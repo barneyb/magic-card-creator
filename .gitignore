@@ -1,0 +1,10 @@
+target
+*.ids
+*.iml
+*.ipr
+*.iws
+.idea
+*.properties
+.settings
+.project
+build
