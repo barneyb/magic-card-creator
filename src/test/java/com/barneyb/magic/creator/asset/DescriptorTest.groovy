@@ -1,4 +1,4 @@
-package com.barneyb.magic.creator.descriptor
+package com.barneyb.magic.creator.asset
 
 import org.junit.Test
 
