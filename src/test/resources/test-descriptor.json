@@ -1,0 +1,69 @@
+{
+    "screen": {
+        "assets": {
+            "frame": {
+                "size": {
+                    "width": 400,
+                    "height": 560
+                },
+                "type": "png"
+            },
+            "large": {
+                "v": {
+                    "width": 19,
+                    "height": 19
+                },
+                "type": "png"
+            },
+            "small": {
+                "size": {
+                    "width": 15,
+                    "height": 15
+                },
+                "type": "png"
+            }
+        },
+        "titlebar": {
+            "x": 36,
+            "y": 36,
+            "width": 328,
+            "height": 22
+        },
+        "artwork": {
+            "x": 36,
+            "y": 69,
+            "width": 328,
+            "height": 242
+        },
+        "typebar": {
+            "x": 38,
+            "y": 319,
+            "width": 324,
+            "height": 22
+        },
+        "textbox": {
+            "x": 38,
+            "y": 352,
+            "width": 324,
+            "height": 150
+        },
+        "powertoughness": {
+            "x": 307,
+            "y": 505,
+            "width": 54,
+            "height": 19
+        },
+        "artist": {
+            "x": 59,
+            "y": 513,
+            "width": 222,
+            "height": 13
+        },
+        "footer": {
+            "x": 30,
+            "y": 527,
+            "width": 251,
+            "height": 9
+        }
+    }
+}
