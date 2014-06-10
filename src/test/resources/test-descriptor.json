@@ -9,7 +9,7 @@
                 "type": "png"
             },
             "large": {
-                "v": {
+                "size": {
                     "width": 19,
                     "height": 19
                 },
