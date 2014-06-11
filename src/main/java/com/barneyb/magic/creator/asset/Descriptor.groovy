@@ -18,7 +18,7 @@ class Descriptor {
     }
 
     static Descriptor fromReader(Reader reader) {
-        new Descriptor(new Gson().fromJson(reader, new ParameterizedType() {
+        def d = new Descriptor(new Gson().fromJson(reader, new ParameterizedType() {
 
             @Override
             Type[] getActualTypeArguments() {
@@ -35,6 +35,15 @@ class Descriptor {
                 null
             }
         }))
+        d.renderSets.each { rsk, rs ->
+            rs.key = rsk
+            ['frames', 'large', 'small'].each {
+                def s = rs[it]
+                s.renderSet = rs
+                s.key = it
+            }
+        }
+        d
     }
 
     final Map<String, RenderSet> renderSets
@@ -43,4 +52,11 @@ class Descriptor {
         this.renderSets = renderSets.asImmutable()
     }
 
+    RenderSet getRenderSet(String name) {
+        def rs = renderSets.get(name)
+        if (rs == null) {
+            throw new IllegalArgumentException("No renderset named '$name' is known.")
+        }
+        rs
+    }
 }

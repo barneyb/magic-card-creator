@@ -15,12 +15,17 @@ class DescriptorTest {
 
     @Test
     void loading() {
-        def d = Descriptor.fromStream(DescriptorTest.classLoader.getResourceAsStream('test-descriptor.json'))
+        def d = Descriptor.fromStream(DescriptorTest.classLoader.getResourceAsStream('assets/test-descriptor.json'))
         assertEquals(['screen'] as Set, d.renderSets.keySet())
         def rs = d.renderSets.values().first()
 
-        assertEquals(new Dimension(400, 560), rs.frame.size)
-        assertEquals('png', rs.frame.type)
+        assertEquals('screen', rs.key)
+
+        assertEquals(rs, rs.frames.renderSet)
+        assertEquals('frames', rs.frames.key)
+
+        assertEquals(new Dimension(400, 560), rs.frames.size)
+        assertEquals('png', rs.frames.type)
 
         assertEquals(new Rectangle(36, 69, 328, 242), rs.artwork)
 

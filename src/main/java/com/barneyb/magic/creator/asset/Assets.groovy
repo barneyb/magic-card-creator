@@ -1,13 +1,15 @@
 package com.barneyb.magic.creator.asset
-import groovy.transform.Immutable
+
+import groovy.transform.PackageScope
+
 /**
  *
  * @author bboisvert
  */
-@Immutable
+@PackageScope
 class Assets {
 
-    AssetSet frame
+    AssetSet frames
 
     AssetSet large
 

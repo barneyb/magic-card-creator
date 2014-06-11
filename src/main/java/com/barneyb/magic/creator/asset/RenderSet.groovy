@@ -1,19 +1,20 @@
 package com.barneyb.magic.creator.asset
-
-import groovy.transform.Immutable
+import groovy.transform.PackageScope
 
 import java.awt.*
 /**
  *
  * @author bboisvert
  */
-@Immutable
 class RenderSet {
 
+    String key
+
+    @PackageScope
     Assets assets
 
-    AssetSet getFrame() {
-        assets.frame
+    AssetSet getFrames() {
+        assets.frames
     }
 
     AssetSet getLarge() {

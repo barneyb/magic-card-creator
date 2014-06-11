@@ -1,7 +1,7 @@
 {
     "screen": {
         "assets": {
-            "frame": {
+            "frames": {
                 "size": {
                     "width": 400,
                     "height": 560
