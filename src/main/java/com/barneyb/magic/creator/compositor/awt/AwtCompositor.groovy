@@ -3,13 +3,18 @@ import com.barneyb.magic.creator.asset.ImageAsset
 import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.Compositor
 import com.barneyb.magic.creator.compositor.RenderModel
+import com.barneyb.magic.creator.compositor.RenderableString
 
 import javax.imageio.ImageIO
 import java.awt.*
+import java.awt.font.LineBreakMeasurer
+import java.awt.font.TextAttribute
+import java.awt.font.TextLayout
 import java.awt.geom.AffineTransform
 import java.awt.image.AffineTransformOp
 import java.awt.image.BufferedImage
 import java.awt.image.RenderedImage
+import java.text.AttributedString
 /**
  *
  * @author bboisvert
@@ -51,7 +56,39 @@ class AwtCompositor implements Compositor {
         }
         drawAsset(g, rs.artwork, model.artwork)
         drawText(g, rs.typebar, model.type)
-        // body
+        final bodyFontSize = rs.small.size.height + 1
+        def y = rs.textbox.y
+        model.body.each { para ->
+            def xOffset = 0
+            para.each {
+                if (it instanceof RenderableString) {
+                    if (it.text == null || it.text.length() == 0) {
+                        throw new UnsupportedOperationException("You cannot render empty blocks of body text.")
+                    }
+                    def s = it.toString()
+                    def attr = new AttributedString(s, [
+                        (TextAttribute.SIZE): bodyFontSize,
+                        (TextAttribute.POSTURE): it.flavor ? TextAttribute.POSTURE_OBLIQUE : TextAttribute.POSTURE_REGULAR
+                    ])
+                    def lm = new LineBreakMeasurer(attr.iterator, g.getFontRenderContext())
+                    TextLayout l
+                    while (lm.position < s.length()) {
+                        if (l != null) {
+                            y += l.ascent + l.descent + l.leading
+                        }
+                        l = lm.nextLayout((float) rs.textbox.width - xOffset)
+                        l.draw(g, (float) rs.textbox.x + xOffset, (float) y + bodyFontSize * 0.8)
+                        xOffset = 0
+                    }
+                    xOffset = l.advance
+                } else {
+                    it = (ImageAsset) it
+                    drawAsset(g, new Rectangle(new Point((int) rs.textbox.x + xOffset, (int) y), it.size), it)
+                    xOffset += it.size.width
+                }
+            }
+            y += bodyFontSize * 2
+        }
         if (model.powerToughnessVisible) {
             drawText(g, rs.powertoughness, model.powerToughness, Align.CENTER)
         }
