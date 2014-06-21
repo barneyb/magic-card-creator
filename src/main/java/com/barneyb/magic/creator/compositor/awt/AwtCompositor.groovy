@@ -58,7 +58,7 @@ class AwtCompositor implements Compositor {
         drawText(g, new Rectangle(
             (int) rs.titlebar.x,
             (int) rs.titlebar.y,
-            (int) rs.titlebar.width - i * rs.large.size.width,
+            (int) rs.titlebar.width - (i + 0.5) * rs.large.size.width,
             (int) rs.titlebar.height
         ), model.title)
         drawAsset(g, rs.artwork, model.artwork)

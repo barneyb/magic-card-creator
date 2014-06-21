@@ -75,7 +75,7 @@ class AwtCompositorTest {
                     rs.small.getImageAsset(CostType.COLORLESS_X),
                     rs.small.getImageAsset(CostType.COLORLESS_X),
                     rs.small.getImageAsset(CostType.BLACK),
-                    new RenderableString(" where X equals your current life total.", false),
+                    new RenderableString(" where X equals your life total.", false),
                 ],
                 [
                     new RenderableString("For the first time in his life, Barney felt warm.  And hungry.", true)
