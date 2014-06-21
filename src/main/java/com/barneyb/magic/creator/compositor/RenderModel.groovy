@@ -17,7 +17,7 @@ class RenderModel {
 
     String type
 
-    List<Renderable> body
+    List<List<Renderable>> body
 
     boolean isPowerToughnessVisible() {
         powerToughness != null

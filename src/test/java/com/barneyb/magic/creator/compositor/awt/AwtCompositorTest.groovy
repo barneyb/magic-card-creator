@@ -24,10 +24,14 @@ class AwtCompositorTest {
             artwork: new RemoteImage(new URL("http://blogs.cornell.edu/art3606bhs74/files/2013/10/Sally-Mann-Black-Eye-1991-painting-artwork-print-1lpzmeq.jpg")),
             type: "Creature \u2014 Human",
             body: [
-                rs.small.getImageAsset(CostType.BLUE),
-                rs.small.getImageAsset(CostType.TAP),
-                new RenderableString(": tap target creature and pay 1 life.\n\n", false),
-                new RenderableString("Sally doesn't like you.", true)
+                [
+                    rs.small.getImageAsset(CostType.BLUE),
+                    rs.small.getImageAsset(CostType.TAP),
+                    new RenderableString(": tap target creature and pay 1 life.", false),
+                ],
+                [
+                    new RenderableString("Sally doesn't like you.", true)
+                ]
             ],
             powerToughness: "1/1",
             artist: "Sally Mann",
