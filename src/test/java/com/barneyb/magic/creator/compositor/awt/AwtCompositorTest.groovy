@@ -31,6 +31,9 @@ class AwtCompositorTest {
                 ],
                 [
                     new RenderableString("Sally doesn't like you.", true)
+                ],
+                [
+                    new RenderableString("Or you.", true)
                 ]
             ],
             powerToughness: "1/1",
@@ -38,6 +41,42 @@ class AwtCompositorTest {
             footer: "\u00A9 2014 Barney Boisvert (1/5)"
         )
         new AwtCompositor().compose(m, rs, new File("sally.png").newOutputStream())
+    }
+
+    @Test
+    void barney() {
+        def rs = Descriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
+        def m = new RenderModel(
+            frame: rs.frames.getImageAsset(FrameType.GOLD_CREATURE),
+            title: "Barney of the Green Woods",
+            cost: [CostType.COLORLESS_1, CostType.WHITE, CostType.BLUE, CostType.BLACK, CostType.RED, CostType.GREEN].collect(rs.large.&getImageAsset),
+            artwork: new RemoteImage(new URL("https://s3.amazonaws.com/private.barneyb.com/headshot.jpg")),
+            type: "Legendary Enchantment Creature \u2014 Human Legend",
+            body: [
+                [
+                    new RenderableString("Indestructable, hexproof.", false),
+                ],
+                [
+                    rs.small.getImageAsset(CostType.COLORLESS_1),
+                    rs.small.getImageAsset(CostType.BLUE),
+                    rs.small.getImageAsset(CostType.GREEN),
+                    rs.small.getImageAsset(CostType.TAP),
+                    new RenderableString(": every opponent dies in a fire unless all pay ", false),
+                    rs.small.getImageAsset(CostType.COLORLESS_X),
+                    rs.small.getImageAsset(CostType.RED),
+                    rs.small.getImageAsset(CostType.BLACK),
+                    rs.small.getImageAsset(CostType.WHITE),
+                    new RenderableString(" where X equals your current life total", false),
+                ],
+                [
+                    new RenderableString("For the first time in his life, Barney felt warm.  And hungry.", true)
+                ]
+            ],
+            powerToughness: "2/2",
+            artist: "Dolores Boisvert",
+            footer: "\u00A9 2014 Fucking Barney! (5/5)"
+        )
+        new AwtCompositor().compose(m, rs, new File("barney.png").newOutputStream())
     }
 
 }
