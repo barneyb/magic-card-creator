@@ -31,7 +31,16 @@ class AwtCompositor implements Compositor {
         def g = card.createGraphics()
         g.color = Color.BLACK
         drawText(g, rs.titlebar, model.title)
-        // cost
+        model.cost.reverse().eachWithIndex { it, i ->
+            def r = new Rectangle(
+                new Point(
+                    (int) rs.titlebar.x + rs.titlebar.width - (i + 1) * rs.large.size.width,
+                    (int) rs.titlebar.y + (rs.titlebar.height - rs.large.size.height) / 2
+                ),
+                rs.large.size
+            )
+            drawAsset(g, r, it)
+        }
         drawAsset(g, rs.artwork, model.artwork)
         drawText(g, rs.typebar, model.type)
         // body
@@ -44,7 +53,12 @@ class AwtCompositor implements Compositor {
     }
 
     protected boolean drawAsset(Graphics2D g, Rectangle box, ImageAsset asset) {
-        g.drawImage(asset.asImage(), new AffineTransformOp(AffineTransform.getScaleInstance(box.width / asset.size.width, box.height / asset.size.height), AffineTransformOp.TYPE_BICUBIC), (int) box.x, (int) box.y)
+        g.drawImage(
+            asset.asImage(),
+            new AffineTransformOp(AffineTransform.getScaleInstance(box.width / asset.size.width, box.height / asset.size.height), AffineTransformOp.TYPE_BICUBIC),
+            (int) box.x,
+            (int) box.y
+        )
     }
 
     protected void drawText(Graphics2D g, Rectangle box, String text) {
