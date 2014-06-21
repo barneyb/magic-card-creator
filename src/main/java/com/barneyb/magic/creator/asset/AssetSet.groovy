@@ -3,7 +3,7 @@ import com.barneyb.magic.creator.descriptor.AssetKeyed
 
 import javax.imageio.ImageIO
 import java.awt.*
-import java.awt.image.RenderedImage
+import java.awt.image.BufferedImage
 
 /**
  *
@@ -27,7 +27,7 @@ class AssetSet {
             }
 
             @Override
-            RenderedImage asImage() {
+            BufferedImage asImage() {
                 def path = "assets/$renderSet.key/$key/${keyed.assetKey}.$type"
                 def stream = RenderSet.classLoader.getResourceAsStream(path)
                 if (stream == null) {
