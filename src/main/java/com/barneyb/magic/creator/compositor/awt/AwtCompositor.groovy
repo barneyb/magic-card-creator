@@ -43,17 +43,24 @@ class AwtCompositor implements Compositor {
         def g = card.createGraphics()
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON)
         g.color = Color.BLACK
-        drawText(g, rs.titlebar, model.title)
-        model.cost.reverse().eachWithIndex { it, i ->
+        int i = 0
+        model.cost.reverse().each { it ->
+            i += 1
             def r = new Rectangle(
                 new Point(
-                    (int) rs.titlebar.x + rs.titlebar.width - (i + 1) * rs.large.size.width,
+                    (int) rs.titlebar.x + rs.titlebar.width - i * rs.large.size.width,
                     (int) rs.titlebar.y + (rs.titlebar.height - rs.large.size.height) / 2
                 ),
                 rs.large.size
             )
             drawAsset(g, r, it)
         }
+        drawText(g, new Rectangle(
+            (int) rs.titlebar.x,
+            (int) rs.titlebar.y,
+            (int) rs.titlebar.width - i * rs.large.size.width,
+            (int) rs.titlebar.height
+        ), model.title)
         drawAsset(g, rs.artwork, model.artwork)
         drawText(g, rs.typebar, model.type)
         final bodyFontSize = rs.small.size.height + 1
@@ -107,27 +114,25 @@ class AwtCompositor implements Compositor {
     }
 
     protected void drawText(Graphics2D g, Rectangle box, String text, Align align=Align.LEADING) {
-        g.font = g.font.deriveFont((float) Math.ceil(box.height * 0.85))
-        if (align == Align.CENTER) {
-            // new bounding box
-            box = centeredRectangle(g, box, text)
-        }
-        g.drawString(text, (int) box.x, (int) (box.y + box.height * 0.8))
-    }
-
-    protected Rectangle centeredRectangle(Graphics2D g, Rectangle box, String text) {
-        def fm = g.getFontMetrics(g.getFont())
+        def oldFont = g.font
+        g.font = oldFont.deriveFont((float) Math.ceil(box.height * 0.85))
+        def fm = g.getFontMetrics(g.font)
         def w = fm.stringWidth(text)
-        if (w < box.width) {
-            new Rectangle(
+        if (w > box.width) {
+            def t = new AffineTransform()
+            t.setToScale(box.width / w, 1)
+            g.font = g.font.deriveFont(t)
+        } else if (align == Align.CENTER && w < box.width) {
+            // new bounding box
+            box = new Rectangle(
                 (int) box.x + (box.width - w) / 2,
                 (int) box.y,
                 w,
                 (int) box.height
             )
-        } else {
-            box
         }
+        g.drawString(text, (int) box.x, (int) (box.y + box.height * 0.8))
+        g.font = oldFont
     }
 
 }
