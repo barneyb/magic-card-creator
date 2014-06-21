@@ -22,7 +22,7 @@ class AwtCompositorTest {
             title: "Sally",
             cost: [CostType.COLORLESS_1, CostType.RED].collect(rs.large.&getImageAsset),
             artwork: new RemoteImage(new URL("http://blogs.cornell.edu/art3606bhs74/files/2013/10/Sally-Mann-Black-Eye-1991-painting-artwork-print-1lpzmeq.jpg")),
-            type: "Creature \u2014 Human",
+            type: "Creature \u2013 Human",
             body: [
                 [
                     rs.small.getImageAsset(CostType.BLUE),
@@ -49,9 +49,9 @@ class AwtCompositorTest {
         def m = new RenderModel(
             frame: rs.frames.getImageAsset(FrameType.GOLD_CREATURE),
             title: "Barney of the Green Woods",
-            cost: [CostType.COLORLESS_1, CostType.WHITE, CostType.BLUE, CostType.BLACK, CostType.RED, CostType.GREEN].collect(rs.large.&getImageAsset),
+            cost: [CostType.COLORLESS_2, CostType.WHITE, CostType.BLUE, CostType.BLACK, CostType.RED, CostType.GREEN].collect(rs.large.&getImageAsset),
             artwork: new RemoteImage(new URL("https://s3.amazonaws.com/private.barneyb.com/headshot.jpg")),
-            type: "Legendary Enchantment Creature \u2014 Human Legend",
+            type: "Legendary Enchantment Creature \u2013 Human Legend",
             body: [
                 [
                     new RenderableString("Indestructable, hexproof.", false),
@@ -66,13 +66,13 @@ class AwtCompositorTest {
                     rs.small.getImageAsset(CostType.RED),
                     rs.small.getImageAsset(CostType.BLACK),
                     rs.small.getImageAsset(CostType.WHITE),
-                    new RenderableString(" where X equals your current life total", false),
+                    new RenderableString(" where X equals your current life total.", false),
                 ],
                 [
                     new RenderableString("For the first time in his life, Barney felt warm.  And hungry.", true)
                 ]
             ],
-            powerToughness: "2/2",
+            powerToughness: "100/100",
             artist: "Dolores Boisvert",
             footer: "\u00A9 2014 Fucking Barney! (5/5)"
         )
