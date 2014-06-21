@@ -3,6 +3,7 @@ import com.barneyb.magic.creator.asset.ImageAsset
 import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.Compositor
 import com.barneyb.magic.creator.compositor.RenderModel
+import com.barneyb.magic.creator.compositor.Renderable
 import com.barneyb.magic.creator.compositor.RenderableString
 
 import javax.imageio.ImageIO
@@ -63,11 +64,12 @@ class AwtCompositor implements Compositor {
         ), model.title)
         drawAsset(g, rs.artwork, model.artwork)
         drawText(g, rs.typebar, model.type)
-        final bodyFontSize = rs.small.size.height + 1
-        def y = rs.textbox.y
-        def lineOffset = bodyFontSize
+
+        g.setClip(rs.textbox)
+        def ctx = new Renderable.DrawCtx(g, rs.textbox, (float) rs.small.size.height + 1)
+
         model.body.each { para ->
-            def xOffset = 0
+            ctx.XOffset = 0
             para.eachWithIndex { it, itemIdx ->
                 if (it instanceof RenderableString) {
                     if (it.text == null || it.text.length() == 0) {
@@ -75,21 +77,21 @@ class AwtCompositor implements Compositor {
                     }
                     def s = it.toString()
                     def attr = new AttributedString(s, [
-                        (TextAttribute.SIZE): bodyFontSize,
+                        (TextAttribute.SIZE): ctx.fontSize,
                         (TextAttribute.POSTURE): it.flavor ? TextAttribute.POSTURE_OBLIQUE : TextAttribute.POSTURE_REGULAR
                     ])
                     def lm = new LineBreakMeasurer(attr.iterator, g.getFontRenderContext())
                     TextLayout l
                     while (lm.position < s.length()) {
                         if (l != null) {
-                            lineOffset = l.ascent + l.descent + l.leading
-                            xOffset = 0
-                            y += lineOffset
+                            ctx.wrapOffset = l.ascent + l.descent + l.leading
+                            ctx.XOffset = 0
+                            ctx.y += ctx.wrapOffset
                         }
-                        l = lm.nextLayout((float) rs.textbox.width - xOffset)
-                        l.draw(g, (float) rs.textbox.x + xOffset, (float) y + bodyFontSize * 0.8)
+                        l = lm.nextLayout((float) ctx.bounds.width - ctx.XOffset)
+                        l.draw(g, (float) ctx.x, (float) ctx.y + ctx.fontSize * 0.8)
                     }
-                    xOffset += l.advance
+                    ctx.XOffset += l.advance
                 } else {
                     it = (ImageAsset) it
                     // look for all of them in a row (to treat as a "word")
@@ -101,16 +103,18 @@ class AwtCompositor implements Compositor {
                             break
                         }
                     }
-                    if (xOffset + blockCount * it.size.width >= rs.textbox.width) {
-                        xOffset = 0
-                        y += lineOffset
+                    if (ctx.XOffset + blockCount * it.size.width >= ctx.bounds.width) {
+                        ctx.XOffset = 0
+                        ctx.y += ctx.wrapOffset
                     }
-                    drawAsset(g, new Rectangle(new Point((int) rs.textbox.x + xOffset, (int) y), it.size), it)
-                    xOffset += it.size.width
+                    drawAsset(g, new Rectangle(ctx.location, it.size), it)
+                    ctx.XOffset += it.size.width
                 }
             }
-            y += lineOffset * 2
+            ctx.y += ctx.wrapOffset * 2
         }
+        g.setClip(null) // clear the clip
+
         if (model.powerToughnessVisible) {
             drawText(g, rs.powertoughness, model.powerToughness, Align.CENTER)
         }
