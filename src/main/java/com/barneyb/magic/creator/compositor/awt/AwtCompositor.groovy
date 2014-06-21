@@ -65,9 +65,10 @@ class AwtCompositor implements Compositor {
         drawText(g, rs.typebar, model.type)
         final bodyFontSize = rs.small.size.height + 1
         def y = rs.textbox.y
+        def lineOffset = bodyFontSize
         model.body.each { para ->
             def xOffset = 0
-            para.each {
+            para.eachWithIndex { it, itemIdx ->
                 if (it instanceof RenderableString) {
                     if (it.text == null || it.text.length() == 0) {
                         throw new UnsupportedOperationException("You cannot render empty blocks of body text.")
@@ -81,8 +82,9 @@ class AwtCompositor implements Compositor {
                     TextLayout l
                     while (lm.position < s.length()) {
                         if (l != null) {
+                            lineOffset = l.ascent + l.descent + l.leading
                             xOffset = 0
-                            y += l.ascent + l.descent + l.leading
+                            y += lineOffset
                         }
                         l = lm.nextLayout((float) rs.textbox.width - xOffset)
                         l.draw(g, (float) rs.textbox.x + xOffset, (float) y + bodyFontSize * 0.8)
@@ -90,11 +92,24 @@ class AwtCompositor implements Compositor {
                     xOffset += l.advance
                 } else {
                     it = (ImageAsset) it
+                    // look for all of them in a row (to treat as a "word")
+                    def blockCount = 1
+                    for (def n : para.subList(itemIdx + 1, para.size())) {
+                        if (n instanceof ImageAsset) {
+                            blockCount += 1
+                        } else {
+                            break
+                        }
+                    }
+                    if (xOffset + blockCount * it.size.width >= rs.textbox.width) {
+                        xOffset = 0
+                        y += lineOffset
+                    }
                     drawAsset(g, new Rectangle(new Point((int) rs.textbox.x + xOffset, (int) y), it.size), it)
                     xOffset += it.size.width
                 }
             }
-            y += bodyFontSize * 2
+            y += lineOffset * 2
         }
         if (model.powerToughnessVisible) {
             drawText(g, rs.powertoughness, model.powerToughness, Align.CENTER)
