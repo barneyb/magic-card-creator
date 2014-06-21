@@ -81,13 +81,13 @@ class AwtCompositor implements Compositor {
                     TextLayout l
                     while (lm.position < s.length()) {
                         if (l != null) {
+                            xOffset = 0
                             y += l.ascent + l.descent + l.leading
                         }
                         l = lm.nextLayout((float) rs.textbox.width - xOffset)
                         l.draw(g, (float) rs.textbox.x + xOffset, (float) y + bodyFontSize * 0.8)
-                        xOffset = 0
                     }
-                    xOffset = l.advance
+                    xOffset += l.advance
                 } else {
                     it = (ImageAsset) it
                     drawAsset(g, new Rectangle(new Point((int) rs.textbox.x + xOffset, (int) y), it.size), it)
