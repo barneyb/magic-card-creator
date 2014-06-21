@@ -23,7 +23,7 @@ class AssetSet {
         new ImageAsset() {
             @Override
             Dimension getSize() {
-                size
+                AssetSet.this.size
             }
 
             @Override
