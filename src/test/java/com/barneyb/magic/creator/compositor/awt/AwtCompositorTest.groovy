@@ -6,8 +6,6 @@ import com.barneyb.magic.creator.compositor.RenderableString
 import com.barneyb.magic.creator.descriptor.CostType
 import com.barneyb.magic.creator.descriptor.FrameType
 import org.junit.Test
-
-import javax.imageio.ImageIO
 /**
  * This is kind of a BS test, because it doesn't actually assert anything, it
  * just spits out some composed cards, and then a human can decide if they're
@@ -35,7 +33,7 @@ class AwtCompositorTest {
             artist: "Sally Mann",
             footer: "\u00A9 2014 Barney Boisvert (1/5)"
         )
-        ImageIO.write(new AwtCompositor().compose(rs, m), "png", new File("sally.png"))
+        new AwtCompositor().compose(m, rs, new File("sally.png").newOutputStream())
     }
 
 }

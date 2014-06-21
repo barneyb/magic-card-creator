@@ -1,14 +1,16 @@
 package com.barneyb.magic.creator.compositor
-
 import com.barneyb.magic.creator.asset.RenderSet
-
-import java.awt.image.RenderedImage
 /**
  *
  * @author bboisvert
  */
 interface Compositor {
 
-    RenderedImage compose(RenderSet rs, RenderModel model)
+    /**
+     * I compose the passed RenderModel and RenderSet and send the result to the
+     * supplied OutputStream.  The stream should be flushed and closed by the
+     * compose method before returning.
+     */
+    void compose(RenderModel model, RenderSet rs, OutputStream dest)
 
 }

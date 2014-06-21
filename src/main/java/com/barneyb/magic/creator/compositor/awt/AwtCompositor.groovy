@@ -4,6 +4,7 @@ import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.Compositor
 import com.barneyb.magic.creator.compositor.RenderModel
 
+import javax.imageio.ImageIO
 import java.awt.*
 import java.awt.geom.AffineTransform
 import java.awt.image.AffineTransformOp
@@ -16,6 +17,15 @@ import java.awt.image.RenderedImage
 class AwtCompositor implements Compositor {
 
     @Override
+    void compose(RenderModel model, RenderSet rs, OutputStream dest) {
+        try {
+            ImageIO.write(compose(rs, model), "png", dest)
+            dest.flush()
+        } finally {
+            dest.close()
+        }
+    }
+
     RenderedImage compose(RenderSet rs, RenderModel model) {
         def card = model.frame.asImage() as BufferedImage
         def g = card.createGraphics()
