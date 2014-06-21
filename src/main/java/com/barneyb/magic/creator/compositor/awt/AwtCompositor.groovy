@@ -16,6 +16,12 @@ import java.awt.image.RenderedImage
  */
 class AwtCompositor implements Compositor {
 
+    protected enum Align {
+        LEADING,
+        CENTER,
+//        TRAILING
+    }
+
     @Override
     void compose(RenderModel model, RenderSet rs, OutputStream dest) {
         try {
@@ -29,6 +35,7 @@ class AwtCompositor implements Compositor {
     RenderedImage compose(RenderSet rs, RenderModel model) {
         def card = model.frame.asImage() as BufferedImage
         def g = card.createGraphics()
+        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON)
         g.color = Color.BLACK
         drawText(g, rs.titlebar, model.title)
         model.cost.reverse().eachWithIndex { it, i ->
@@ -45,7 +52,7 @@ class AwtCompositor implements Compositor {
         drawText(g, rs.typebar, model.type)
         // body
         if (model.powerToughnessVisible) {
-            drawText(g, rs.powertoughness, model.powerToughness)
+            drawText(g, rs.powertoughness, model.powerToughness, Align.CENTER)
         }
         drawText(g, rs.artist, model.artist)
         drawText(g, rs.footer, model.footer)
@@ -61,8 +68,28 @@ class AwtCompositor implements Compositor {
         )
     }
 
-    protected void drawText(Graphics2D g, Rectangle box, String text) {
-        g.font = g.font.deriveFont((float) box.height * 0.85f)
-        g.drawString(text, (int) box.x, (int) (box.@y + box.@height * 0.8))
+    protected void drawText(Graphics2D g, Rectangle box, String text, Align align=Align.LEADING) {
+        g.font = g.font.deriveFont((float) Math.ceil(box.height * 0.85))
+        if (align == Align.CENTER) {
+            // new bounding box
+            box = centeredRectangle(g, box, text)
+        }
+        g.drawString(text, (int) box.x, (int) (box.y + box.height * 0.8))
     }
+
+    protected Rectangle centeredRectangle(Graphics2D g, Rectangle box, String text) {
+        def fm = g.getFontMetrics(g.getFont())
+        def w = fm.stringWidth(text)
+        if (w < box.width) {
+            new Rectangle(
+                (int) box.x + (box.width - w) / 2,
+                (int) box.y,
+                w,
+                (int) box.height
+            )
+        } else {
+            box
+        }
+    }
+
 }
