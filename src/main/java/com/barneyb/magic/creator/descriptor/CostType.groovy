@@ -18,6 +18,7 @@ enum CostType implements AssetKeyed {
     COLORLESS_7('7'),
     COLORLESS_8('8'),
     COLORLESS_9('9'),
+    COLORLESS_X('x'),
     GREEN('g'),
     RED('r'),
     TAP('t'),
