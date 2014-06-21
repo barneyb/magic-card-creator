@@ -35,6 +35,10 @@ class AssetSet {
                 }
                 ImageIO.read(stream)
             }
+
+            String toString() {
+                '{' + keyed.assetKey + '}'
+            }
         }
     }
 }
