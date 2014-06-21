@@ -14,9 +14,10 @@ import java.awt.image.RenderedImage
  *
  * @author bboisvert
  */
+@SuppressWarnings("GrMethodMayBeStatic")
 class AwtCompositor implements Compositor {
 
-    protected enum Align {
+    static protected enum Align {
         LEADING,
         CENTER,
 //        TRAILING
@@ -59,7 +60,7 @@ class AwtCompositor implements Compositor {
         card
     }
 
-    protected boolean drawAsset(Graphics2D g, Rectangle box, ImageAsset asset) {
+    protected void drawAsset(Graphics2D g, Rectangle box, ImageAsset asset) {
         g.drawImage(
             asset.asImage(),
             new AffineTransformOp(AffineTransform.getScaleInstance(box.width / asset.size.width, box.height / asset.size.height), AffineTransformOp.TYPE_BICUBIC),
