@@ -24,6 +24,8 @@ import java.util.List
 @SuppressWarnings("GrMethodMayBeStatic")
 class AwtCompositor implements Compositor {
 
+    public static final Font BASE_FONT = Font.decode("Goudy Old Style-bold") // new Font([:])
+
     static protected enum Align {
         LEADING,
         CENTER,
@@ -76,6 +78,7 @@ class AwtCompositor implements Compositor {
         def card = model.frame.asImage() as BufferedImage
         def g = card.createGraphics()
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON)
+        g.font = BASE_FONT
         g.color = Color.BLACK
         int i = 0
         model.cost.reverse().each { it ->
@@ -99,7 +102,10 @@ class AwtCompositor implements Compositor {
         drawText(g, rs.typebar, model.type)
 
         g.setClip(rs.textbox)
-        def ctx = new RenderCtx(g, rs.textbox, (float) rs.small.size.height + 1)
+        def fontSize = (float) rs.small.size.height * 1.2
+        g.font = BASE_FONT.deriveFont(fontSize)
+        def fm = g.fontMetrics
+        def ctx = new RenderCtx(g, rs.textbox, fontSize, fm.ascent + fm.descent)
         model.body.each { para ->
             ctx.XOffset = 0
             ctx.line = para
@@ -107,7 +113,7 @@ class AwtCompositor implements Compositor {
                 ctx.idx = itemIdx
                 render(ctx, it)
             }
-            ctx.y += ctx.wrapOffset * 1.75
+            ctx.y += ctx.wrapOffset * 1.5
         }
         g.setClip(null) // clear the clip
 
@@ -118,6 +124,7 @@ class AwtCompositor implements Compositor {
         if (model.whiteFooterText) {
             g.color = Color.WHITE
         }
+        g.font = BASE_FONT
         drawText(g, rs.artist, model.artist)
         drawText(g, rs.footer, model.footer)
         card
@@ -133,19 +140,17 @@ class AwtCompositor implements Compositor {
         }
         def s = it.toString()
         def attr = new AttributedString(s, [
-            (TextAttribute.SIZE): ctx.fontSize,
-            (TextAttribute.POSTURE): it.flavor ? TextAttribute.POSTURE_OBLIQUE : TextAttribute.POSTURE_REGULAR
+            (TextAttribute.FONT): BASE_FONT.deriveFont(it.flavor ? Font.ITALIC : Font.PLAIN, ctx.fontSize)
         ])
         def lm = new LineBreakMeasurer(attr.iterator, ctx.graphics.getFontRenderContext())
         TextLayout l
         while (lm.position < s.length()) {
             if (l != null) {
-                ctx.wrapOffset = l.ascent + l.descent + l.leading
                 ctx.XOffset = 0
                 ctx.y += ctx.wrapOffset
             }
             l = lm.nextLayout((float) ctx.bounds.width - ctx.XOffset)
-            l.draw(ctx.graphics, (float) ctx.x, (float) ctx.y + ctx.fontSize * 0.8)
+            l.draw(ctx.graphics, (float) ctx.x, (float) ctx.y + l.ascent)
         }
         ctx.XOffset += l.advance
     }
@@ -163,7 +168,7 @@ class AwtCompositor implements Compositor {
             ctx.XOffset = 0
             ctx.y += ctx.wrapOffset
         }
-        drawAsset(ctx.graphics, new Rectangle(ctx.location, it.size), it)
+        drawAsset(ctx.graphics, new Rectangle((int) ctx.x, (int) ctx.y + (ctx.wrapOffset - it.size.height) * 0.5, (int) it.size.width, (int) it.size.height), it)
         ctx.XOffset += it.size.width
     }
 
@@ -178,7 +183,7 @@ class AwtCompositor implements Compositor {
 
     protected void drawText(Graphics2D g, Rectangle box, String text, Align align=Align.LEADING) {
         def oldFont = g.font
-        g.font = oldFont.deriveFont((float) Math.ceil(box.height * 0.85))
+        g.font = BASE_FONT.deriveFont((float) Math.ceil(box.height * 0.85))
         def fm = g.getFontMetrics(g.font)
         def w = fm.stringWidth(text)
         if (w > box.width) {
