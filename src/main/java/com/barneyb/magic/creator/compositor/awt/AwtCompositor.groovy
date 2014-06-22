@@ -16,6 +16,8 @@ import java.awt.image.AffineTransformOp
 import java.awt.image.BufferedImage
 import java.awt.image.RenderedImage
 import java.text.AttributedString
+import java.util.List
+
 /**
  *
  * @author bboisvert
@@ -27,6 +29,38 @@ class AwtCompositor implements Compositor {
         LEADING,
         CENTER,
 //        TRAILING
+    }
+
+    static class RenderCtx {
+        final Graphics2D graphics
+        Rectangle bounds
+        double x
+        double y
+        float fontSize
+        float wrapOffset
+        List<Renderable> line
+        int idx
+
+        def RenderCtx(Graphics2D g, Rectangle b, float fs) {
+            graphics = g
+            bounds = b
+            x = bounds.x
+            y = bounds.y
+            fontSize = fs
+            wrapOffset = fs
+        }
+
+        double getXOffset() {
+            x - bounds.x
+        }
+
+        void setXOffset(double xOffset) {
+            x = bounds.x + xOffset
+        }
+
+        Point getLocation() {
+            new Point((int) x, (int) y)
+        }
     }
 
     @Override
@@ -66,52 +100,16 @@ class AwtCompositor implements Compositor {
         drawText(g, rs.typebar, model.type)
 
         g.setClip(rs.textbox)
-        def ctx = new Renderable.DrawCtx(g, rs.textbox, (float) rs.small.size.height + 1)
+        def ctx = new RenderCtx(g, rs.textbox, (float) rs.small.size.height + 1)
 
         model.body.each { para ->
             ctx.XOffset = 0
+            ctx.line = para
             para.eachWithIndex { it, itemIdx ->
-                if (it instanceof RenderableString) {
-                    if (it.text == null || it.text.length() == 0) {
-                        throw new UnsupportedOperationException("You cannot render empty blocks of body text.")
-                    }
-                    def s = it.toString()
-                    def attr = new AttributedString(s, [
-                        (TextAttribute.SIZE): ctx.fontSize,
-                        (TextAttribute.POSTURE): it.flavor ? TextAttribute.POSTURE_OBLIQUE : TextAttribute.POSTURE_REGULAR
-                    ])
-                    def lm = new LineBreakMeasurer(attr.iterator, g.getFontRenderContext())
-                    TextLayout l
-                    while (lm.position < s.length()) {
-                        if (l != null) {
-                            ctx.wrapOffset = l.ascent + l.descent + l.leading
-                            ctx.XOffset = 0
-                            ctx.y += ctx.wrapOffset
-                        }
-                        l = lm.nextLayout((float) ctx.bounds.width - ctx.XOffset)
-                        l.draw(g, (float) ctx.x, (float) ctx.y + ctx.fontSize * 0.8)
-                    }
-                    ctx.XOffset += l.advance
-                } else {
-                    it = (ImageAsset) it
-                    // look for all of them in a row (to treat as a "word")
-                    def blockCount = 1
-                    for (def n : para.subList(itemIdx + 1, para.size())) {
-                        if (n instanceof ImageAsset) {
-                            blockCount += 1
-                        } else {
-                            break
-                        }
-                    }
-                    if (ctx.XOffset + blockCount * it.size.width >= ctx.bounds.width) {
-                        ctx.XOffset = 0
-                        ctx.y += ctx.wrapOffset
-                    }
-                    drawAsset(g, new Rectangle(ctx.location, it.size), it)
-                    ctx.XOffset += it.size.width
-                }
+                ctx.idx = itemIdx
+                render(ctx, it)
             }
-            ctx.y += ctx.wrapOffset * 2
+            ctx.y += ctx.wrapOffset * 1.75
         }
         g.setClip(null) // clear the clip
 
@@ -123,10 +121,54 @@ class AwtCompositor implements Compositor {
         card
     }
 
+    protected void render(RenderCtx ctx, Renderable it) {
+        throw new UnsupportedOperationException("Renderable '${it.getClass().name}' is not supported.")
+    }
+
+    protected void render(RenderCtx ctx, RenderableString it) {
+        if (it.text == null || it.text.length() == 0) {
+            throw new UnsupportedOperationException("You cannot render empty blocks of body text.")
+        }
+        def s = it.toString()
+        def attr = new AttributedString(s, [
+            (TextAttribute.SIZE): ctx.fontSize,
+            (TextAttribute.POSTURE): it.flavor ? TextAttribute.POSTURE_OBLIQUE : TextAttribute.POSTURE_REGULAR
+        ])
+        def lm = new LineBreakMeasurer(attr.iterator, ctx.graphics.getFontRenderContext())
+        TextLayout l
+        while (lm.position < s.length()) {
+            if (l != null) {
+                ctx.wrapOffset = l.ascent + l.descent + l.leading
+                ctx.XOffset = 0
+                ctx.y += ctx.wrapOffset
+            }
+            l = lm.nextLayout((float) ctx.bounds.width - ctx.XOffset)
+            l.draw(ctx.graphics, (float) ctx.x, (float) ctx.y + ctx.fontSize * 0.8)
+        }
+        ctx.XOffset += l.advance
+    }
+
+    protected void render(RenderCtx ctx, ImageAsset it) {
+        def blockCount = 1
+        for (def n : ctx.line.subList(ctx.idx + 1, ctx.line.size())) {
+            if (n instanceof ImageAsset) {
+                blockCount += 1
+            } else {
+                break
+            }
+        }
+        if (ctx.XOffset + blockCount * it.size.width >= ctx.bounds.width) {
+            ctx.XOffset = 0
+            ctx.y += ctx.wrapOffset
+        }
+        drawAsset(ctx.graphics, new Rectangle(ctx.location, it.size), it)
+        ctx.XOffset += it.size.width
+    }
+
     protected void drawAsset(Graphics2D g, Rectangle box, ImageAsset asset) {
         g.drawImage(
             asset.asImage(),
-            new AffineTransformOp(AffineTransform.getScaleInstance(box.width / asset.size.width, box.height / asset.size.height), AffineTransformOp.TYPE_BICUBIC),
+            asset.size == box.size ? null : new AffineTransformOp(AffineTransform.getScaleInstance(box.width / asset.size.width, box.height / asset.size.height), AffineTransformOp.TYPE_BICUBIC),
             (int) box.x,
             (int) box.y
         )
