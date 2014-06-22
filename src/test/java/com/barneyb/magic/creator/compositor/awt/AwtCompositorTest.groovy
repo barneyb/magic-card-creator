@@ -4,7 +4,9 @@ import com.barneyb.magic.creator.asset.RemoteImage
 import com.barneyb.magic.creator.compositor.RenderModel
 import com.barneyb.magic.creator.compositor.RenderableString
 import com.barneyb.magic.creator.descriptor.CostType
-import com.barneyb.magic.creator.descriptor.FrameType
+import com.barneyb.magic.creator.descriptor.FrameBaseType
+import com.barneyb.magic.creator.descriptor.FrameModifier
+import org.junit.BeforeClass
 import org.junit.Test
 /**
  * This is kind of a BS test, because it doesn't actually assert anything, it
@@ -36,7 +38,7 @@ class AwtCompositorTest {
     void nightmare() {
         def rs = Descriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
         def m = new RenderModel(
-            frame: rs.frames.getImageAsset(FrameType.BLACK_CREATURE),
+            frame: rs.frames.getImageAsset(FrameBaseType.BLACK + FrameModifier.Type.CREATURE),
             title: "Nightmare",
             cost: [CostType.COLORLESS_5, CostType.BLACK].collect(rs.large.&getImageAsset),
             artwork: new RemoteImage(new URL("http://rookery.s3.amazonaws.com/1135500/1135763_dd89_1024x2000.jpg")),
@@ -53,6 +55,7 @@ class AwtCompositorTest {
                 ]
             ],
             powerToughness: "*/*",
+            whiteFooterText: true,
             artist: "catfish08",
             footer: "\u00A9 2014 Barney Boisvert (3/5)"
         )
@@ -63,7 +66,7 @@ class AwtCompositorTest {
     void sally() {
         def rs = Descriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
         def m = new RenderModel(
-            frame: rs.frames.getImageAsset(FrameType.RED_CREATURE),
+            frame: rs.frames.getImageAsset(FrameBaseType.RED + FrameModifier.Type.CREATURE),
             title: "Sally",
             cost: [CostType.COLORLESS_1, CostType.RED].collect(rs.large.&getImageAsset),
             artwork: new RemoteImage(new URL("http://blogs.cornell.edu/art3606bhs74/files/2013/10/Sally-Mann-Black-Eye-1991-painting-artwork-print-1lpzmeq.jpg")),
@@ -92,7 +95,7 @@ class AwtCompositorTest {
     void barney() {
         def rs = Descriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
         def m = new RenderModel(
-            frame: rs.frames.getImageAsset(FrameType.GOLD_CREATURE),
+            frame: rs.frames.getImageAsset(FrameBaseType.GOLD + FrameModifier.Type.ENCHANTMENT_CREATURE),
             title: "Barney of the Green Woods",
             cost: [CostType.COLORLESS_2, CostType.WHITE, CostType.BLUE, CostType.BLACK, CostType.RED, CostType.GREEN].collect(rs.large.&getImageAsset),
             artwork: new RemoteImage(new URL("https://s3.amazonaws.com/private.barneyb.com/headshot.jpg")),
