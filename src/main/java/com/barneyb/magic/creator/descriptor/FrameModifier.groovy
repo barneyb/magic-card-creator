@@ -17,16 +17,16 @@ interface FrameModifier extends AssetKeyed {
     }
 
     static enum Dual implements FrameModifier {
+        WHITE_BLUE,
+        WHITE_BLACK,
+        WHITE_RED,
+        WHITE_GREEN,
         BLUE_BLACK,
         BLUE_RED,
-        GREEN_BLACK,
-        GREEN_BLUE,
-        GREEN_RED,
-        RED_BLACK,
-        WHITE_BLACK,
-        WHITE_BLUE,
-        WHITE_GREEN,
-        WHITE_RED,
+        BLUE_GREEN,
+        BLACK_RED,
+        BLACK_GREEN,
+        RED_GREEN
 
         final int priority = 2
 
