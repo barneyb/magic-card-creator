@@ -46,4 +46,9 @@ class RemoteImage implements ImageAsset {
         return url.hashCode()
     }
 
+    @Override
+    public String toString() {
+        '{' + url + '}'
+    }
+
 }
