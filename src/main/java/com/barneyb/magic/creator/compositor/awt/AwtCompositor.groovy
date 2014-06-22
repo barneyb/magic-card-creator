@@ -40,13 +40,13 @@ class AwtCompositor implements Compositor {
         List<Renderable> line
         int idx
 
-        def RenderCtx(Graphics2D g, Rectangle b, float fs) {
+        def RenderCtx(Graphics2D g, Rectangle b, float fs, float wo = fs) {
             graphics = g
             bounds = b
             x = bounds.x
             y = bounds.y
             fontSize = fs
-            wrapOffset = fs
+            wrapOffset = wo
         }
 
         double getXOffset() {
