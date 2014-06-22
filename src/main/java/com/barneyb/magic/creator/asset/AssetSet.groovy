@@ -28,7 +28,7 @@ class AssetSet {
 
             @Override
             BufferedImage asImage() {
-                def path = "assets/$renderSet.key/$key/${keyed.assetKey}.$type"
+                def path = assetPath
                 def stream = RenderSet.classLoader.getResourceAsStream(path)
                 if (stream == null) {
                     throw new IllegalArgumentException("No image could be read from the classpath at '$path'.")
@@ -36,8 +36,22 @@ class AssetSet {
                 ImageIO.read(stream)
             }
 
+            private String getAssetPath() {
+                "assets/$renderSet.key/$key/${keyed.assetKey}.$type"
+            }
+
             String toString() {
                 '{' + keyed.assetKey + '}'
+            }
+
+            @Override
+            int hashCode() {
+                assetPath.hashCode()
+            }
+
+            @Override
+            boolean equals(Object o) {
+                getClass().isAssignableFrom(o.getClass()) && assetPath == o.assetPath
             }
         }
     }

@@ -30,4 +30,20 @@ class RemoteImage implements ImageAsset {
     BufferedImage asImage() {
         image
     }
+
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (!(o instanceof RemoteImage)) return false
+
+        RemoteImage that = (RemoteImage) o
+
+        if (url != that.url) return false
+
+        return true
+    }
+
+    int hashCode() {
+        return url.hashCode()
+    }
+
 }
