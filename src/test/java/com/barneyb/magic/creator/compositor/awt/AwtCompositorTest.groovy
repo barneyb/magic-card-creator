@@ -15,6 +15,33 @@ import org.junit.Test
 class AwtCompositorTest {
 
     @Test
+    void nightmare() {
+        def rs = Descriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
+        def m = new RenderModel(
+            frame: rs.frames.getImageAsset(FrameType.BLACK_CREATURE),
+            title: "Nightmare",
+            cost: [CostType.COLORLESS_5, CostType.BLACK].collect(rs.large.&getImageAsset),
+            artwork: new RemoteImage(new URL("http://rookery.s3.amazonaws.com/1135500/1135763_dd89_1024x2000.jpg")),
+            type: "Creature \u2013 Nightmare Horse",
+            body: [
+                [
+                    new RenderableString("Flying", false),
+                ],
+                [
+                    new RenderableString("Nightmare's power and toughness are each equal to the number of Swamps you control.", false),
+                ],
+                [
+                    new RenderableString("The thunder of its hooves beats dreams into despair.", true),
+                ]
+            ],
+            powerToughness: "*/*",
+            artist: "catfish08",
+            footer: "\u00A9 2014 Barney Boisvert (3/5)"
+        )
+        new AwtCompositor().compose(m, rs, new File("nightmare.png").newOutputStream())
+    }
+
+    @Test
     void sally() {
         def rs = Descriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
         def m = new RenderModel(
