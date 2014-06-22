@@ -76,7 +76,7 @@ class AwtCompositorTest {
                 [
                     rs.small.getImageAsset(CostType.BLUE),
                     rs.small.getImageAsset(CostType.TAP),
-                    new RenderableString(": tap target creature and pay 1 life.", false),
+                    new RenderableString(": Tap target creature and pay 1 life.", false),
                 ],
                 [
                     new RenderableString("Sally doesn't like you.", true)
@@ -110,7 +110,7 @@ class AwtCompositorTest {
                     rs.small.getImageAsset(CostType.BLUE),
                     rs.small.getImageAsset(CostType.GREEN),
                     rs.small.getImageAsset(CostType.TAP),
-                    new RenderableString(": every opponent dies in a fire unless all pay ", false),
+                    new RenderableString(": Every opponent dies in a fire unless all pay ", false),
                     rs.small.getImageAsset(CostType.COLORLESS_X),
                     rs.small.getImageAsset(CostType.BLUE),
                     rs.small.getImageAsset(CostType.BLACK),
