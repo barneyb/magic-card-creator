@@ -26,6 +26,8 @@ class RenderModel {
     // might be null
     String powerToughness
 
+    boolean whiteFooterText = false
+
     String artist
 
     String footer

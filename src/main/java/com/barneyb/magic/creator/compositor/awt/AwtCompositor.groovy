@@ -5,7 +5,6 @@ import com.barneyb.magic.creator.compositor.Compositor
 import com.barneyb.magic.creator.compositor.RenderModel
 import com.barneyb.magic.creator.compositor.Renderable
 import com.barneyb.magic.creator.compositor.RenderableString
-import com.barneyb.magic.creator.descriptor.FrameType
 
 import javax.imageio.ImageIO
 import java.awt.*
@@ -116,12 +115,8 @@ class AwtCompositor implements Compositor {
             drawText(g, rs.powertoughness, model.powerToughness, Align.CENTER)
         }
 
-        // black cards have their artist/footer drawn in white
-        // todo: this is ghastly
-        if (model.frame == rs.frames.getImageAsset(FrameType.BLACK) || model.frame == rs.frames.getImageAsset(FrameType.BLACK_CREATURE)) {
+        if (model.whiteFooterText) {
             g.color = Color.WHITE
-        } else {
-            g.color = Color.BLACK
         }
         drawText(g, rs.artist, model.artist)
         drawText(g, rs.footer, model.footer)
