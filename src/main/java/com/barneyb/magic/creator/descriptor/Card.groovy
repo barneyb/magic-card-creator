@@ -15,9 +15,9 @@ class Card {
 
     String subtype
 
-    def power
+    String power
 
-    def toughness
+    String toughness
 
     String artist
 
