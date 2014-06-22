@@ -5,6 +5,7 @@ import com.barneyb.magic.creator.compositor.Compositor
 import com.barneyb.magic.creator.compositor.RenderModel
 import com.barneyb.magic.creator.compositor.Renderable
 import com.barneyb.magic.creator.compositor.RenderableString
+import com.barneyb.magic.creator.descriptor.FrameType
 
 import javax.imageio.ImageIO
 import java.awt.*
@@ -17,7 +18,6 @@ import java.awt.image.BufferedImage
 import java.awt.image.RenderedImage
 import java.text.AttributedString
 import java.util.List
-
 /**
  *
  * @author bboisvert
@@ -101,7 +101,6 @@ class AwtCompositor implements Compositor {
 
         g.setClip(rs.textbox)
         def ctx = new RenderCtx(g, rs.textbox, (float) rs.small.size.height + 1)
-
         model.body.each { para ->
             ctx.XOffset = 0
             ctx.line = para
@@ -115,6 +114,14 @@ class AwtCompositor implements Compositor {
 
         if (model.powerToughnessVisible) {
             drawText(g, rs.powertoughness, model.powerToughness, Align.CENTER)
+        }
+
+        // black cards have their artist/footer drawn in white
+        // todo: this is ghastly
+        if (model.frame == rs.frames.getImageAsset(FrameType.BLACK) || model.frame == rs.frames.getImageAsset(FrameType.BLACK_CREATURE)) {
+            g.color = Color.WHITE
+        } else {
+            g.color = Color.BLACK
         }
         drawText(g, rs.artist, model.artist)
         drawText(g, rs.footer, model.footer)
