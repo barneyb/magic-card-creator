@@ -14,6 +14,24 @@ import org.junit.Test
  */
 class AwtCompositorTest {
 
+    @BeforeClass
+    static void ensureTarget() {
+        def d = new File("build")
+        if (! d.exists()) {
+            d.mkdir()
+        }
+        def f = new File(d, "preview.html")
+        if (! f.exists())
+            f.text = """\
+<html>
+<body>
+<img src="sally.png" />
+<img src="barney.png" />
+<img src="nightmare.png" />
+</body>
+</html>"""
+    }
+
     @Test
     void nightmare() {
         def rs = Descriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
@@ -38,7 +56,7 @@ class AwtCompositorTest {
             artist: "catfish08",
             footer: "\u00A9 2014 Barney Boisvert (3/5)"
         )
-        new AwtCompositor().compose(m, rs, new File("nightmare.png").newOutputStream())
+        new AwtCompositor().compose(m, rs, new File("build/nightmare.png").newOutputStream())
     }
 
     @Test
@@ -67,7 +85,7 @@ class AwtCompositorTest {
             artist: "Sally Mann",
             footer: "\u00A9 2014 Barney Boisvert (1/5)"
         )
-        new AwtCompositor().compose(m, rs, new File("sally.png").newOutputStream())
+        new AwtCompositor().compose(m, rs, new File("build/sally.png").newOutputStream())
     }
 
     @Test
@@ -112,7 +130,7 @@ class AwtCompositorTest {
             artist: "Dolores Boisvert",
             footer: "\u00A9 2014 Fucking Barney! (5/5)"
         )
-        new AwtCompositor().compose(m, rs, new File("barney.png").newOutputStream())
+        new AwtCompositor().compose(m, rs, new File("build/barney.png").newOutputStream())
     }
 
 }
