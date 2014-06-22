@@ -24,13 +24,13 @@ class AwtCompositorTest {
             outputDir.mkdir()
         }
         def f = new File(outputDir, "preview.html")
-        if (! f.exists())
-            f.text = """\
+        f.text = """\
 <html>
 <body>
 <img src="sally.png" />
-<img src="barney.png" />
 <img src="nightmare.png" />
+<img src="blitz-hellion.png" />
+<img src="barney.png" />
 </body>
 </html>"""
     }
@@ -103,7 +103,7 @@ class AwtCompositorTest {
             type: "Legendary Enchantment Creature \u2013 Human Legend",
             body: [
                 [
-                    new RenderableString("Indestructable, hexproof.", false),
+                    new RenderableString("Indestructable, hexproof", false),
                 ],
                 [
                     rs.small.getImageAsset(CostType.COLORLESS_1),
@@ -135,6 +135,33 @@ class AwtCompositorTest {
             footer: "\u00A9 2014 Fucking Barney! (5/5)"
         )
         new AwtCompositor().compose(m, rs, new File(outputDir, "barney.png").newOutputStream())
+    }
+
+    @Test
+    void blitz_hellion() {
+        def rs = Descriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
+        def m = new RenderModel(
+            frame: rs.frames.getImageAsset(FrameBaseType.GOLD + FrameModifier.Type.CREATURE + FrameModifier.Dual.RED_GREEN),
+            title: "Blitz Hellion",
+            cost: [CostType.COLORLESS_2, CostType.RED, CostType.GREEN].collect(rs.large.&getImageAsset),
+            artwork: new RemoteImage(new URL("http://www.magic-ville.com/fr/scan_art?736")),
+            type: "Creature \u2013 Hellion",
+            body: [
+                [
+                    new RenderableString("Trample, haste", false),
+                ],
+                [
+                    new RenderableString("At the beginning of the end step, Blitz Hellion's owner shuffles it into his or her library.", false),
+                ],
+                [
+                    new RenderableString("Alarans commemorated its appearances with new holidays bearing names like the Great Cataclysm and the Fall of Ilson Gate.", true)
+                ]
+            ],
+            powerToughness: "7/7",
+            artist: "Anthony S. Waters",
+            footer: "\u00A9 2014 Fucking Barney! (4/5)"
+        )
+        new AwtCompositor().compose(m, rs, new File(outputDir, "blitz-hellion.png").newOutputStream())
     }
 
 }
