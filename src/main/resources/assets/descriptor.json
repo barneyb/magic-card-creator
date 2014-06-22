@@ -42,10 +42,10 @@
             "height": 22
         },
         "textbox": {
-            "x": 38,
-            "y": 352,
-            "width": 324,
-            "height": 150
+            "x": 40,
+            "y": 355,
+            "width": 320,
+            "height": 145
         },
         "powertoughness": {
             "x": 307,
