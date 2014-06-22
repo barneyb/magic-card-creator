@@ -24,7 +24,10 @@ import java.util.List
 @SuppressWarnings("GrMethodMayBeStatic")
 class AwtCompositor implements Compositor {
 
-    public static final Font BASE_FONT = Font.decode("Goudy Old Style-bold") // new Font([:])
+    // Goudy Old Style doesn't measure right
+    // default isn't serif
+    // Georgia is pretty close, AND measures correctly
+    public static final Font BASE_FONT = Font.decode("Georgia-bold") // Font.decode("Goudy Old Style-bold") // new Font([:])
 
     static protected enum Align {
         LEADING,
@@ -184,12 +187,16 @@ class AwtCompositor implements Compositor {
     protected void drawText(Graphics2D g, Rectangle box, String text, Align align=Align.LEADING) {
         def oldFont = g.font
         g.font = BASE_FONT.deriveFont((float) Math.ceil(box.height * 0.85))
-        def fm = g.getFontMetrics(g.font)
-        def w = fm.stringWidth(text)
+        def w = g.fontMetrics.stringWidth(text)
         if (w > box.width) {
             def t = new AffineTransform()
             t.setToScale(box.width / w, 1)
             g.font = g.font.deriveFont(t)
+            // sanity check...
+            w = g.fontMetrics.stringWidth(text)
+            if (w > box.width) {
+                throw new IllegalStateException("transforming font for '$text' didn't work right.")
+            }
         } else if (align == Align.CENTER && w < box.width) {
             // new bounding box
             box = new Rectangle(
