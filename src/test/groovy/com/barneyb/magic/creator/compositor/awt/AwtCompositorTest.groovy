@@ -26,6 +26,7 @@ class AwtCompositorTest {
 <html>
 <body>
 <img src="sally.png" />
+<img src="counterspell.png" />
 <img src="nightmare.png" />
 <img src="blitz-hellion.png" />
 <img src="barney.png" />
@@ -41,15 +42,21 @@ class AwtCompositorTest {
     }
 
     @Test
-    void nightmare() {
-        def m = Cards.nightmare(rs)
-        new AwtCompositor().compose(m, rs, new File(outputDir, "nightmare.png").newOutputStream())
-    }
-
-    @Test
     void sally() {
         def m = Cards.sally(rs)
         new AwtCompositor().compose(m, rs, new File(outputDir, "sally.png").newOutputStream())
+    }
+
+    @Test
+    void counterspell() {
+        def m = Cards.counterspell(rs)
+        new AwtCompositor().compose(m, rs, new File(outputDir, "counterspell.png").newOutputStream())
+    }
+
+    @Test
+    void nightmare() {
+        def m = Cards.nightmare(rs)
+        new AwtCompositor().compose(m, rs, new File(outputDir, "nightmare.png").newOutputStream())
     }
 
     @Test
