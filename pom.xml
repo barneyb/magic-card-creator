@@ -22,4 +22,93 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <build>
+        <sourceDirectory>src/main/groovy</sourceDirectory>
+        <testSourceDirectory>src/test/groovy</testSourceDirectory>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.7</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>build</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>compile-run</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc">
+                                    <classpath refid="maven.compile.classpath" />
+                                </taskdef>
+                                <mkdir dir="${project.build.outputDirectory}" />
+                                <groovyc destdir="${project.build.outputDirectory}" verbose="yes" srcdir="${project.build.sourceDirectory}">
+                                    <classpath refid="maven.compile.classpath" />
+                                    <javac source="${java.compliance.version}" target="${java.compliance.version}" />
+                                </groovyc>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>test-compile-run</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc">
+                                    <classpath refid="maven.compile.classpath" />
+                                </taskdef>
+                                <mkdir dir="${project.build.testOutputDirectory}" />
+                                <groovyc destdir="${project.build.testOutputDirectory}" verbose="yes" srcdir="${project.build.testSourceDirectory}">
+                                    <classpath refid="maven.test.classpath" />
+                                    <javac source="${java.compliance.version}" target="${java.compliance.version}" />
+                                </groovyc>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>verify-run</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <taskdef name="groovydoc" classname="org.codehaus.groovy.ant.Groovydoc">
+                                    <classpath refid="maven.compile.classpath" />
+                                </taskdef>
+                                <groovydoc destdir="${project.reporting.outputDirectory}/groovydoc" sourcepath="${project.build.sourceDirectory}" use="true" windowtitle="${project.name}" doctitle="${project.name}">
+                                    <link packages="java.,javax." href="http://download.oracle.com/javase/6/docs/api" />
+                                </groovydoc>
+                                <jar destfile="${project.build.directory}/${project.artifactId}-${project.version}-javadoc.jar" basedir="${project.reporting.outputDirectory}/groovydoc" />
+                                <attachartifact file="${project.build.directory}/${project.artifactId}-${project.version}-javadoc.jar" classifier="javadoc" type="jar" />
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
