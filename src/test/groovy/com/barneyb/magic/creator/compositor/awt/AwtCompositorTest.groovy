@@ -1,11 +1,13 @@
 package com.barneyb.magic.creator.compositor.awt
 import com.barneyb.magic.creator.asset.ClasspathImage
 import com.barneyb.magic.creator.asset.Descriptor
+import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.RenderModel
 import com.barneyb.magic.creator.compositor.RenderableString
 import com.barneyb.magic.creator.descriptor.CostType
 import com.barneyb.magic.creator.descriptor.FrameBaseType
 import com.barneyb.magic.creator.descriptor.FrameModifier
+import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
 /**
@@ -35,9 +37,15 @@ class AwtCompositorTest {
 </html>"""
     }
 
+    RenderSet rs
+
+    @Before
+    void _makeRenderSet() {
+        rs = Descriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
+    }
+
     @Test
     void nightmare() {
-        def rs = Descriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
         def m = new RenderModel(
             frame: rs.frames.getImageAsset(FrameBaseType.BLACK + FrameModifier.Type.CREATURE),
             title: "Nightmare",
@@ -65,7 +73,6 @@ class AwtCompositorTest {
 
     @Test
     void sally() {
-        def rs = Descriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
         def m = new RenderModel(
             frame: rs.frames.getImageAsset(FrameBaseType.RED + FrameModifier.Type.CREATURE),
             title: "Sally",
@@ -94,7 +101,6 @@ class AwtCompositorTest {
 
     @Test
     void barney() {
-        def rs = Descriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
         def m = new RenderModel(
             frame: rs.frames.getImageAsset(FrameBaseType.GOLD + FrameModifier.Type.ENCHANTMENT_CREATURE),
             title: "Barney of the Green Woods",
@@ -139,7 +145,6 @@ class AwtCompositorTest {
 
     @Test
     void blitz_hellion() {
-        def rs = Descriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
         def m = new RenderModel(
             frame: rs.frames.getImageAsset(FrameBaseType.GOLD + FrameModifier.Type.CREATURE + FrameModifier.Dual.RED_GREEN),
             title: "Blitz Hellion",
