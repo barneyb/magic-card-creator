@@ -6,6 +6,7 @@ package com.barneyb.magic.creator.descriptor
  */
 enum CostType implements AssetKeyed {
 
+    COLORLESS_X('x', ManaColor.COLORLESS),
     COLORLESS_0('0', ManaColor.COLORLESS),
     COLORLESS_1('1', ManaColor.COLORLESS),
     COLORLESS_2('2', ManaColor.COLORLESS),
@@ -16,7 +17,6 @@ enum CostType implements AssetKeyed {
     COLORLESS_7('7', ManaColor.COLORLESS),
     COLORLESS_8('8', ManaColor.COLORLESS),
     COLORLESS_9('9', ManaColor.COLORLESS),
-    COLORLESS_X('x', ManaColor.COLORLESS),
     WHITE('w', ManaColor.WHITE),
     BLUE('u', ManaColor.BLUE),
     BLACK('b', ManaColor.BLACK),
