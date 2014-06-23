@@ -1,6 +1,6 @@
 package com.barneyb.magic.creator.compositor.awt
+import com.barneyb.magic.creator.asset.ClasspathImage
 import com.barneyb.magic.creator.asset.Descriptor
-import com.barneyb.magic.creator.asset.RemoteImage
 import com.barneyb.magic.creator.compositor.RenderModel
 import com.barneyb.magic.creator.compositor.RenderableString
 import com.barneyb.magic.creator.descriptor.CostType
@@ -42,7 +42,7 @@ class AwtCompositorTest {
             frame: rs.frames.getImageAsset(FrameBaseType.BLACK + FrameModifier.Type.CREATURE),
             title: "Nightmare",
             cost: [CostType.COLORLESS_5, CostType.BLACK].collect(rs.large.&getImageAsset),
-            artwork: new RemoteImage(new URL("http://rookery.s3.amazonaws.com/1135500/1135763_dd89_1024x2000.jpg")),
+            artwork: new ClasspathImage("artwork/nightmare.jpg"),
             type: "Creature \u2013 Nightmare Horse",
             body: [
                 [
@@ -70,7 +70,7 @@ class AwtCompositorTest {
             frame: rs.frames.getImageAsset(FrameBaseType.RED + FrameModifier.Type.CREATURE),
             title: "Sally",
             cost: [CostType.COLORLESS_1, CostType.RED].collect(rs.large.&getImageAsset),
-            artwork: new RemoteImage(new URL("http://blogs.cornell.edu/art3606bhs74/files/2013/10/Sally-Mann-Black-Eye-1991-painting-artwork-print-1lpzmeq.jpg")),
+            artwork: new ClasspathImage("artwork/sally.jpg"),
             type: "Creature \u2013 Human",
             body: [
                 [
@@ -99,7 +99,7 @@ class AwtCompositorTest {
             frame: rs.frames.getImageAsset(FrameBaseType.GOLD + FrameModifier.Type.ENCHANTMENT_CREATURE),
             title: "Barney of the Green Woods",
             cost: [CostType.COLORLESS_2, CostType.WHITE, CostType.BLUE, CostType.BLACK, CostType.RED, CostType.GREEN].collect(rs.large.&getImageAsset),
-            artwork: new RemoteImage(new URL("https://s3.amazonaws.com/private.barneyb.com/headshot.jpg")),
+            artwork: new ClasspathImage("artwork/barney.jpg"),
             type: "Legendary Enchantment Creature \u2013 Human Legend",
             body: [
                 [
@@ -144,7 +144,7 @@ class AwtCompositorTest {
             frame: rs.frames.getImageAsset(FrameBaseType.GOLD + FrameModifier.Type.CREATURE + FrameModifier.Dual.RED_GREEN),
             title: "Blitz Hellion",
             cost: [CostType.COLORLESS_2, CostType.RED, CostType.GREEN].collect(rs.large.&getImageAsset),
-            artwork: new RemoteImage(new URL("http://www.magic-ville.com/fr/scan_art?736")),
+            artwork: new ClasspathImage("artwork/hellion.jpg"),
             type: "Creature \u2013 Hellion",
             body: [
                 [
