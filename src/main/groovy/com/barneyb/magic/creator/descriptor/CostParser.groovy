@@ -9,7 +9,7 @@ class CostParser {
     static List<CostType> parse(String cost) {
         cost.collect {
             CostType.fromKey(it.toLowerCase())
-        }
+        }.sort()
     }
 
 }

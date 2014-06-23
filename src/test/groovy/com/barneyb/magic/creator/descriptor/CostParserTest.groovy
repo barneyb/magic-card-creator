@@ -76,6 +76,8 @@ class CostParserTest {
     @Test
     void nicolBolas() {
         assertEquals([COLORLESS_2, BLUE, BLUE, BLACK, BLACK, RED, RED], parse("2uubbrr"))
+        // this cost string is deliberately ordered "weird"
+        assertEquals([COLORLESS_2, BLUE, BLUE, BLACK, BLACK, RED, RED], parse("RUBR2UB"))
     }
 
 }
