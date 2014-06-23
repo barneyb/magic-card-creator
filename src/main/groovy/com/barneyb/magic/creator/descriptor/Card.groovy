@@ -48,16 +48,6 @@ class Card {
         subtype = s?.trim()
     }
 
-    String power
-    void setPower(String s) {
-        power = s?.trim()
-    }
-
-    String toughness
-    void setToughness(String s) {
-        toughness = s?.trim()
-    }
-
     String abilities
     void setAbilities(String s) {
         abilities = s?.trim()
@@ -66,6 +56,16 @@ class Card {
     String flavor
     void setFlavor(String s) {
         flavor = s?.trim()
+    }
+
+    String power
+    void setPower(String s) {
+        power = s?.trim()
+    }
+
+    String toughness
+    void setToughness(String s) {
+        toughness = s?.trim()
     }
 
     String artist
