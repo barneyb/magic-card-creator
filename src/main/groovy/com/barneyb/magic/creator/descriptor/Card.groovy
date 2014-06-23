@@ -37,10 +37,10 @@ class Card {
 
     String toughness
 
-    String artist
-
     String abilities
 
     String flavor
+
+    String artist
 
 }
