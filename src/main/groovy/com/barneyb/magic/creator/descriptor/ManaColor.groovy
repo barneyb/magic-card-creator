@@ -7,7 +7,7 @@ package com.barneyb.magic.creator.descriptor
  *
  * @author bboisvert
  */
-enum ManaColors {
+enum ManaColor {
     COLORLESS,
     WHITE,
     BLUE,
