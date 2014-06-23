@@ -11,6 +11,32 @@ import static org.junit.Assert.*
 class CardTest {
 
     @Test
+    void whitespaceTrimming() {
+        def c = new Card(
+            title: " Tim ",
+            costString: " 2u ",
+            artwork: "  ./tim.jpg ",
+            type: "  creature  ",
+            subtype: "  wizard  ",
+            power: " 1 ",
+            toughness: " 1 ",
+            abilities: " {t}: Tim pings you.  ",
+            flavor: " Tim is a bastard. ",
+            artist: " Bacon McPiggers ",
+        )
+        assertEquals("Tim", c.title)
+        assertEquals("2u", c.costString)
+        assertEquals("./tim.jpg", c.artwork)
+        assertEquals("creature", c.type)
+        assertEquals("wizard", c.subtype)
+        assertEquals("1", c.power)
+        assertEquals("1", c.toughness)
+        assertEquals("{t}: Tim pings you.", c.abilities)
+        assertEquals("Tim is a bastard.", c.flavor)
+        assertEquals("Bacon McPiggers", c.artist)
+    }
+
+    @Test
     void getCost() {
         assertEquals([CostType.BLUE], new Card(costString: "U").cost)
     }

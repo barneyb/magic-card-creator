@@ -12,8 +12,14 @@ import groovy.transform.TupleConstructor
 class Card {
 
     String title
+    void setTitle(String s) {
+        title = s?.trim()
+    }
 
     String costString
+    void setCostString(String s) {
+        costString = s?.trim()
+    }
 
     List<CostType> getCost() {
         CostParser.parse(costString)
@@ -24,23 +30,47 @@ class Card {
     }
 
     String artwork
+    void setArtwork(String s) {
+        artwork = s?.trim()
+    }
 
     String type
+    void setType(String s) {
+        type = s?.trim()
+    }
 
     boolean isCreature() {
         type.toLowerCase().tokenize().contains("creature")
     }
 
     String subtype
+    void setSubtype(String s) {
+        subtype = s?.trim()
+    }
 
     String power
+    void setPower(String s) {
+        power = s?.trim()
+    }
 
     String toughness
+    void setToughness(String s) {
+        toughness = s?.trim()
+    }
 
     String abilities
+    void setAbilities(String s) {
+        abilities = s?.trim()
+    }
 
     String flavor
+    void setFlavor(String s) {
+        flavor = s?.trim()
+    }
 
     String artist
+    void setArtist(String s) {
+        artist = s?.trim()
+    }
 
 }
