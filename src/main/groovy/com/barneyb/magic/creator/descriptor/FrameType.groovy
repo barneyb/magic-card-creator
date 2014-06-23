@@ -8,4 +8,6 @@ interface FrameType extends AssetKeyed {
 
     FrameType plus(FrameModifier mod)
 
+    FrameType minus(FrameModifier mod)
+
 }

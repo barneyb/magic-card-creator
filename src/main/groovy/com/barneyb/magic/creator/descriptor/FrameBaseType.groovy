@@ -20,6 +20,13 @@ enum FrameBaseType implements FrameType {
 
     @Override
     FrameType plus(FrameModifier mod) {
-        new CompoundFrame(this, [(mod.priority): mod] as TreeMap)
+        new CompoundFrame(this, [mod])
     }
+
+    @Override
+    FrameType minus(FrameModifier mod) {
+        // FrameBaseType never has mods, so removing one is always a no-op
+        this
+    }
+
 }
