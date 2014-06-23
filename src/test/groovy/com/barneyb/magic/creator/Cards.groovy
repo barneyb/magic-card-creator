@@ -2,6 +2,7 @@ package com.barneyb.magic.creator
 
 import com.barneyb.magic.creator.asset.ClasspathImage
 import com.barneyb.magic.creator.asset.RenderSet
+import com.barneyb.magic.creator.compositor.Paragraph
 import com.barneyb.magic.creator.compositor.RenderModel
 import com.barneyb.magic.creator.compositor.RenderableString
 import com.barneyb.magic.creator.descriptor.Card
@@ -42,7 +43,7 @@ Or you.
             abilities: "Counter target spell.",
             flavor: """
 How about "never".
-    -- Barney
+    -- Barney of the Green Woods
 """,
             artist: "Zueuk"
         )
@@ -113,7 +114,13 @@ Indestructable, hexproof
                     new RenderableString("Counter target spell.", false),
                 ],
                 [
-                    new RenderableString("How about \"never\".\n    -- Barney", true),
+                    new Paragraph()
+                ],
+                [
+                    new RenderableString("How about \"never\".", true),
+                ],
+                [
+                    new RenderableString("    -- Barney of the Green Woods", true),
                 ]
             ],
             artist: "Zueuk",
@@ -137,7 +144,13 @@ Indestructable, hexproof
                     new RenderableString("Flying", false),
                 ],
                 [
+                    new Paragraph()
+                ],
+                [
                     new RenderableString("Nightmare's power and toughness are each equal to the number of Swamps you control.", false),
+                ],
+                [
+                    new Paragraph()
                 ],
                 [
                     new RenderableString("The thunder of its hooves beats dreams into despair.", true),
@@ -168,7 +181,13 @@ Indestructable, hexproof
                     new RenderableString(": Tap target creature and pay 1 life.", false),
                 ],
                 [
+                    new Paragraph()
+                ],
+                [
                     new RenderableString("Sally doesn't like you.", true)
+                ],
+                [
+                    new Paragraph()
                 ],
                 [
                     new RenderableString("Or you.", true)
@@ -196,6 +215,9 @@ Indestructable, hexproof
                     new RenderableString("Indestructable, hexproof", false),
                 ],
                 [
+                    new Paragraph()
+                ],
+                [
                     rs.small.getImageAsset(CostType.COLORLESS_1),
                     rs.small.getImageAsset(CostType.BLUE),
                     rs.small.getImageAsset(CostType.GREEN),
@@ -215,6 +237,9 @@ Indestructable, hexproof
                     rs.small.getImageAsset(CostType.COLORLESS_X),
                     rs.small.getImageAsset(CostType.BLACK),
                     new RenderableString(" where X equals your life total.", false),
+                ],
+                [
+                    new Paragraph()
                 ],
                 [
                     new RenderableString("For the first time in his life, Barney felt warm.  And hungry.", true)
@@ -242,7 +267,13 @@ Indestructable, hexproof
                     new RenderableString("Trample, haste", false),
                 ],
                 [
+                    new Paragraph()
+                ],
+                [
                     new RenderableString("At the beginning of the end step, Blitz Hellion's owner shuffles it into his or her library.", false),
+                ],
+                [
+                    new Paragraph()
                 ],
                 [
                     new RenderableString("Alarans commemorated its appearances with new holidays bearing names like the Great Cataclysm and the Fall of Ilson Gate.", true)

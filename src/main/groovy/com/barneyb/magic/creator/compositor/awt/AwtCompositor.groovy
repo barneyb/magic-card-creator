@@ -2,6 +2,7 @@ package com.barneyb.magic.creator.compositor.awt
 import com.barneyb.magic.creator.asset.ImageAsset
 import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.Compositor
+import com.barneyb.magic.creator.compositor.Paragraph
 import com.barneyb.magic.creator.compositor.RenderModel
 import com.barneyb.magic.creator.compositor.Renderable
 import com.barneyb.magic.creator.compositor.RenderableString
@@ -109,14 +110,14 @@ class AwtCompositor implements Compositor {
         g.font = BASE_FONT.deriveFont(fontSize)
         def fm = g.fontMetrics
         def ctx = new RenderCtx(g, rs.textbox, fontSize, fm.ascent + fm.descent)
-        model.body.each { para ->
+        model.body.each { line ->
             ctx.XOffset = 0
-            ctx.line = para
-            para.eachWithIndex { it, itemIdx ->
+            ctx.line = line
+            line.eachWithIndex { it, itemIdx ->
                 ctx.idx = itemIdx
                 render(ctx, it)
             }
-            ctx.y += ctx.wrapOffset * 1.5
+            ctx.y += ctx.wrapOffset
         }
         g.setClip(null) // clear the clip
 
@@ -135,6 +136,10 @@ class AwtCompositor implements Compositor {
 
     protected void render(RenderCtx ctx, Renderable it) {
         throw new UnsupportedOperationException("Renderable '${it.getClass().name}' is not supported.")
+    }
+
+    protected void render(RenderCtx ctx, Paragraph it) {
+        ctx.y -= ctx.wrapOffset * 0.35
     }
 
     protected void render(RenderCtx ctx, RenderableString it) {
