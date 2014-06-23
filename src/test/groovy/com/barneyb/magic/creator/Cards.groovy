@@ -156,7 +156,7 @@ Indestructable, hexproof
                     new RenderableString("The thunder of its hooves beats dreams into despair.", true),
                 ]
             ],
-            powerToughness: "*/*",
+            powerToughness: "* / *",
             whiteFooterText: true,
             artist: "catfish08",
             footer: "\u00A9 2014 Barney Boisvert (3/5)"
@@ -193,7 +193,7 @@ Indestructable, hexproof
                     new RenderableString("Or you.", true)
                 ]
             ],
-            powerToughness: "1/1",
+            powerToughness: "1 / 1",
             artist: "Sally Mann",
             footer: "\u00A9 2014 Barney Boisvert (1/5)"
         )
@@ -279,7 +279,7 @@ Indestructable, hexproof
                     new RenderableString("Alarans commemorated its appearances with new holidays bearing names like the Great Cataclysm and the Fall of Ilson Gate.", true)
                 ]
             ],
-            powerToughness: "7/7",
+            powerToughness: "7 / 7",
             artist: "Anthony S. Waters",
             footer: "\u00A9 2014 Fucking Barney! (4/5)"
         )
