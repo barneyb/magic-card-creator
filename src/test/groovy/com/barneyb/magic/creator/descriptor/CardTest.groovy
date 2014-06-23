@@ -33,4 +33,11 @@ class CardTest {
         assertFalse(new Card(type: "Land").creature)
     }
 
+    @Test
+    void _equals() {
+        assertEquals(new Card("fred"), new Card("fred"))
+        assertEquals(new Card("fred", "u"), new Card("fred", "b"))
+        assertEquals(new Card("fred", "u", null, "sorcery"), new Card("fred", "u", null, "instant"))
+    }
+
 }
