@@ -12,7 +12,7 @@ class RenderableString implements Renderable {
     boolean flavor
 
     String toString() {
-        text
+        flavor ? "{$text}" : text
     }
 
 }
