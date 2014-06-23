@@ -59,6 +59,27 @@ class CostParserTest {
     }
 
     @Test
+    void tap() {
+        assertEquals([], parse("t"))
+        assertEquals([TAP], CostParser.parse("t", true))
+    }
+
+    @Test
+    void addNumericColorless() {
+        assertEquals([COLORLESS_6], parse("123"))
+    }
+
+    @Test
+    void multiXColorless() {
+        assertEquals([COLORLESS_X, COLORLESS_X, GREEN], parse("xxg"))
+    }
+
+    @Test
+    void garbage() {
+        assertEquals([COLORLESS_X, COLORLESS_6, WHITE, BLUE, BLACK, RED, GREEN], parse("123qwertyuiopsdfghjklzxcvbnm"))
+    }
+
+    @Test
     void fireball() {
         assertEquals([COLORLESS_X, RED], parse("xr"))
     }
