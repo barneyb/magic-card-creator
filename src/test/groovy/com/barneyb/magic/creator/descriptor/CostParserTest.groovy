@@ -101,4 +101,10 @@ class CostParserTest {
         assertEquals([COLORLESS_2, BLUE, BLUE, BLACK, BLACK, RED, RED], parse("RUBR2UB"))
     }
 
+    @Test
+    void parts() {
+        assertEquals(['w', 'u', 'b', 'r', 'g'], CostParser.parts("wubrg"))
+        assertEquals(['2', '2/u', 'w/g', 'g/p'], CostParser.parts("2{2/u}{w/g}{g/p}"))
+    }
+
 }

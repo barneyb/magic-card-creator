@@ -9,8 +9,8 @@ import static com.barneyb.magic.creator.descriptor.CostType.*
 class CostParser {
 
     static List<CostType> parse(String cost, boolean allowTap=false) {
-        def l = cost.collect {
-            fromKey(it.toLowerCase())
+        def l = parts(cost).collect {
+            fromSymbol(it.toLowerCase())
         }.findAll {
             it != null && (allowTap || it != TAP)
         }
@@ -19,9 +19,27 @@ class CostParser {
         }
         if (cl.size() > 1) {
             l.removeAll(cl)
-            l << fromKey(cl*.assetKey*.toInteger().sum().toString())
+            l << fromSymbol(cl*.symbol*.toInteger().sum().toString())
         }
         l.sort()
+    }
+
+    static List<String> parts(String cost) {
+        def result = []
+        StringBuilder hunk = null
+        cost.each { c ->
+            if (c == '{') {
+                hunk = new StringBuilder()
+            } else if (c == '}') {
+                result << hunk.toString()
+                hunk = null
+            } else if (hunk != null) {
+                hunk.append(c)
+            } else {
+                result << c
+            }
+        }
+        result
     }
 
 }

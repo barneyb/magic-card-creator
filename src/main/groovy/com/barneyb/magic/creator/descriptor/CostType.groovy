@@ -24,21 +24,23 @@ enum CostType implements AssetKeyed {
     GREEN('g', ManaColor.GREEN),
     TAP('t', []),
 
-    final String assetKey
+    final String symbol
     final Collection<ManaColor> colors
+    final String assetKey
 
-    def CostType(String assetKey, ManaColor color) {
-        this(assetKey, [color])
+    def CostType(String symbol, ManaColor color, String assetKey=symbol) {
+        this(symbol, [color], assetKey)
     }
 
-    def CostType(String assetKey, Collection<ManaColor> colors) {
-        this.assetKey = assetKey
+    def CostType(String symbol, Collection<ManaColor> colors, String assetKey=symbol) {
+        this.symbol = symbol
         this.colors = colors
+        this.assetKey = assetKey
     }
 
-    static CostType fromKey(String key) {
+    static CostType fromSymbol(String key) {
         CostType.enumConstants.find {
-            it.assetKey == key
+            it.symbol == key
         }
     }
 
