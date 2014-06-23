@@ -30,4 +30,10 @@ enum CostType implements AssetKeyed {
         this.assetKey = assetKey
     }
 
+    static CostType fromKey(String key) {
+        CostType.enumConstants.find {
+            it.assetKey == key
+        }
+    }
+
 }
