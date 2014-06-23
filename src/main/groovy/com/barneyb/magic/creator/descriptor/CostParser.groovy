@@ -9,11 +9,12 @@ import static com.barneyb.magic.creator.descriptor.CostType.*
 class CostParser {
 
     static List<CostType> parse(String cost, boolean allowTap=false) {
-        def l = parts(cost).collect {
-            fromSymbol(it.toLowerCase())
-        }.findAll {
-            it != null && (allowTap || it != TAP)
-        }
+        def l = parts(cost)*.toLowerCase()
+            .findAll(CostType.&isSymbol)
+            .collect(CostType.&fromSymbol)
+            .findAll {
+                it != null && (allowTap || it != TAP)
+            }
         def cl = l.findAll {
             it != COLORLESS_X && it.colors == [ManaColor.COLORLESS]
         }
