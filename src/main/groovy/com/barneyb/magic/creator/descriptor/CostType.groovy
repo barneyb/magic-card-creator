@@ -38,10 +38,21 @@ enum CostType implements AssetKeyed {
         this.assetKey = assetKey
     }
 
-    static CostType fromSymbol(String key) {
+    static CostType fromSymbol(String symbol) {
+        def t = _fromSymbol(symbol)
+        if (t == null) {
+            throw new IllegalArgumentException("The '$symbol' symbol is not a recognized cost symbol.")
+        }
+        t
+    }
+
+    private static CostType _fromSymbol(String symbol) {
         CostType.enumConstants.find {
-            it.symbol == key
+            it.symbol == symbol
         }
     }
 
+    static boolean isSymbol(String symbol) {
+        _fromSymbol(symbol) != null
+    }
 }
