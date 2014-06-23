@@ -1,8 +1,12 @@
 package com.barneyb.magic.creator.descriptor
+
+import groovy.transform.TupleConstructor
+
 /**
  *
  * @author bboisvert
  */
+@TupleConstructor
 class CardSet extends AbstractList<Card> {
 
     String name
@@ -16,6 +20,16 @@ class CardSet extends AbstractList<Card> {
 
     int getCardsInSet() {
         cards.size()
+    }
+
+    Card get(String title) {
+        def c = cards.find {
+            it.title.equalsIgnoreCase(title)
+        }
+        if (c == null) {
+            throw new IllegalArgumentException("This set does not contain a card named '$title'.")
+        }
+        c
     }
 
     @Override
@@ -37,6 +51,9 @@ class CardSet extends AbstractList<Card> {
 
     @Override
     void add(int i, Card card) {
+        if (cards.any { it.title.equalsIgnoreCase(card.title) }) {
+            throw new IllegalArgumentException("This set already has a card named '$card.title'.")
+        }
         card.set = this
         cards.add(i, card)
     }
