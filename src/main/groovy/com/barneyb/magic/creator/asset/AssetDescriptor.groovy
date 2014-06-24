@@ -7,18 +7,18 @@ import java.lang.reflect.Type
  *
  * @author bboisvert
  */
-class Descriptor {
+class AssetDescriptor {
 
-    static Descriptor fromText(String text) {
+    static AssetDescriptor fromText(String text) {
        fromReader(new StringReader(text))
     }
 
-    static Descriptor fromStream(InputStream stream) {
+    static AssetDescriptor fromStream(InputStream stream) {
         fromReader(new InputStreamReader(stream))
     }
 
-    static Descriptor fromReader(Reader reader) {
-        def d = new Descriptor(new Gson().fromJson(reader, new ParameterizedType() {
+    static AssetDescriptor fromReader(Reader reader) {
+        def d = new AssetDescriptor(new Gson().fromJson(reader, new ParameterizedType() {
 
             @Override
             Type[] getActualTypeArguments() {
@@ -48,7 +48,7 @@ class Descriptor {
 
     final Map<String, RenderSet> renderSets
 
-    def Descriptor(Map<String, RenderSet> renderSets) {
+    def AssetDescriptor(Map<String, RenderSet> renderSets) {
         this.renderSets = renderSets.asImmutable()
     }
 

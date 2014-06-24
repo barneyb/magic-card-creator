@@ -11,11 +11,11 @@ import static org.junit.Assert.assertEquals
  *
  * @author bboisvert
  */
-class DescriptorTest {
+class AssetDescriptorTest {
 
     @Test
     void loading() {
-        def d = Descriptor.fromStream(DescriptorTest.classLoader.getResourceAsStream('assets/test-descriptor.json'))
+        def d = AssetDescriptor.fromStream(AssetDescriptorTest.classLoader.getResourceAsStream('assets/test-descriptor.json'))
         assertEquals(['screen'] as Set, d.renderSets.keySet())
         def rs = d.renderSets.values().first()
 

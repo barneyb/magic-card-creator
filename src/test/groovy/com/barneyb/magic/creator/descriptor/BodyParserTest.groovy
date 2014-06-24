@@ -1,5 +1,6 @@
 package com.barneyb.magic.creator.descriptor
-import com.barneyb.magic.creator.asset.Descriptor
+
+import com.barneyb.magic.creator.asset.AssetDescriptor
 import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.AbilityText
 import com.barneyb.magic.creator.compositor.FlavorText
@@ -19,7 +20,7 @@ class BodyParserTest {
 
     @Before
     void _makeRenderSet() {
-        rs = Descriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
+        rs = AssetDescriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
     }
 
     @Test

@@ -1,7 +1,7 @@
 package com.barneyb.magic.creator.compositor.awt
 
 import com.barneyb.magic.creator.Cards
-import com.barneyb.magic.creator.asset.Descriptor
+import com.barneyb.magic.creator.asset.AssetDescriptor
 import com.barneyb.magic.creator.asset.RenderSet
 import org.junit.Before
 import org.junit.BeforeClass
@@ -38,7 +38,7 @@ class AwtCompositorTest {
 
     @Before
     void _makeRenderSet() {
-        rs = Descriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
+        rs = AssetDescriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
     }
 
     @Test
