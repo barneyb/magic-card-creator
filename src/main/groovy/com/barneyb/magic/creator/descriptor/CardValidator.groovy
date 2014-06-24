@@ -83,6 +83,31 @@ class CardValidator {
         msgs
     }
 
+    Collection<String> validateBody(String body) {
+        def msgs = []
+        if (body == null || body.allWhitespace) {
+            msgs << "Cards must ave body text."
+        }
+        int depth = 0
+        for (char c : body) {
+            if (c == '{') {
+                depth += 1
+                if (depth > 1) {
+                    msgs << "Invalid brace nesting (nested open) $depth"
+                }
+            } else if (c == '}') {
+                depth -= 1
+                if (depth < 0) {
+                    msgs << "Invalid brace nesting (extra close) $depth"
+                }
+            }
+        }
+        if (depth > 0) {
+            msgs << "Invalid brace nesting (missing close) $depth"
+        }
+        msgs
+    }
+
     Collection<String> validatePower(String power) {
         validatePowerOrToughness('Power', power)
     }
