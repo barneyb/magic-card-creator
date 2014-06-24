@@ -9,7 +9,7 @@ import static com.barneyb.magic.creator.descriptor.CostType.*
 class CostParser {
 
     static List<CostType> parse(String cost, boolean allowTap=false) {
-        def l = parts(cost)*.toLowerCase()
+        def l = parts(cost)
             .findAll(CostType.&isSymbol)
             .collect(CostType.&fromSymbol)
             .findAll {

@@ -47,6 +47,7 @@ enum CostType implements AssetKeyed {
     }
 
     private static CostType _fromSymbol(String symbol) {
+        symbol = symbol.toLowerCase()
         CostType.enumConstants.find {
             it.symbol == symbol
         }
