@@ -58,34 +58,26 @@ class MarkdownDescriptor implements CardSetDescriptor, Visitor {
         new Parser(src).parse().accept(this)
     }
 
-    def MarkdownDescriptor(String src) {
-        this(MarkdownDescriptor.classLoader.getResource("test_set.md"), new StringReader(src))
-    }
-
     final URL base
 
     final CardSet cardSet
 
-    Card card
+    private Card card
 
-    StringBuilder buffer
-    Stack<StringBuilder> textStack = []
+    private StringBuilder buffer
+    private Stack<StringBuilder> textStack = []
 
-    StringBuilder push() {
+    protected StringBuilder push() {
         buffer = textStack.push(new StringBuilder())
     }
 
-    StringBuilder pop() {
+    protected StringBuilder pop() {
         def b = textStack.pop()
         buffer = textStack.size() == 0 ? null : textStack.peek()
         b
     }
 
-    void openItem() {
-        push()
-    }
-
-    void closeItem() {
+    protected void closeItem() {
         if (textStack.size() == 0) {
             return
         }
@@ -116,7 +108,7 @@ class MarkdownDescriptor implements CardSetDescriptor, Visitor {
         }
     }
 
-    void gotHeader(String text, int level) {
+    protected void openItem(String text, int level) {
         text = text.trim()
         if (level == 1) {
             // cardset name
@@ -127,9 +119,10 @@ class MarkdownDescriptor implements CardSetDescriptor, Visitor {
             card = new Card(text.substring(0, i), text.substring(i + 1))
             cardSet << card
         }
+        push()
     }
 
-    void gotImage(String url, String text) {
+    protected void gotImage(String url, String text) {
         if (card == null) {
             return
         }
@@ -155,14 +148,12 @@ class MarkdownDescriptor implements CardSetDescriptor, Visitor {
         closeItem()
         push()
         doKids(node)
-        gotHeader(pop().toString(), node.level)
-        openItem()
+        openItem(pop().toString(), node.level)
     }
 
     @Override
     void visit(Image node) {
         gotImage(node.resource.location, node.text)
-        doKids(node)
     }
 
     @Override
@@ -180,7 +171,6 @@ class MarkdownDescriptor implements CardSetDescriptor, Visitor {
     @Override
     void visit(Text node) {
         buffer.append(node.value)
-        doKids(node)
     }
 
     protected void doKids(org.tautua.markdownpapers.ast.Node node){

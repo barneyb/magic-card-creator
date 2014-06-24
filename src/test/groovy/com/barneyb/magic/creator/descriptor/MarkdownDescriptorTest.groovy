@@ -10,6 +10,12 @@ import static org.junit.Assert.*
  */
 class MarkdownDescriptorTest {
 
+    public static final URL TEST_SET_DESCRIPTOR = MarkdownDescriptorTest.classLoader.getResource("test_set.md")
+
+    protected def desc(String src) {
+        new MarkdownDescriptor(TEST_SET_DESCRIPTOR, new StringReader(src))
+    }
+
     protected assertCard(Card e, Card a) {
         try {
             assertEquals(e.title, a.title)
@@ -30,7 +36,7 @@ class MarkdownDescriptorTest {
 
     @Test
     void setAttributes() {
-        def cs = new MarkdownDescriptor("""
+        def cs = desc("""
 Test Set
 ===
 one
@@ -50,7 +56,7 @@ Creature - Human 1/1
 
     @Test
     void card() {
-        def cs = new MarkdownDescriptor("""
+        def cs = desc("""
 ## Sally 1R
 
 ![Sally Mann](artwork/sally.jpg)
