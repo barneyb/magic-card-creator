@@ -9,8 +9,8 @@ import groovy.transform.TupleConstructor
 @TupleConstructor
 class CardSet extends AbstractList<Card> {
 
-    String name
-    String footer
+    String name = "Unknown Set"
+    String footer = "\u00A9 1993-2014 Wizards of the Coast LLC"
 
     private List<Card> cards = []
 
@@ -67,4 +67,25 @@ class CardSet extends AbstractList<Card> {
         old
     }
 
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (!(o instanceof CardSet)) return false
+        if (!super.equals(o)) return false
+
+        CardSet cards1 = (CardSet) o
+
+        if (cards != cards1.cards) return false
+        if (footer != cards1.footer) return false
+        if (name != cards1.name) return false
+
+        return true
+    }
+
+    int hashCode() {
+        int result = super.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + footer.hashCode()
+        result = 31 * result + cards.hashCode()
+        return result
+    }
 }
