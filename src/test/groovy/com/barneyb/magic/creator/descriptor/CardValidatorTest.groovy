@@ -116,12 +116,37 @@ class CardValidatorTest {
 
     @Test
     void creatureSubtype() {
-        def check = { n, t->
+        def check = { n, t ->
             assertEquals("'Creature - $t' failed", n, validator.validateCreatureSubtype(t).size())
         }
         check 1, null
         check 1, ""
         check 0, "fred"
+    }
+
+    @Test
+    void bodyText() {
+        def check = { n, t ->
+            println t
+            println "\t" + validator.validateBody(t).join("\n\t")
+            assertEquals("'$t' failed", n, validator.validateBody(t).size())
+        }
+        check 1, null
+        check 1, ''
+        check 0, "Height"
+        check 0, """Height
+
+and you are short."""
+        check 0, """Height
+
+{and you are short.}"""
+        check 0, "{u}{b}, {t}: summon plague of locusts."
+        check 0, "{u}{b}, {t}: summon plague of locusts {(If you have PoL in hand, play it without paying.)}."
+        check 1, "extra }"
+        check 1, "extra {"
+        check 2, "{nested {}" // nested and missing close
+        check 1, "{nested }}" // extra close
+        check 1, "{nested {}}" // nested
     }
 
     @Test
