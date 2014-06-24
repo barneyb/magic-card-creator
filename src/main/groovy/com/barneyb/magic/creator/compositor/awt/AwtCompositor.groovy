@@ -191,9 +191,13 @@ class AwtCompositor implements Compositor {
     }
 
     protected void drawAsset(Graphics2D g, Rectangle box, ImageAsset asset) {
+        AffineTransformOp transOp = null
+        if (asset.size != box.size) {
+            transOp = new AffineTransformOp(AffineTransform.getScaleInstance(box.width / asset.size.width, box.height / asset.size.height), AffineTransformOp.TYPE_BICUBIC)
+        }
         g.drawImage(
             asset.asImage(),
-            asset.size == box.size ? null : new AffineTransformOp(AffineTransform.getScaleInstance(box.width / asset.size.width, box.height / asset.size.height), AffineTransformOp.TYPE_BICUBIC),
+            transOp,
             (int) box.x,
             (int) box.y
         )
