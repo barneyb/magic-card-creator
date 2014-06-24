@@ -1,11 +1,13 @@
 package com.barneyb.magic.creator.compositor.awt
 import com.barneyb.magic.creator.asset.ImageAsset
 import com.barneyb.magic.creator.asset.RenderSet
+import com.barneyb.magic.creator.compositor.AbilityText
 import com.barneyb.magic.creator.compositor.Compositor
+import com.barneyb.magic.creator.compositor.FlavorText
 import com.barneyb.magic.creator.compositor.Paragraph
 import com.barneyb.magic.creator.compositor.RenderModel
 import com.barneyb.magic.creator.compositor.Renderable
-import com.barneyb.magic.creator.compositor.RenderableString
+import com.barneyb.magic.creator.compositor.RenderableText
 
 import javax.imageio.ImageIO
 import java.awt.*
@@ -142,13 +144,21 @@ class AwtCompositor implements Compositor {
         ctx.y -= ctx.wrapOffset * 0.35
     }
 
-    protected void render(RenderCtx ctx, RenderableString it) {
+    protected void render(RenderCtx ctx, AbilityText it) {
+        render(ctx, it, false)
+    }
+
+    protected void render(RenderCtx ctx, FlavorText it) {
+        render(ctx, it, true)
+    }
+
+    protected void render(RenderCtx ctx, RenderableText it, boolean flavor) {
         if (it.text == null || it.text.length() == 0) {
             throw new UnsupportedOperationException("You cannot render empty blocks of body text.")
         }
         def s = it.text
         def attr = new AttributedString(s, [
-            (TextAttribute.FONT): BASE_FONT.deriveFont(it.flavor ? Font.ITALIC : Font.PLAIN, ctx.fontSize)
+            (TextAttribute.FONT): BASE_FONT.deriveFont(flavor ? Font.ITALIC : Font.PLAIN, ctx.fontSize)
         ])
         def lm = new LineBreakMeasurer(attr.iterator, ctx.graphics.getFontRenderContext())
         TextLayout l

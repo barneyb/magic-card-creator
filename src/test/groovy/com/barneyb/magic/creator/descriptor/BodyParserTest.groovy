@@ -1,8 +1,9 @@
 package com.barneyb.magic.creator.descriptor
 import com.barneyb.magic.creator.asset.Descriptor
 import com.barneyb.magic.creator.asset.RenderSet
+import com.barneyb.magic.creator.compositor.AbilityText
+import com.barneyb.magic.creator.compositor.FlavorText
 import com.barneyb.magic.creator.compositor.Paragraph
-import com.barneyb.magic.creator.compositor.RenderableString
 import com.barneyb.magic.creator.compositor.awt.AwtCompositorTest
 import org.junit.Before
 import org.junit.Test
@@ -25,9 +26,9 @@ class BodyParserTest {
     void simpleSymbols() {
         assertEquals([[
             CostType.GREEN,
-            new RenderableString(', ', false),
+            new AbilityText(', '),
             CostType.TAP,
-            new RenderableString(': Do something.', false),
+            new AbilityText(': Do something.'),
         ]], BodyParser.parseAbilities('{G}, {T}: Do something.'))
     }
 
@@ -35,20 +36,20 @@ class BodyParserTest {
     void complexSymbols() {
         assertEquals([[
             CostType.BLUE,
-            new RenderableString(', ', false),
+            new AbilityText(', '),
             CostType.TAP,
-            new RenderableString(': Do something unless ', false),
+            new AbilityText(': Do something unless '),
             CostType.COLORLESS_X,
             CostType.RED,
-            new RenderableString(' is paid by Johann.', false),
+            new AbilityText(' is paid by Johann.'),
         ]], BodyParser.parseAbilities('{u}, {t}: Do something unless {x}{r} is paid by Johann.'))
     }
 
     @Test
     void inlineFlavor() {
         assertEquals([[
-            new RenderableString('Scry 2. ', false),
-            new RenderableString('(Look at ... in any order.)', true),
+            new AbilityText('Scry 2. '),
+            new FlavorText('(Look at ... in any order.)'),
         ]], BodyParser.parseAbilities('Scry 2. {(Look at ... in any order.)}'))
     }
 
@@ -56,12 +57,12 @@ class BodyParserTest {
     void a_breaks() {
         assertEquals(
             [
-                [new RenderableString("one", false)],
-                [new RenderableString("two", false)],
+                [new AbilityText("one")],
+                [new AbilityText("two")],
                 [new Paragraph()],
-                [new RenderableString("three", false)],
+                [new AbilityText("three")],
                 [new Paragraph()],
-                [new RenderableString("four", false)],
+                [new AbilityText("four")],
             ],
             BodyParser.parseAbilities('\n\none\ntwo\n\nthree\n\n\n\nfour\n')
         )
@@ -71,12 +72,12 @@ class BodyParserTest {
     void f_breaks() {
         assertEquals(
             [
-                [new RenderableString("one", true)],
-                [new RenderableString("two", true)],
+                [new FlavorText("one")],
+                [new FlavorText("two")],
                 [new Paragraph()],
-                [new RenderableString("three", true)],
+                [new FlavorText("three")],
                 [new Paragraph()],
-                [new RenderableString("four", true)],
+                [new FlavorText("four")],
             ],
             BodyParser.parseFlavor('\n\none\ntwo\n\nthree\n\n\n\nfour\n')
         )

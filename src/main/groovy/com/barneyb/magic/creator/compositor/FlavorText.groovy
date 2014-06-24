@@ -5,14 +5,13 @@ import groovy.transform.Immutable
  * @author bboisvert
  */
 @Immutable
-class RenderableString implements Renderable {
+class FlavorText implements RenderableText {
 
     String text
 
-    boolean flavor
 
     String toString() {
-        flavor ? "{$text}" : text
+        "{$text}"
     }
 
 }

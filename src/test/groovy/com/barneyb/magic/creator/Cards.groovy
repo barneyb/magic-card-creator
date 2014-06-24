@@ -2,9 +2,10 @@ package com.barneyb.magic.creator
 
 import com.barneyb.magic.creator.asset.ClasspathImage
 import com.barneyb.magic.creator.asset.RenderSet
+import com.barneyb.magic.creator.compositor.AbilityText
+import com.barneyb.magic.creator.compositor.FlavorText
 import com.barneyb.magic.creator.compositor.Paragraph
 import com.barneyb.magic.creator.compositor.RenderModel
-import com.barneyb.magic.creator.compositor.RenderableString
 import com.barneyb.magic.creator.descriptor.Card
 import com.barneyb.magic.creator.descriptor.CardSet
 import com.barneyb.magic.creator.descriptor.CostType
@@ -111,16 +112,16 @@ Indestructable, hexproof
             type: "Instant",
             body: [
                 [
-                    new RenderableString("Counter target spell.", false),
+                    new AbilityText("Counter target spell."),
                 ],
                 [
                     new Paragraph()
                 ],
                 [
-                    new RenderableString("How about \"never\".", true),
+                    new FlavorText("How about \"never\"."),
                 ],
                 [
-                    new RenderableString("    -- Barney of the Green Woods", true),
+                    new FlavorText("    -- Barney of the Green Woods"),
                 ]
             ],
             artist: "Zueuk",
@@ -141,19 +142,19 @@ Indestructable, hexproof
             type: "Creature \u2013 Nightmare Horse",
             body: [
                 [
-                    new RenderableString("Flying", false),
+                    new AbilityText("Flying"),
                 ],
                 [
                     new Paragraph()
                 ],
                 [
-                    new RenderableString("Nightmare's power and toughness are each equal to the number of Swamps you control.", false),
+                    new AbilityText("Nightmare's power and toughness are each equal to the number of Swamps you control."),
                 ],
                 [
                     new Paragraph()
                 ],
                 [
-                    new RenderableString("The thunder of its hooves beats dreams into despair.", true),
+                    new FlavorText("The thunder of its hooves beats dreams into despair."),
                 ]
             ],
             powerToughness: "* / *",
@@ -178,19 +179,19 @@ Indestructable, hexproof
                 [
                     rs.small.getImageAsset(CostType.BLUE),
                     rs.small.getImageAsset(CostType.TAP),
-                    new RenderableString(": Tap target creature and pay 1 life.", false),
+                    new AbilityText(": Tap target creature and pay 1 life."),
                 ],
                 [
                     new Paragraph()
                 ],
                 [
-                    new RenderableString("Sally doesn't like you.", true)
+                    new FlavorText("Sally doesn't like you.")
                 ],
                 [
                     new Paragraph()
                 ],
                 [
-                    new RenderableString("Or you.", true)
+                    new FlavorText("Or you.")
                 ]
             ],
             powerToughness: "1 / 1",
@@ -212,7 +213,7 @@ Indestructable, hexproof
             type: "Legendary Enchantment Creature \u2013 Human Legend",
             body: [
                 [
-                    new RenderableString("Indestructable, hexproof", false),
+                    new AbilityText("Indestructable, hexproof"),
                 ],
                 [
                     new Paragraph()
@@ -222,27 +223,27 @@ Indestructable, hexproof
                     rs.small.getImageAsset(CostType.BLUE),
                     rs.small.getImageAsset(CostType.GREEN),
                     rs.small.getImageAsset(CostType.TAP),
-                    new RenderableString(": Every opponent dies in a fire unless all pay ", false),
+                    new AbilityText(": Every opponent dies in a fire unless all pay "),
                     rs.small.getImageAsset(CostType.COLORLESS_X),
                     rs.small.getImageAsset(CostType.BLUE),
                     rs.small.getImageAsset(CostType.BLACK),
                     rs.small.getImageAsset(CostType.GREEN),
-                    new RenderableString(" or ", false),
+                    new AbilityText(" or "),
                     rs.small.getImageAsset(CostType.COLORLESS_X),
                     rs.small.getImageAsset(CostType.RED),
                     rs.small.getImageAsset(CostType.BLACK),
                     rs.small.getImageAsset(CostType.WHITE),
-                    new RenderableString(" or ", false),
+                    new AbilityText(" or "),
                     rs.small.getImageAsset(CostType.COLORLESS_X),
                     rs.small.getImageAsset(CostType.COLORLESS_X),
                     rs.small.getImageAsset(CostType.BLACK),
-                    new RenderableString(" where X equals your life total.", false),
+                    new AbilityText(" where X equals your life total."),
                 ],
                 [
                     new Paragraph()
                 ],
                 [
-                    new RenderableString("For the first time in his life, Barney felt warm.  And hungry.", true)
+                    new FlavorText("For the first time in his life, Barney felt warm.  And hungry.")
                 ]
             ],
             powerToughness: "100/100",
@@ -264,19 +265,19 @@ Indestructable, hexproof
             type: "Creature \u2013 Hellion",
             body: [
                 [
-                    new RenderableString("Trample, haste", false),
+                    new AbilityText("Trample, haste"),
                 ],
                 [
                     new Paragraph()
                 ],
                 [
-                    new RenderableString("At the beginning of the end step, Blitz Hellion's owner shuffles it into his or her library.", false),
+                    new AbilityText("At the beginning of the end step, Blitz Hellion's owner shuffles it into his or her library."),
                 ],
                 [
                     new Paragraph()
                 ],
                 [
-                    new RenderableString("Alarans commemorated its appearances with new holidays bearing names like the Great Cataclysm and the Fall of Ilson Gate.", true)
+                    new FlavorText("Alarans commemorated its appearances with new holidays bearing names like the Great Cataclysm and the Fall of Ilson Gate.")
                 ]
             ],
             powerToughness: "7 / 7",
