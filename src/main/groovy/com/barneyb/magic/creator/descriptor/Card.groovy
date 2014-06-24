@@ -1,6 +1,7 @@
 package com.barneyb.magic.creator.descriptor
 
 import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 import groovy.transform.TupleConstructor
 
 /**
@@ -9,6 +10,7 @@ import groovy.transform.TupleConstructor
  */
 @TupleConstructor(excludes = ["set"])
 @EqualsAndHashCode(excludes = ["set"])
+@ToString
 class Card {
 
     protected CardSet set
