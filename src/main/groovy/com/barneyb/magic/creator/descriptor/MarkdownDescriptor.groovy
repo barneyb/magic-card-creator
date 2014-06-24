@@ -41,8 +41,8 @@ class MarkdownDescriptor implements CardSetDescriptor, Visitor {
         this(src, src.newReader())
     }
 
-    def MarkdownDescriptor(URL base, InputStream src, String encoding="utf-8") {
-        this(base, new InputStreamReader(src, encoding))
+    def MarkdownDescriptor(URL base, InputStream src) {
+        this(base, new InputStreamReader(src))
     }
 
     def MarkdownDescriptor(URL base, String src) {
