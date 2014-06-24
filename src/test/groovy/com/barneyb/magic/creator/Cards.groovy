@@ -247,7 +247,7 @@ Indestructable, hexproof
             ],
             powerToughness: "100/100",
             artist: "Dolores Boisvert",
-            footer: "\u00A9 2014 Fucking Barney! (5/5)"
+            footer: "\u00A9 2014 Barney Boisvert (5/5)"
         )
     }
 
@@ -281,7 +281,7 @@ Indestructable, hexproof
             ],
             powerToughness: "7 / 7",
             artist: "Anthony S. Waters",
-            footer: "\u00A9 2014 Fucking Barney! (4/5)"
+            footer: "\u00A9 2014 Barney Boisvert (4/5)"
         )
     }
 }

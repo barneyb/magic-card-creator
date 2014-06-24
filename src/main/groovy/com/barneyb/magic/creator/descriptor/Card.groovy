@@ -41,13 +41,29 @@ class Card {
         type = s?.trim()
     }
 
+    List<String> getTypeParts() {
+        type.toLowerCase().tokenize()
+    }
+
     boolean isCreature() {
-        type.toLowerCase().tokenize().contains("creature")
+        typeParts.contains("creature")
+    }
+
+    boolean isEnchantment() {
+        typeParts.contains("enchantment")
     }
 
     String subtype
     void setSubtype(String s) {
         subtype = s?.trim()
+    }
+
+    List<String> getSubtypeParts() {
+        subtype.toLowerCase().tokenize()
+    }
+
+    boolean isSubtyped() {
+        subtype != null && subtype != ''
     }
 
     String abilities
@@ -73,6 +89,22 @@ class Card {
     String artist
     void setArtist(String s) {
         artist = s?.trim()
+    }
+
+    String getFooter() {
+        set?.footer
+    }
+
+    boolean hasSet() {
+        set != null
+    }
+
+    Integer getCardOfSet() {
+        set?.getCardOfSet(this)
+    }
+
+    Integer getCardsInSet() {
+        set?.cardsInSet
     }
 
 }
