@@ -122,14 +122,6 @@ class MarkdownDescriptor implements CardSetDescriptor, Visitor {
         push()
     }
 
-    protected void gotImage(String url, String text) {
-        if (card == null) {
-            return
-        }
-        card.artwork = new URL(base, url).toString()
-        card.artist = text
-    }
-
     @Override
     void visit(Document node) {
         doKids(node)
@@ -153,7 +145,10 @@ class MarkdownDescriptor implements CardSetDescriptor, Visitor {
 
     @Override
     void visit(Image node) {
-        gotImage(node.resource.location, node.text)
+        if (card != null) {
+            card.artwork = new URL(base, node.resource.location).toString()
+            card.artist = node.text
+        }
     }
 
     @Override
