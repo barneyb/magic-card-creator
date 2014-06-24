@@ -8,7 +8,7 @@ import com.barneyb.magic.creator.compositor.Paragraph
  */
 class BodyParser {
 
-    static List<List> parseAbilities(String text) {
+    static List<List> parse(String text) {
         toLines(text).collect {
             if (it == '') {
                [new Paragraph()]

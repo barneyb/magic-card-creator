@@ -29,7 +29,7 @@ class BodyParserTest {
             new AbilityText(', '),
             CostType.TAP,
             new AbilityText(': Do something.'),
-        ]], BodyParser.parseAbilities('{G}, {T}: Do something.'))
+        ]], BodyParser.parse('{G}, {T}: Do something.'))
     }
 
     @Test
@@ -42,7 +42,7 @@ class BodyParserTest {
             CostType.COLORLESS_X,
             CostType.RED,
             new AbilityText(' is paid by Johann.'),
-        ]], BodyParser.parseAbilities('{u}, {t}: Do something unless {x}{r} is paid by Johann.'))
+        ]], BodyParser.parse('{u}, {t}: Do something unless {x}{r} is paid by Johann.'))
     }
 
     @Test
@@ -50,7 +50,7 @@ class BodyParserTest {
         assertEquals([[
             new AbilityText('Scry 2. '),
             new FlavorText('(Look at ... in any order.)'),
-        ]], BodyParser.parseAbilities('Scry 2. {(Look at ... in any order.)}'))
+        ]], BodyParser.parse('Scry 2. {(Look at ... in any order.)}'))
     }
 
     @Test
@@ -72,7 +72,7 @@ class BodyParserTest {
                 [new Paragraph()],
                 [new AbilityText("four")],
             ],
-            BodyParser.parseAbilities('\n\none\ntwo\n\nthree\n\n\n\nfour\n')
+            BodyParser.parse('\n\none\ntwo\n\nthree\n\n\n\nfour\n')
         )
     }
 
