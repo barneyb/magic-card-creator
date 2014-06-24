@@ -3,7 +3,7 @@ magic-card-creator
 
 A composition toolkit for creating custom Magic: The Gathering cards.
 
-Travis does our CI: ![Build Status](https://travis-ci.org/barneyb/magic-card-creator.svg?branch=master)
+Travis does our CI: [![Build Status](https://travis-ci.org/barneyb/magic-card-creator.svg?branch=master)](https://travis-ci.org/barneyb/magic-card-creator)
 
 The impetus was issues with the card generator at [http://www.mtgcardmaker.com/](http://www.mtgcardmaker.com/)
 
