@@ -27,10 +27,7 @@ import java.util.List
 @SuppressWarnings("GrMethodMayBeStatic")
 class AwtCompositor implements Compositor {
 
-    // Goudy Old Style doesn't measure right
-    // default isn't serif
-    // Georgia is pretty close, AND measures correctly
-    public static final Font BASE_FONT = Font.decode("Georgia-bold") // Font.decode("Goudy Old Style-bold") // new Font([:])
+    public static final Font BASE_FONT = Font.decode("Goudy Old Style-bold")
 
     static protected enum Align {
         LEADING,
@@ -212,10 +209,10 @@ class AwtCompositor implements Compositor {
             t.setToScale(box.width / w, 1)
             g.font = g.font.deriveFont(t)
             // sanity check...
-            w = g.fontMetrics.stringWidth(text)
-            if (w > box.width) {
-                throw new IllegalStateException("transforming font for '$text' didn't work right.")
-            }
+//            w = g.fontMetrics.stringWidth(text)
+//            if (w > box.width) {
+//                throw new IllegalStateException("transforming font for '$text' didn't work right ($w > $box.width).")
+//            }
         } else if (align == Align.CENTER && w < box.width) {
             // new bounding box
             box = new Rectangle(
