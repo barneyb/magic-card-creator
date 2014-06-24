@@ -20,8 +20,7 @@ class CardTest {
             subtype: "  wizard  ",
             power: " 1 ",
             toughness: " 1 ",
-            abilities: " {t}: Tim pings you.  ",
-            flavor: " Tim is a bastard. ",
+            body: " :P ",
             artist: " Bacon McPiggers ",
         )
         assertEquals("Tim", c.title)
@@ -29,10 +28,9 @@ class CardTest {
         assertEquals("./tim.jpg", c.artwork)
         assertEquals("creature", c.type)
         assertEquals("wizard", c.subtype)
+        assertEquals(":P", c.body)
         assertEquals("1", c.power)
         assertEquals("1", c.toughness)
-        assertEquals("{t}: Tim pings you.", c.abilities)
-        assertEquals("Tim is a bastard.", c.flavor)
         assertEquals("Bacon McPiggers", c.artist)
     }
 

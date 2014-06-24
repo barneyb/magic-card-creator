@@ -26,11 +26,12 @@ class Cards {
             artwork: "artwork/sally.jpg", // todo: is this right?
             type: "Creature",
             subtype: "Human",
-            abilities: "{U}{T}: Tap target creature and pay 1 life.",
-            flavor: """
-Sally doesn't like you.
+            body: """
+{U}{T}: Tap target creature and pay 1 life.
 
-Or you.
+{Sally doesn't like you.}
+
+{Or you.}
 """,
             power: "1",
             toughness: "1",
@@ -41,10 +42,11 @@ Or you.
             costString: "UU",
             artwork: "artwork/counterspell.jpg", // todo: is this right?
             type: "Instant",
-            abilities: "Counter target spell.",
-            flavor: """
-How about "never".
-    -- Barney of the Green Woods
+            body: """
+Counter target spell.
+
+{How about "never".
+    -- Barney of the Green Woods}
 """,
             artist: "Zueuk"
         )
@@ -54,12 +56,13 @@ How about "never".
             artwork: "artwork/nightmare.jpg", // todo: is this right?
             type: "Creature",
             subtype: "Nightmare Horse",
-            abilities: """
+            body: """
 Flying
 
 Nightmare's power and toughness are each equal to the number of Swamps you control.
+
+{The thunder of its hooves beats dreams into despair.}
 """,
-            flavor: "The thunder of its hooves beats dreams into despair.",
             power: "*",
             toughness: "*",
             artist: "catfish08"
@@ -70,12 +73,13 @@ Nightmare's power and toughness are each equal to the number of Swamps you contr
             artwork: "artwork/hellion.jpg", // todo: is this right?
             type: "Creature",
             subtype: "Hellion",
-            abilities: """
+            body: """
 Trample, haste
 
 At the beginning of the end step, Blitz Hellion's owner shuffles it into his or her library.
+
+{Alarans commemorated its appearances with new holidays bearing names like the Great Cataclysm and the Fall of Ilson Gate.}
 """,
-            flavor: "Alarans commemorated its appearances with new holidays bearing names like the Great Cataclysm and the Fall of Ilson Gate.",
             power: "7",
             toughness: "7",
             artist: "Anthony S. Waters"
@@ -86,12 +90,13 @@ At the beginning of the end step, Blitz Hellion's owner shuffles it into his or 
             artwork: "artwork/barney.jpg", // todo: is this right?
             type: "Legendary Enchantment Creature",
             subtype: "Human Legend",
-            abilities: """
+            body: """
 Indestructable, hexproof
 
 {1}{U}{G}{T}: Every opponent dies in a fire unless all pay {X}{U}{B}{G} or {X}{R}{B}{W} or {X}{X}{B} where X equals your life total.
+
+{For the first time in his life, Barney felt warm.  And hungry.}
 """,
-            flavor: "For the first time in his life, Barney felt warm.  And hungry.",
             power: "100",
             toughness: "100",
             artist: "Dolores Boisvert"

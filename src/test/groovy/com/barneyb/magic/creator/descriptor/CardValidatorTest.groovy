@@ -30,8 +30,7 @@ class CardValidatorTest {
             artwork: null,
             type: "garbage creature",
             subtype: null,
-            abilities: null,
-            flavor: null,
+            body: null,
             power: null,
             toughness: null,
             artist: null
@@ -56,8 +55,7 @@ class CardValidatorTest {
             artwork: null,
             type: "monster",
             subtype: null,
-            abilities: null,
-            flavor: null,
+            body: null,
             power: null,
             toughness: null,
             artist: null
@@ -147,6 +145,10 @@ and you are short."""
         check 2, "{nested {}" // nested and missing close
         check 1, "{nested }}" // extra close
         check 1, "{nested {}}" // nested
+        check 0, """flavor {with
+nested
+
+newlines}"""
     }
 
     @Test

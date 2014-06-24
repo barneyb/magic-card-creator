@@ -39,20 +39,11 @@ class RenderModel {
             m.powerToughness = c.power + (c.power.length() > 1 && c.toughness.length() > 1 ? '/' : ' / ') + c.toughness
         }
         m.frame = rs.frames.getImageAsset(frame)
-        m.body = []
-        if (c.abilities != null && c.abilities != '') {
-            m.body.addAll(BodyParser.parseAbilities(c.abilities).collect { line ->
+        m.body = BodyParser.parse(c.body).collect { line ->
                 line.collect {
-                    it instanceof CostType ? rs.small.getImageAsset(it) : it
+                    it instanceof CostType ? rs.small.getImageAsset(it) : (Renderable) it
                 }
-            })
-        }
-        if (c.flavor!= null && c.flavor!= '') {
-            if (m.body.size() > 0) {
-                m.body << [new Paragraph()]
             }
-            m.body.addAll(BodyParser.parseFlavor(c.flavor))
-        }
 
         if (c.hasSet()) {
             m.footer = "$c.footer ($c.cardOfSet/$c.cardsInSet)"

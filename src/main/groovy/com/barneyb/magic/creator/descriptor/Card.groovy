@@ -66,14 +66,9 @@ class Card {
         subtype != null && subtype != ''
     }
 
-    String abilities
-    void setAbilities(String s) {
-        abilities = s?.trim()
-    }
-
-    String flavor
-    void setFlavor(String s) {
-        flavor = s?.trim()
+    String body
+    void setBody(String s) {
+        body = s?.trim()
     }
 
     String power
