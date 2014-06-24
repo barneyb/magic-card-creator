@@ -8,7 +8,7 @@ import groovy.transform.TupleConstructor
  * @author bboisvert
  */
 @TupleConstructor(excludes = ["set"])
-@EqualsAndHashCode(includes = ["title"])
+@EqualsAndHashCode(excludes = ["set"])
 class Card {
 
     protected CardSet set
