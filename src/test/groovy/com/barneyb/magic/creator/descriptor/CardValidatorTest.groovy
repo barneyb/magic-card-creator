@@ -41,6 +41,7 @@ class CardValidatorTest {
             'costString',
             'type',
             'subtype',
+            'body',
             'power',
             'toughness',
             'artist'
@@ -65,6 +66,7 @@ class CardValidatorTest {
             'title',
             'costString',
             'type',
+            'body',
             'artist'
         ], es*.propertyName)
     }

@@ -26,6 +26,9 @@ class CardValidator {
         ]
         if (c.creature) {
             props.subtype = validateCreatureSubtype(c.subtype)
+        }
+        props.body = validateBody(c.body)
+        if (c.creature) {
             props.power = validatePower(c.power)
             props.toughness = validateToughness(c.toughness)
         }
