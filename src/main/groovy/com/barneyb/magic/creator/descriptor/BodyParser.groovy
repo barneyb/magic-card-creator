@@ -9,18 +9,28 @@ import com.barneyb.magic.creator.compositor.Paragraph
 class BodyParser {
 
     static List<List> parse(String text) {
+        int depth = 0
         toLines(text).collect {
             if (it == '') {
                [new Paragraph()]
             } else {
+                int delta = 0
+                for (char c : it) {
+                    if (c == '{') {
+                        delta += 1
+                    } else if (c == '}') {
+                        delta -= 1
+                    }
+                }
+                if (depth > 0) {
+                    it = '{' * depth + it
+                }
+                depth += delta
+                if (depth > 0) {
+                    it += '}' * depth
+                }
                 toItems(it)
             }
-        }
-    }
-
-    static List<List> parseFlavor(String text) {
-        toLines(text).collect {
-            [it == '' ? new Paragraph() : new FlavorText(it)]
         }
     }
 

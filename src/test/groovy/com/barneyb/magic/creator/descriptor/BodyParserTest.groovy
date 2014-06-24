@@ -77,17 +77,18 @@ class BodyParserTest {
     }
 
     @Test
-    void f_breaks() {
+    void inlineLineBreaks() {
         assertEquals(
             [
-                [new FlavorText("one")],
-                [new FlavorText("two")],
+                [
+                    new AbilityText("flavor "),
+                    new FlavorText("with")
+                ],
+                [new FlavorText("nested")],
                 [new Paragraph()],
-                [new FlavorText("three")],
-                [new Paragraph()],
-                [new FlavorText("four")],
+                [new FlavorText("newlines")],
             ],
-            BodyParser.parseFlavor('\n\none\ntwo\n\nthree\n\n\n\nfour\n')
+            BodyParser.parse("flavor {with\nnested\n\nnewlines}")
         )
     }
 
