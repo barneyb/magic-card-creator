@@ -40,6 +40,10 @@ class BodyParser {
                 break
             }
             close = text.indexOf('}', open)
+            if (close < 0) {
+                // pretend there was one added to the end of the string
+                close = text.length()
+            }
             if (open >= 0 && open < close) {
                 if (open > pointer) {
                     items << new AbilityText(text.substring(pointer, open))

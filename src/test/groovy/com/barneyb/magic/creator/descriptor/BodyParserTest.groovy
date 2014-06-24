@@ -54,6 +54,14 @@ class BodyParserTest {
     }
 
     @Test
+    void badFlavor() {
+        assertEquals([[
+            new AbilityText('unclosed '),
+            new FlavorText('flavor'),
+        ]], BodyParser.parse('unclosed {flavor'))
+    }
+
+    @Test
     void a_breaks() {
         assertEquals(
             [
