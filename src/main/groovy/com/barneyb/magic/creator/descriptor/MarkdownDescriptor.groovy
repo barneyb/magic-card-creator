@@ -90,7 +90,7 @@ class MarkdownDescriptor implements CardSetDescriptor, Visitor {
         } else {
             def type = body.substring(0, body.indexOf('\n')).trim()
             card.body = body.substring(type.length())
-            def pt = type.matches(/.* [0-9]+\/[0-9]+/) ? type.substring(type.lastIndexOf(' ')) : null
+            def pt = type.matches(/.* [0-9Xx*]+\/[0-9Xx*]+/) ? type.substring(type.lastIndexOf(' ')) : null
             if (pt != null) {
                 type = type.substring(0, type.length() - pt.length())
                 pt = pt.tokenize('/')
