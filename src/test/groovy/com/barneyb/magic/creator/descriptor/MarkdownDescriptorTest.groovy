@@ -34,6 +34,21 @@ class MarkdownDescriptorTest {
         }
     }
 
+    protected assertCardSet(CardSet expected, CardSet actual) {
+        try {
+            assertEquals(expected, actual)
+        } catch (AssertionError ae) {
+            assertEquals(expected.name, actual.name)
+            assertEquals(expected.footer, actual.footer)
+            assertEquals(expected.cardsInSet, actual.cardsInSet)
+            assertEquals(expected*.title, actual*.title)
+            expected.eachWithIndex { it, i ->
+                assertCard(it, actual.get(i))
+            }
+            throw ae
+        }
+    }
+
     @Test
     void setAttributes() {
         def cs = desc("""
@@ -71,6 +86,11 @@ Creature - Human 1/1
 """).cardSet
         assertEquals(1, cs.size())
         assertCard(Cards.sally(), cs.first())
+    }
+
+    @Test
+    void testSet() {
+        assertCardSet(Cards.set(), new MarkdownDescriptor(TEST_SET_DESCRIPTOR).cardSet)
     }
 
     @Test

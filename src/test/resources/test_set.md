@@ -22,8 +22,8 @@ Instant
 
 Counter target spell.
 
-*How about "never".
-    -- Barney of the Green Woods*
+*How about "never".*
+{    -- Barney of the Green Woods}
 
 ## Nightmare 5B
 
@@ -60,4 +60,4 @@ Indestructable, hexproof
 
 {1}{U}{G}{T}: Every opponent dies in a fire unless all pay {X}{U}{B}{G} or {X}{R}{B}{W} or {X}{X}{B} where X equals your life total.
 
-*For the first time in his life, Barney felt warm.  And hungry.*
+{For the first time in his life, Barney felt warm.  And hungry.}

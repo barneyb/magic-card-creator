@@ -46,8 +46,8 @@ class Cards {
             body: """
 Counter target spell.
 
-{How about "never".
-    -- Barney of the Green Woods}
+{How about "never".}
+{    -- Barney of the Green Woods}
 """,
             artist: "Zueuk"
         )
