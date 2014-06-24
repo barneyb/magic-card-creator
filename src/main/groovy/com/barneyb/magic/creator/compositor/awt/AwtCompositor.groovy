@@ -146,7 +146,7 @@ class AwtCompositor implements Compositor {
         if (it.text == null || it.text.length() == 0) {
             throw new UnsupportedOperationException("You cannot render empty blocks of body text.")
         }
-        def s = it.toString()
+        def s = it.text
         def attr = new AttributedString(s, [
             (TextAttribute.FONT): BASE_FONT.deriveFont(it.flavor ? Font.ITALIC : Font.PLAIN, ctx.fontSize)
         ])
