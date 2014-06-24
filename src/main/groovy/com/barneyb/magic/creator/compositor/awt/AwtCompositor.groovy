@@ -108,7 +108,7 @@ class AwtCompositor implements Compositor {
         drawText(g, rs.typebar, model.type)
 
         g.setClip(rs.textbox)
-        def fontSize = (float) rs.small.size.height * 1.2
+        def fontSize = (float) rs.small.size.height * 1.1
         g.font = BASE_FONT.deriveFont(fontSize)
         def fm = g.fontMetrics
         def ctx = new RenderCtx(g, rs.textbox, fontSize, fm.ascent + fm.descent)
