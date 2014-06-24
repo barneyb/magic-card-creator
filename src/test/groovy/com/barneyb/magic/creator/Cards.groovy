@@ -1,6 +1,6 @@
 package com.barneyb.magic.creator
 
-import com.barneyb.magic.creator.asset.ClasspathImage
+import com.barneyb.magic.creator.asset.RemoteImage
 import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.AbilityText
 import com.barneyb.magic.creator.compositor.FlavorText
@@ -11,19 +11,20 @@ import com.barneyb.magic.creator.descriptor.CardSet
 import com.barneyb.magic.creator.descriptor.CostType
 import com.barneyb.magic.creator.descriptor.FrameBaseType
 import com.barneyb.magic.creator.descriptor.FrameModifier
-
 /**
  *
  * @author bboisvert
  */
 class Cards {
 
+    static def _cl = Cards.classLoader
+
     static CardSet set() {
         def s = new CardSet("Test Set", "\u00A9 2014 Barney Boisvert")
         s << new Card(
             title: "Sally",
             costString: "1R",
-            artwork: "artwork/sally.jpg", // todo: is this right?
+            artwork: _cl.getResource("artwork/sally.jpg"),
             type: "Creature",
             subtype: "Human",
             body: """
@@ -40,7 +41,7 @@ class Cards {
         s << new Card(
             title: "Counterspell",
             costString: "UU",
-            artwork: "artwork/counterspell.jpg", // todo: is this right?
+            artwork: _cl.getResource("artwork/counterspell.jpg"),
             type: "Instant",
             body: """
 Counter target spell.
@@ -53,7 +54,7 @@ Counter target spell.
         s << new Card(
             title: "Nightmare",
             costString: "5B",
-            artwork: "artwork/nightmare.jpg", // todo: is this right?
+            artwork: _cl.getResource("artwork/nightmare.jpg"),
             type: "Creature",
             subtype: "Nightmare Horse",
             body: """
@@ -70,7 +71,7 @@ Nightmare's power and toughness are each equal to the number of Swamps you contr
         s << new Card(
             title: "Blitz Hellion",
             costString: "2RG",
-            artwork: "artwork/hellion.jpg", // todo: is this right?
+            artwork: _cl.getResource("artwork/hellion.jpg"),
             type: "Creature",
             subtype: "Hellion",
             body: """
@@ -87,7 +88,7 @@ At the beginning of the end step, Blitz Hellion's owner shuffles it into his or 
         s << new Card(
             title: "Barney of the Green Woods",
             costString: "2WUBRG",
-            artwork: "artwork/barney.jpg", // todo: is this right?
+            artwork: _cl.getResource("artwork/barney.jpg"),
             type: "Legendary Enchantment Creature",
             subtype: "Human Legend",
             body: """
@@ -113,7 +114,7 @@ Indestructable, hexproof
             frame: rs.frames.getImageAsset(FrameBaseType.BLUE),
             title: "Counterspell",
             cost: [CostType.BLUE, CostType.BLUE].collect(rs.large.&getImageAsset),
-            artwork: new ClasspathImage("artwork/counterspell.jpg"),
+            artwork: new RemoteImage(_cl.getResource("artwork/counterspell.jpg")),
             type: "Instant",
             body: [
                 [
@@ -143,7 +144,7 @@ Indestructable, hexproof
             frame: rs.frames.getImageAsset(FrameBaseType.BLACK + FrameModifier.Type.CREATURE),
             title: "Nightmare",
             cost: [CostType.COLORLESS_5, CostType.BLACK].collect(rs.large.&getImageAsset),
-            artwork: new ClasspathImage("artwork/nightmare.jpg"),
+            artwork: new RemoteImage(_cl.getResource("artwork/nightmare.jpg")),
             type: "Creature \u2013 Nightmare Horse",
             body: [
                 [
@@ -178,7 +179,7 @@ Indestructable, hexproof
             frame: rs.frames.getImageAsset(FrameBaseType.RED + FrameModifier.Type.CREATURE),
             title: "Sally",
             cost: [CostType.COLORLESS_1, CostType.RED].collect(rs.large.&getImageAsset),
-            artwork: new ClasspathImage("artwork/sally.jpg"),
+            artwork: new RemoteImage(_cl.getResource("artwork/sally.jpg")),
             type: "Creature \u2013 Human",
             body: [
                 [
@@ -214,7 +215,7 @@ Indestructable, hexproof
             frame: rs.frames.getImageAsset(FrameBaseType.GOLD + FrameModifier.Type.ENCHANTMENT_CREATURE),
             title: "Barney of the Green Woods",
             cost: [CostType.COLORLESS_2, CostType.WHITE, CostType.BLUE, CostType.BLACK, CostType.RED, CostType.GREEN].collect(rs.large.&getImageAsset),
-            artwork: new ClasspathImage("artwork/barney.jpg"),
+            artwork: new RemoteImage(_cl.getResource("artwork/barney.jpg")),
             type: "Legendary Enchantment Creature \u2013 Human Legend",
             body: [
                 [
@@ -266,7 +267,7 @@ Indestructable, hexproof
             frame: rs.frames.getImageAsset(FrameBaseType.GOLD + FrameModifier.Type.CREATURE + FrameModifier.Dual.RED_GREEN),
             title: "Blitz Hellion",
             cost: [CostType.COLORLESS_2, CostType.RED, CostType.GREEN].collect(rs.large.&getImageAsset),
-            artwork: new ClasspathImage("artwork/hellion.jpg"),
+            artwork: new RemoteImage(_cl.getResource("artwork/hellion.jpg")),
             type: "Creature \u2013 Hellion",
             body: [
                 [

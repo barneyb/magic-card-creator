@@ -1,6 +1,7 @@
 package com.barneyb.magic.creator.compositor
-import com.barneyb.magic.creator.asset.ClasspathImage
+
 import com.barneyb.magic.creator.asset.ImageAsset
+import com.barneyb.magic.creator.asset.RemoteImage
 import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.descriptor.BodyParser
 import com.barneyb.magic.creator.descriptor.Card
@@ -9,6 +10,7 @@ import com.barneyb.magic.creator.descriptor.FrameBaseType
 import com.barneyb.magic.creator.descriptor.FrameModifier
 import com.barneyb.magic.creator.descriptor.FrameType
 import groovy.transform.Canonical
+
 /**
  *
  * @author bboisvert
@@ -29,7 +31,7 @@ class RenderModel {
         def m = new RenderModel(
             title: c.title,
             cost: c.cost.collect(rs.large.&getImageAsset),
-            artwork: new ClasspathImage(c.artwork), // todo: is this right?
+            artwork: new RemoteImage(new URL(c.artwork)),
             type: c.type + (c.subtyped ? " \u2013 $c.subtype" : ''),
             whiteFooterText: frame == FrameBaseType.BLACK,
             artist: c.artist,
