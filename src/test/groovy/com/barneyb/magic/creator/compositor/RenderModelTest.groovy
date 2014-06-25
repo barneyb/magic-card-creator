@@ -7,6 +7,7 @@ import com.barneyb.magic.creator.compositor.awt.AwtCompositorTest
 import org.junit.Before
 import org.junit.Test
 
+import static com.barneyb.magic.creator.Cards.assertRenderModel
 import static junit.framework.Assert.*
 /**
  *
@@ -32,7 +33,7 @@ class RenderModelTest {
 
     @Test
     void fromCard_sally() {
-        assertEquals(
+        assertRenderModel(
             Cards.sally(rs),
             RenderModel.fromCard(Cards.sally(), rs)
         )
@@ -40,7 +41,7 @@ class RenderModelTest {
 
     @Test
     void fromCard_counterspell() {
-        assertEquals(
+        assertRenderModel(
             Cards.counterspell(rs),
             RenderModel.fromCard(Cards.counterspell(), rs)
         )
@@ -48,7 +49,7 @@ class RenderModelTest {
 
     @Test
     void fromCard_nightmare() {
-        assertEquals(
+        assertRenderModel(
             Cards.nightmare(rs),
             RenderModel.fromCard(Cards.nightmare(), rs)
         )
@@ -56,7 +57,7 @@ class RenderModelTest {
 
     @Test
     void fromCard_hellion() {
-        assertEquals(
+        assertRenderModel(
             Cards.hellion(rs),
             RenderModel.fromCard(Cards.hellion(), rs)
         )
@@ -64,7 +65,7 @@ class RenderModelTest {
 
     @Test
     void fromCard_barney() {
-        assertEquals(
+        assertRenderModel(
             Cards.barney(rs),
             RenderModel.fromCard(Cards.barney(), rs)
         )
