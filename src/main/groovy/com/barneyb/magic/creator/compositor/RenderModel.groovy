@@ -38,7 +38,7 @@ class RenderModel {
         )
         if (c.creature) {
             frame += c.enchantment ? FrameModifier.Type.ENCHANTMENT_CREATURE : FrameModifier.Type.CREATURE
-            m.powerToughness = c.power + ((c.power ?: '?').length() > 1 && (c.toughness ?: '?').length() > 1 ? '/' : ' / ') + c.toughness
+            m.powerToughness = c.power + (c.power.length() > 1 && c.toughness.length() > 1 ? '/' : ' / ') + c.toughness
         }
         m.frame = rs.frames.getImageAsset(frame)
         m.body = BodyParser.parse(c.body).collect { line ->
