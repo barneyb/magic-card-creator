@@ -31,13 +31,18 @@ enum Commands {
         def v = new CardValidator()
         int invalids = 0
         cards.each { card ->
-            def es = v.validate(card)
-            if (es.size() > 0) {
-                invalids += 1
-                println "#$card.cardOfSet $card.title"
-                es.each {
-                    println "  $it"
+            println "#$card.cardOfSet $card.title"
+            try {
+                def es = v.validate(card)
+                if (es.size() > 0) {
+                    invalids += 1
+                    es.each {
+                        println "  $it"
+                    }
                 }
+            } catch (e) {
+                invalids += 1
+                e.printStackTrace()
             }
         }
         if (invalids == 0) {
@@ -78,10 +83,14 @@ enum Commands {
         def compositor = new AwtCompositor()
         cards.each { card ->
             println "#$card.cardOfSet $card.title".padRight(maxLen, '.')
-            validator.validate(card).each {
-                println "  " + it
+            try {
+                validator.validate(card).each {
+                    println "  " + it
+                }
+                compositor.compose(RenderModel.fromCard(card, rs), rs, new File(dir, "${card.cardOfSet}.png").newOutputStream())
+            } catch (e) {
+                e.printStackTrace()
             }
-            compositor.compose(RenderModel.fromCard(card, rs), rs, new File(dir, "${card.cardOfSet}.png").newOutputStream())
         }
     }),
 
