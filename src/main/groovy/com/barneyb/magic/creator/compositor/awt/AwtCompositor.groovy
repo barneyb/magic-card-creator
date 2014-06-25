@@ -37,19 +37,21 @@ class AwtCompositor implements Compositor {
 
     static class RenderCtx {
         final Graphics2D graphics
-        Rectangle bounds
+        final Rectangle bounds
         double x
         double y
         float fontSize
         float wrapOffset
+        final boolean measuring
 
-        def RenderCtx(Graphics2D g, Rectangle b, float fs, float wo = fs) {
+        def RenderCtx(Graphics2D g, Rectangle b, float fs, float wo = fs, boolean m=false) {
             graphics = g
             bounds = b
             x = bounds.x
             y = bounds.y
             fontSize = fs
             wrapOffset = wo
+            measuring = m
         }
 
         double getXOffset() {
@@ -103,15 +105,32 @@ class AwtCompositor implements Compositor {
         drawText(g, rs.typebar, model.type)
 
         g.setClip(rs.textbox)
+        // measure first
         def fontSize = (float) rs.small.size.height * 1.15
         g.font = BASE_FONT.deriveFont(fontSize)
         def fm = g.fontMetrics
-        def ctx = new RenderCtx(g, rs.textbox, fontSize, fm.ascent + fm.descent)
+        def ctx = new RenderCtx(g, rs.textbox, fontSize, fm.ascent + fm.descent, true)
         model.body.each { line ->
             ctx.XOffset = 0
-            line.eachWithIndex { it, itemIdx ->
-                render(ctx, it)
-            }
+            line.each this.&render.curry(ctx)
+            ctx.y += ctx.wrapOffset
+        }
+        // now draw it
+        int extraHeight = rs.textbox.y + rs.textbox.height - ctx.y
+        if (extraHeight > 0) {
+            // vertically center
+            ctx = new RenderCtx(g, rs.textbox, fontSize, fm.ascent + fm.descent, false)
+            ctx.y += Math.floor(extraHeight / 2)
+        } else {
+            // todo: actually rescale
+            fontSize = (float) rs.small.size.height * 1.15
+            g.font = BASE_FONT.deriveFont(fontSize)
+            fm = g.fontMetrics
+            ctx = new RenderCtx(g, rs.textbox, fontSize, fm.ascent + fm.descent, false)
+        }
+        model.body.each { line ->
+            ctx.XOffset = 0
+            line.each this.&render.curry(ctx)
             ctx.y += ctx.wrapOffset
         }
         g.setClip(null) // clear the clip
@@ -161,7 +180,9 @@ class AwtCompositor implements Compositor {
                 ctx.y += ctx.wrapOffset
             }
             l = lm.nextLayout((float) ctx.bounds.width - ctx.XOffset)
-            l.draw(ctx.graphics, (float) ctx.x, (float) ctx.y + l.ascent)
+            if (! ctx.measuring) {
+                l.draw(ctx.graphics, (float) ctx.x, (float) ctx.y + l.ascent)
+            }
         }
         ctx.XOffset += l.advance
     }
@@ -175,7 +196,9 @@ class AwtCompositor implements Compositor {
     }
 
     protected void render(RenderCtx ctx, ImageAsset it) {
-        drawAsset(ctx.graphics, new Rectangle((int) ctx.x, (int) ctx.y + (ctx.wrapOffset - it.size.height) * 0.5, (int) it.size.width, (int) it.size.height), it)
+        if (! ctx.measuring) {
+            drawAsset(ctx.graphics, new Rectangle((int) ctx.x, (int) ctx.y + (ctx.wrapOffset - it.size.height) * 0.5, (int) it.size.width, (int) it.size.height), it)
+        }
         ctx.XOffset += it.size.width
     }
 
