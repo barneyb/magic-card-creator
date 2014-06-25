@@ -42,10 +42,25 @@ class RenderModel {
         }
         m.frame = rs.frames.getImageAsset(frame)
         m.body = BodyParser.parse(c.body).collect { line ->
-                line.collect {
-                    it instanceof CostType ? rs.small.getImageAsset(it) : (Renderable) it
+            def grouped = []
+            def last = null
+            line.collect {
+                it instanceof CostType ? rs.small.getImageAsset(it) : (Renderable) it
+            }.each {
+                if (it instanceof ImageAsset) {
+                    if (last instanceof CompoundImage) {
+                        last.add(it)
+                        return
+                    } else if (last instanceof ImageAsset) {
+                        grouped.remove((int) grouped.size() - 1)
+                        it = new CompoundImage([last, it])
+                    }
                 }
+                grouped << it
+                last = it
             }
+            grouped
+        }
 
         if (c.hasSet()) {
             m.footer = "$c.footer ($c.cardOfSet/$c.cardsInSet)"
