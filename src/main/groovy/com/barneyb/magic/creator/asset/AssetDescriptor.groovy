@@ -55,7 +55,7 @@ class AssetDescriptor {
     RenderSet getRenderSet(String name) {
         def rs = renderSets.get(name)
         if (rs == null) {
-            throw new IllegalArgumentException("No renderset named '$name' is known.")
+            throw new IllegalArgumentException("No renderset named '$name' is known (${renderSets.keySet().join(', ')}).")
         }
         rs
     }
