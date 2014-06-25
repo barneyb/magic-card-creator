@@ -74,11 +74,17 @@ class Card {
     }
 
     String power
+    String getPower() {
+        power ?: "?"
+    }
     void setPower(String s) {
         power = s?.trim()
     }
 
     String toughness
+    String getToughness() {
+        toughness ?: "?"
+    }
     void setToughness(String s) {
         toughness = s?.trim()
     }
