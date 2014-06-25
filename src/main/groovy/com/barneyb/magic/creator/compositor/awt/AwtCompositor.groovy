@@ -3,6 +3,7 @@ import com.barneyb.magic.creator.asset.ImageAsset
 import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.AbilityText
 import com.barneyb.magic.creator.compositor.Compositor
+import com.barneyb.magic.creator.compositor.CompoundImageAsset
 import com.barneyb.magic.creator.compositor.FlavorText
 import com.barneyb.magic.creator.compositor.Paragraph
 import com.barneyb.magic.creator.compositor.RenderModel
@@ -19,7 +20,6 @@ import java.awt.image.AffineTransformOp
 import java.awt.image.BufferedImage
 import java.awt.image.RenderedImage
 import java.text.AttributedString
-import java.util.List
 /**
  *
  * @author bboisvert
@@ -42,8 +42,6 @@ class AwtCompositor implements Compositor {
         double y
         float fontSize
         float wrapOffset
-        List<Renderable> line
-        int idx
 
         def RenderCtx(Graphics2D g, Rectangle b, float fs, float wo = fs) {
             graphics = g
@@ -111,9 +109,7 @@ class AwtCompositor implements Compositor {
         def ctx = new RenderCtx(g, rs.textbox, fontSize, fm.ascent + fm.descent)
         model.body.each { line ->
             ctx.XOffset = 0
-            ctx.line = line
             line.eachWithIndex { it, itemIdx ->
-                ctx.idx = itemIdx
                 render(ctx, it)
             }
             ctx.y += ctx.wrapOffset
@@ -170,19 +166,15 @@ class AwtCompositor implements Compositor {
         ctx.XOffset += l.advance
     }
 
-    protected void render(RenderCtx ctx, ImageAsset it) {
-        def blockCount = 1
-        for (def n : ctx.line.subList(ctx.idx + 1, ctx.line.size())) {
-            if (n instanceof ImageAsset) {
-                blockCount += 1
-            } else {
-                break
-            }
-        }
-        if (ctx.XOffset + blockCount * it.size.width >= ctx.bounds.width) {
+    protected void render(RenderCtx ctx, CompoundImageAsset it) {
+        if (ctx.XOffset + it.size.width > ctx.bounds.width) {
             ctx.XOffset = 0
             ctx.y += ctx.wrapOffset
         }
+        it.each this.&render.curry(ctx)
+    }
+
+    protected void render(RenderCtx ctx, ImageAsset it) {
         drawAsset(ctx.graphics, new Rectangle((int) ctx.x, (int) ctx.y + (ctx.wrapOffset - it.size.height) * 0.5, (int) it.size.width, (int) it.size.height), it)
         ctx.XOffset += it.size.width
     }
