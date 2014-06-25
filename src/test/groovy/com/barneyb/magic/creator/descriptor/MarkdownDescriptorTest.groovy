@@ -1,8 +1,8 @@
 package com.barneyb.magic.creator.descriptor
 
-import com.barneyb.magic.creator.Cards
 import org.junit.Test
 
+import static com.barneyb.magic.creator.Cards.*
 import static org.junit.Assert.*
 /**
  *
@@ -14,39 +14,6 @@ class MarkdownDescriptorTest {
 
     protected def desc(String src) {
         new MarkdownDescriptor(TEST_SET_DESCRIPTOR, new StringReader(src))
-    }
-
-    protected assertCard(Card e, Card a) {
-        try {
-            assertEquals(e.title, a.title)
-            assertEquals(e.costString, a.costString)
-            assertEquals(e.artwork, a.artwork)
-            assertEquals(e.type, a.type)
-            assertEquals(e.subtype, a.subtype)
-            assertEquals(e.body, a.body)
-            assertEquals(e.power, a.power)
-            assertEquals(e.toughness, a.toughness)
-            assertEquals(e.artist, a.artist)
-        } catch (AssertionError ae) {
-            println "expected: $e"
-            println "  actual: $a"
-            throw ae
-        }
-    }
-
-    protected assertCardSet(CardSet expected, CardSet actual) {
-        try {
-            assertEquals(expected, actual)
-        } catch (AssertionError ae) {
-            assertEquals(expected.name, actual.name)
-            assertEquals(expected.footer, actual.footer)
-            assertEquals(expected.cardsInSet, actual.cardsInSet)
-            assertEquals(expected*.title, actual*.title)
-            expected.eachWithIndex { it, i ->
-                assertCard(it, actual.get(i))
-            }
-            throw ae
-        }
     }
 
     @Test
@@ -85,12 +52,12 @@ Creature - Human 1/1
 *Or you.*
 """).cardSet
         assertEquals(1, cs.size())
-        assertCard(Cards.sally(), cs.first())
+        assertCard(sally(), cs.first())
     }
 
     @Test
     void testSet() {
-        assertCardSet(Cards.set(), new MarkdownDescriptor(TEST_SET_DESCRIPTOR).cardSet)
+        assertCardSet(set(), new MarkdownDescriptor(TEST_SET_DESCRIPTOR).cardSet)
     }
 
     @Test

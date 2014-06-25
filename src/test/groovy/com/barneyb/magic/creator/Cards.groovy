@@ -1,8 +1,8 @@
 package com.barneyb.magic.creator
-
 import com.barneyb.magic.creator.asset.RemoteImage
 import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.AbilityText
+import com.barneyb.magic.creator.compositor.CompoundRenderable
 import com.barneyb.magic.creator.compositor.FlavorText
 import com.barneyb.magic.creator.compositor.Paragraph
 import com.barneyb.magic.creator.compositor.RenderModel
@@ -11,6 +11,8 @@ import com.barneyb.magic.creator.descriptor.CardSet
 import com.barneyb.magic.creator.descriptor.CostType
 import com.barneyb.magic.creator.descriptor.FrameBaseType
 import com.barneyb.magic.creator.descriptor.FrameModifier
+
+import static org.junit.Assert.*
 /**
  *
  * @author bboisvert
@@ -18,6 +20,39 @@ import com.barneyb.magic.creator.descriptor.FrameModifier
 class Cards {
 
     static def _cl = Cards.classLoader
+
+    static assertCard(Card e, Card a) {
+        try {
+            assertEquals(e.title, a.title)
+            assertEquals(e.costString, a.costString)
+            assertEquals(e.artwork, a.artwork)
+            assertEquals(e.type, a.type)
+            assertEquals(e.subtype, a.subtype)
+            assertEquals(e.body, a.body)
+            assertEquals(e.power, a.power)
+            assertEquals(e.toughness, a.toughness)
+            assertEquals(e.artist, a.artist)
+        } catch (AssertionError ae) {
+            println "expected: $e"
+            println "  actual: $a"
+            throw ae
+        }
+    }
+
+    static assertCardSet(CardSet expected, CardSet actual) {
+        try {
+            assertEquals(expected, actual)
+        } catch (AssertionError ae) {
+            assertEquals(expected.name, actual.name)
+            assertEquals(expected.footer, actual.footer)
+            assertEquals(expected.cardsInSet, actual.cardsInSet)
+            assertEquals(expected*.title, actual*.title)
+            expected.eachWithIndex { it, i ->
+                assertCard(it, actual.get(i))
+            }
+            throw ae
+        }
+    }
 
     static CardSet set() {
         def s = new CardSet("Test Set", "\u00A9 2014 Barney Boisvert")
@@ -183,8 +218,10 @@ Indestructable, hexproof
             type: "Creature \u2013 Human",
             body: [
                 [
-                    rs.small.getImageAsset(CostType.BLUE),
-                    rs.small.getImageAsset(CostType.TAP),
+                    new CompoundRenderable([
+                        rs.small.getImageAsset(CostType.BLUE),
+                        rs.small.getImageAsset(CostType.TAP)
+                    ]),
                     new AbilityText(": Tap target creature and pay 1 life."),
                 ],
                 [
@@ -225,24 +262,32 @@ Indestructable, hexproof
                     new Paragraph()
                 ],
                 [
-                    rs.small.getImageAsset(CostType.COLORLESS_1),
-                    rs.small.getImageAsset(CostType.BLUE),
-                    rs.small.getImageAsset(CostType.GREEN),
-                    rs.small.getImageAsset(CostType.TAP),
+                    new CompoundRenderable([
+                        rs.small.getImageAsset(CostType.COLORLESS_1),
+                        rs.small.getImageAsset(CostType.BLUE),
+                        rs.small.getImageAsset(CostType.GREEN),
+                        rs.small.getImageAsset(CostType.TAP)
+                    ]),
                     new AbilityText(": Every opponent dies in a fire unless all pay "),
-                    rs.small.getImageAsset(CostType.COLORLESS_X),
-                    rs.small.getImageAsset(CostType.BLUE),
-                    rs.small.getImageAsset(CostType.BLACK),
-                    rs.small.getImageAsset(CostType.GREEN),
+                    new CompoundRenderable([
+                        rs.small.getImageAsset(CostType.COLORLESS_X),
+                        rs.small.getImageAsset(CostType.BLUE),
+                        rs.small.getImageAsset(CostType.BLACK),
+                        rs.small.getImageAsset(CostType.GREEN)
+                    ]),
                     new AbilityText(" or "),
-                    rs.small.getImageAsset(CostType.COLORLESS_X),
-                    rs.small.getImageAsset(CostType.RED),
-                    rs.small.getImageAsset(CostType.BLACK),
-                    rs.small.getImageAsset(CostType.WHITE),
+                    new CompoundRenderable([
+                        rs.small.getImageAsset(CostType.COLORLESS_X),
+                        rs.small.getImageAsset(CostType.RED),
+                        rs.small.getImageAsset(CostType.BLACK),
+                        rs.small.getImageAsset(CostType.WHITE)
+                    ]),
                     new AbilityText(" or "),
-                    rs.small.getImageAsset(CostType.COLORLESS_X),
-                    rs.small.getImageAsset(CostType.COLORLESS_X),
-                    rs.small.getImageAsset(CostType.BLACK),
+                    new CompoundRenderable([
+                        rs.small.getImageAsset(CostType.COLORLESS_X),
+                        rs.small.getImageAsset(CostType.COLORLESS_X),
+                        rs.small.getImageAsset(CostType.BLACK)
+                    ]),
                     new AbilityText(" where X equals your life total."),
                 ],
                 [
