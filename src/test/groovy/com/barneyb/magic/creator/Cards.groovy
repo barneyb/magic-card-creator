@@ -3,7 +3,7 @@ package com.barneyb.magic.creator
 import com.barneyb.magic.creator.asset.RemoteImage
 import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.AbilityText
-import com.barneyb.magic.creator.compositor.CompoundImage
+import com.barneyb.magic.creator.compositor.CompoundImageAsset
 import com.barneyb.magic.creator.compositor.FlavorText
 import com.barneyb.magic.creator.compositor.Paragraph
 import com.barneyb.magic.creator.compositor.RenderModel
@@ -237,7 +237,7 @@ Indestructable, hexproof
             type: "Creature \u2013 Human",
             body: [
                 [
-                    new CompoundImage([
+                    new CompoundImageAsset([
                         rs.small.getImageAsset(CostType.BLUE),
                         rs.small.getImageAsset(CostType.TAP)
                     ]),
@@ -281,28 +281,28 @@ Indestructable, hexproof
                     new Paragraph()
                 ],
                 [
-                    new CompoundImage([
+                    new CompoundImageAsset([
                         rs.small.getImageAsset(CostType.COLORLESS_1),
                         rs.small.getImageAsset(CostType.BLUE),
                         rs.small.getImageAsset(CostType.GREEN),
                         rs.small.getImageAsset(CostType.TAP)
                     ]),
                     new AbilityText(": Every opponent dies in a fire unless all pay "),
-                    new CompoundImage([
+                    new CompoundImageAsset([
                         rs.small.getImageAsset(CostType.COLORLESS_X),
                         rs.small.getImageAsset(CostType.BLUE),
                         rs.small.getImageAsset(CostType.BLACK),
                         rs.small.getImageAsset(CostType.GREEN)
                     ]),
                     new AbilityText(" or "),
-                    new CompoundImage([
+                    new CompoundImageAsset([
                         rs.small.getImageAsset(CostType.COLORLESS_X),
                         rs.small.getImageAsset(CostType.RED),
                         rs.small.getImageAsset(CostType.BLACK),
                         rs.small.getImageAsset(CostType.WHITE)
                     ]),
                     new AbilityText(" or "),
-                    new CompoundImage([
+                    new CompoundImageAsset([
                         rs.small.getImageAsset(CostType.COLORLESS_X),
                         rs.small.getImageAsset(CostType.COLORLESS_X),
                         rs.small.getImageAsset(CostType.BLACK)

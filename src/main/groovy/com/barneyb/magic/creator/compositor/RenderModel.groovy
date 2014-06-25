@@ -48,12 +48,12 @@ class RenderModel {
                 it instanceof CostType ? rs.small.getImageAsset(it) : (Renderable) it
             }.each {
                 if (it instanceof ImageAsset) {
-                    if (last instanceof CompoundImage) {
+                    if (last instanceof CompoundImageAsset) {
                         last.add(it)
                         return
                     } else if (last instanceof ImageAsset) {
                         grouped.remove((int) grouped.size() - 1)
-                        it = new CompoundImage([last, it])
+                        it = new CompoundImageAsset([last, it])
                     }
                 }
                 grouped << it

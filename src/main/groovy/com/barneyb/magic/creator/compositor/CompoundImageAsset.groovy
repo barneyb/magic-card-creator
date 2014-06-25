@@ -8,12 +8,12 @@ import java.awt.Dimension
  *
  * @author bboisvert
  */
-class CompoundImage implements Renderable, List<ImageAsset> {
+class CompoundImageAsset implements Renderable, List<ImageAsset> {
 
     @Delegate
     List<ImageAsset> items
 
-    def CompoundImage(List<ImageAsset> items=[]) {
+    def CompoundImageAsset(List<ImageAsset> items=[]) {
         this.items = items
     }
 
