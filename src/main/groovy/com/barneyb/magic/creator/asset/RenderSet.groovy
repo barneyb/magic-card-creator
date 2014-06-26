@@ -10,6 +10,8 @@ class RenderSet {
 
     String key
 
+    String compositor
+
     @PackageScope
     Assets assets
 

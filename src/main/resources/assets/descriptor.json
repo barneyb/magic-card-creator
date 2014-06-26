@@ -1,5 +1,6 @@
 {
     "screen": {
+        "compositor": "awt",
         "assets": {
             "frames": {
                 "size": {

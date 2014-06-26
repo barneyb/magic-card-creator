@@ -1,5 +1,4 @@
 package com.barneyb.magic.creator.cli
-
 import com.barneyb.magic.creator.asset.AssetDescriptor
 import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.RenderModel
@@ -7,7 +6,6 @@ import com.barneyb.magic.creator.compositor.awt.AwtCompositor
 import com.barneyb.magic.creator.descriptor.CardSet
 import com.barneyb.magic.creator.descriptor.CardValidator
 import groovy.transform.TupleConstructor
-
 /**
  *
  * @author bboisvert
@@ -80,7 +78,12 @@ enum Commands {
         println "Composing '$cards.name' into $dir:"
         int maxLen = cards*.title*.length().max() + cards.size().toString().length() + 5
         def validator = new CardValidator()
-        def compositor = new AwtCompositor()
+        def compositor = {
+            switch (rs.compositor) {
+                default:
+                    return new AwtCompositor()
+            }
+        }()
         cards.each { card ->
             println "#$card.cardOfSet $card.title".padRight(maxLen, '.')
             try {
