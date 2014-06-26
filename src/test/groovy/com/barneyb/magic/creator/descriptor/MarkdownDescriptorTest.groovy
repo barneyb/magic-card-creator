@@ -2,6 +2,8 @@ package com.barneyb.magic.creator.descriptor
 
 import org.junit.Test
 
+import static com.barneyb.magic.creator.Assert.assertCard
+import static com.barneyb.magic.creator.Assert.assertCardSet
 import static com.barneyb.magic.creator.Cards.*
 import static org.junit.Assert.*
 /**

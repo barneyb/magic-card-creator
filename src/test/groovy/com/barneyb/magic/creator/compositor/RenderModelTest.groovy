@@ -7,7 +7,7 @@ import com.barneyb.magic.creator.compositor.awt.AwtCompositorTest
 import org.junit.Before
 import org.junit.Test
 
-import static com.barneyb.magic.creator.Cards.assertRenderModel
+import static com.barneyb.magic.creator.Assert.*
 import static junit.framework.Assert.*
 /**
  *
