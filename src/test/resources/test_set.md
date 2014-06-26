@@ -1,6 +1,6 @@
 # Test Set
 
-© 2014 Barney Boisvert
+\u00A9 2014 Barney Boisvert
 
 ## Sally 1R
 

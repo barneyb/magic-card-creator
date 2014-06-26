@@ -1,4 +1,5 @@
 package com.barneyb.magic.creator.descriptor
+
 import groovy.transform.TupleConstructor
 import org.tautua.markdownpapers.ast.CharRef
 import org.tautua.markdownpapers.ast.Code
@@ -30,6 +31,7 @@ import org.tautua.markdownpapers.ast.Text
 import org.tautua.markdownpapers.ast.Visitor
 import org.tautua.markdownpapers.parser.Parser
 
+import static com.barneyb.magic.creator.util.StringUtils.*
 /**
  *
  * @author bboisvert
@@ -81,7 +83,7 @@ class MarkdownDescriptor implements CardSetDescriptor, Visitor {
         if (textStack.size() == 0) {
             return
         }
-        def body = pop().toString().trim()
+        def body = decodeEscapes(pop().toString().trim())
         if (card == null) {
             // must be the set.
             if (! body.allWhitespace) {
@@ -112,11 +114,11 @@ class MarkdownDescriptor implements CardSetDescriptor, Visitor {
         text = text.trim()
         if (level == 1) {
             // cardset name
-            cardSet.name = text.trim()
+            cardSet.name = decodeEscapes(text.trim())
         } else if (level == 2) {
             // card title and trailing casting cost
             int i = text.lastIndexOf(' ')
-            card = new Card(text.substring(0, i), text.substring(i + 1))
+            card = new Card(decodeEscapes(text.substring(0, i)), text.substring(i + 1))
             cardSet << card
         }
         push()

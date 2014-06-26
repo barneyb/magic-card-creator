@@ -19,6 +19,17 @@ class MarkdownDescriptorTest {
     }
 
     @Test
+    void funkyChars() {
+        def cs = desc("""
+Test \\u00b6 Set
+===
+\\u00A9 Barney
+""").cardSet
+        assertEquals("Test \u00b6 Set", cs.name)
+        assertEquals("\u00A9 Barney", cs.footer)
+    }
+
+    @Test
     void setAttributes() {
         def cs = desc("""
 Test Set
