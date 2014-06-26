@@ -43,6 +43,8 @@ class AwtCompositor implements Compositor {
         float fontSize
         float wrapOffset
         final boolean measuring
+        int paragraphCount = 0
+        float paragraphBreakSize
 
         def RenderCtx(Graphics2D g, Rectangle b, float fs, float wo = fs, boolean m=false) {
             graphics = g
@@ -51,6 +53,7 @@ class AwtCompositor implements Compositor {
             y = bounds.y
             fontSize = fs
             wrapOffset = wo
+            paragraphBreakSize = wrapOffset * 0.65
             measuring = m
         }
 
@@ -109,29 +112,38 @@ class AwtCompositor implements Compositor {
         def fontSize = (float) rs.small.size.height * 1.15
         g.font = BASE_FONT.deriveFont(fontSize)
         def fm = g.fontMetrics
-        def ctx = new RenderCtx(g, rs.textbox, fontSize, fm.ascent + fm.descent, true)
+        def mctx = new RenderCtx(g, rs.textbox, fontSize, fm.ascent + fm.descent, true)
         model.body.each { line ->
-            ctx.XOffset = 0
-            line.each this.&render.curry(ctx)
-            ctx.y += ctx.wrapOffset
+            mctx.XOffset = 0
+            line.each this.&render.curry(mctx)
+            mctx.y += mctx.wrapOffset
         }
         // now draw it
-        int extraHeight = rs.textbox.y + rs.textbox.height - ctx.y
-        if (extraHeight > 0) {
+        int extraSpace = rs.textbox.y + rs.textbox.height - mctx.y
+        def rctx = new RenderCtx(g, rs.textbox, fontSize, fm.ascent + fm.descent, false)
+        if (extraSpace > 0) {
             // vertically center
-            ctx = new RenderCtx(g, rs.textbox, fontSize, fm.ascent + fm.descent, false)
-            ctx.y += Math.floor(extraHeight / 2)
+            rctx.y += Math.floor(extraSpace / 2.5)
         } else {
-            // todo: actually rescale
-            fontSize = (float) rs.small.size.height * 1.15
-            g.font = BASE_FONT.deriveFont(fontSize)
-            fm = g.fontMetrics
-            ctx = new RenderCtx(g, rs.textbox, fontSize, fm.ascent + fm.descent, false)
+            extraSpace *= -1
+            def maxSpaceReduction = mctx.paragraphCount * mctx.paragraphBreakSize * 0.5
+            if (extraSpace < maxSpaceReduction) {
+                // reduce paragraph breaks and done
+                rctx.paragraphBreakSize -= extraSpace / mctx.paragraphCount
+            } else {
+                // reduce breaks, and resize text
+                extraSpace -= maxSpaceReduction // actually pulled off at the end by halving the paragraph break size
+                fontSize = (float) mctx.fontSize - extraSpace / 25 // ~6 lines of text, chars are taller than wide, so 5^2 is about the area of a char
+                g.font = BASE_FONT.deriveFont(fontSize)
+                fm = g.fontMetrics
+                rctx = new RenderCtx(g, rs.textbox, fontSize, fm.ascent + fm.descent, false)
+                rctx.paragraphBreakSize *= 0.5
+            }
         }
         model.body.each { line ->
-            ctx.XOffset = 0
-            line.each this.&render.curry(ctx)
-            ctx.y += ctx.wrapOffset
+            rctx.XOffset = 0
+            line.each this.&render.curry(rctx)
+            rctx.y += rctx.wrapOffset
         }
         g.setClip(null) // clear the clip
 
@@ -153,7 +165,8 @@ class AwtCompositor implements Compositor {
     }
 
     protected void render(RenderCtx ctx, Paragraph it) {
-        ctx.y -= ctx.wrapOffset * 0.35
+        ctx.y -= ctx.wrapOffset - ctx.paragraphBreakSize
+        ctx.paragraphCount += 1
     }
 
     protected void render(RenderCtx ctx, AbilityText it) {
