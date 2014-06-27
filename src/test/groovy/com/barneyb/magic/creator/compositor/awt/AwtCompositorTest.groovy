@@ -21,7 +21,7 @@ class AwtCompositorTest {
         if (! outputDir.exists()) {
             outputDir.mkdir()
         }
-        def f = new File(outputDir, "preview.html")
+        def f = new File(outputDir, "preview_awt.html")
         f.text = """\
 <html>
 <body>
