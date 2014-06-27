@@ -14,7 +14,7 @@
         .color-disc.white {
             fill: #fffeda;
         }
-        .color-disc.white {
+        .color-disc.red {
             fill: #f69173;
         }
         .color-disc.green {
