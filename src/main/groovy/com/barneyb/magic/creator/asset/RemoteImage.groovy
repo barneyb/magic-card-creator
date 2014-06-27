@@ -16,9 +16,17 @@ class RemoteImage implements ImageAsset {
     private transient BufferedImage __image
     protected BufferedImage getImage() {
         if (__image == null) {
-            __image = ImageIO.read(url)
+            __image = ImageIO.read(getInputStream())
         }
         __image
+    }
+
+    private transient byte[] __bytes
+    protected byte[] getBytes() {
+        if (__bytes == null) {
+            __bytes = url.bytes
+        }
+        __bytes
     }
 
     @Override
@@ -29,6 +37,11 @@ class RemoteImage implements ImageAsset {
     @Override
     BufferedImage asImage() {
         image
+    }
+
+    @Override
+    InputStream getInputStream() {
+        new ByteArrayInputStream(bytes)
     }
 
     boolean equals(o) {
