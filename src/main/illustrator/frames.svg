@@ -3,9 +3,11 @@
         rect {
             stroke: #000000;
             stroke-width: 5px;
+            fill: #9f9;
         }
         .frame {
             stroke-width: 11px;
+            fill: #ff0;
         }
 
         rect.artifact { fill: #eef7ff; }
