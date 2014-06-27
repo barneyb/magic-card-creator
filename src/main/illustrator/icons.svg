@@ -41,7 +41,7 @@
         }
     </style>
     <!-- tap -->
-    <g transform="translate(80,130)">
+    <g id="t" transform="translate(80,130)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc" />
         <g transform="matrix(1,.85,-.85,1,6,25)">
@@ -49,21 +49,21 @@
         </g>
     </g>
     <!-- colorless mana -->
-    <g transform="translate(170,130)">
+    <g id="x" transform="translate(170,130)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc" />
         <g transform="matrix(0.9,0,0,1,14,34)">
             <text class="x">X</text>
         </g>
     </g>
-    <g transform="translate(260,130)">
+    <g id="0" transform="translate(260,130)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc" />
         <g transform="matrix(1,0,0,1,15,34)">
             <text>0</text>
         </g>
     </g>
-    <g transform="translate(350,130)">
+    <g id="1" transform="translate(350,130)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc" />
         <g transform="matrix(1,0,0,1,15,34)">
@@ -71,28 +71,28 @@
         </g>
     </g>
 
-    <g transform="translate(80,220)">
+    <g id="2" transform="translate(80,220)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc" />
         <g transform="matrix(1,0,0,1,15,34)">
             <text>2</text>
         </g>
     </g>
-    <g transform="translate(170,220)">
+    <g id="3" transform="translate(170,220)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc" />
         <g transform="matrix(1,0,0,1,15,34)">
             <text>3</text>
         </g>
     </g>
-    <g transform="translate(260,220)">
+    <g id="4" transform="translate(260,220)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc" />
         <g transform="matrix(1,0,0,1,15,34)">
             <text>4</text>
         </g>
     </g>
-    <g transform="translate(350,220)">
+    <g id="5" transform="translate(350,220)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc" />
         <g transform="matrix(1,0,0,1,15,34)">
@@ -100,42 +100,42 @@
         </g>
     </g>
 
-    <g transform="translate(440,220)">
+    <g id="6" transform="translate(440,220)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc" />
         <g transform="matrix(1,0,0,1,15,34)">
             <text>6</text>
         </g>
     </g>
-    <g transform="translate(530,220)">
+    <g id="7" transform="translate(530,220)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc" />
         <g transform="matrix(1,0,0,1,15,34)">
             <text>7</text>
         </g>
     </g>
-    <g transform="translate(620,220)">
+    <g id="8" transform="translate(620,220)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc" />
         <g transform="matrix(1,0,0,1,15,34)">
             <text>8</text>
         </g>
     </g>
-    <g transform="translate(710,220)">
+    <g id="9" transform="translate(710,220)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc" />
         <g transform="matrix(1,0,0,1,15,34)">
             <text>9</text>
         </g>
     </g>
-    <g transform="translate(800,220)">
+    <g id="10" transform="translate(800,220)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc" />
         <g transform="matrix(0.8,0,0,1,9,34)">
             <text>10</text>
         </g>
     </g>
-    <g transform="translate(800,310)">
+    <g id="11" transform="translate(800,310)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc" />
         <g transform="matrix(0.8,0,0,1,9,34)">
@@ -144,7 +144,7 @@
     </g>
 
     <!-- blue -->
-    <g transform="translate(440,130)">
+    <g id="u" transform="translate(440,130)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc blue" />
         <g transform="matrix(1,0,0,-1,31,21)">
@@ -153,7 +153,7 @@
     </g>
 
     <!-- white -->
-    <g transform="translate(530,130)">
+    <g id="w" transform="translate(530,130)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc white" />
         <!-- rays -->
@@ -165,7 +165,7 @@
     </g>
 
     <!-- red -->
-    <g transform="translate(620,130)">
+    <g id="r" transform="translate(620,130)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc red" />
         <!-- flame -->
@@ -183,7 +183,7 @@
     </g>
 
     <!-- green -->
-    <g transform="translate(710,130)">
+    <g id="g" transform="translate(710,130)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc green" />
         <g transform="matrix(1,0,0,-1,23,16)">
@@ -192,7 +192,7 @@
     </g>
 
     <!-- black -->
-    <g transform="translate(800,130)">
+    <g id="b" transform="translate(800,130)">
         <circle r="22" cx="22" cy="25" class="drop-shadow" />
         <circle r="22" cx="25" cy="22" class="color-disc black" />
         <g transform="matrix(1,0,0,-1,25,28)">
