@@ -6,7 +6,7 @@
             opacity: 0.75;
         }
         .color-disc {
-            fill: #ffe6af;
+            fill: #b0a5a2;
         }
         .color-disc.blue {
             fill: #afe6ff;
