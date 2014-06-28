@@ -3,36 +3,12 @@
         rect {
             stroke: #000000;
             stroke-width: 5px;
-            fill: #9f9;
+            fill: url(#box-texture);
         }
         .frame {
             stroke-width: 11px;
-            fill: #ff0;
+            fill: url(#frame-texture);
         }
-
-        .artifact rect { fill: #eef7ff; }
-        .artifact rect.frame { fill: #cdf; }
-
-        .black rect { fill: #eee; }
-        .black rect.frame { fill: #777; }
-
-        .blue rect { fill: #eef7ff; }
-        .blue rect.frame { fill: #afe6ff; }
-
-        .gold rect { fill: #fec; }
-        .gold rect.frame { fill: #fd6; }
-
-        .green rect { fill: #dfe; }
-        .green rect.frame { fill: #257f3e; }
-
-        .land rect { fill: #eef7ff; }
-        .land rect.frame { fill: #cdf; }
-
-        .red rect { fill: #fdd; }
-        .red rect.frame { fill: #f69173; }
-
-        .white rect { fill: #fffcf9; }
-        .white rect.frame { fill: #fffeda; }
 
         .drop-shadow {
             fill: #000;
@@ -94,6 +70,16 @@
             font-size: 13px;
         }
     </style>
+    <defs>
+        <pattern id="frame-texture" width="1024" height="768" patternUnits="userSpaceOnUse">
+            <image xlink:href="metal.jpg" width="1024" height="768" />
+            <rect width="1024" height="768" style="fill:#fd6" opacity=".65" />
+        </pattern>
+        <pattern id="box-texture" width="1024" height="768" patternUnits="userSpaceOnUse">
+            <image xlink:href="metal.jpg" width="1024" height="768" />
+            <rect width="1024" height="768" style="fill:#fec" opacity=".9" />
+        </pattern>
+    </defs>
     <defs class="icons">
         <g id="t">
             <circle r="22" cx="22" cy="25" class="drop-shadow" />
