@@ -51,3 +51,33 @@ Instant
 Tap target blue creature with toughness 2 or greater.
 
 *The mountain sprang forth and Vorel swam right into it.*
+
+## Strawberry Shortcake 1WR
+
+![Dolores Boisvert](artwork/shortcake.jpg)
+
+Instant
+
+All Humans gain +1/+2 until end of turn.
+
+*Strawberries are to humans as blood is to vampires.*
+
+## Go Big of Go Home 2WB
+
+![Emery Boisvert](artwork/go_big.jpg)
+
+Instant
+
+All creatures you control get +2/+1 until end of turn.  You lose 3 life.  This loss of life cannot be prevented.
+
+*His love for small creatures would drive him to destruction.*
+
+## Sleep Potion U
+
+![Lindsay Boisvert](artwork/sleep_potion.jpg)
+
+Instant
+
+Target creature cannot attack or block until end of turn.
+
+*And goodnight.*
