@@ -6,6 +6,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jaxb.api.version>2.1</jaxb.api.version>
     </properties>
     <dependencies>
         <dependency>
@@ -64,8 +65,42 @@
                         <fileset>
                             <directory>build</directory>
                         </fileset>
+                        <fileset>
+                            <directory>${project.build.sourceDirectory}/com/barneyb/magic/creator/compositor/svg/schema</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>${project.build.sourceDirectory}/META-INF</directory>
+                            <includes>
+                                <include>sun-jaxb.episode</include>
+                            </includes>
+                        </fileset>
                     </filesets>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>0.9.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-hybridmeta-bindings</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <specVersion>${jaxb.api.version}</specVersion>
+                            <schemaLanguage>DTD</schemaLanguage>
+                            <schemaDirectory>src/main/dtd</schemaDirectory>
+                            <schemaIncludes>
+                                <include>svg11-flat-20110816.dtd</include>
+                            </schemaIncludes>
+                            <generateDirectory>${project.build.sourceDirectory}</generateDirectory>
+                            <generatePackage>com.barneyb.magic.creator.compositor.svg.schema</generatePackage>
+                            <extension>true</extension>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
