@@ -16,7 +16,12 @@ class RemoteImage implements ImageAsset {
     private transient BufferedImage __image
     protected BufferedImage getImage() {
         if (__image == null) {
-            __image = ImageIO.read(url)
+            try {
+                __image = ImageIO.read(url)
+            } catch (RuntimeException re) {
+                println "failed to load '" + this + "'"
+                throw re
+            }
         }
         __image
     }
