@@ -21,14 +21,6 @@ class SvgCompositorTest {
         def f = new File(outputDir, "preview_svg.html")
         f.text = """\
 <html>
-<head>
-<style>
-    img {
-        width: 400px;
-        height: 560px;
-    }
-</style>
-</head>
 <body>
 <embed src="sally.svg" />
 <embed src="counterspell.svg" />
