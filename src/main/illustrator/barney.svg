@@ -221,18 +221,18 @@
             </g>
         </g>
     </g>
-    <g transform="translate(27,45)" class="title">
-        <text textLength="198" lengthAdjust="spacingAndGlyphs">Barney of the Green Woods</text>
+    <g transform="matrix(.72,0,0,1,27,45)" class="title">
+        <text>Barney of the Green Woods</text>
     </g>
     <g transform="matrix(0.860,0,0,0.381,26,57)" class="title">
         <image width="404" height="566" xlink:href="../../test/resources/artwork/barney.jpg" />
     </g>
-    <g transform="translate(27,300)" class="typebar">
-        <text textLength="346" lengthAdjust="spacingAndGlyphs">Lengendary Enchantment Creature - Human Legend</text>
+    <g transform="matrix(.66,0,0,1,27,300)" class="typebar">
+        <text>Lengendary Enchantment Creature - Human Legend</text>
     </g>
     <g transform="translate(33,320)" class="textbox">
-        <g transform="translate(0,0)">
-            <text y="13">Indestructable, hexproof</text>
+        <g transform="translate(0,13)">
+            <text>Indestructable, hexproof</text>
         </g>
 
         <g transform="translate(0,35)">
@@ -242,24 +242,32 @@
                 <use xlink:href="#g" x="94" />
                 <use xlink:href="#t" x="141" />
             </g>
-            <text y="15" x="80">: Every opponent dies in a fire</text>
+            <g transform="translate(80,13)">
+                <text>&#x003a; Every opponent dies in a fire</text>
+            </g>
         </g>
         <g transform="translate(0,58)">
-            <text y="15">unless all pay </text>
+            <g transform="translate(0,13)">
+                <text>unless all pay </text>
+            </g>
             <g transform="translate(109,0) scale(.40,.40)" class="icons">
                 <use xlink:href="#x" />
                 <use xlink:href="#u" x="47" />
                 <use xlink:href="#b" x="94" />
                 <use xlink:href="#g" x="141" />
             </g>
-            <text y="15" x="190"> or </text>
+            <g transform="translate(190,15)">
+                <text> or </text>
+            </g>
             <g transform="translate(212,0) scale(.40,.40)" class="icons">
                 <use xlink:href="#x" />
                 <use xlink:href="#r" x="47" />
                 <use xlink:href="#b" x="94" />
                 <use xlink:href="#w" x="141" />
             </g>
-            <text y="15" x="290"> or </text>
+            <g transform="translate(290,15)">
+                <text> or </text>
+            </g>
         </g>
         <g transform="translate(0,84)">
             <g transform="scale(.40,.40)" class="icons">
@@ -267,13 +275,19 @@
                 <use xlink:href="#x" x="47" />
                 <use xlink:href="#b" x="94" />
             </g>
-            <text y="15" x="60">where X equals your life total.</text>
+            <g transform="translate(60,15)">
+                <text>where X equals your life total.</text>
+            </g>
         </g>
         <g transform="translate(0,119)">
-            <text y="15" font-style="italic">For the first time in his life, Barney felt warm.</text>
+            <g transform="translate(0,15)">
+                <text font-style="italic">For the first time in his life, Barney felt warm.</text>
+            </g>
         </g>
         <g transform="translate(0,142)">
-            <text y="15" font-style="italic">And hungry.</text>
+            <g transform="translate(0,15)">
+                <text font-style="italic">And hungry.</text>
+            </g>
         </g>
     </g>
     <g transform="translate(324,525)" class="pt">
