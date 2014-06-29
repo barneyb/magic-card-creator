@@ -95,6 +95,16 @@ enum Commands {
                 e.printStackTrace()
             }
         }
+        new File(dir, "proofs.html").text = """<html>
+<head>
+<style>
+img { width: ${rs.frames.size.width}px; height: ${rs.frames.size.height}px; padding: 0; margin: 10px; }
+</style>
+</head>
+<body>
+${cards.collect { "<img src=\"${it.cardOfSet}.png\" />" }.join("\n")}
+</body>
+</html>"""
     }),
 
     final Closure action
