@@ -22,6 +22,8 @@
         <rect class="artist"   x="140" y="1150" width="520" height="30" />
         <rect class="footer"   x="70"  y="1185" width="590" height="25" />
     </g>
+    <!-- this one will add the print bleed -->
+    <!--<g transform="translate(17.5,17.5) scale(2.1875,2.1875)">-->
     <g transform="scale(2.275,2.25)">
         <image opacity="0.5" width="400" height="560" xlink:href="../resources/assets/screen/frames/red_creature.png" />
     </g>
