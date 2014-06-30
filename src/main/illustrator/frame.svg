@@ -1,0 +1,28 @@
+<svg width="910" height="1260" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <style type="text/css">
+        rect {
+            fill: #ff0;
+            stroke-width: 0;
+        }
+        .border {
+            fill: #000;
+        }
+        .frame {
+            fill: #00f;
+        }
+    </style>
+    <g>
+        <rect class="border"   x="0"   y="0"   width="910" height="1260" />
+        <rect class="frame"    x="47"  y="47"  width="816" height="1166" />
+        <rect class="titlebar" x="81"  y="80"   width="746" height="51" />
+        <rect class="artwork"  x="80"  y="153"  width="748" height="545" />
+        <rect class="typebar"  x="85"  y="716"  width="738" height="50" />
+        <rect class="textbox"  x="90"  y="805"  width="725" height="300" />
+        <rect class="pt"       x="698" y="1130" width="125" height="48" />
+        <rect class="artist"   x="140" y="1150" width="520" height="30" />
+        <rect class="footer"   x="70"  y="1185" width="590" height="25" />
+    </g>
+    <g transform="scale(2.275,2.25)">
+        <image opacity="0.5" width="400" height="560" xlink:href="../resources/assets/screen/frames/red_creature.png" />
+    </g>
+</svg>
