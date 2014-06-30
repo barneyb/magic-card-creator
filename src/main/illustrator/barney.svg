@@ -224,8 +224,8 @@
     <g transform="matrix(.72,0,0,1,27,45)" class="title">
         <text>Barney of the Green Woods</text>
     </g>
-    <g transform="matrix(0.860,0,0,0.381,26,57)" class="title">
-        <image width="404" height="566" xlink:href="../../test/resources/artwork/barney.jpg" />
+    <g transform="matrix(0.860,0,0,0.457,26,57)" class="title">
+        <image width="404" height="473" xlink:href="../../test/resources/artwork/barney.jpg" />
     </g>
     <g transform="matrix(.66,0,0,1,27,300)" class="typebar">
         <text>Lengendary Enchantment Creature - Human Legend</text>
