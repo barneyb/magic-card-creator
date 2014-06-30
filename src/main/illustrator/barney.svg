@@ -18,7 +18,7 @@
             opacity: 0.75;
         }
         .color-disc {
-            fill: #b0a5a2;
+            fill: #c5bbb8;
         }
         .color-disc.blue {
             fill: #afe6ff;
@@ -33,7 +33,7 @@
             fill: #257f3e;
         }
         .color-disc.black {
-            fill: #eeeeee;
+            fill: #c5bbb8;
         }
         .icon {
             stroke-width: 0;
