@@ -43,9 +43,9 @@
         },
         "textbox": {
             "x": 90,
-            "y": 805,
+            "y": 800,
             "width": 725,
-            "height": 300
+            "height": 305
         },
         "powertoughness": {
             "x": 698,

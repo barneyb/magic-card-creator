@@ -17,7 +17,7 @@
         <rect class="titlebar" x="81"  y="80"   width="746" height="51" />
         <rect class="artwork"  x="80"  y="153"  width="748" height="545" />
         <rect class="typebar"  x="85"  y="716"  width="738" height="50" />
-        <rect class="textbox"  x="90"  y="805"  width="725" height="300" />
+        <rect class="textbox"  x="90"  y="800"  width="725" height="305" />
         <rect class="pt"       x="698" y="1130" width="125" height="48" />
         <rect class="artist"   x="140" y="1150" width="520" height="30" />
         <rect class="footer"   x="70"  y="1185" width="590" height="25" />
