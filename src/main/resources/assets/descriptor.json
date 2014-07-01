@@ -3,8 +3,8 @@
         "assets": {
             "frames": {
                 "size": {
-                    "width": 910,
-                    "height": 1260
+                    "width": 875,
+                    "height": 1225
                 },
                 "type": "svg"
             },
@@ -25,45 +25,45 @@
         },
         "titlebar": {
             "x": 81,
-            "y": 80,
-            "width": 746,
-            "height": 51
+            "y": 78,
+            "width": 717,
+            "height": 49
         },
         "artwork": {
-            "x": 80,
-            "y": 153,
-            "width": 748,
-            "height": 545
+            "x": 77,
+            "y": 147,
+            "width": 720,
+            "height": 532
         },
         "typebar": {
-            "x": 85,
-            "y": 716,
-            "width": 738,
-            "height": 50
-        },
-        "textbox": {
-            "x": 90,
-            "y": 800,
-            "width": 725,
-            "height": 305
-        },
-        "powertoughness": {
-            "x": 698,
-            "y": 1130,
-            "width": 125,
+            "x": 84,
+            "y": 697,
+            "width": 710,
             "height": 48
         },
+        "textbox": {
+            "x": 84,
+            "y": 780,
+            "width": 705,
+            "height": 295
+        },
+        "powertoughness": {
+            "x": 670,
+            "y": 1100,
+            "width": 120,
+            "height": 45
+        },
         "artist": {
-            "x": 140,
-            "y": 1150,
-            "width": 520,
-            "height": 30
+            "x": 138,
+            "y": 1119,
+            "width": 500,
+            "height": 29
         },
         "footer": {
             "x": 70,
-            "y": 1185,
-            "width": 590,
-            "height": 25
+            "y": 1153,
+            "width": 568,
+            "height": 22
         }
     },
     "screen": {
