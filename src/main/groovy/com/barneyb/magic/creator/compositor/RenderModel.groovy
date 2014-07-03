@@ -80,6 +80,20 @@ class RenderModel {
 
     List<List<Renderable>> body
 
+    Set<ImageAsset> getBodyIcons() {
+        def icons = [] as Set
+        def doIt
+        doIt = {
+            if (it instanceof ImageAsset) {
+                icons << it
+            } else if (it instanceof Collection) {
+                it.each doIt
+            }
+        }
+        body.each doIt
+        icons
+    }
+
     boolean isPowerToughnessVisible() {
         powerToughness != null
     }

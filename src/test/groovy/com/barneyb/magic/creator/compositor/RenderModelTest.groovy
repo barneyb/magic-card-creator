@@ -1,5 +1,4 @@
 package com.barneyb.magic.creator.compositor
-
 import com.barneyb.magic.creator.Cards
 import com.barneyb.magic.creator.asset.AssetDescriptor
 import com.barneyb.magic.creator.asset.RenderSet
@@ -8,6 +7,7 @@ import org.junit.Before
 import org.junit.Test
 
 import static com.barneyb.magic.creator.Assert.*
+import static com.barneyb.magic.creator.descriptor.CostType.*
 import static junit.framework.Assert.*
 /**
  *
@@ -69,6 +69,26 @@ class RenderModelTest {
             Cards.barney(rs),
             RenderModel.fromCard(Cards.barney(), rs)
         )
+    }
+
+    @Test
+    void getBodyIcons() {
+        assertEquals([
+        ].collect(rs.small.&getImageAsset) as Set, Cards.counterspell(rs).bodyIcons)
+        assertEquals([
+            BLUE,
+            TAP
+        ].collect(rs.small.&getImageAsset) as Set, Cards.sally(rs).bodyIcons)
+        assertEquals([
+            COLORLESS_1,
+            BLUE,
+            GREEN,
+            TAP,
+            COLORLESS_X,
+            BLACK,
+            RED,
+            WHITE
+        ].collect(rs.small.&getImageAsset) as Set, Cards.barney(rs).bodyIcons)
     }
 
 }
