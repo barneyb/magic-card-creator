@@ -1,4 +1,71 @@
 {
+    "svg": {
+        "assets": {
+            "frames": {
+                "size": {
+                    "width": 875,
+                    "height": 1225
+                },
+                "type": "svg"
+            },
+            "large": {
+                "size": {
+                    "width": 47,
+                    "height": 47
+                },
+                "type": "svg"
+            },
+            "small": {
+                "size": {
+                    "width": 37,
+                    "height": 37
+                },
+                "type": "svg"
+            }
+        },
+        "titlebar": {
+            "x": 81,
+            "y": 78,
+            "width": 717,
+            "height": 49
+        },
+        "artwork": {
+            "x": 77,
+            "y": 147,
+            "width": 720,
+            "height": 532
+        },
+        "typebar": {
+            "x": 84,
+            "y": 697,
+            "width": 710,
+            "height": 48
+        },
+        "textbox": {
+            "x": 84,
+            "y": 780,
+            "width": 705,
+            "height": 295
+        },
+        "powertoughness": {
+            "x": 670,
+            "y": 1100,
+            "width": 120,
+            "height": 45
+        },
+        "artist": {
+            "x": 138,
+            "y": 1119,
+            "width": 500,
+            "height": 29
+        },
+        "footer": {
+            "x": 70,
+            "y": 1153,
+            "width": 568,
+            "height": 22
+        }
+    },
     "screen": {
         "compositor": "awt",
         "assets": {

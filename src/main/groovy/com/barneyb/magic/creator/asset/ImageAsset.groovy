@@ -11,6 +11,9 @@ interface ImageAsset extends Renderable {
 
     Dimension getSize()
 
+    @Deprecated
     BufferedImage asImage()
+
+    InputStream getInputStream()
 
 }
