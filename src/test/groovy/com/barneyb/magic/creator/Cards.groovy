@@ -219,7 +219,7 @@ Indestructable, hexproof
             frame: rs.frames.getImageAsset(FrameBaseType.GOLD + FrameModifier.Type.ENCHANTMENT_CREATURE),
             title: "Barney of the Green Woods",
             cost: [CostType.COLORLESS_2, CostType.WHITE, CostType.BLUE, CostType.BLACK, CostType.RED, CostType.GREEN].collect(rs.large.&getImageAsset),
-            artwork: new RemoteImage(_cl.getResource("artwork/barney.jpg")),
+            artwork: new RemoteImage(_cl.getResource("artwork/barney_fake.png")),
             type: "Legendary Enchantment Creature \u2013 Human Legend",
             body: [
                 [
