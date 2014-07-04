@@ -1,15 +1,5 @@
 <svg width="875" height="1225" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <style type="text/css">
-        rect {
-            stroke: #000000;
-            stroke-width: 5px;
-            fill: url(#box-texture);
-        }
-        .frame {
-            stroke-width: 11px;
-            fill: url(#frame-texture);
-        }
-
         .drop-shadow {
             fill: #000;
             opacity: 0;
@@ -70,16 +60,6 @@
             font-size: 26px;
         }
     </style>
-    <defs>
-        <pattern id="frame-texture" width="1024" height="768" patternUnits="userSpaceOnUse">
-            <image xlink:href="metal.jpg" width="1024" height="768" />
-            <rect width="1024" height="768" style="fill:#fd6" opacity=".65" />
-        </pattern>
-        <pattern id="box-texture" width="1024" height="768" patternUnits="userSpaceOnUse">
-            <image xlink:href="metal.jpg" width="1024" height="768" />
-            <rect width="1024" height="768" style="fill:#fec" opacity=".9" />
-        </pattern>
-    </defs>
     <defs class="icons">
         <g id="t">
             <circle r="22" cx="22" cy="25" class="drop-shadow" />
