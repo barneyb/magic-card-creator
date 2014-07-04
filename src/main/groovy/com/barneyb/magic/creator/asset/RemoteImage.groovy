@@ -49,6 +49,14 @@ class RemoteImage implements ImageAsset {
         new ByteArrayInputStream(bytes)
     }
 
+    boolean isExists() {
+        if (url == null) {
+            return false
+        }
+        def s = bytes
+        s != null && s.length > 0
+    }
+
     boolean equals(o) {
         if (this.is(o)) return true
         if (!(o instanceof RemoteImage)) return false

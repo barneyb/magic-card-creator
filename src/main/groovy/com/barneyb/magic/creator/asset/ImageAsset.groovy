@@ -16,4 +16,6 @@ interface ImageAsset extends Renderable {
 
     InputStream getInputStream()
 
+    boolean isExists()
+
 }
