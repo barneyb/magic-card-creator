@@ -9,7 +9,7 @@ import groovy.transform.PackageScope
 @PackageScope
 class Assets {
 
-    AssetSet frames
+    FrameAssetSet frames
 
     AssetSet large
 
