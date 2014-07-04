@@ -195,8 +195,8 @@
     <g transform="translate(81,118) scale(.76,1)" class="title">
         <text>Barney of the Green Woods</text>
     </g>
-    <g transform="translate(77,147) scale(1.78,1.12)" class="title">
-        <image width="404" height="473" xlink:href="../../test/resources/artwork/barney.jpg" />
+    <g transform="translate(77,147) scale(1.11)" class="title">
+        <image width="650" height="477" xlink:href="../../test/resources/artwork/barney_fake.png" />
     </g>
     <g transform="translate(84,735) scale(0.7,1)" class="typebar">
         <text>Legendary Enchantment Creature - Human Legend</text>
