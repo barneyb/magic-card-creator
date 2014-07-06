@@ -1,3 +1,15 @@
+#
+# The dataformat of this file is whitespace delimited.  Each block is separated
+# by two or more newlines from the next one.  Within a block multiple newlines
+# cannot be used together.  The first line of each block is the icon id,
+# optionally followed by one or more whitespace characters and a color for the
+# icon background.
+#
+# Comments MUST start on the left edge of the line, are introduced with an
+# octothorpe, and extend to the end of the line, including the newline character
+# if one is present.
+#
+
 w #fffeda
 <!-- rays -->
 <g transform="matrix(1,0,0,-1,24.5,13.25)">
