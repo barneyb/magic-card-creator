@@ -17,7 +17,7 @@ class Icon {
     <circle r="22" cx="25" cy="22" fill="$color" />
     $body
 </svg>
-        """
+"""
     }
 
     String getSmall() {
@@ -28,7 +28,7 @@ class Icon {
         $body
     </g>
 </svg>
-        """
+"""
     }
 }
 
