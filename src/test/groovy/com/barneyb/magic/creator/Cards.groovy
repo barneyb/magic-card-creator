@@ -90,7 +90,7 @@ At the beginning of the end step, Blitz Hellion's owner shuffles it into his or 
         s << new Card(
             title: "Barney of the Green Woods",
             costString: "2WUBRG",
-            artwork: _cl.getResource("artwork/barney.jpg"),
+            artwork: _cl.getResource("artwork/barney_fake.png"),
             type: "Legendary Enchantment Creature",
             subtype: "Human Legend",
             body: """
