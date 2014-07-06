@@ -90,6 +90,13 @@
                                 <include>sun-jaxb.episode</include>
                             </includes>
                         </fileset>
+                        <fileset>
+                            <directory>${basedir}/src/main/resources/assets/print</directory>
+                            <includes>
+                                <include>large/*.svg</include>
+                                <include>small/*.svg</include>
+                            </includes>
+                        </fileset>
                     </filesets>
                 </configuration>
             </plugin>
@@ -123,6 +130,18 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.7</version>
                 <executions>
+                    <execution>
+                        <id>generate-svg-icons</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <script language="groovy" classpathref="maven.compile.classpath" src="${basedir}/src/main/resources/assets/print/generate_icons.groovy" />
+                            </target>
+                        </configuration>
+                    </execution>
                     <execution>
                         <id>compile-run</id>
                         <phase>compile</phase>

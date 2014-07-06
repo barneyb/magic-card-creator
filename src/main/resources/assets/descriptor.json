@@ -6,7 +6,7 @@
                     "width": 875,
                     "height": 1225
                 },
-                "type": "svg"
+                "type": "png"
             },
             "large": {
                 "size": {
@@ -17,8 +17,8 @@
             },
             "small": {
                 "size": {
-                    "width": 37,
-                    "height": 37
+                    "width": 22,
+                    "height": 22
                 },
                 "type": "svg"
             }
