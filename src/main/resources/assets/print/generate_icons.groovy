@@ -44,7 +44,7 @@ if (! dir.exists()) {
 def lg = new File(dir, 'large')
 def sm = new File(dir, 'small')
 def icons = new File(dir, 'icons.txt').text.trim().readLines().findAll {
-    ! it.startsWith('#')
+    ! it.trim().startsWith('#')
 }.join('\n').split('\n\n')*.trim().collect {
     def lines = it.readLines()
     def top = lines.first().trim().tokenize()
