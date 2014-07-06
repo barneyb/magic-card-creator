@@ -1,5 +1,6 @@
 {
-    "svg": {
+    "print": {
+        "compositor": "svg",
         "assets": {
             "frames": {
                 "size": {
