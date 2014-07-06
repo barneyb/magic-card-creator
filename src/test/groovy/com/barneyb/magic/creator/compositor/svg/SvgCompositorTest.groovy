@@ -35,7 +35,7 @@ class SvgCompositorTest {
 
     @Before
     void _makeRenderSet() {
-        rs = AssetDescriptor.fromStream(SvgCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
+        rs = AssetDescriptor.fromStream(SvgCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("print")
     }
 
     @Test
