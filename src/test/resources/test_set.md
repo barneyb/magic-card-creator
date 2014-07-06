@@ -52,7 +52,7 @@ At the beginning of the end step, Blitz Hellion's owner shuffles it into his or 
 
 ## Barney of the Green Woods 2WUBRG
 
-![Dolores Boisvert](artwork/barney.jpg)
+![Dolores Boisvert](artwork/barney_fake.png)
 
 Legendary Enchantment Creature - Human Legend 100/100
 
