@@ -5,9 +5,13 @@
 # optionally followed by one or more whitespace characters and a color for the
 # icon background.
 #
-# Comments MUST start on the left edge of the line, are introduced with an
-# octothorpe, and extend to the end of the line, including the newline character
-# if one is present.
+# Comments are introduced with an octothorpe, must be the first non-whitespace
+# character on the line, and extend to the end of the line, including the
+# newline character (if one is present).
+#
+# While it is technically possible to include raster images w/in an icon body,
+# doing so is not recommended, as icons will almost always be scaled (including
+# being scaled _up_).
 #
 
 w #fffeda
