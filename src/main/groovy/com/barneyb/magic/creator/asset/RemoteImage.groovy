@@ -1,5 +1,4 @@
 package com.barneyb.magic.creator.asset
-import groovy.transform.TupleConstructor
 
 import javax.imageio.ImageIO
 import java.awt.*
@@ -8,10 +7,27 @@ import java.awt.image.BufferedImage
  *
  * @author bboisvert
  */
-@TupleConstructor
 class RemoteImage implements ImageAsset {
 
-    URL url
+    final URL url
+    final Dimension size
+
+    /**
+     * This constructor will immediately request the URL, blindly assume it is
+     * an ImageIO-readable file, and measure it.  As such, it only works for
+     * certain file types and always costs the remote interaction, so should be
+     * avoided where possible.
+     */
+    @Deprecated
+    RemoteImage(URL url) {
+        this.url = url
+        this.size = new Dimension(image.width, image.height)
+    }
+
+    RemoteImage(URL url, Dimension size) {
+        this.url = url
+        this.size = size
+    }
 
     private transient BufferedImage __image
     protected BufferedImage getImage() {
@@ -32,11 +48,6 @@ class RemoteImage implements ImageAsset {
             __bytes = url.bytes
         }
         __bytes
-    }
-
-    @Override
-    Dimension getSize() {
-        new Dimension(image.width, image.height)
     }
 
     @Override
