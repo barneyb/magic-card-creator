@@ -2,6 +2,7 @@ package com.barneyb.magic.creator.compositor.awt
 import com.barneyb.magic.creator.asset.ImageAsset
 import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.AbilityText
+import com.barneyb.magic.creator.compositor.Align
 import com.barneyb.magic.creator.compositor.Compositor
 import com.barneyb.magic.creator.compositor.CompoundImageAsset
 import com.barneyb.magic.creator.compositor.FlavorText
@@ -27,12 +28,6 @@ import java.text.AttributedString
 class AwtCompositor implements Compositor {
 
     public static final Font BASE_FONT = Font.decode("Goudy Old Style-bold")
-
-    static protected enum Align {
-        LEADING,
-        CENTER,
-//        TRAILING
-    }
 
     static class RenderCtx {
         final Graphics2D graphics
