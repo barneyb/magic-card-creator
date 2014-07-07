@@ -59,7 +59,7 @@ class SvgCompositor implements Compositor {
         g = el(doc.rootElement, 'g', [
             fill: "black",
             'stroke-width': 0,
-            font: FONT_NAME,
+            'font-family': FONT_NAME,
             'font-weight': "bold",
         ])
 
