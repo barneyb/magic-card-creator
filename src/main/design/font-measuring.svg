@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<svg width="1024" height="768" xmlns="http://www.w3.org/2000/svg">
+    <g transform="matrix(3 0 0 3 -400 -150)">
+        <g transform="translate(160 80)">
+            <text>20px == 15pt (ascent + descent = 18px)</text>
+        </g>
+
+        <g>
+            <rect width="500" height="20" x="150" y="100" opacity="0.166" />
+            <g fill="green">
+                <rect width="95" height="20" x="155" y="106.3" opacity="0.166" />
+            </g>
+            <g fill="red">
+                <rect width="95" height="18" x="160" y="106.3" opacity="0.166" />
+            </g>
+            <text x="160" y="120" font-size="20">I am green 1</text>
+            <text x="160" y="120" font-size="15pt" opacity="0.5">I am green 2</text>
+        </g>
+
+        <g transform="translate(0 40)">
+            <rect width="500" height="20" x="150" y="100" opacity="0.166" />
+            <g fill="green">
+                <rect width="130" height="20" x="260" y="102.3" opacity="0.166" />
+            </g>
+            <g fill="red">
+                <rect width="130" height="23.6" x="255" y="102.3" opacity="0.166" />
+            </g>
+            <g fill="yellow">
+                <rect width="130" height="17.7" x="250" y="102.3" opacity="0.166" />
+            </g>
+            <g fill="blue">
+                <rect width="130" height="5.9" x="250" y="120" opacity="0.166" />
+            </g>
+            <g fill="purple">
+                <rect width="130" height="26.66" x="245" y="102.3" opacity="0.166" />
+            </g>
+            <text x="260" y="120" font-size="20pt">I am green 1</text>
+            <text x="260" y="120" font-size="26.66" opacity="0.5">I am green 2</text>
+        </g>
+
+        <g transform="translate(160 200)">
+            <text>26.66px == 20pt (17.7 + 5.9 = 23.6px)</text>
+        </g>
+    </g>
+</svg>
