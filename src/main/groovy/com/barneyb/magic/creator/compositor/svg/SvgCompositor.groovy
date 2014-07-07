@@ -89,9 +89,10 @@ class SvgCompositor implements Compositor {
 
         def frc = new FontRenderContext(null, RenderingHints.VALUE_TEXT_ANTIALIAS_ON, RenderingHints.VALUE_FRACTIONALMETRICS_ON)
         def tl = new TextLayout(attstr.iterator, frc)
-        def y = box.y + tl.ascent + (box.height - tl.ascent - tl.descent - tl.leading) / 2
+        def bounds = tl.bounds
+        def y = box.y // + tl.ascent
         def x = box.x
-        def w = tl.advance
+        def w = bounds.width
         if (align == Align.CENTER && w < box.width) {
             x += (box.width - w) / 2
         }
@@ -101,14 +102,26 @@ class SvgCompositor implements Compositor {
             'font-size': fontSize
         ])
         this.el(container, 'rect', [
-            y: tl.descent - tl.ascent,
-            width: tl.bounds.width,
-            height: tl.bounds.height,
+            x: bounds.x,
+            y: bounds.y,
+            width: bounds.width,
+            height: bounds.height,
             fill: "#f00",
             stroke: "#000",
             'stroke-width': 1,
             opacity: 0.3
         ])
+        [(bounds.y): "#000", (bounds.y + tl.ascent): "#f00", (bounds.y + tl.ascent + tl.descent): "#0f0", (bounds.y + bounds.height): "#00f"].each { n, c ->
+            this.el(container, 'line', [
+                x1: bounds.x - 20,
+                x2: bounds.x + bounds.width + 20,
+                y1: n,
+                y2: n,
+                stroke: c,
+                'stroke-width': 1,
+                opacity: 0.3
+            ])
+        }
         def el = this.el(container, "text")
         el.appendChild(parent.ownerDocument.createTextNode(text))
         if (w > box.width) {
@@ -116,11 +129,12 @@ class SvgCompositor implements Compositor {
             def g = this.el(parent, "g", [
                 transform: "scale(${box.width / w} 1)"
             ])
-            g.appendChild(el)
+            g.appendChild(el) // this moves the text w/in this new element
             this.el(g, 'rect', [
-                y: tl.descent - tl.ascent,
-                width: tl.bounds.width,
-                height: tl.bounds.height,
+                x: bounds.x,
+                y: bounds.y,
+                width: bounds.width,
+                height: bounds.height,
                 fill: "#0f0",
                 stroke: "#000",
                 'stroke-width': 1,
