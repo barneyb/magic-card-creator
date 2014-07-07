@@ -68,8 +68,8 @@ class SvgCompositor implements Compositor {
         if (model.isPowerToughnessVisible()) {
             xmlText(g, rs.powertoughness, model.powerToughness, Align.CENTER)
         }
-        xmlText(el(g, 'g', ['font-weight': "normal"]), rs.artist, model.artist)
-        xmlText(g, rs.footer, model.footer)
+        xmlText(g, rs.artist, model.artist)
+        xmlText(el(g, 'g', ['font-weight': "normal"]), rs.footer, model.footer, Align.LEADING)
 
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer transformer = tf.newTransformer();
