@@ -17,7 +17,6 @@ import java.awt.font.TextAttribute
 import java.awt.font.TextLayout
 import java.awt.geom.AffineTransform
 import java.awt.image.AffineTransformOp
-import java.awt.image.BufferedImage
 import java.awt.image.RenderedImage
 import java.text.AttributedString
 /**
@@ -81,7 +80,7 @@ class AwtCompositor implements Compositor {
     }
 
     RenderedImage compose(RenderSet rs, RenderModel model) {
-        def card = model.frame.asImage() as BufferedImage
+        def card = ImageIO.read(model.frame.inputStream)
         def g = card.createGraphics()
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON)
         g.font = BASE_FONT
@@ -221,7 +220,7 @@ class AwtCompositor implements Compositor {
             transOp = new AffineTransformOp(AffineTransform.getScaleInstance(box.width / asset.size.width, box.height / asset.size.height), AffineTransformOp.TYPE_BICUBIC)
         }
         g.drawImage(
-            asset.asImage(),
+            ImageIO.read(asset.inputStream),
             transOp,
             (int) box.x,
             (int) box.y

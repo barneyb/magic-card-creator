@@ -40,11 +40,6 @@ class RemoteImage implements ImageAsset {
     }
 
     @Override
-    BufferedImage asImage() {
-        image
-    }
-
-    @Override
     InputStream getInputStream() {
         new ByteArrayInputStream(bytes)
     }
