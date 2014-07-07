@@ -5,8 +5,8 @@
                 <circle r="11" cx="11" cy="11" fill="#c5bbb8" />
                 <g transform="translate(-1.5 0) scale(0.5)">
                     <g transform="matrix(1,.851,-.851,1,6,25)">
-                <text font-family="Goudy Old Style" font-weight="bold" font-size="30px">T</text>
-            </g>
+                        <text font-family="Goudy Old Style" font-weight="bold" font-size="30px">T</text>
+                    </g>
                 </g>
             </svg>
         </g>
@@ -15,8 +15,8 @@
                 <circle r="11" cx="11" cy="11" fill="#c5bbb8" />
                 <g transform="translate(-1.5 0) scale(0.5)">
                     <g transform="matrix(1,0,0,1,15,34)">
-                <text font-family="Goudy Old Style" font-weight="bold" font-size="40px">1</text>
-            </g>
+                        <text font-family="Goudy Old Style" font-weight="bold" font-size="40px">1</text>
+                    </g>
                 </g>
             </svg>
         </g>
