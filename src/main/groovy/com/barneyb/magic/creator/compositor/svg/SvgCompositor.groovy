@@ -50,7 +50,9 @@ class SvgCompositor implements Compositor {
         xmlBox(g, rs.artwork)
         xmlBox(g, rs.typebar)
         xmlBox(g, rs.textbox)
-        xmlBox(g, rs.powertoughness)
+        if (model.isPowerToughnessVisible()) {
+            xmlBox(g, rs.powertoughness)
+        }
         xmlBox(g, rs.artist)
         xmlBox(g, rs.footer)
 
