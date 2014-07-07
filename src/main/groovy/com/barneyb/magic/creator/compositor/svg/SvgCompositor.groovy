@@ -43,7 +43,7 @@ class SvgCompositor implements Compositor {
         def g = el(doc.rootElement, 'g', [
             fill: "none",
             'stroke-width': 1,
-            stroke: "silver"
+            stroke: "#ebebeb"
         ])
 
         xmlBox(g, rs.titlebar)
