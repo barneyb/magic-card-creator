@@ -12,10 +12,12 @@ class Icon {
 
     String getLarge() {
         """\
-<svg xmlns="http://www.w3.org/2000/svg" width="47" height="47">
+<svg xmlns="http://www.w3.org/2000/svg" width="45" height="47">
     <circle r="22" cx="22" cy="25" fill="#000" opacity="0.75" />
-    <circle r="22" cx="25" cy="22" fill="$color" />
-    $body
+    <circle r="22" cx="23" cy="22" fill="$color" />
+    <g transform="translate(-2 0)">
+        $body
+    </g>
 </svg>
 """
     }
