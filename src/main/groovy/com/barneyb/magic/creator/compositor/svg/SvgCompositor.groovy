@@ -46,36 +46,37 @@ class SvgCompositor implements Compositor {
         doc.rootElement.setAttributeNS(null, "width", rs.frames.size.width.toString())
         doc.rootElement.setAttributeNS(null, "height", rs.frames.size.height.toString())
 
-        def g = el(doc.rootElement, 'g', [
+        def gbx = el(doc.rootElement, 'g', [
             fill          : "none",
             'stroke-width': 1,
             stroke        : "#ebebeb"
         ])
 
-        xmlBox(g, rs.titlebar)
-        xmlBox(g, rs.artwork)
-        xmlBox(g, rs.typebar)
-        xmlBox(g, rs.textbox)
+        xmlBox(gbx, rs.titlebar)
+        xmlBox(gbx, rs.artwork)
+        xmlBox(gbx, rs.typebar)
+        xmlBox(gbx, rs.textbox)
         if (model.isPowerToughnessVisible()) {
-            xmlBox(g, rs.powertoughness)
+            xmlBox(gbx, rs.powertoughness)
         }
-        xmlBox(g, rs.artist)
-        xmlBox(g, rs.footer)
+        xmlBox(gbx, rs.artist)
+        xmlBox(gbx, rs.footer)
 
         g = el(doc.rootElement, 'g', [
+        def gtx = el(doc.rootElement, 'g', [
             fill          : "black",
             'stroke-width': 0,
             'font-family' : FONT_NAME,
             'font-weight' : "bold",
         ])
 
-        xmlText(g, rs.titlebar, model.title)
-        xmlText(g, rs.typebar, model.type)
+        xmlText(gtx, titleBox, model.title)
+        xmlText(gtx, rs.typebar, model.type)
         if (model.isPowerToughnessVisible()) {
-            xmlText(g, rs.powertoughness, model.powerToughness, Align.CENTER)
+            xmlText(gtx, rs.powertoughness, model.powerToughness, Align.CENTER)
         }
-        xmlText(g, rs.artist, model.artist)
-        xmlText(el(g, 'g', ['font-weight': "normal"]), rs.footer, model.footer, Align.LEADING)
+        xmlText(gtx, rs.artist, model.artist)
+        xmlText(el(gtx, 'g', ['font-weight': "normal"]), rs.footer, model.footer, Align.LEADING)
     }
 
     protected Element xmlText(Element parent, Rectangle box, String text, Align align=Align.LEADING) {
