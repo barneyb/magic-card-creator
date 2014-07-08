@@ -3,7 +3,9 @@ import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.Align
 import com.barneyb.magic.creator.compositor.Compositor
 import com.barneyb.magic.creator.compositor.RenderModel
+import org.apache.batik.dom.svg.SAXSVGDocumentFactory
 import org.apache.batik.dom.svg.SVGDOMImplementation
+import org.apache.batik.util.XMLResourceDescriptor
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
 
@@ -46,13 +48,34 @@ class SvgCompositor implements Compositor {
         doc.rootElement.setAttributeNS(null, "width", rs.frames.size.width.toString())
         doc.rootElement.setAttributeNS(null, "height", rs.frames.size.height.toString())
 
+        def defs = el(doc.rootElement, 'defs')
+
         def gbx = el(doc.rootElement, 'g', [
             fill          : "none",
             'stroke-width': 1,
             stroke        : "#ebebeb"
         ])
 
-        xmlBox(gbx, rs.titlebar)
+        def gtx = el(doc.rootElement, 'g', [
+            fill          : "black",
+            'stroke-width': 0,
+            'font-family' : FONT_NAME,
+            'font-weight' : "bold",
+        ])
+
+        def iconHeight = 43.29 // todo: hard-coded font size of title in px
+        def iconWidth = iconHeight / rs.large.size.height * rs.large.size.width
+
+        def titleBox = new Rectangle(
+            (int) rs.titlebar.x,
+            (int) rs.titlebar.y,
+            (int) rs.titlebar.width - (model.cost.size() + 0.5) * iconWidth,
+            (int) rs.titlebar.height
+        )
+
+        // draw all the bounding boxes (for debugging)
+        xmlBox(gbx, rs.titlebar) // title and cost
+        xmlBox(gbx, titleBox) // just title, after constrained by cost
         xmlBox(gbx, rs.artwork)
         xmlBox(gbx, rs.typebar)
         xmlBox(gbx, rs.textbox)
@@ -62,14 +85,7 @@ class SvgCompositor implements Compositor {
         xmlBox(gbx, rs.artist)
         xmlBox(gbx, rs.footer)
 
-        g = el(doc.rootElement, 'g', [
-        def gtx = el(doc.rootElement, 'g', [
-            fill          : "black",
-            'stroke-width': 0,
-            'font-family' : FONT_NAME,
-            'font-weight' : "bold",
-        ])
-
+        // draw all the single-line text elements
         xmlText(gtx, titleBox, model.title)
         xmlText(gtx, rs.typebar, model.type)
         if (model.isPowerToughnessVisible()) {
@@ -77,6 +93,30 @@ class SvgCompositor implements Compositor {
         }
         xmlText(gtx, rs.artist, model.artist)
         xmlText(el(gtx, 'g', ['font-weight': "normal"]), rs.footer, model.footer, Align.LEADING)
+
+        // draw the casting cost
+        def gc = el(doc.rootElement, 'g', [
+            transform: "translate(${rs.titlebar.x + rs.titlebar.width - model.cost.size() * iconWidth} ${rs.titlebar.y + (rs.titlebar.height - iconHeight) / 2})"
+        ])
+        gc = el(gc, 'g', [
+            transform: "scale(${(float) iconHeight / rs.large.size.height})"
+        ])
+        model.cost.unique(false).sort().each { it ->
+            String parser = XMLResourceDescriptor.getXMLParserClassName()
+            SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser)
+            def icon = (f.createDocument('', it.inputStream) as SVGDocument).rootElement
+
+            doc.adoptNode(icon)
+            el(defs, 'g', [
+                id: "lg-$it.id"
+            ]).appendChild(icon)
+        }
+        model.cost.eachWithIndex { it, i ->
+            el(gc, 'use', [
+                'xlink:href': "#lg-$it.id",
+                transform: "translate(${i * rs.large.size.width} 0)"
+            ])
+        }
     }
 
     protected Element xmlText(Element parent, Rectangle box, String text, Align align=Align.LEADING) {
