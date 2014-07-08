@@ -17,6 +17,6 @@ class AssetSet {
     String type
 
     ImageAsset getImageAsset(AssetKeyed keyed) {
-        new ClasspathImage("assets/$renderSet.key/$key/${keyed.assetKey}.$type", size)
+        new ClasspathImage(keyed.assetKey, "assets/$renderSet.key/$key/${keyed.assetKey}.$type", size)
     }
 }

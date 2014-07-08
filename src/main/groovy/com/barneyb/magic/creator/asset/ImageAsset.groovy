@@ -8,6 +8,8 @@ import java.awt.*
  */
 interface ImageAsset extends Renderable {
 
+    String getId()
+
     Dimension getSize()
 
     InputStream getInputStream()

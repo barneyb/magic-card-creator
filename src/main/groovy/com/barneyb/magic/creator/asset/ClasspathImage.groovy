@@ -22,8 +22,8 @@ class ClasspathImage extends RemoteImage {
         this.assetPath = assetPath
     }
 
-    def ClasspathImage(String assetPath, Dimension size) {
-        super(ClasspathImage.classLoader.getResource(assetPath), size)
+    def ClasspathImage(String id, String assetPath, Dimension size) {
+        super(id, ClasspathImage.classLoader.getResource(assetPath), size)
         this.assetPath = assetPath
     }
 

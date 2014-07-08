@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage
  */
 class RemoteImage implements ImageAsset {
 
+    final String id
     final URL url
     final Dimension size
 
@@ -24,7 +25,8 @@ class RemoteImage implements ImageAsset {
         this.size = new Dimension(image.width, image.height)
     }
 
-    RemoteImage(URL url, Dimension size) {
+    RemoteImage(String id, URL url, Dimension size) {
+        this.id = id
         this.url = url
         this.size = size
     }
