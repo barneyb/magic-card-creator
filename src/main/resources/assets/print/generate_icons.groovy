@@ -3,7 +3,7 @@ package assets.print
 class Icon {
 
     String id
-    String color = '#c5bbb8'
+    String color = '#d0cac3'
     String body
 
     String getFilename() {
