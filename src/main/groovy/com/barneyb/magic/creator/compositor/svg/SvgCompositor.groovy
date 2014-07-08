@@ -63,8 +63,8 @@ class SvgCompositor implements Compositor {
             'font-weight' : "bold",
         ])
 
-        def iconHeight = 43.29 // todo: hard-coded font size of title in px
-        def iconWidth = iconHeight / rs.large.size.height * rs.large.size.width
+        float iconHeight = rs.titlebar.height * 0.88
+        float iconWidth = iconHeight / rs.large.size.height * rs.large.size.width
 
         def titleBox = new Rectangle(
             (int) rs.titlebar.x,
