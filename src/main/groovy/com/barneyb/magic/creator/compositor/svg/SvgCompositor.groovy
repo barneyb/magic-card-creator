@@ -73,8 +73,7 @@ class SvgCompositor implements Compositor {
             'stroke-width': 0
         ])
 
-        float iconHeight = rs.titlebar.height * 0.88
-        float iconWidth = iconHeight / rs.large.size.height * rs.large.size.width
+        float iconWidth = rs.titlebar.height / rs.large.size.height * rs.large.size.width
 
         def titleBox = new Rectangle(
             (int) rs.titlebar.x,
@@ -106,10 +105,10 @@ class SvgCompositor implements Compositor {
 
         // draw the casting cost
         def gc = el(doc.rootElement, 'g', [
-            transform: "translate(${rs.titlebar.x + rs.titlebar.width - model.cost.size() * iconWidth} ${rs.titlebar.y + (rs.titlebar.height - iconHeight) / 2})"
+            transform: "translate(${rs.titlebar.x + rs.titlebar.width - model.cost.size() * iconWidth} ${(float) rs.titlebar.y})"
         ])
         gc = el(gc, 'g', [
-            transform: "scale(${(float) iconHeight / rs.large.size.height})"
+            transform: "scale(${(float) rs.titlebar.height / rs.large.size.height})"
         ])
         model.cost.unique(false).sort().each { it ->
             String parser = XMLResourceDescriptor.getXMLParserClassName()
