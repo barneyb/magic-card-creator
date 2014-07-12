@@ -29,6 +29,7 @@ class AwtCompositorTest {
 <img src="nightmare.png" />
 <img src="blitz-hellion.png" />
 <img src="barney.png" />
+<img src="brothel.png" />
 </body>
 </html>"""
     }

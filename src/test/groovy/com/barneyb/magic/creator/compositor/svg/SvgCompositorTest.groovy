@@ -27,6 +27,7 @@ class SvgCompositorTest {
 <embed src="nightmare.svg" />
 <embed src="blitz-hellion.svg" />
 <embed src="barney.svg" />
+<embed src="brothel.svg" />
 </body>
 </html>"""
     }
