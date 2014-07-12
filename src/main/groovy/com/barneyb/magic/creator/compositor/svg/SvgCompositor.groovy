@@ -1,14 +1,18 @@
 package com.barneyb.magic.creator.compositor.svg
+
+import com.barneyb.magic.creator.asset.ImageAsset
 import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.Align
 import com.barneyb.magic.creator.compositor.Compositor
 import com.barneyb.magic.creator.compositor.RenderModel
 import org.apache.batik.dom.svg.SAXSVGDocumentFactory
 import org.apache.batik.dom.svg.SVGDOMImplementation
+import org.apache.batik.svggen.SVGGraphics2D
 import org.apache.batik.util.XMLResourceDescriptor
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
 
+import javax.imageio.ImageIO
 import javax.xml.transform.OutputKeys
 import javax.xml.transform.Transformer
 import javax.xml.transform.TransformerFactory
@@ -18,6 +22,8 @@ import java.awt.*
 import java.awt.font.FontRenderContext
 import java.awt.font.TextAttribute
 import java.awt.font.TextLayout
+import java.awt.geom.AffineTransform
+import java.awt.image.AffineTransformOp
 import java.text.AttributedString
 
 /**
@@ -62,16 +68,12 @@ class SvgCompositor implements Compositor {
 
         def defs = el(doc.rootElement, 'defs')
 
-        def gbx = el(doc.rootElement, 'g', [
-            fill          : "none",
-            'stroke-width': 1,
-            stroke        : "#ebebeb"
-        ])
-
-        def gtx = el(doc.rootElement, 'g', [
-            fill          : "black",
-            'stroke-width': 0
-        ])
+        // this will inline the rasters as Base64-encoded data URLs.
+        SVGGraphics2D svgg = new SVGGraphics2D(doc)
+        xmlImage(svgg, new Rectangle(new Point(0, 0), rs.frames.size), model.frame)
+        xmlImage(svgg, rs.artwork, model.artwork)
+        doc.documentElement.appendChild(svgg.root)
+        svgg = null
 
         float iconWidth = rs.titlebar.height / rs.large.size.height * rs.large.size.width
 
@@ -81,6 +83,12 @@ class SvgCompositor implements Compositor {
             (int) rs.titlebar.width - (model.cost.size() + 0.5) * iconWidth,
             (int) rs.titlebar.height
         )
+
+        def gbx = el(doc.rootElement, 'g', [
+            fill          : "none",
+            'stroke-width': 1,
+            stroke        : "#ebebeb"
+        ])
 
         // draw all the bounding boxes (for debugging)
         xmlBox(gbx, rs.titlebar) // title and cost
@@ -93,6 +101,11 @@ class SvgCompositor implements Compositor {
         }
         xmlBox(gbx, rs.artist)
         xmlBox(gbx, rs.footer)
+
+        def gtx = el(doc.rootElement, 'g', [
+            fill          : "black",
+            'stroke-width': 0
+        ])
 
         // draw all the single-line text elements
         xmlText(gtx, titleBox, model.title, TITLE_FONT)
@@ -126,6 +139,15 @@ class SvgCompositor implements Compositor {
                 transform: "translate(${i * rs.large.size.width} 0)"
             ])
         }
+    }
+
+    protected void xmlImage(SVGGraphics2D svgg, Rectangle box, ImageAsset asset) {
+        if (! asset.exists) {
+            return
+        }
+        def img = ImageIO.read(asset.inputStream)
+        def size = new Dimension(img.width, img.height) // this should match 'asset.size'
+        svgg.drawImage(img, new AffineTransformOp(AffineTransform.getScaleInstance(box.width / size.width, box.height / size.height), AffineTransformOp.TYPE_BICUBIC), (int) box.x, (int) box.y)
     }
 
     protected Element xmlText(Element parent, Rectangle box, String text, Map<TextAttribute, ?> attrs, Align align=Align.LEADING) {
