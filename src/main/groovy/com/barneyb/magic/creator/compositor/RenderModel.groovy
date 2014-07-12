@@ -20,13 +20,17 @@ class RenderModel {
 
     static RenderModel fromCard(Card c, RenderSet rs) {
         FrameType frame
-        if (c.colors.size() > 1) {
+        if (c.land) {
+            frame = FrameBaseType.LAND
+        } else if (c.artifact) {
+            frame = FrameBaseType.ARTIFACT
+        } else if (c.colors.size() > 1) {
             frame = FrameBaseType.GOLD
-            if (c.colors.size() == 2) {
-                frame += FrameModifier.Dual.valueOf(c.colors*.name().join("_"))
-            }
         } else {
             frame = FrameBaseType.valueOf(c.colors.first().name()) // kludge!
+        }
+        if (c.colors.size() == 2) {
+            frame += FrameModifier.Dual.valueOf(c.colors*.name().join("_"))
         }
         def m = new RenderModel(
             title: c.title,
@@ -72,7 +76,7 @@ class RenderModel {
 
     String title
 
-    List<ImageAsset> cost
+    List<ImageAsset> cost = []
 
     ImageAsset artwork
 

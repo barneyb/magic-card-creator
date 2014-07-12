@@ -51,6 +51,14 @@ class Card {
         typeParts.contains("creature")
     }
 
+    boolean isLand() {
+        typeParts.contains("land")
+    }
+
+    boolean isArtifact() {
+        typeParts.contains("artifact")
+    }
+
     boolean isEnchantment() {
         typeParts.contains("enchantment")
     }

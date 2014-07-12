@@ -1,5 +1,4 @@
 package com.barneyb.magic.creator.compositor.awt
-
 import com.barneyb.magic.creator.Cards
 import com.barneyb.magic.creator.asset.AssetDescriptor
 import com.barneyb.magic.creator.asset.RenderSet
@@ -69,6 +68,12 @@ class AwtCompositorTest {
     void blitz_hellion() {
         def m = Cards.hellion(rs)
         new AwtCompositor().compose(m, rs, new File(outputDir, "blitz-hellion.png").newOutputStream())
+    }
+
+    @Test
+    void brothel() {
+        def m = Cards.brothel(rs)
+        new AwtCompositor().compose(m, rs, new File(outputDir, "brothel.png").newOutputStream())
     }
 
 }

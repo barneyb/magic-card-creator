@@ -72,6 +72,14 @@ class RenderModelTest {
     }
 
     @Test
+    void fromCard_brothel() {
+        assertRenderModel(
+            Cards.brothel(rs),
+            RenderModel.fromCard(Cards.brothel(), rs)
+        )
+    }
+
+    @Test
     void getBodyIcons() {
         assertEquals([
         ].collect(rs.small.&getImageAsset) as Set, Cards.counterspell(rs).bodyIcons)

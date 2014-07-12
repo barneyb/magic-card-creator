@@ -68,4 +68,10 @@ class SvgCompositorTest {
         new SvgCompositor().compose(m, rs, new File(outputDir, "blitz-hellion.svg").newOutputStream())
     }
 
+    @Test
+    void brothel() {
+        def m = Cards.brothel(rs)
+        new SvgCompositor().compose(m, rs, new File(outputDir, "brothel.svg").newOutputStream())
+    }
+
 }

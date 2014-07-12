@@ -31,6 +31,8 @@ import org.tautua.markdownpapers.ast.Text
 import org.tautua.markdownpapers.ast.Visitor
 import org.tautua.markdownpapers.parser.Parser
 
+import java.util.regex.Pattern
+
 import static com.barneyb.magic.creator.util.StringUtils.*
 /**
  *
@@ -38,6 +40,8 @@ import static com.barneyb.magic.creator.util.StringUtils.*
  */
 @TupleConstructor
 class MarkdownDescriptor implements CardSetDescriptor, Visitor {
+
+    public static final Pattern COST_PATTERN = ~/^([0-9]|[wugrbWUGRB]|\{([0-9]+|[wugrbWUGRB])\})+$/
 
     def MarkdownDescriptor(URL src) {
         this(src, src.newReader())
@@ -118,7 +122,12 @@ class MarkdownDescriptor implements CardSetDescriptor, Visitor {
         } else if (level == 2) {
             // card title and trailing casting cost
             int i = text.lastIndexOf(' ')
-            card = new Card(decodeEscapes(text.substring(0, i)), text.substring(i + 1))
+            def cost = text.substring(i + 1)
+            if (cost.matches(COST_PATTERN)) {
+                card = new Card(decodeEscapes(text.substring(0, i)), cost)
+            } else {
+                card = new Card(decodeEscapes(text))
+            }
             cardSet << card
         }
         push()

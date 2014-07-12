@@ -98,11 +98,22 @@ Indestructable, hexproof
 
 {1}{U}{G}{T}: Every opponent dies in a fire unless all pay {X}{U}{B}{G} or {X}{R}{B}{W} or {X}{X}{B} where X equals your life total.
 
-{For the first time in his life, Barney felt warm.  And hungry.}
+{For the first time in his life, Barney felt warm. And hungry.}
 """,
             power: "100",
             toughness: "100",
             artist: "Dolores Boisvert"
+        )
+        s << new Card(
+            title: "Elysian Brothel",
+            artwork: _cl.getResource("artwork/brothel.jpg"),
+            type: "Legendary Land",
+            body: """
+All legendary creatures, gods, and angels, get -1/-1.
+
+{They are selective in their clientele, but their service legendary.}
+""",
+            artist: "God of War: Ascension"
         )
         s
     }
@@ -133,7 +144,7 @@ Indestructable, hexproof
                 ]
             ],
             artist: "Zueuk",
-            footer: "\u00A9 2014 Barney Boisvert (2/5)"
+            footer: "\u00A9 2014 Barney Boisvert (2/6)"
         )
     }
 
@@ -168,7 +179,7 @@ Indestructable, hexproof
             powerToughness: "* / *",
             whiteFooterText: true,
             artist: "catfish08",
-            footer: "\u00A9 2014 Barney Boisvert (3/5)"
+            footer: "\u00A9 2014 Barney Boisvert (3/6)"
         )
     }
 
@@ -206,7 +217,7 @@ Indestructable, hexproof
             ],
             powerToughness: "1 / 1",
             artist: "Sally Mann",
-            footer: "\u00A9 2014 Barney Boisvert (1/5)"
+            footer: "\u00A9 2014 Barney Boisvert (1/6)"
         )
     }
 
@@ -261,12 +272,12 @@ Indestructable, hexproof
                     new Paragraph()
                 ],
                 [
-                    new FlavorText("For the first time in his life, Barney felt warm.  And hungry.")
+                    new FlavorText("For the first time in his life, Barney felt warm. And hungry.")
                 ]
             ],
             powerToughness: "100/100",
             artist: "Dolores Boisvert",
-            footer: "\u00A9 2014 Barney Boisvert (5/5)"
+            footer: "\u00A9 2014 Barney Boisvert (5/6)"
         )
     }
 
@@ -300,7 +311,34 @@ Indestructable, hexproof
             ],
             powerToughness: "7 / 7",
             artist: "Anthony S. Waters",
-            footer: "\u00A9 2014 Barney Boisvert (4/5)"
+            footer: "\u00A9 2014 Barney Boisvert (4/6)"
+        )
+    }
+
+    static Card brothel() {
+        set().get("Elysian Brothel")
+    }
+
+    static RenderModel brothel(RenderSet rs) {
+        new RenderModel(
+            frame: rs.frames.getImageAsset(FrameBaseType.LAND),
+            title: "Elysian Brothel",
+            artwork: new RemoteImage(_cl.getResource("artwork/brothel.jpg")),
+            type: "Legendary Land",
+            body: [
+                [
+                    new AbilityText("All legendary creatures, gods, and angels, get -1/-1."),
+                ],
+                [
+                    new Paragraph()
+                ],
+                [
+                    new FlavorText("They are selective in their clientele, but their service legendary.")
+                ]
+            ],
+            whiteFooterText: true,
+            artist: "God of War: Ascension",
+            footer: "\u00A9 2014 Barney Boisvert (6/6)"
         )
     }
 }
