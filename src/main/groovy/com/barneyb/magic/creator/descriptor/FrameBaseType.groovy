@@ -6,13 +6,19 @@ package com.barneyb.magic.creator.descriptor
 enum FrameBaseType implements FrameType {
 
     ARTIFACT,
-    BLACK,
+    BLACK(true),
     BLUE,
     GOLD,
     GREEN,
-    LAND,
+    LAND(true),
     RED,
     WHITE
+
+    final boolean whiteFooterText
+
+    def FrameBaseType(boolean whiteFooterText=false) {
+        this.whiteFooterText = whiteFooterText
+    }
 
     String getAssetKey() {
         name().toLowerCase()

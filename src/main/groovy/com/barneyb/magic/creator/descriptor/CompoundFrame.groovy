@@ -58,4 +58,10 @@ class CompoundFrame implements FrameType {
             this
         }
     }
+
+    @Override
+    boolean getWhiteFooterText() {
+        base.whiteFooterText
+    }
+
 }

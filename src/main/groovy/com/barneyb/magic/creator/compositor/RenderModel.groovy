@@ -33,7 +33,7 @@ class RenderModel {
             cost: c.cost.collect(rs.large.&getImageAsset),
             artwork: new RemoteImage(new URL(c.artwork)),
             type: c.type + (c.subtyped ? " \u2013 $c.subtype" : ''),
-            whiteFooterText: frame == FrameBaseType.BLACK,
+            whiteFooterText: frame.whiteFooterText,
             artist: c.artist,
         )
         if (c.creature) {

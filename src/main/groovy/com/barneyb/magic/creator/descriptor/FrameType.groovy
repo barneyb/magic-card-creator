@@ -10,4 +10,5 @@ interface FrameType extends AssetKeyed {
 
     FrameType minus(FrameModifier mod)
 
+    boolean getWhiteFooterText()
 }
