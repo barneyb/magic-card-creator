@@ -12,7 +12,7 @@ import org.junit.Test
  */
 class BatikTranscoderTest {
 
-    static final File outputDir = new File("src/main/design")
+    static final File outputDir = new File("build")
 
     @BeforeClass
     static void ensureTarget() {
@@ -22,26 +22,18 @@ class BatikTranscoderTest {
         def f = new File(outputDir, "preview_batik.html")
         f.text = """\
 <html>
-<head>
-<style>
-img {
-    width: 400px;
-    height: 560px;
-}
-</style>
-</head>
 <body>
 <embed src="barney.svg"></embed>
+<img src="barney_tc.png" />
 <img src="barney.png" />
-<img src="../../../build/barney.png" />
 </body>
 </html>"""
     }
 
     @Test
     void png() {
-        def src = new File('src/main/design/barney.svg')
-        def dest = new File(src.parent, "barney.png")
+        def src = new File(outputDir, 'barney.svg')
+        def dest = new File(src.parent, "barney_tc.png")
         new PNGTranscoder().transcode(
             new TranscoderInput(src.toURI().toString()),
             new TranscoderOutput(dest.newOutputStream())
@@ -50,8 +42,8 @@ img {
 
     @Test
     void pdf() {
-        def src = new File('src/main/design/barney.svg')
-        def dest = new File(src.parent, "barney.pdf")
+        def src = new File(outputDir, 'barney.svg')
+        def dest = new File(src.parent, "barney_tc.pdf")
         new PDFTranscoder().transcode(
             new TranscoderInput(src.toURI().toString()),
             new TranscoderOutput(dest.newOutputStream())
