@@ -6,6 +6,7 @@ import com.barneyb.magic.creator.compositor.Align
 import com.barneyb.magic.creator.compositor.Compositor
 import com.barneyb.magic.creator.compositor.CompoundImageAsset
 import com.barneyb.magic.creator.compositor.FlavorText
+import com.barneyb.magic.creator.compositor.MagicBreakIteratorProvider
 import com.barneyb.magic.creator.compositor.Paragraph
 import com.barneyb.magic.creator.compositor.RenderModel
 import com.barneyb.magic.creator.compositor.Renderable
@@ -179,7 +180,7 @@ class AwtCompositor implements Compositor {
         def attr = new AttributedString(s, [
             (TextAttribute.FONT): BASE_FONT.deriveFont(flavor ? Font.ITALIC : Font.PLAIN, ctx.fontSize)
         ])
-        def lm = new LineBreakMeasurer(attr.iterator, ctx.graphics.getFontRenderContext())
+        def lm = new LineBreakMeasurer(attr.iterator, MagicBreakIteratorProvider.lineInstance, ctx.graphics.getFontRenderContext())
         TextLayout l
         while (lm.position < s.length()) {
             if (l != null) {
