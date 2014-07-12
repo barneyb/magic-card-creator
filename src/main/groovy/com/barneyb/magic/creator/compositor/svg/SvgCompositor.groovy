@@ -19,6 +19,7 @@ import java.awt.font.FontRenderContext
 import java.awt.font.TextAttribute
 import java.awt.font.TextLayout
 import java.text.AttributedString
+
 /**
  *
  * @author bboisvert
@@ -136,13 +137,13 @@ class SvgCompositor implements Compositor {
         ])
         def lm = font.getLineMetrics(text, frc)
         fontSize = fontSize / (lm.ascent + Math.abs(lm.descent)) * box.height
-        def attstr = new AttributedString(text, attrs + [
-            (TextAttribute.SIZE): fontSize
+        font = new Font(attrs + [
+            (TextAttribute.SIZE): fontSize,
         ])
-        def tl = new TextLayout(attstr.iterator, frc)
-        float y = box.y + tl.ascent + (box.height - tl.ascent - tl.descent) / 2
+        lm = font.getLineMetrics(text, frc)
+        float y = box.y + lm.ascent + (box.height - lm.ascent - Math.abs(lm.descent)) / 2
         float x = box.x
-        float w = tl.advance
+        float w = new TextLayout(new AttributedString(text, font.attributes).iterator, frc).advance
         if (align == Align.CENTER && w < box.width) {
             x += (box.width - w) / 2
         }
