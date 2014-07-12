@@ -84,23 +84,23 @@ class SvgCompositor implements Compositor {
             (int) rs.titlebar.height
         )
 
-        def gbx = el(doc.rootElement, 'g', [
-            fill          : "none",
-            'stroke-width': 1,
-            stroke        : "#ebebeb"
-        ])
-
-        // draw all the bounding boxes (for debugging)
-        xmlBox(gbx, rs.titlebar) // title and cost
-        xmlBox(gbx, titleBox) // just title, after constrained by cost
-        xmlBox(gbx, rs.artwork)
-        xmlBox(gbx, rs.typebar)
-        xmlBox(gbx, rs.textbox)
-        if (model.isPowerToughnessVisible()) {
-            xmlBox(gbx, rs.powertoughness)
-        }
-        xmlBox(gbx, rs.artist)
-        xmlBox(gbx, rs.footer)
+//        def gbx = el(doc.rootElement, 'g', [
+//            fill          : "none",
+//            'stroke-width': 1,
+//            stroke        : "#ebebeb"
+//        ])
+//
+//        // draw all the bounding boxes (for debugging)
+//        xmlBox(gbx, rs.titlebar) // title and cost
+//        xmlBox(gbx, titleBox) // just title, after constrained by cost
+//        xmlBox(gbx, rs.artwork)
+//        xmlBox(gbx, rs.typebar)
+//        xmlBox(gbx, rs.textbox)
+//        if (model.isPowerToughnessVisible()) {
+//            xmlBox(gbx, rs.powertoughness)
+//        }
+//        xmlBox(gbx, rs.artist)
+//        xmlBox(gbx, rs.footer)
 
         def gtx = el(doc.rootElement, 'g', [
             fill          : "black",
