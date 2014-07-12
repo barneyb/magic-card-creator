@@ -25,7 +25,18 @@ import java.text.AttributedString
  */
 class SvgCompositor implements Compositor {
 
-    public static final String FONT_NAME = "Goudy Old Style"
+    public static final Map<TextAttribute, ?> TITLE_FONT = [
+        (TextAttribute.FAMILY): "Matrix",
+        (TextAttribute.WEIGHT): TextAttribute.WEIGHT_BOLD,
+    ]
+    public static final Map<TextAttribute, ?> BODY_FONT = [
+        (TextAttribute.FAMILY): "Garamond",
+        (TextAttribute.WEIGHT): TextAttribute.WEIGHT_REGULAR,
+    ]
+    public static final Map<TextAttribute, ?> POWER_TOUGHNESS_FONT = [
+        (TextAttribute.FAMILY): "Goudy Old Style",
+        (TextAttribute.WEIGHT): TextAttribute.WEIGHT_BOLD,
+    ]
 
     @Override
     void compose(RenderModel model, RenderSet rs, OutputStream dest) {
@@ -58,9 +69,7 @@ class SvgCompositor implements Compositor {
 
         def gtx = el(doc.rootElement, 'g', [
             fill          : "black",
-            'stroke-width': 0,
-            'font-family' : FONT_NAME,
-            'font-weight' : "bold",
+            'stroke-width': 0
         ])
 
         float iconHeight = rs.titlebar.height * 0.88
@@ -86,13 +95,13 @@ class SvgCompositor implements Compositor {
         xmlBox(gbx, rs.footer)
 
         // draw all the single-line text elements
-        xmlText(gtx, titleBox, model.title)
-        xmlText(gtx, rs.typebar, model.type)
+        xmlText(gtx, titleBox, model.title, TITLE_FONT)
+        xmlText(gtx, rs.typebar, model.type, TITLE_FONT)
         if (model.isPowerToughnessVisible()) {
-            xmlText(gtx, rs.powertoughness, model.powerToughness, Align.CENTER)
+            xmlText(gtx, rs.powertoughness, model.powerToughness, POWER_TOUGHNESS_FONT, Align.CENTER)
         }
-        xmlText(gtx, rs.artist, model.artist)
-        xmlText(el(gtx, 'g', ['font-weight': "normal"]), rs.footer, model.footer, Align.LEADING)
+        xmlText(gtx, rs.artist, model.artist, TITLE_FONT)
+        xmlText(gtx, rs.footer, model.footer, BODY_FONT)
 
         // draw the casting cost
         def gc = el(doc.rootElement, 'g', [
@@ -119,17 +128,15 @@ class SvgCompositor implements Compositor {
         }
     }
 
-    protected Element xmlText(Element parent, Rectangle box, String text, Align align=Align.LEADING) {
+    protected Element xmlText(Element parent, Rectangle box, String text, Map<TextAttribute, ?> attrs, Align align=Align.LEADING) {
         float fontSize = box.height
         def frc = new FontRenderContext(null, RenderingHints.VALUE_TEXT_ANTIALIAS_ON, RenderingHints.VALUE_FRACTIONALMETRICS_ON)
-        def font = new Font([
-            (TextAttribute.FAMILY): FONT_NAME,
-            (TextAttribute.SIZE)  : fontSize,
-            (TextAttribute.WEIGHT): TextAttribute.WEIGHT_BOLD,
+        def font = new Font(attrs + [
+            (TextAttribute.SIZE): fontSize,
         ])
         def lm = font.getLineMetrics(text, frc)
-        fontSize = fontSize / (lm.ascent + lm.descent) * box.height
-        def attstr = new AttributedString(text, font.attributes + [
+        fontSize = fontSize / (lm.ascent + Math.abs(lm.descent)) * box.height
+        def attstr = new AttributedString(text, attrs + [
             (TextAttribute.SIZE): fontSize
         ])
         def tl = new TextLayout(attstr.iterator, frc)
@@ -143,8 +150,10 @@ class SvgCompositor implements Compositor {
             transform: "translate($x $y)",
             'font-size': fontSize + "px"
         ])
-
-        def el = this.el(container, "text")
+        def el = this.el(container, "text", [
+            'font-family': attrs[TextAttribute.FAMILY],
+            'font-weight': attrs[TextAttribute.WEIGHT] == TextAttribute.WEIGHT_BOLD ? "bold" : "normal",
+        ])
         el.appendChild(parent.ownerDocument.createTextNode(text))
         if (w > box.width) {
             // wrap it with a transform
