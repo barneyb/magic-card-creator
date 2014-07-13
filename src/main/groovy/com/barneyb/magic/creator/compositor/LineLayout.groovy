@@ -26,10 +26,14 @@ class LineLayout {
     /**
      * The scaling transform needed in the x direction to fit in the box.
      */
-    float xScale
+    float scale
 
     LineLayout plus(Point2D p) {
-        new LineLayout(fontSize, x + p.x, y + p.y, xScale)
+        new LineLayout(fontSize, (float) x + p.x, (float) y + p.y, scale)
+    }
+
+    boolean isScaled() {
+        scale != 1
     }
 
 }
