@@ -4,6 +4,7 @@ import com.barneyb.magic.creator.asset.ImageAsset
 import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.Align
 import com.barneyb.magic.creator.compositor.Compositor
+import com.barneyb.magic.creator.compositor.LayoutUtils
 import com.barneyb.magic.creator.compositor.RenderModel
 import org.apache.batik.dom.svg.SAXSVGDocumentFactory
 import org.apache.batik.dom.svg.SVGDOMImplementation
@@ -19,12 +20,9 @@ import javax.xml.transform.TransformerFactory
 import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
 import java.awt.*
-import java.awt.font.FontRenderContext
 import java.awt.font.TextAttribute
-import java.awt.font.TextLayout
 import java.awt.geom.AffineTransform
 import java.awt.image.AffineTransformOp
-import java.text.AttributedString
 
 /**
  *
@@ -151,36 +149,20 @@ class SvgCompositor implements Compositor {
     }
 
     protected Element xmlText(Element parent, Rectangle box, String text, Map<TextAttribute, ?> attrs, Align align=Align.LEADING) {
-        float fontSize = box.height
-        def frc = new FontRenderContext(null, RenderingHints.VALUE_TEXT_ANTIALIAS_ON, RenderingHints.VALUE_FRACTIONALMETRICS_ON)
-        def font = new Font(attrs + [
-            (TextAttribute.SIZE): fontSize,
-        ])
-        def lm = font.getLineMetrics(text, frc)
-        fontSize = fontSize / (lm.ascent + Math.abs(lm.descent)) * box.height
-        font = new Font(attrs + [
-            (TextAttribute.SIZE): fontSize,
-        ])
-        lm = font.getLineMetrics(text, frc)
-        float y = box.y + lm.ascent + (box.height - lm.ascent - Math.abs(lm.descent)) / 2
-        float x = box.x
-        float w = new TextLayout(new AttributedString(text, font.attributes).iterator, frc).advance
-        if (align == Align.CENTER && w < box.width) {
-            x += (box.width - w) / 2
-        }
+        def ll = new LayoutUtils().line(box, text, attrs, align)
         def container = this.el(parent, "g", [
-            transform: "translate($x $y)",
-            'font-size': fontSize + "px"
+            transform: "translate($ll.x $ll.y)",
+            'font-size': ll.fontSize + "px"
         ])
         def el = this.el(container, "text", [
             'font-family': attrs[TextAttribute.FAMILY],
             'font-weight': attrs[TextAttribute.WEIGHT] == TextAttribute.WEIGHT_BOLD ? "bold" : "normal",
         ])
         el.appendChild(parent.ownerDocument.createTextNode(text))
-        if (w > box.width) {
+        if (ll.scaled) {
             // wrap it with a transform
             def g = this.el(parent, "g", [
-                transform: "scale(${(float) box.width / w} 1)"
+                transform: "scale($ll.scale 1)"
             ])
             g.appendChild(el) // this moves the text w/in this new element
             container.appendChild(g)
