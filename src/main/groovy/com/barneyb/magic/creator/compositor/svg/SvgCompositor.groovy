@@ -118,7 +118,7 @@ class SvgCompositor implements Compositor {
 
         // draw the casting cost
         def gc = el(doc.rootElement, 'g', [
-            transform: "translate(${rs.titlebar.x + rs.titlebar.width - model.cost.size() * iconWidth} ${(float) rs.titlebar.y})"
+            transform: "translate(${(float) rs.titlebar.x + rs.titlebar.width - model.cost.size() * iconWidth} ${(float) rs.titlebar.y})"
         ])
         gc = el(gc, 'g', [
             transform: "scale(${(float) rs.titlebar.height / rs.large.size.height})"
