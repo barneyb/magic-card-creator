@@ -13,10 +13,27 @@ import java.text.AttributedString
  */
 class LayoutUtils {
 
+    /**
+     * Defers to {@link #line(com.barneyb.magic.creator.compositor.Dimension2D, java.lang.String, java.util.Map, com.barneyb.magic.creator.compositor.Align)}.
+     */
     LineLayout line(Dimension2D box, String text, Font font, Align align=Align.LEADING) {
         line(box, text, font.attributes, align)
     }
 
+    /**
+     * Measures the specified text, according to the provided layout instructions,
+     * and returns a a LineLayout object describing how to draw the text so that
+     * it will be entirely contained w/in the passed box.  The text will be sized
+     * to take up the whole height of the box, positioned horizontally within
+     * the box according to the specified Align value, and finally scaled in the
+     * horizontal direction to prevent overrun.
+     *
+     * @param box The dimensions of the box the text must fit within.
+     * @param text The text to be draw.
+     * @param attrs The TextAttributes the text will be drawn with.
+     * @param align The alignment of the text within the box.
+     * @return a LineLayout describing how the text should be laid out w/in the box.
+     */
     LineLayout line(Dimension2D box, String text, Map<TextAttribute, ?> attrs, Align align=Align.LEADING) {
         if (! attrs.containsKey(TextAttribute.FAMILY)) {
             throw new IllegalArgumentException("You must supply a 'family' attribute to lay out a line of text.")
@@ -51,12 +68,21 @@ class LayoutUtils {
         new LineLayout(fontSize, x, y, xScale)
     }
 
+    /**
+     * Defers to {@link #line(java.awt.Rectangle, java.lang.String, java.util.Map, com.barneyb.magic.creator.compositor.Align)}.
+     */
     LineLayout line(Rectangle box, String text, Font font, Align align=Align.LEADING) {
         line(box, text, font.attributes, align)
     }
 
+    /**
+     * Defers to {@link #line(com.barneyb.magic.creator.compositor.Dimension2D, java.lang.String, java.util.Map, com.barneyb.magic.creator.compositor.Align)},
+     * and then offsets the coordinates by those in the Rectangle.
+     */
     LineLayout line(Rectangle box, String text, Map<TextAttribute, ?> attrs, Align align=Align.LEADING) {
         line(new Dimension2D(box.width, box.height), text, attrs, align) + new Point2D.Double(box.x, box.y)
     }
+
+
 
 }
