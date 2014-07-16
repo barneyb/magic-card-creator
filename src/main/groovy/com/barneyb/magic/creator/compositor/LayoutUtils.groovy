@@ -13,6 +13,9 @@ import java.text.AttributedString
  */
 class LayoutUtils {
 
+    // blindly assume we'll always use antialiased fractional-pixel rendering
+    public static final FontRenderContext FONT_RENDER_CONTEXT = new FontRenderContext(null, RenderingHints.VALUE_TEXT_ANTIALIAS_ON, RenderingHints.VALUE_FRACTIONALMETRICS_ON)
+
     /**
      * Defers to {@link #line(java.awt.geom.Dimension2D, java.lang.String, java.util.Map, com.barneyb.magic.creator.compositor.Align)}.
      */
@@ -38,26 +41,16 @@ class LayoutUtils {
         if (! attrs.containsKey(TextAttribute.FAMILY)) {
             throw new IllegalArgumentException("You must supply a 'family' attribute to lay out a line of text.")
         }
-        def frc = new FontRenderContext(null, RenderingHints.VALUE_TEXT_ANTIALIAS_ON, RenderingHints.VALUE_FRACTIONALMETRICS_ON)
-        float fontSize = box.height
-
-        // measure at full height
+        float fontSize = fontSizeForHeight(box.height, text, attrs, false)
         def font = new Font(attrs + [
             (TextAttribute.SIZE): fontSize,
         ])
-        def lm = font.getLineMetrics(text, frc)
-
-        // recalc fontsize assuming linear vertical scaling
-        fontSize = fontSize / (lm.ascent + Math.abs(lm.descent)) * box.height
-        font = new Font(attrs + [
-            (TextAttribute.SIZE): fontSize,
-        ])
-        lm = font.getLineMetrics(text, frc)
+        def lm = font.getLineMetrics(text, FONT_RENDER_CONTEXT)
 
         // do the math
         float y = lm.ascent + (box.height - lm.ascent - Math.abs(lm.descent)) / 2
         float x = 0
-        float w = new TextLayout(new AttributedString(text, font.attributes).iterator, frc).advance
+        float w = new TextLayout(new AttributedString(text, font.attributes).iterator, FONT_RENDER_CONTEXT).advance
         float xScale = 1
         if (align == Align.CENTER && w < box.width) {
             x += (box.width - w) / 2
@@ -67,6 +60,36 @@ class LayoutUtils {
         }
         new LineLayout(fontSize, x, y, xScale)
     }
+
+    /**
+     * I calculate and return the proper font size to get text with the specific
+     * height according to the passed TextAttributes, optionally including
+     * leading.  For single-line text strings, you probably don't want to use
+     * leading, but for multi-line (including wrapped) strings, you definitely
+     * would.
+     *
+     * @param height The desired line height.
+     * @param text The text to be drawn.  If null or omitted, all the ASCII
+     *  letters and numbers will be used.
+     * @param attrs The TextAttributes that will be used to render the text.
+     * @param includeLeading Whether to allow space for the leading between
+     *  lines, or just the visible height (ascent + descent) of the text.
+     * @return The font size to use to get text rendered at the requested height.
+     */
+    float fontSizeForHeight(double height, String text=null, Map<TextAttribute, ?> attrs, boolean includeLeading) {
+        if (text == null) {
+            text = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890"
+        }
+        float fontSize = height
+        // measure at full height
+        def font = new Font(attrs + [
+            (TextAttribute.SIZE): fontSize,
+        ])
+        def lm = font.getLineMetrics(text, FONT_RENDER_CONTEXT)
+        // recalc fontsize assuming linear vertical scaling
+        fontSize / (lm.ascent + Math.abs(lm.descent) + (includeLeading ? lm.leading : 0f)) * height
+    }
+
 
     /**
      * Defers to {@link #line(java.awt.Rectangle, java.lang.String, java.util.Map, com.barneyb.magic.creator.compositor.Align)}.
