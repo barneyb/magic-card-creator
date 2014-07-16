@@ -14,9 +14,9 @@ import java.text.AttributedString
 class LayoutUtils {
 
     /**
-     * Defers to {@link #line(com.barneyb.magic.creator.compositor.Dimension2D, java.lang.String, java.util.Map, com.barneyb.magic.creator.compositor.Align)}.
+     * Defers to {@link #line(java.awt.geom.Dimension2D, java.lang.String, java.util.Map, com.barneyb.magic.creator.compositor.Align)}.
      */
-    LineLayout line(Dimension2D box, String text, Font font, Align align=Align.LEADING) {
+    LineLayout line(java.awt.geom.Dimension2D box, String text, Font font, Align align=Align.LEADING) {
         line(box, text, font.attributes, align)
     }
 
@@ -34,7 +34,7 @@ class LayoutUtils {
      * @param align The alignment of the text within the box.
      * @return a LineLayout describing how the text should be laid out w/in the box.
      */
-    LineLayout line(Dimension2D box, String text, Map<TextAttribute, ?> attrs, Align align=Align.LEADING) {
+    LineLayout line(java.awt.geom.Dimension2D box, String text, Map<TextAttribute, ?> attrs, Align align=Align.LEADING) {
         if (! attrs.containsKey(TextAttribute.FAMILY)) {
             throw new IllegalArgumentException("You must supply a 'family' attribute to lay out a line of text.")
         }
@@ -76,7 +76,7 @@ class LayoutUtils {
     }
 
     /**
-     * Defers to {@link #line(com.barneyb.magic.creator.compositor.Dimension2D, java.lang.String, java.util.Map, com.barneyb.magic.creator.compositor.Align)},
+     * Defers to {@link #line(java.awt.geom.Dimension2D, java.lang.String, java.util.Map, com.barneyb.magic.creator.compositor.Align)},
      * and then offsets the coordinates by those in the Rectangle.
      */
     LineLayout line(Rectangle box, String text, Map<TextAttribute, ?> attrs, Align align=Align.LEADING) {
