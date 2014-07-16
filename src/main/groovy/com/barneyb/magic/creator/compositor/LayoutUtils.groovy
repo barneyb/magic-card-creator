@@ -33,7 +33,8 @@ class LayoutUtils {
      *
      * @param box The dimensions of the box the text must fit within.
      * @param text The text to be draw.
-     * @param attrs The TextAttributes the text will be drawn with.
+     * @param attrs The TextAttributes the text will be drawn with.  Note that
+     *  a passed font size, if any, will be ignored.
      * @param align The alignment of the text within the box.
      * @return a LineLayout describing how the text should be laid out w/in the box.
      */
