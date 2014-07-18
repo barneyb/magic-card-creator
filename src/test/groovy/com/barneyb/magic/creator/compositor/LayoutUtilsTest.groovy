@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals
  *
  * @author bboisvert
  */
-@Ignore
+@org.junit.Ignore
 class LayoutUtilsTest {
 
     LayoutUtils utils
