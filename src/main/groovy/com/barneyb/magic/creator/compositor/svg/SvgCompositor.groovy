@@ -137,6 +137,13 @@ class SvgCompositor implements Compositor {
                 transform: "translate(${i * rs.large.size.width} 0)"
             ])
         }
+        new LayoutUtils().block(svgg, rs.textbox, model.body, new Font(BODY_FONT), { g, b, it ->
+            el(gc, 'use', [
+                'xlink:href': "#lg-$it.id",
+                transform: "translate($b.x $b.y)"
+            ])
+        })
+        doc.documentElement.appendChild(svgg.root)
     }
 
     protected void xmlImage(SVGGraphics2D svgg, Rectangle box, ImageAsset asset) {
