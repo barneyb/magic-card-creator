@@ -223,8 +223,7 @@ class LayoutUtils {
             throw new UnsupportedOperationException("You cannot render empty blocks of body text.")
         }
         def s = it.text
-        font = font.deriveFont(ctx.fontSize)
-        def attr = new AttributedString(s, font.attributes)
+        def attr = new AttributedString(s, font.deriveFont(ctx.fontSize).attributes)
         def lm = new LineBreakMeasurer(attr.iterator, MagicBreakIteratorProvider.lineInstance, ctx.graphics.getFontRenderContext())
         TextLayout l
         while (lm.position < s.length()) {
@@ -234,8 +233,7 @@ class LayoutUtils {
             }
             l = lm.nextLayout((float) ctx.bounds.width - ctx.XOffset)
             if (! ctx.measuring) {
-                ctx.graphics.font = font
-                ctx.graphics.drawString(s, (float) ctx.x, (float) ctx.y + l.ascent)
+                l.draw(ctx.graphics, (float) ctx.x, (float) ctx.y + l.ascent)
             }
         }
         ctx.XOffset += l.advance
