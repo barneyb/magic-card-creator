@@ -1,11 +1,15 @@
 package com.barneyb.magic.creator.compositor
 
+import com.barneyb.magic.creator.asset.ImageAsset
+
 import java.awt.*
 import java.awt.font.FontRenderContext
+import java.awt.font.LineBreakMeasurer
 import java.awt.font.TextAttribute
 import java.awt.font.TextLayout
 import java.awt.geom.Point2D
 import java.text.AttributedString
+import java.util.List
 
 /**
  *
@@ -105,6 +109,141 @@ class LayoutUtils {
      */
     LineLayout line(Rectangle box, String text, Map<TextAttribute, ?> attrs, Align align=Align.LEADING) {
         line(new Dimension2D(box.width, box.height), text, attrs, align) + new Point2D.Double(box.x, box.y)
+    }
+
+    static class RenderCtx {
+        final Graphics2D graphics
+        final Rectangle bounds
+        double x
+        double y
+        float fontSize
+        float wrapOffset
+        final boolean measuring
+        int paragraphCount = 0
+        float paragraphBreakSize
+
+        def RenderCtx(Graphics2D g, Rectangle b, float fs, float wo = fs, boolean m=false) {
+            graphics = g
+            bounds = b
+            x = bounds.x
+            y = bounds.y
+            fontSize = fs
+            wrapOffset = wo
+            paragraphBreakSize = wrapOffset * 0.65
+            measuring = m
+        }
+
+        double getXOffset() {
+            x - bounds.x
+        }
+
+        void setXOffset(double xOffset) {
+            x = bounds.x + xOffset
+        }
+
+        Point getLocation() {
+            new Point((int) x, (int) y)
+        }
+    }
+
+    Font BASE_FONT
+    Closure drawAsset
+    void block(Graphics2D g, Rectangle box, List<List<Renderable>> items, Font font, Closure drawAsset) {
+        this.BASE_FONT = font
+        this.drawAsset = drawAsset
+        def fontSize = (float) box.height / 6
+        g.font = font.deriveFont(fontSize)
+        def fm = g.fontMetrics
+        def mctx = new RenderCtx(g, box, fontSize, fm.ascent + fm.descent, true)
+        items.each { line ->
+            mctx.XOffset = 0
+            line.each this.&render.curry(mctx)
+            mctx.y += mctx.wrapOffset
+        }
+        // now draw it
+        int extraSpace = box.y + box.height - mctx.y
+        def rctx = new RenderCtx(g, box, fontSize, fm.ascent + fm.descent, false)
+        if (extraSpace > 0) {
+            // vertically center
+            rctx.y += Math.floor(extraSpace / 2.5)
+        } else {
+            extraSpace *= -1
+            def maxSpaceReduction = mctx.paragraphCount * mctx.paragraphBreakSize * 0.5
+            if (extraSpace < maxSpaceReduction) {
+                // reduce paragraph breaks and done
+                rctx.paragraphBreakSize -= extraSpace / mctx.paragraphCount
+            } else {
+                // reduce breaks, and resize text
+                extraSpace -= maxSpaceReduction
+                // actually pulled off at the end by halving the paragraph break size
+                fontSize = (float) mctx.fontSize - extraSpace / 25
+                // ~6 lines of text, chars are taller than wide, so 5^2 is about the area of a char
+                g.font = font.deriveFont(fontSize)
+                fm = g.fontMetrics
+                rctx = new RenderCtx(g, box, fontSize, fm.ascent + fm.descent, false)
+                rctx.paragraphBreakSize *= 0.5
+            }
+        }
+        items.each { line ->
+            rctx.XOffset = 0
+            line.each this.&render.curry(rctx)
+            rctx.y += rctx.wrapOffset
+        }
+    }
+
+    protected void render(RenderCtx ctx, Renderable it) {
+        throw new UnsupportedOperationException("Renderable '${it.getClass().name}' is not supported.")
+    }
+
+    protected void render(RenderCtx ctx, Paragraph it) {
+        ctx.y -= ctx.wrapOffset - ctx.paragraphBreakSize
+        ctx.paragraphCount += 1
+    }
+
+    protected void render(RenderCtx ctx, AbilityText it) {
+        render(ctx, it, false)
+    }
+
+    protected void render(RenderCtx ctx, FlavorText it) {
+        render(ctx, it, true)
+    }
+
+    protected void render(RenderCtx ctx, RenderableText it, boolean flavor) {
+        if (it.text == null || it.text.length() == 0) {
+            throw new UnsupportedOperationException("You cannot render empty blocks of body text.")
+        }
+        def s = it.text
+        def attr = new AttributedString(s, [
+            (TextAttribute.FONT): BASE_FONT.deriveFont(flavor ? Font.ITALIC : Font.PLAIN, ctx.fontSize)
+        ])
+        def lm = new LineBreakMeasurer(attr.iterator, MagicBreakIteratorProvider.lineInstance, ctx.graphics.getFontRenderContext())
+        TextLayout l
+        while (lm.position < s.length()) {
+            if (l != null) {
+                ctx.XOffset = 0
+                ctx.y += ctx.wrapOffset
+            }
+            l = lm.nextLayout((float) ctx.bounds.width - ctx.XOffset)
+            if (! ctx.measuring) {
+                l.draw(ctx.graphics, (float) ctx.x, (float) ctx.y + l.ascent)
+            }
+        }
+        ctx.XOffset += l.advance
+    }
+
+    protected void render(RenderCtx ctx, CompoundImageAsset it) {
+        if (ctx.XOffset + it.size.width > ctx.bounds.width) {
+            ctx.XOffset = 0
+            ctx.y += ctx.wrapOffset
+        }
+        it.each this.&render.curry(ctx)
+    }
+
+    protected void render(RenderCtx ctx, ImageAsset it) {
+        if (! ctx.measuring) {
+            drawAsset(ctx.graphics, new Rectangle((int) ctx.x, (int) ctx.y + (ctx.wrapOffset - it.size.height) * 0.5, (int) it.size.width, (int) it.size.height), it)
+        }
+        ctx.XOffset += it.size.width
     }
 
 
