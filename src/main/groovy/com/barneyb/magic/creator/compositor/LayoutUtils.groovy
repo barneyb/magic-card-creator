@@ -7,7 +7,6 @@ import java.awt.font.FontRenderContext
 import java.awt.font.LineBreakMeasurer
 import java.awt.font.TextAttribute
 import java.awt.font.TextLayout
-import java.awt.geom.AffineTransform
 import java.awt.geom.Point2D
 import java.text.AttributedString
 import java.util.List
@@ -119,11 +118,14 @@ class LayoutUtils {
         final Rectangle bounds
         double x
         double y
+        Font bodyFont
+        Font flavorFont
         float fontSize
         float wrapOffset
         final boolean measuring
         int paragraphCount = 0
         float paragraphBreakSize
+        Closure drawAsset
 
         def RenderCtx(Graphics2D g, Rectangle b, float fs, float wo = fs, boolean m=false) {
             graphics = g
@@ -149,22 +151,20 @@ class LayoutUtils {
         }
     }
 
-    void block(Graphics2D g, Rectangle box, List<List<Renderable>> items, Map<TextAttribute, ?> attrs, Closure drawAsset) {
-        block(g, box, items, new Font(attrs), drawAsset)
+    void block(Graphics2D g, Rectangle box, List<List<Renderable>> items, Map<TextAttribute, ?> bodyAttrs, Map<TextAttribute, ?> flavorAttrs, Closure drawAsset) {
+        block(g, box, items, new Font(bodyAttrs), new Font(flavorAttrs), drawAsset)
     }
 
-    Font BASE_FONT
-    Closure drawAsset
-    void block(Graphics2D g, Rectangle box, List<List<Renderable>> items, Font font, Closure drawAsset) {
-        this.BASE_FONT = font
-        this.drawAsset = drawAsset
-        def fontSize = fontSizeForHeight(box.height / 6, ALL_ALPHANUMERICS, BASE_FONT.attributes, true)
+    void block(Graphics2D g, Rectangle box, List<List<Renderable>> items, Font bodyFont, Font flavorFont, Closure drawAsset) {
+        def fontSize = fontSizeForHeight(box.height / 6, ALL_ALPHANUMERICS, bodyFont.attributes, true)
         RenderCtx rctx
         for (int _i = 0; _i < 5; _i++) {
             // measure first
-            g.font = BASE_FONT.deriveFont(fontSize)
+            g.font = bodyFont.deriveFont(fontSize)
             def fm = g.fontMetrics
             def mctx = new RenderCtx(g, box, fontSize, fm.ascent + fm.descent, true)
+            mctx.bodyFont = bodyFont
+            mctx.flavorFont = flavorFont
             items.each { line ->
                 mctx.XOffset = 0
                 line.each this.&render.curry(mctx)
@@ -190,6 +190,9 @@ class LayoutUtils {
                 }
             }
         }
+        rctx.drawAsset = drawAsset
+        rctx.bodyFont = bodyFont
+        rctx.flavorFont = flavorFont
         // draw it
         items.each { line ->
             rctx.XOffset = 0
@@ -208,26 +211,19 @@ class LayoutUtils {
     }
 
     protected void render(RenderCtx ctx, AbilityText it) {
-        render(ctx, it, false)
+        render(ctx, it, ctx.bodyFont)
     }
 
     protected void render(RenderCtx ctx, FlavorText it) {
-        render(ctx, it, true)
+        render(ctx, it, ctx.flavorFont)
     }
 
-    protected void render(RenderCtx ctx, RenderableText it, boolean flavor) {
+    protected void render(RenderCtx ctx, RenderableText it, Font font) {
         if (it.text == null || it.text.length() == 0) {
             throw new UnsupportedOperationException("You cannot render empty blocks of body text.")
         }
         def s = it.text
-        def textAttrs = BASE_FONT.attributes + [
-            (TextAttribute.SIZE): ctx.fontSize
-        ]
-        if (flavor) {
-            textAttrs[TextAttribute.POSTURE] = TextAttribute.POSTURE_OBLIQUE
-            textAttrs[TextAttribute.TRANSFORM] = AffineTransform.getShearInstance(0.2, 0)
-        }
-        def attr = new AttributedString(s, textAttrs)
+        def attr = new AttributedString(s, font.deriveFont(ctx.fontSize).attributes)
         def lm = new LineBreakMeasurer(attr.iterator, MagicBreakIteratorProvider.lineInstance, ctx.graphics.getFontRenderContext())
         TextLayout l
         while (lm.position < s.length()) {
@@ -253,7 +249,7 @@ class LayoutUtils {
 
     protected void render(RenderCtx ctx, ImageAsset it) {
         if (! ctx.measuring) {
-            drawAsset(ctx.graphics, new Rectangle((int) ctx.x, (int) ctx.y + (ctx.wrapOffset - it.size.height) * 0.5, (int) it.size.width, (int) it.size.height), it)
+            ctx.drawAsset(ctx.graphics, new Rectangle((int) ctx.x, (int) ctx.y + (ctx.wrapOffset - it.size.height) * 0.5, (int) it.size.width, (int) it.size.height), it)
         }
         ctx.XOffset += it.size.width
     }

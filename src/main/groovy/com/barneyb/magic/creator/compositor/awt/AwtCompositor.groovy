@@ -58,7 +58,7 @@ class AwtCompositor implements Compositor {
         drawText(g, rs.typebar, model.type)
 
         g.setClip(rs.textbox)
-        new LayoutUtils().block(g, rs.textbox, model.body, BASE_FONT, this.&drawAsset)
+        new LayoutUtils().block(g, rs.textbox, model.body, BASE_FONT, BASE_FONT.deriveFont(Font.ITALIC), this.&drawAsset)
         g.setClip(null) // clear the clip
 
         if (model.powerToughnessVisible) {
