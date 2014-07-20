@@ -151,7 +151,7 @@ class SvgCompositor implements Compositor {
         }
 
         openGraphics()
-        new LayoutUtils().block(svgg, rs.textbox, model.body, new Font(BODY_FONT), { g, b, it ->
+        new LayoutUtils().block(svgg, rs.textbox, model.body, BODY_FONT, { g, b, it ->
             el(gc, 'use', [
                 'xlink:href': "#sm-$it.id",
                 transform: "translate($b.x $b.y)"

@@ -148,16 +148,20 @@ class LayoutUtils {
         }
     }
 
+    void block(Graphics2D g, Rectangle box, List<List<Renderable>> items, Map<TextAttribute, ?> attrs, Closure drawAsset) {
+        block(g, box, items, new Font(attrs), drawAsset)
+    }
+
     Font BASE_FONT
     Closure drawAsset
     void block(Graphics2D g, Rectangle box, List<List<Renderable>> items, Font font, Closure drawAsset) {
         this.BASE_FONT = font
         this.drawAsset = drawAsset
-        def fontSize = fontSizeForHeight(box.height / 6, ALL_ALPHANUMERICS, font.attributes, true)
+        def fontSize = fontSizeForHeight(box.height / 6, ALL_ALPHANUMERICS, BASE_FONT.attributes, true)
         RenderCtx rctx
         for (int _i = 0; _i < 5; _i++) {
             // measure first
-            g.font = font.deriveFont(fontSize)
+            g.font = BASE_FONT.deriveFont(fontSize)
             def fm = g.fontMetrics
             def mctx = new RenderCtx(g, box, fontSize, fm.ascent + fm.descent, true)
             items.each { line ->
