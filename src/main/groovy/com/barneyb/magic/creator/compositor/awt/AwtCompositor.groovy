@@ -57,7 +57,7 @@ class AwtCompositor implements Compositor {
         drawAsset(g, rs.artwork, model.artwork)
         drawText(g, rs.typebar, model.type)
 
-        g.setClip(box)
+        g.setClip(rs.textbox)
         new LayoutUtils().block(g, rs.textbox, model.body, BASE_FONT, this.&drawAsset)
         g.setClip(null) // clear the clip
 
