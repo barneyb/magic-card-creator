@@ -57,10 +57,8 @@ class AwtCompositor implements Compositor {
         drawAsset(g, rs.artwork, model.artwork)
         drawText(g, rs.typebar, model.type)
 
-        def box = rs.textbox
-        def items = model.body
         g.setClip(box)
-        new LayoutUtils().block(g, box, items, BASE_FONT, this.&drawAsset)
+        new LayoutUtils().block(g, rs.textbox, model.body, BASE_FONT, this.&drawAsset)
         g.setClip(null) // clear the clip
 
         if (model.powerToughnessVisible) {
