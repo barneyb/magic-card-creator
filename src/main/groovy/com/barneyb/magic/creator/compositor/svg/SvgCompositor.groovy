@@ -132,16 +132,18 @@ class SvgCompositor implements Compositor {
         gc = el(gc, 'g', [
             transform: "scale(${(float) rs.titlebar.height / rs.large.size.height})"
         ])
-        model.cost.unique(false).sort().each { it ->
+
+        def iconDef = { idPrefix, it ->
             String parser = XMLResourceDescriptor.getXMLParserClassName()
             SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser)
             def icon = (f.createDocument('', it.inputStream) as SVGDocument).rootElement
 
             doc.adoptNode(icon)
             el(defs, 'g', [
-                id: "lg-$it.id"
+                id: "$idPrefix-$it.id"
             ]).appendChild(icon)
         }
+        model.cost.unique(false).each iconDef.curry('lg')
         model.cost.eachWithIndex { it, i ->
             el(gc, 'use', [
                 'xlink:href': "#lg-$it.id",
@@ -149,11 +151,12 @@ class SvgCompositor implements Compositor {
             ])
         }
 
+        model.bodyIcons.each iconDef.curry('sm')
         withGraphics {
-            new LayoutUtils().block(it, rs.textbox, model.body, BODY_FONT, FLAVOR_FONT, { g, b, ia ->
-                el(gc, 'use', [
-                    'xlink:href': "#sm-$ia.id",
-                    transform: "translate($b.x $b.y)"
+            new LayoutUtils().block(it, rs.textbox, model.body, BODY_FONT, FLAVOR_FONT, { Graphics2D g, Rectangle box, ImageAsset asset ->
+                el(doc.rootElement, 'use', [
+                    'xlink:href': "#sm-$asset.id",
+                    transform: "translate($box.x $box.y)" + (box.size == asset.size ? '' : " scale(${(float) box.width / asset.size.width} ${(float) box.height / asset.size.height})")
                 ])
             })
         }
