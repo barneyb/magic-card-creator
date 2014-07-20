@@ -90,28 +90,13 @@ class AwtCompositor implements Compositor {
     }
 
     protected void drawText(Graphics2D g, Rectangle box, String text, Align align=Align.LEADING) {
+        def ll = new LayoutUtils().line(box, text, BASE_FONT, align)
         def oldFont = g.font
-        g.font = BASE_FONT.deriveFont((float) Math.ceil(box.height * 0.85))
-        def w = g.fontMetrics.stringWidth(text)
-        if (w > box.width) {
-            def t = new AffineTransform()
-            t.setToScale(box.width / w, 1)
-            g.font = g.font.deriveFont(t)
-            // sanity check...
-//            w = g.fontMetrics.stringWidth(text)
-//            if (w > box.width) {
-//                throw new IllegalStateException("transforming font for '$text' didn't work right ($w > $box.width).")
-//            }
-        } else if (align == Align.CENTER && w < box.width) {
-            // new bounding box
-            box = new Rectangle(
-                (int) box.x + (box.width - w) / 2,
-                (int) box.y,
-                w,
-                (int) box.height
-            )
+        g.font = BASE_FONT.deriveFont(ll.fontSize)
+        if (ll.scaled) {
+            g.font = g.font.deriveFont(AffineTransform.getScaleInstance(ll.scale, 1))
         }
-        g.drawString(text, (int) box.x, (int) (box.y + box.height * 0.8))
+        g.drawString(text, (int) ll.x, (int) ll.y)
         g.font = oldFont
     }
 
