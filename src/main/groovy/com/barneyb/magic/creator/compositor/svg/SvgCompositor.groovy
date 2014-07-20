@@ -72,24 +72,17 @@ class SvgCompositor implements Compositor {
 
         def defs = el(doc.rootElement, 'defs')
 
-        SVGGraphics2D svgg
-        def closeGraphics = { ->
-            if (svgg != null) {
-                doc.documentElement.appendChild(svgg.topLevelGroup)
-                svgg = null
-            }
+        def withGraphics = { work ->
+            SVGGraphics2D svgg = new SVGGraphics2D(doc)
+            work(svgg)
+            doc.documentElement.appendChild(svgg.topLevelGroup)
         }
-        def openGraphics = { ->
-            if (svgg != null) {
-                closeGraphics()
-            }
-            svgg = new SVGGraphics2D(doc)
-        }
+
         // this will inline the rasters as Base64-encoded data URLs.
-        openGraphics()
-        xmlImage(svgg, new Rectangle(new Point(0, 0), rs.frames.size), model.frame)
-        xmlImage(svgg, rs.artwork, model.artwork)
-        closeGraphics()
+        withGraphics {
+//            xmlImage(it, new Rectangle(new Point(0, 0), rs.frames.size), model.frame)
+//            xmlImage(it, rs.artwork, model.artwork)
+        }
 
         float iconWidth = rs.titlebar.height / rs.large.size.height * rs.large.size.width
 
@@ -156,14 +149,14 @@ class SvgCompositor implements Compositor {
             ])
         }
 
-        openGraphics()
-        new LayoutUtils().block(svgg, rs.textbox, model.body, BODY_FONT, FLAVOR_FONT, { g, b, it ->
-            el(gc, 'use', [
-                'xlink:href': "#sm-$it.id",
-                transform: "translate($b.x $b.y)"
-            ])
-        })
-        closeGraphics()
+        withGraphics {
+            new LayoutUtils().block(it, rs.textbox, model.body, BODY_FONT, FLAVOR_FONT, { g, b, ia ->
+                el(gc, 'use', [
+                    'xlink:href': "#sm-$ia.id",
+                    transform: "translate($b.x $b.y)"
+                ])
+            })
+        }
     }
 
     protected void xmlImage(SVGGraphics2D svgg, Rectangle box, ImageAsset asset) {
