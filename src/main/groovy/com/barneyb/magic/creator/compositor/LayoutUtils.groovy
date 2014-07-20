@@ -7,6 +7,7 @@ import java.awt.font.FontRenderContext
 import java.awt.font.LineBreakMeasurer
 import java.awt.font.TextAttribute
 import java.awt.font.TextLayout
+import java.awt.geom.AffineTransform
 import java.awt.geom.Point2D
 import java.text.AttributedString
 import java.util.List
@@ -219,9 +220,14 @@ class LayoutUtils {
             throw new UnsupportedOperationException("You cannot render empty blocks of body text.")
         }
         def s = it.text
-        def attr = new AttributedString(s, [
-            (TextAttribute.FONT): BASE_FONT.deriveFont(flavor ? Font.ITALIC : Font.PLAIN, ctx.fontSize)
-        ])
+        def textAttrs = BASE_FONT.attributes + [
+            (TextAttribute.SIZE): ctx.fontSize
+        ]
+        if (flavor) {
+            textAttrs[TextAttribute.POSTURE] = TextAttribute.POSTURE_OBLIQUE
+            textAttrs[TextAttribute.TRANSFORM] = AffineTransform.getShearInstance(0.2, 0)
+        }
+        def attr = new AttributedString(s, textAttrs)
         def lm = new LineBreakMeasurer(attr.iterator, MagicBreakIteratorProvider.lineInstance, ctx.graphics.getFontRenderContext())
         TextLayout l
         while (lm.position < s.length()) {
