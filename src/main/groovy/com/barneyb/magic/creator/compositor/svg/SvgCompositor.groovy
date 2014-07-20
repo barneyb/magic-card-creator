@@ -69,7 +69,7 @@ class SvgCompositor implements Compositor {
         SVGGraphics2D svgg
         def closeGraphics = { ->
             if (svgg != null) {
-                doc.documentElement.appendChild(svgg.root.getElementsByTagName('g').item(0))
+                doc.documentElement.appendChild(svgg.topLevelGroup)
                 svgg = null
             }
         }
