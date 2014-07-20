@@ -20,6 +20,8 @@ class LayoutUtils {
     // blindly assume we'll always use antialiased fractional-pixel rendering
     public static final FontRenderContext FONT_RENDER_CONTEXT = new FontRenderContext(null, RenderingHints.VALUE_TEXT_ANTIALIAS_ON, RenderingHints.VALUE_FRACTIONALMETRICS_ON)
 
+    public static final String ALL_ALPHANUMERICS = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890"
+
     /**
      * Defers to {@link #line(java.awt.geom.Dimension2D, java.lang.String, java.util.Map, com.barneyb.magic.creator.compositor.Align)}.
      */
@@ -83,7 +85,7 @@ class LayoutUtils {
      */
     float fontSizeForHeight(double height, String text=null, Map<TextAttribute, ?> attrs, boolean includeLeading) {
         if (text == null) {
-            text = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890"
+            text = ALL_ALPHANUMERICS
         }
         float fontSize = height
         // measure at full height
