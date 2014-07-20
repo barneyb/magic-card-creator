@@ -153,39 +153,39 @@ class LayoutUtils {
     void block(Graphics2D g, Rectangle box, List<List<Renderable>> items, Font font, Closure drawAsset) {
         this.BASE_FONT = font
         this.drawAsset = drawAsset
-        def fontSize = (float) box.height / 6
-        g.font = font.deriveFont(fontSize)
-        def fm = g.fontMetrics
-        def mctx = new RenderCtx(g, box, fontSize, fm.ascent + fm.descent, true)
-        items.each { line ->
-            mctx.XOffset = 0
-            line.each this.&render.curry(mctx)
-            mctx.y += mctx.wrapOffset
-        }
-        // now draw it
-        int extraSpace = box.y + box.height - mctx.y
-        def rctx = new RenderCtx(g, box, fontSize, fm.ascent + fm.descent, false)
-        if (extraSpace > 0) {
-            // vertically center
-            rctx.y += Math.floor(extraSpace / 2.5)
-        } else {
-            extraSpace *= -1
-            def maxSpaceReduction = mctx.paragraphCount * mctx.paragraphBreakSize * 0.5
-            if (extraSpace < maxSpaceReduction) {
-                // reduce paragraph breaks and done
-                rctx.paragraphBreakSize -= extraSpace / mctx.paragraphCount
+        def fontSize = fontSizeForHeight(box.height / 6, ALL_ALPHANUMERICS, font.attributes, true)
+        RenderCtx rctx
+        for (int _i = 0; _i < 5; _i++) {
+            // measure first
+            g.font = font.deriveFont(fontSize)
+            def fm = g.fontMetrics
+            def mctx = new RenderCtx(g, box, fontSize, fm.ascent + fm.descent, true)
+            items.each { line ->
+                mctx.XOffset = 0
+                line.each this.&render.curry(mctx)
+                mctx.y += mctx.wrapOffset
+            }
+            // check how we did
+            int extraSpace = box.y + box.height - mctx.y
+            rctx = new RenderCtx(g, box, fontSize, fm.ascent + fm.descent, false)
+            if (extraSpace >= 0) {
+                // vertically center
+                rctx.y += Math.floor(extraSpace / 2.5)
+                break
             } else {
-                // reduce breaks, and resize text
-                extraSpace -= maxSpaceReduction
-                // actually pulled off at the end by halving the paragraph break size
-                fontSize = (float) mctx.fontSize - extraSpace / 25
-                // ~6 lines of text, chars are taller than wide, so 5^2 is about the area of a char
-                g.font = font.deriveFont(fontSize)
-                fm = g.fontMetrics
-                rctx = new RenderCtx(g, box, fontSize, fm.ascent + fm.descent, false)
-                rctx.paragraphBreakSize *= 0.5
+                extraSpace *= -1
+                def maxSpaceReduction = mctx.paragraphCount * mctx.paragraphBreakSize * 0.5
+                if (extraSpace <= maxSpaceReduction) {
+                    // reduce paragraph breaks and done
+                    rctx.paragraphBreakSize -= extraSpace / mctx.paragraphCount
+                    break
+                } else {
+                    // shrink it down and repeat
+                    fontSize = (float) mctx.fontSize - (extraSpace - maxSpaceReduction) / 10 // the '10' is magic. I don't know what it represents.
+                }
             }
         }
+        // draw it
         items.each { line ->
             rctx.XOffset = 0
             line.each this.&render.curry(rctx)
