@@ -22,6 +22,7 @@ import javax.xml.transform.stream.StreamResult
 import java.awt.*
 import java.awt.font.TextAttribute
 import java.awt.geom.AffineTransform
+import java.awt.geom.Rectangle2D
 import java.awt.image.AffineTransformOp
 
 /**
@@ -164,7 +165,7 @@ class SvgCompositor implements Compositor {
 
         model.bodyIcons.each iconDef.curry('sm')
         withGraphics {
-            new LayoutUtils().block(it, rs.textbox, model.body, BODY_FONT, FLAVOR_FONT, { Graphics2D g, Rectangle box, ImageAsset asset ->
+            new LayoutUtils().block(it, rs.textbox, model.body, BODY_FONT, FLAVOR_FONT, { Graphics2D g, Rectangle2D box, ImageAsset asset ->
                 el(doc.rootElement, 'use', [
                     'xlink:href': "#sm-$asset.id",
                     transform: "translate($box.x $box.y)" + (box.size == asset.size ? '' : " scale(${(float) box.width / asset.size.width} ${(float) box.height / asset.size.height})")

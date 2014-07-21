@@ -8,6 +8,7 @@ import java.awt.font.LineBreakMeasurer
 import java.awt.font.TextAttribute
 import java.awt.font.TextLayout
 import java.awt.geom.Point2D
+import java.awt.geom.Rectangle2D
 import java.text.AttributedString
 import java.util.List
 
@@ -116,8 +117,8 @@ class LayoutUtils {
     static class RenderCtx {
         final Graphics2D graphics
         final Rectangle bounds
-        double x
-        double y
+        float x
+        float y
         Font bodyFont
         Font flavorFont
         float fontSize
@@ -227,7 +228,7 @@ class LayoutUtils {
         def lm = new LineBreakMeasurer(attr.iterator, MagicBreakIteratorProvider.lineInstance, ctx.graphics.getFontRenderContext())
         TextLayout l
         while (lm.position < s.length()) {
-            if (l != null) {
+            if (l != null || ctx.XOffset >= ctx.bounds.width) {
                 ctx.XOffset = 0
                 ctx.y += ctx.wrapOffset
             }
@@ -248,10 +249,24 @@ class LayoutUtils {
     }
 
     protected void render(RenderCtx ctx, ImageAsset it) {
+        float factor = ctx.wrapOffset / it.size.height
         if (! ctx.measuring) {
-            ctx.drawAsset(ctx.graphics, new Rectangle((int) ctx.x, (int) ctx.y + (ctx.wrapOffset - it.size.height) * 0.5, (int) it.size.width, (int) it.size.height), it)
+            ctx.drawAsset(
+                ctx.graphics,
+                new Rectangle2D.Float(
+                    ctx.x,
+                    (float) ctx.y + (ctx.wrapOffset - it.size.height) * 0.5,
+                    (float) it.size.width * factor,
+                    (float) it.size.height * factor
+                ) {
+                    java.awt.geom.Dimension2D getSize() {
+                        new Dimension2D(width, height)
+                    }
+                },
+                it
+            )
         }
-        ctx.XOffset += it.size.width
+        ctx.XOffset += it.size.width * factor
     }
 
 

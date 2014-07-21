@@ -9,6 +9,7 @@ import com.barneyb.magic.creator.compositor.RenderModel
 import javax.imageio.ImageIO
 import java.awt.*
 import java.awt.geom.AffineTransform
+import java.awt.geom.Rectangle2D
 import java.awt.image.AffineTransformOp
 import java.awt.image.RenderedImage
 /**
@@ -74,7 +75,7 @@ class AwtCompositor implements Compositor {
         card
     }
 
-    protected void drawAsset(Graphics2D g, Rectangle box, ImageAsset asset) {
+    protected void drawAsset(Graphics2D g, Rectangle2D box, ImageAsset asset) {
         AffineTransformOp transOp = null
         if (asset.size != box.size) {
             transOp = new AffineTransformOp(AffineTransform.getScaleInstance(box.width / asset.size.width, box.height / asset.size.height), AffineTransformOp.TYPE_BICUBIC)
