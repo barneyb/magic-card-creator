@@ -249,15 +249,17 @@ class LayoutUtils {
     }
 
     protected void render(RenderCtx ctx, ImageAsset it) {
-        float factor = ctx.wrapOffset / it.size.height
+        float factor = ctx.fontSize / it.size.height
+        def width = it.size.width * factor
+        def height = it.size.height * factor
         if (! ctx.measuring) {
             ctx.drawAsset(
                 ctx.graphics,
                 new Rectangle2D.Float(
                     ctx.x,
-                    (float) ctx.y + (ctx.wrapOffset - it.size.height) * 0.5,
-                    (float) it.size.width * factor,
-                    (float) it.size.height * factor
+                    (float) ctx.y + (ctx.wrapOffset - height) * 0.5,
+                    (float) width,
+                    (float) height
                 ) {
                     java.awt.geom.Dimension2D getSize() {
                         new Dimension2D(width, height)
@@ -266,7 +268,7 @@ class LayoutUtils {
                 it
             )
         }
-        ctx.XOffset += it.size.width * factor
+        ctx.XOffset += width * 1.07
     }
 
 
