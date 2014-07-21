@@ -72,17 +72,28 @@ class SvgCompositor implements Compositor {
 
         def defs = el(doc.rootElement, 'defs')
 
+        def mask = el(defs, 'mask', [
+            id            : 'artwork-hole',
+            fill          : '#000',
+            'stroke-width': 0
+        ])
+        xmlBox(mask, new Rectangle(new Point(0, 0), rs.frames.size)).setAttributeNS(null, 'fill', 'white')
+        xmlBox(mask, rs.artwork).setAttributeNS(null, 'fill', 'black')
+
+
         def withGraphics = { work ->
             SVGGraphics2D svgg = new SVGGraphics2D(doc)
             work(svgg)
-            doc.documentElement.appendChild(svgg.topLevelGroup)
+            (Element) doc.documentElement.appendChild(svgg.topLevelGroup)
         }
 
         // this will inline the rasters as Base64-encoded data URLs.
-        withGraphics {
-//            xmlImage(it, new Rectangle(new Point(0, 0), rs.frames.size), model.frame)
-//            xmlImage(it, rs.artwork, model.artwork)
+        withGraphics { SVGGraphics2D it ->
+            xmlImage(it, rs.artwork, model.artwork)
         }
+        withGraphics { SVGGraphics2D it ->
+            xmlImage(it, new Rectangle(new Point(0, 0), rs.frames.size), model.frame)
+        }.setAttributeNS(null, 'mask', 'url(#artwork-hole)')
 
         float iconWidth = rs.titlebar.height / rs.large.size.height * rs.large.size.width
 
