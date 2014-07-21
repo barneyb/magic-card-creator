@@ -128,7 +128,7 @@ class LayoutUtils {
         float paragraphBreakSize
         Closure drawAsset
 
-        def RenderCtx(Graphics2D g, Rectangle b, float fs, float wo = fs, boolean m=false) {
+        def RenderCtx(Graphics2D g, Rectangle b, float fs, float wo, boolean m) {
             graphics = g
             bounds = b
             x = bounds.x
