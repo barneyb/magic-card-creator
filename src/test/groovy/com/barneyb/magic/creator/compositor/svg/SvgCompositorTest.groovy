@@ -1,7 +1,15 @@
 package com.barneyb.magic.creator.compositor.svg
 import com.barneyb.magic.creator.Cards
 import com.barneyb.magic.creator.asset.AssetDescriptor
+import com.barneyb.magic.creator.asset.ClasspathImage
 import com.barneyb.magic.creator.asset.RenderSet
+import com.barneyb.magic.creator.compositor.AbilityText
+import com.barneyb.magic.creator.compositor.FlavorText
+import com.barneyb.magic.creator.compositor.Paragraph
+import com.barneyb.magic.creator.compositor.RenderModel
+import com.barneyb.magic.creator.descriptor.CostType
+import com.barneyb.magic.creator.descriptor.FrameBaseType
+import com.barneyb.magic.creator.descriptor.FrameModifier
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
@@ -25,6 +33,7 @@ class SvgCompositorTest {
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8" />
 </head>
 <body>
+<embed src="brennas_white_card.svg" />
 <embed src="sally.svg" />
 <embed src="counterspell.svg" />
 <embed src="nightmare.svg" />
@@ -76,6 +85,31 @@ class SvgCompositorTest {
     void brothel() {
         def m = Cards.brothel(rs)
         new SvgCompositor().compose(m, rs, new File(outputDir, "brothel.svg").newOutputStream())
+    }
+
+    @Test
+    void brennasWhiteCard() {
+        new SvgCompositor().compose(new RenderModel(
+            frame: rs.frames.getImageAsset(FrameBaseType.WHITE + FrameModifier.Type.CREATURE),
+            title: "Sleeping Cherub",
+            cost: [CostType.COLORLESS_2, CostType.WHITE, CostType.WHITE].collect(rs.large.&getImageAsset),
+            artwork: new ClasspathImage("artwork/sally.jpg"),
+            type: "Creature \u2013 Angel",
+            body: [
+                [
+                    new AbilityText("Flying, double strike, lifelink"),
+                ],
+                [
+                    new Paragraph()
+                ],
+                [
+                    new FlavorText("Serra's children are angels.  And fierce.")
+                ]
+            ],
+            powerToughness: "2 / 2",
+            artist: "Sally Mann",
+            footer: "\u00a9 2014 Barney Boisvert (0/1)"
+        ), rs, new File(outputDir, "brennas_white_card.svg").newOutputStream())
     }
 
 }
