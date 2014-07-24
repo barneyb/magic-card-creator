@@ -1,6 +1,7 @@
 package com.barneyb.magic.creator.compositor.svg
 
 import com.barneyb.magic.creator.asset.ImageAsset
+import com.barneyb.magic.creator.asset.RemoteImage
 import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.Align
 import com.barneyb.magic.creator.compositor.Compositor
@@ -59,9 +60,9 @@ class SvgCompositor implements Compositor {
             fill          : '#000',
             'stroke-width': 0
         ])
-        xmlBox(mask, new Rectangle(new Point(0, 0), rs.frames.size)).setAttributeNS(null, 'fill', 'white')
+        def frameBox = new Rectangle(new Point(0, 0), rs.frames.size)
+        xmlBox(mask, frameBox).setAttributeNS(null, 'fill', 'white')
         xmlBox(mask, rs.artwork).setAttributeNS(null, 'fill', 'black')
-
 
         def withGraphics = { work ->
             SVGGraphics2D g = new SVGGraphics2D(doc)
@@ -69,13 +70,26 @@ class SvgCompositor implements Compositor {
             (Element) doc.documentElement.appendChild(g.topLevelGroup)
         }
 
-        // this will inline the rasters as Base64-encoded data URLs.
-        withGraphics { SVGGraphics2D it ->
-            xmlImage(it, rs.artwork, model.artwork)
+        // if the art and frame are RemoteImage, reference them, otherwise inline as Base64
+        def art = model.artwork
+        if (art instanceof RemoteImage) {
+            xmlImage(doc.rootElement, rs.artwork, art)
+        } else {
+            withGraphics { SVGGraphics2D it ->
+                xmlImage(it, rs.artwork, art)
+            }
         }
-        withGraphics { SVGGraphics2D it ->
-            xmlImage(it, new Rectangle(new Point(0, 0), rs.frames.size), model.frame)
-        }.setAttributeNS(null, 'mask', 'url(#artwork-hole)')
+
+        def frame = model.frame
+        def fel
+        if (frame instanceof RemoteImage) {
+            fel = xmlImage(doc.rootElement, frameBox, frame)
+        } else {
+            fel = withGraphics { SVGGraphics2D it ->
+                xmlImage(it, frameBox, frame)
+            }
+        }
+        fel.setAttributeNS(null, 'mask', 'url(#artwork-hole)')
 
         float iconWidth = rs.titlebar.height / rs.large.size.height * rs.large.size.width
 
@@ -153,6 +167,19 @@ class SvgCompositor implements Compositor {
                 ])
             })
         }
+    }
+
+    protected Element xmlImage(Element parent, Rectangle box, RemoteImage asset) {
+        def size = asset.size
+        el(
+            el(parent, 'g', [transform: "matrix(${(float) box.width / size.width} 0 0 ${(float) box.height / size.height} $box.x $box.y)"]),
+            'image',
+            [
+                width       : size.width,
+                height      : size.height,
+                'xlink:href': asset.url
+            ]
+        )
     }
 
     protected void xmlImage(SVGGraphics2D svgg, Rectangle box, ImageAsset asset) {
