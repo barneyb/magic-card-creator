@@ -25,46 +25,46 @@
             }
         },
         "titlebar": {
-            "x": 81,
-            "y": 78,
-            "width": 717,
+            "x": 70,
+            "y": 65,
+            "width": 735,
             "height": 49
         },
         "artwork": {
-            "x": 77,
-            "y": 147,
-            "width": 720,
-            "height": 532
+            "x": 68,
+            "y": 139,
+            "width": 740,
+            "height": 541
         },
         "typebar": {
-            "x": 84,
-            "y": 697,
-            "width": 710,
-            "height": 48
+            "x": 72,
+            "y": 701,
+            "width": 730,
+            "height": 45
         },
         "textbox": {
-            "x": 84,
-            "y": 780,
-            "width": 705,
-            "height": 295
+            "x": 74,
+            "y": 778,
+            "width": 720,
+            "height": 305
         },
         "powertoughness": {
-            "x": 670,
-            "y": 1095,
-            "width": 120,
-            "height": 50
+            "x": 675,
+            "y": 1112,
+            "width": 125,
+            "height": 46
         },
         "artist": {
-            "x": 138,
-            "y": 1119,
-            "width": 500,
-            "height": 29
+            "x": 135,
+            "y": 1131,
+            "width": 503,
+            "height": 30
         },
         "footer": {
-            "x": 70,
-            "y": 1153,
-            "width": 568,
-            "height": 22
+            "x": 55,
+            "y": 1166,
+            "width": 583,
+            "height": 21
         }
     },
     "screen": {
