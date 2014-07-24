@@ -108,7 +108,7 @@ class SvgCompositor implements Compositor {
 //        def gbx = el(doc.rootElement, 'g', [
 //            fill          : "none",
 //            'stroke-width': 1,
-//            stroke        : "#ebebeb"
+//            stroke        : 'red' // "#ebebeb"
 //        ])
 //
 //        // draw all the bounding boxes (for debugging)
