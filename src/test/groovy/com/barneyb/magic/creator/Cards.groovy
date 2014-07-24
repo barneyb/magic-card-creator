@@ -176,7 +176,7 @@ All legendary creatures, gods, and angels, get -1/-1.
                     new FlavorText("The thunder of its hooves beats dreams into despair."),
                 ]
             ],
-            powerToughness: "* / *",
+            powerToughness: "*/*",
             whiteFooterText: true,
             artist: "catfish08",
             footer: "\u00A9 2014 Barney Boisvert (3/6)"
@@ -215,7 +215,7 @@ All legendary creatures, gods, and angels, get -1/-1.
                     new FlavorText("Or you.")
                 ]
             ],
-            powerToughness: "1 / 1",
+            powerToughness: "1/1",
             artist: "Sally Mann",
             footer: "\u00A9 2014 Barney Boisvert (1/6)"
         )
@@ -309,7 +309,7 @@ All legendary creatures, gods, and angels, get -1/-1.
                     new FlavorText("Alarans commemorated its appearances with new holidays bearing names like the Great Cataclysm and the Fall of Ilson Gate.")
                 ]
             ],
-            powerToughness: "7 / 7",
+            powerToughness: "7/7",
             artist: "Anthony S. Waters",
             footer: "\u00A9 2014 Barney Boisvert (4/6)"
         )
