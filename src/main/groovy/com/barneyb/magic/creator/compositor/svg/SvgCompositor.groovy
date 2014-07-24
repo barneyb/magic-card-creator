@@ -31,25 +31,6 @@ import java.awt.image.AffineTransformOp
  */
 class SvgCompositor implements Compositor {
 
-    public static final Map<TextAttribute, ?> TITLE_FONT = [
-        (TextAttribute.FAMILY)      : "Matrix",
-        (TextAttribute.WEIGHT)      : TextAttribute.WEIGHT_BOLD,
-    ]
-    public static final Map<TextAttribute, ?> BODY_FONT = [
-        (TextAttribute.FAMILY)      : "Garamond",
-        (TextAttribute.WEIGHT)      : TextAttribute.WEIGHT_REGULAR,
-    ]
-    public static final Map<TextAttribute, ?> FLAVOR_FONT = [
-        (TextAttribute.FAMILY)      : "Garamond",
-        (TextAttribute.WEIGHT)      : TextAttribute.WEIGHT_REGULAR,
-        (TextAttribute.POSTURE)     : TextAttribute.POSTURE_OBLIQUE,
-        (TextAttribute.TRANSFORM)   : AffineTransform.getShearInstance(0.25, 0)
-    ]
-    public static final Map<TextAttribute, ?> POWER_TOUGHNESS_FONT = [
-        (TextAttribute.FAMILY)      : "Goudy Old Style",
-        (TextAttribute.WEIGHT)      : TextAttribute.WEIGHT_BOLD,
-    ]
-
     @Override
     void compose(RenderModel model, RenderSet rs, OutputStream dest) {
         def impl = SVGDOMImplementation.getDOMImplementation();
@@ -164,7 +145,7 @@ class SvgCompositor implements Compositor {
         }
 
         model.bodyIcons.each iconDef.curry('sm')
-        withGraphics {
+        withGraphics { Graphics2D it ->
             new LayoutUtils().block(it, rs.textbox, model.body, BODY_FONT, FLAVOR_FONT, { Graphics2D g, Rectangle2D box, ImageAsset asset ->
                 el(doc.rootElement, 'use', [
                     'xlink:href': "#sm-$asset.id",

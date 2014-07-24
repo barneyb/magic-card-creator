@@ -35,7 +35,7 @@ class AwtCompositor implements Compositor {
         def card = ImageIO.read(model.frame.inputStream)
         def g = card.createGraphics()
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON)
-        g.font = BASE_FONT
+        g.font = new Font(TITLE_FONT)
         g.color = Color.BLACK
         int i = 0
         model.cost.reverse().each { it ->
@@ -59,18 +59,20 @@ class AwtCompositor implements Compositor {
         drawText(g, rs.typebar, model.type)
 
         g.setClip(rs.textbox)
-        new LayoutUtils().block(g, rs.textbox, model.body, BASE_FONT, BASE_FONT.deriveFont(Font.ITALIC), this.&drawAsset)
+        new LayoutUtils().block(g, rs.textbox, model.body, new Font(BODY_FONT), new Font(FLAVOR_FONT), this.&drawAsset)
         g.setClip(null) // clear the clip
 
         if (model.powerToughnessVisible) {
+            g.font = new Font(POWER_TOUGHNESS_FONT)
             drawText(g, rs.powertoughness, model.powerToughness, Align.CENTER)
         }
 
         if (model.whiteFooterText) {
             g.color = Color.WHITE
         }
-        g.font = BASE_FONT
+        g.font = new Font(TITLE_FONT)
         drawText(g, rs.artist, model.artist)
+        g.font = new Font(BODY_FONT)
         drawText(g, rs.footer, model.footer)
         card
     }
