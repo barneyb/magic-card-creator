@@ -47,7 +47,7 @@ class BatikTranscoderTest {
         def t = new PNGTranscoder()
         t.addTranscodingHint(PNGTranscoder.KEY_WIDTH, 400f)
         t.transcode(
-            new TranscoderInput(src.toURI().toString()),
+            new TranscoderInput(src.newInputStream()),
             new TranscoderOutput(dest.newOutputStream())
         )
     }
@@ -61,7 +61,7 @@ class BatikTranscoderTest {
         }
         def dest = new File(src.parent, "barney_tc.pdf")
         new PDFTranscoder().transcode(
-            new TranscoderInput(src.toURI().toString()),
+            new TranscoderInput(src.newInputStream()),
             new TranscoderOutput(dest.newOutputStream())
         )
     }
