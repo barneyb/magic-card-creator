@@ -72,24 +72,28 @@ class SvgCompositor implements Compositor {
 
         // if the art and frame are RemoteImage, reference them, otherwise inline as Base64
         def art = model.artwork
-        if (xlinkInsteadOfInline(art)) {
-            xmlImage(doc.rootElement, rs.artwork, art)
-        } else {
-            withGraphics { SVGGraphics2D it ->
-                xmlImage(it, rs.artwork, art)
+        if (art.exists) {
+            if (xlinkInsteadOfInline(art)) {
+                xmlImage(doc.rootElement, rs.artwork, art)
+            } else {
+                withGraphics { SVGGraphics2D it ->
+                    xmlImage(it, rs.artwork, art)
+                }
             }
         }
 
         def frame = model.frame
-        def fel
-        if (xlinkInsteadOfInline(frame)) {
-            fel = xmlImage(doc.rootElement, frameBox, frame)
-        } else {
-            fel = withGraphics { SVGGraphics2D it ->
-                xmlImage(it, frameBox, frame)
+        if (frame.exists) {
+            def fel
+            if (xlinkInsteadOfInline(frame)) {
+                fel = xmlImage(doc.rootElement, frameBox, frame)
+            } else {
+                fel = withGraphics { SVGGraphics2D it ->
+                    xmlImage(it, frameBox, frame)
+                }
             }
+            fel.setAttributeNS(null, 'mask', 'url(#artwork-hole)')
         }
-        fel.setAttributeNS(null, 'mask', 'url(#artwork-hole)')
 
         float iconWidth = rs.titlebar.height / rs.large.size.height * rs.large.size.width
 
@@ -190,9 +194,6 @@ class SvgCompositor implements Compositor {
     }
 
     protected void xmlImage(SVGGraphics2D svgg, Rectangle box, ImageAsset asset) {
-        if (! asset.exists) {
-            return
-        }
         def img = ImageIO.read(asset.inputStream)
         def size = new Dimension(img.width, img.height) // this should match 'asset.size'
         svgg.drawImage(img, new AffineTransformOp(AffineTransform.getScaleInstance(box.width / size.width, box.height / size.height), AffineTransformOp.TYPE_BICUBIC), (int) box.x, (int) box.y)
