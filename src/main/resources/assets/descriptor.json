@@ -26,9 +26,9 @@
         },
         "titlebar": {
             "x": 70,
-            "y": 65,
-            "width": 735,
-            "height": 49
+            "y": 69,
+            "width": 738,
+            "height": 45
         },
         "artwork": {
             "x": 68,
@@ -38,13 +38,13 @@
         },
         "typebar": {
             "x": 72,
-            "y": 701,
+            "y": 706,
             "width": 730,
-            "height": 45
+            "height": 40
         },
         "textbox": {
             "x": 74,
-            "y": 778,
+            "y": 780,
             "width": 720,
             "height": 305
         },
@@ -56,15 +56,15 @@
         },
         "artist": {
             "x": 135,
-            "y": 1131,
+            "y": 1133,
             "width": 503,
             "height": 30
         },
         "footer": {
             "x": 55,
-            "y": 1166,
+            "y": 1164,
             "width": 583,
-            "height": 21
+            "height": 23
         }
     },
     "screen": {
