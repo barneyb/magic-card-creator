@@ -72,7 +72,7 @@ class SvgCompositor implements Compositor {
 
         // if the art and frame are RemoteImage, reference them, otherwise inline as Base64
         def art = model.artwork
-        if (art instanceof RemoteImage) {
+        if (xlinkInsteadOfInline(art)) {
             xmlImage(doc.rootElement, rs.artwork, art)
         } else {
             withGraphics { SVGGraphics2D it ->
@@ -82,7 +82,7 @@ class SvgCompositor implements Compositor {
 
         def frame = model.frame
         def fel
-        if (frame instanceof RemoteImage) {
+        if (xlinkInsteadOfInline(frame)) {
             fel = xmlImage(doc.rootElement, frameBox, frame)
         } else {
             fel = withGraphics { SVGGraphics2D it ->
@@ -167,6 +167,13 @@ class SvgCompositor implements Compositor {
                 ])
             })
         }
+    }
+
+    protected boolean xlinkInsteadOfInline(ImageAsset asset) {
+        if (asset instanceof RemoteImage) {
+            return asset.url.protocol == 'file' || asset.url.protocol == 'http'
+        }
+        false
     }
 
     protected Element xmlImage(Element parent, Rectangle box, RemoteImage asset) {
