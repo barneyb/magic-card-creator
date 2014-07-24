@@ -25,6 +25,7 @@ class BatikTranscoderTest {
 <body>
 <embed src="barney.svg"></embed>
 <img src="barney_tc.png" />
+<img src="barney_tc_small.png" />
 <img src="barney.png" />
 </body>
 </html>"""
@@ -39,6 +40,13 @@ class BatikTranscoderTest {
         }
         def dest = new File(src.parent, "barney_tc.png")
         new PNGTranscoder().transcode(
+            new TranscoderInput(src.toURI().toString()),
+            new TranscoderOutput(dest.newOutputStream())
+        )
+        dest = new File(src.parent, "barney_tc_small.png")
+        def t = new PNGTranscoder()
+        t.addTranscodingHint(PNGTranscoder.KEY_WIDTH, 400f)
+        t.transcode(
             new TranscoderInput(src.toURI().toString()),
             new TranscoderOutput(dest.newOutputStream())
         )
