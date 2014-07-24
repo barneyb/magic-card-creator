@@ -17,10 +17,8 @@ interface Compositor {
         (TextAttribute.WEIGHT)      : TextAttribute.WEIGHT_REGULAR,
     ]
     public static final Map<TextAttribute, ?> FLAVOR_FONT = [
-        (TextAttribute.FAMILY)      : "Garamond",
+        (TextAttribute.FAMILY)      : "Garamond-italic",
         (TextAttribute.WEIGHT)      : TextAttribute.WEIGHT_REGULAR,
-        (TextAttribute.POSTURE)     : TextAttribute.POSTURE_OBLIQUE,
-//        (TextAttribute.TRANSFORM)   : AffineTransform.getShearInstance(0.25, 0)
     ]
     public static final Map<TextAttribute, ?> POWER_TOUGHNESS_FONT = [
         (TextAttribute.FAMILY)      : "Goudy Old Style",
