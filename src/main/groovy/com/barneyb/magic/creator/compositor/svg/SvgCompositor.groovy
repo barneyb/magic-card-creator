@@ -39,12 +39,12 @@ class SvgCompositor implements Compositor {
 
         composeInto(doc, rs, model)
 
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer transformer = tf.newTransformer();
-        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-        transformer.transform(new DOMSource(doc), new StreamResult(dest));
+        def tf = TransformerFactory.newInstance()
+        Transformer t = tf.newTransformer()
+        t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes")
+        t.setOutputProperty(OutputKeys.INDENT, "yes")
+        t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4")
+        t.transform(new DOMSource(doc), new StreamResult(dest))
         dest.close()
     }
 
