@@ -57,8 +57,8 @@ t
 </g>
 
 x
-<g transform="matrix(0.8 0 0 1 12.5 39)">
-    <text font-family="Goudy Old Style" font-weight="normal" font-size="50px" class="x">X</text>
+<g transform="matrix(.8 0 0 1 13 37)">
+    <text font-family="Goudy Old Style" font-weight="normal" font-size="45px" class="x">X</text>
 </g>
 
 0
