@@ -106,7 +106,7 @@ class SvgCompositorTest {
                     new FlavorText("Serra's children are angels.  And fierce.")
                 ]
             ],
-            powerToughness: "2 / 2",
+            powerToughness: "2/4",
             artist: "Sally Mann",
             footer: "\u00a9 2014 Barney Boisvert (0/1)"
         ), rs, new File(outputDir, "brennas_white_card.svg").newOutputStream())
