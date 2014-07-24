@@ -64,9 +64,9 @@ class SvgCompositor implements Compositor {
 
 
         def withGraphics = { work ->
-            SVGGraphics2D svgg = new SVGGraphics2D(doc)
-            work(svgg)
-            (Element) doc.documentElement.appendChild(svgg.topLevelGroup)
+            SVGGraphics2D g = new SVGGraphics2D(doc)
+            work(g)
+            (Element) doc.documentElement.appendChild(g.topLevelGroup)
         }
 
         // this will inline the rasters as Base64-encoded data URLs.
