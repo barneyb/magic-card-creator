@@ -98,11 +98,6 @@ enum Commands {
         def proofs = new File(dir, "proofs.html")
         if (format.proofed) {
             proofs.text = """<html>
-<head>
-<style>
-$format.proofTag { width: ${rs.frames.size.width}px; height: ${rs.frames.size.height}px; padding: 0; margin: 10px; }
-</style>
-</head>
 <body>
 ${cards.collect { "<$format.proofTag src=\"${it.cardOfSet}.$format\" />" }.join("\n")}
 </body>
