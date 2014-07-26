@@ -1,11 +1,13 @@
 package com.barneyb.magic.creator.cli
+
 import com.barneyb.magic.creator.asset.AssetDescriptor
 import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.RenderModel
-import com.barneyb.magic.creator.compositor.awt.AwtCompositor
+import com.barneyb.magic.creator.compositor.svg.SvgCompositor
 import com.barneyb.magic.creator.descriptor.CardSet
 import com.barneyb.magic.creator.descriptor.CardValidator
 import groovy.transform.TupleConstructor
+
 /**
  *
  * @author bboisvert
@@ -55,11 +57,12 @@ enum Commands {
 
     COMPOSE({ CardSet cards, List<String> args ->
         if (args.size() < 1) {
-            println "You must specify the renderset name to use (e.g., 'screen') after the descriptor."
+            println "You must specify the target format to use (svg, png, or pdf) after the descriptor."
             System.exit(2)
         }
-        RenderSet rs = AssetDescriptor.fromStream(Main.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet(args.first())
+        Format format = Format.valueOf(args.first())
         args = args.tail()
+        RenderSet rs = AssetDescriptor.fromStream(Main.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet('print')
 
         File dir
         if (args.size() >= 1) {
@@ -78,33 +81,33 @@ enum Commands {
         println "Composing '$cards.name' into $dir:"
         int maxLen = cards*.title*.length().max() + cards.size().toString().length() + 5
         def validator = new CardValidator()
-        def compositor = {
-            switch (rs.compositor) {
-                default:
-                    return new AwtCompositor()
-            }
-        }()
+        def compositor = new SvgCompositor()
         cards.each { card ->
             println "#$card.cardOfSet $card.title".padRight(maxLen, '.')
             try {
                 validator.validate(card).each {
                     println "  " + it
                 }
-                compositor.compose(RenderModel.fromCard(card, rs), rs, new File(dir, "${card.cardOfSet}.png").newOutputStream())
+                def baos = new ByteArrayOutputStream()
+                compositor.compose(RenderModel.fromCard(card, rs), rs, baos)
+                new File(dir, "${card.cardOfSet}.$format").bytes = format.formatter(baos.toByteArray())
             } catch (e) {
                 e.printStackTrace()
             }
         }
-        new File(dir, "proofs.html").text = """<html>
+        def proofs = new File(dir, "proofs.html")
+        if (format.proofed) {
+            proofs.text = """<html>
 <head>
 <style>
-img { width: ${rs.frames.size.width}px; height: ${rs.frames.size.height}px; padding: 0; margin: 10px; }
+$format.proofTag { width: ${rs.frames.size.width}px; height: ${rs.frames.size.height}px; padding: 0; margin: 10px; }
 </style>
 </head>
 <body>
-${cards.collect { "<img src=\"${it.cardOfSet}.png\" />" }.join("\n")}
+${cards.collect { "<$format.proofTag src=\"${it.cardOfSet}.$format\" />" }.join("\n")}
 </body>
 </html>"""
+        }
     }),
 
     final Closure action
