@@ -125,7 +125,7 @@
                                 <mkdir dir="${project.build.outputDirectory}" />
                                 <groovyc destdir="${project.build.outputDirectory}" verbose="yes" srcdir="${project.build.sourceDirectory}">
                                     <classpath refid="maven.compile.classpath" />
-                                    <javac source="${java.compliance.version}" target="${java.compliance.version}" />
+                                    <javac source="${java.version}" target="${java.version}" />
                                 </groovyc>
                             </target>
                         </configuration>
@@ -144,7 +144,7 @@
                                 <mkdir dir="${project.build.testOutputDirectory}" />
                                 <groovyc destdir="${project.build.testOutputDirectory}" verbose="yes" srcdir="${project.build.testSourceDirectory}">
                                     <classpath refid="maven.test.classpath" />
-                                    <javac source="${java.compliance.version}" target="${java.compliance.version}" />
+                                    <javac source="${java.version}" target="${java.version}" />
                                 </groovyc>
                             </target>
                         </configuration>
