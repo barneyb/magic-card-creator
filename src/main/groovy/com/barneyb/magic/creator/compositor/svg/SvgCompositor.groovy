@@ -74,7 +74,7 @@ class SvgCompositor implements Compositor {
         def art = model.artwork
         if (art.exists) {
             if (xlinkInsteadOfInline(art)) {
-                xmlImage(doc.rootElement, rs.artwork, art)
+                xmlImage(doc.rootElement, rs.artwork, (RemoteImage) art)
             } else {
                 withGraphics { SVGGraphics2D it ->
                     xmlImage(it, rs.artwork, art)
@@ -86,7 +86,7 @@ class SvgCompositor implements Compositor {
         if (frame.exists) {
             def fel
             if (xlinkInsteadOfInline(frame)) {
-                fel = xmlImage(doc.rootElement, frameBox, frame)
+                fel = xmlImage(doc.rootElement, frameBox, (RemoteImage) frame)
             } else {
                 fel = withGraphics { SVGGraphics2D it ->
                     xmlImage(it, frameBox, frame)
@@ -144,7 +144,7 @@ class SvgCompositor implements Compositor {
             transform: "scale(${(float) rs.titlebar.height / rs.large.size.height})"
         ])
 
-        def iconDef = { idPrefix, it ->
+        def iconDef = { idPrefix, ImageAsset it ->
             String parser = XMLResourceDescriptor.getXMLParserClassName()
             SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser)
             def icon = (f.createDocument('', it.inputStream) as SVGDocument).rootElement
@@ -173,6 +173,7 @@ class SvgCompositor implements Compositor {
         }
     }
 
+    @SuppressWarnings("GrMethodMayBeStatic")
     protected boolean xlinkInsteadOfInline(ImageAsset asset) {
         if (asset instanceof RemoteImage) {
             return asset.url.protocol == 'file' || asset.url.protocol == 'http'
@@ -193,6 +194,7 @@ class SvgCompositor implements Compositor {
         )
     }
 
+    @SuppressWarnings("GrMethodMayBeStatic")
     protected void xmlImage(SVGGraphics2D svgg, Rectangle box, ImageAsset asset) {
         def img = ImageIO.read(asset.inputStream)
         def size = new Dimension(img.width, img.height) // this should match 'asset.size'
@@ -230,6 +232,7 @@ class SvgCompositor implements Compositor {
         ])
     }
 
+    @SuppressWarnings("GrMethodMayBeStatic")
     protected Element el(Element parent, String name, Map<String, ?> attrs=[:]) {
         def el = parent.ownerDocument.createElementNS(parent.namespaceURI, name)
         attrs.each { n, v ->
