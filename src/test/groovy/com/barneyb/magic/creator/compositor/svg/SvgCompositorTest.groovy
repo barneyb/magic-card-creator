@@ -17,6 +17,7 @@ import org.junit.Test
  *
  * @author bboisvert
  */
+@org.junit.Ignore
 class SvgCompositorTest {
 
     static final File outputDir = new File("build")

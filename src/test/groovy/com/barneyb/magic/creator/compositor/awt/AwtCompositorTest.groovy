@@ -11,6 +11,7 @@ import org.junit.Test
  * right or not.  So it's more of just an example runner, but easy to run via
  * jUnit's infrastructure.
  */
+@org.junit.Ignore
 class AwtCompositorTest {
 
     static final File outputDir = new File("build")
