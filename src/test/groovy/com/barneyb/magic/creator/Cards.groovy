@@ -335,7 +335,7 @@ All legendary creatures, gods, and angels, get -1/-1.
         )
     }
 
-    static RenderModel brennasWhiteCard(RenderSet rs) {
+    static RenderModel cherub(RenderSet rs) {
         new RenderModel(
             frame: rs.frames.getImageAsset(FrameBaseType.WHITE + FrameModifier.Type.CREATURE),
             title: "Sleeping Cherub",

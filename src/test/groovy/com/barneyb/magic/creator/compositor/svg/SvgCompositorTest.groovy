@@ -30,8 +30,8 @@ class SvgCompositorTest {
 <body>
 <embed src="sally.svg" />
 <embed src="sally_print.svg" />
-<embed src="brennas_white_card.svg" />
-<embed src="brennas_white_card_print.svg" />
+<embed src="sleeping-cherub.svg" />
+<embed src="sleeping-cherub_print.svg" />
 <embed src="counterspell.svg" />
 <embed src="nightmare.svg" />
 <embed src="blitz-hellion.svg" />
@@ -91,15 +91,15 @@ class SvgCompositorTest {
     }
 
     @Test
-    void brennasWhiteCard() {
-        def m = Cards.brennasWhiteCard(rs)
-        new SvgCompositor().compose(m, rs, new File(outputDir, "brennas_white_card.svg").newOutputStream())
+    void sleeping_cherub() {
+        def m = Cards.cherub(rs)
+        new SvgCompositor().compose(m, rs, new File(outputDir, "sleeping-cherub.svg").newOutputStream())
     }
 
     @Test
-    void brennasWhiteCard_print() {
-        def m = Cards.brennasWhiteCard(rs)
-        new SvgCompositor(forPrint: true).compose(m, rs, new File(outputDir, "brennas_white_card_print.svg").newOutputStream())
+    void sleeping_cherub_print() {
+        def m = Cards.cherub(rs)
+        new SvgCompositor(forPrint: true).compose(m, rs, new File(outputDir, "sleeping-cherub_print.svg").newOutputStream())
     }
 
 }
