@@ -1,17 +1,10 @@
 package com.barneyb.magic.creator
 
+import com.barneyb.magic.creator.asset.ClasspathImage
 import com.barneyb.magic.creator.asset.RemoteImage
 import com.barneyb.magic.creator.asset.RenderSet
-import com.barneyb.magic.creator.compositor.AbilityText
-import com.barneyb.magic.creator.compositor.CompoundImageAsset
-import com.barneyb.magic.creator.compositor.FlavorText
-import com.barneyb.magic.creator.compositor.Paragraph
-import com.barneyb.magic.creator.compositor.RenderModel
-import com.barneyb.magic.creator.descriptor.Card
-import com.barneyb.magic.creator.descriptor.CardSet
-import com.barneyb.magic.creator.descriptor.CostType
-import com.barneyb.magic.creator.descriptor.FrameBaseType
-import com.barneyb.magic.creator.descriptor.FrameModifier
+import com.barneyb.magic.creator.compositor.*
+import com.barneyb.magic.creator.descriptor.*
 
 /**
  *
@@ -339,6 +332,30 @@ All legendary creatures, gods, and angels, get -1/-1.
             whiteFooterText: true,
             artist: "God of War: Ascension",
             footer: "\u00A9 2014 Barney Boisvert (6/6)"
+        )
+    }
+
+    static RenderModel brennasWhiteCard(RenderSet rs) {
+        new RenderModel(
+            frame: rs.frames.getImageAsset(FrameBaseType.WHITE + FrameModifier.Type.CREATURE),
+            title: "Sleeping Cherub",
+            cost: [CostType.COLORLESS_2, CostType.WHITE, CostType.WHITE].collect(rs.large.&getImageAsset),
+            artwork: new ClasspathImage("artwork/sally.jpg"),
+            type: "Creature \u2013 Angel",
+            body: [
+                [
+                    new AbilityText("Flying, double strike, lifelink"),
+                ],
+                [
+                    new Paragraph()
+                ],
+                [
+                    new FlavorText("Serra's children are angels.  And fierce.")
+                ]
+            ],
+            powerToughness: "2/4",
+            artist: "Sally Mann",
+            footer: "\u00a9 2014 Barney Boisvert (0/1)"
         )
     }
 }
