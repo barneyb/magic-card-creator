@@ -59,6 +59,10 @@ enum Commands {
         new CoreCompose().compose(cards, args)
     }),
 
+    COMPOSE_PRINT({ CardSet cards, List<String> args ->
+        new CoreCompose(true).compose(cards, args, Format.pdf)
+    })
+
     final Closure action
 
     void execute(CardSet cards, List<String> args) {
@@ -71,18 +75,21 @@ enum Commands {
 
     private static class CoreCompose {
 
-        final boolean forPrint
+        final boolean forPrint = false
 
         def CoreCompose(boolean forPrint=false) {
             this.forPrint = forPrint
         }
 
-        void compose(CardSet cards, List<String> args) {
-            if (args.size() < 1) {
-                println "You must specify the target format to use (svg, png, or pdf) after the descriptor."
-                System.exit(2)
+        void compose(CardSet cards, List<String> args, Format format=null) {
+            if (args.empty) {
+                if (format == null) {
+                    println "You must specify the target format to use (svg, png, or pdf) after the descriptor."
+                    System.exit(2)
+                }
+            } else {
+                format = Format.valueOf(args.first())
             }
-            Format format = Format.valueOf(args.first())
             args = args.tail()
             RenderSet rs = AssetDescriptor.fromStream(Main.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet('print')
 
@@ -103,7 +110,7 @@ enum Commands {
             println "Composing '$cards.name' into $dir:"
             int maxLen = cards*.title*.length().max() + cards.size().toString().length() + 5
             def validator = new CardValidator()
-            def compositor = new SvgCompositor()
+            def compositor = new SvgCompositor(forPrint: forPrint)
             cards.each { card ->
                 println "#$card.cardOfSet $card.title".padRight(maxLen, '.')
                 try {

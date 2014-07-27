@@ -14,7 +14,7 @@ class Main {
         if (args.length < 2) {
             Commands.HELP.action "You must supply a command and a descriptor file as the first two arguments."
         }
-        def command = args[0].toUpperCase()
+        def command = args[0].toUpperCase().replace('-', '_')
         if (! Commands.enumConstants*.name().contains(command)) {
             Commands.HELP.action "The '$command' command is not recognized (${Commands.enumConstants*.name()*.toLowerCase()})."
         }
