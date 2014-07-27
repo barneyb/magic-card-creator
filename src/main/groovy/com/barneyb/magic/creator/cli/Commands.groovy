@@ -56,53 +56,7 @@ enum Commands {
     }),
 
     COMPOSE({ CardSet cards, List<String> args ->
-        if (args.size() < 1) {
-            println "You must specify the target format to use (svg, png, or pdf) after the descriptor."
-            System.exit(2)
-        }
-        Format format = Format.valueOf(args.first())
-        args = args.tail()
-        RenderSet rs = AssetDescriptor.fromStream(Main.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet('print')
-
-        File dir
-        if (args.size() >= 1) {
-            dir = new File(args.first())
-            args = args.tail()
-        } else {
-            dir = new File('.')
-        }
-        if (dir.exists() && ! dir.directory) {
-            println "You must specify a directory to compose into."
-            System.exit(2)
-        } else if (! dir.exists()) {
-            dir.mkdirs()
-        }
-
-        println "Composing '$cards.name' into $dir:"
-        int maxLen = cards*.title*.length().max() + cards.size().toString().length() + 5
-        def validator = new CardValidator()
-        def compositor = new SvgCompositor()
-        cards.each { card ->
-            println "#$card.cardOfSet $card.title".padRight(maxLen, '.')
-            try {
-                validator.validate(card).each {
-                    println "  " + it
-                }
-                def baos = new ByteArrayOutputStream()
-                compositor.compose(RenderModel.fromCard(card, rs), rs, baos)
-                new File(dir, "${card.cardOfSet}.$format").bytes = format.formatter(baos.toByteArray())
-            } catch (e) {
-                e.printStackTrace()
-            }
-        }
-        def proofs = new File(dir, "proofs.html")
-        if (format.proofed) {
-            proofs.text = """<html>
-<body>
-${cards.collect { "<$format.proofTag src=\"${it.cardOfSet}.$format\" />" }.join("\n")}
-</body>
-</html>"""
-        }
+        new CoreCompose().compose(cards, args)
     }),
 
     final Closure action
@@ -112,6 +66,65 @@ ${cards.collect { "<$format.proofTag src=\"${it.cardOfSet}.$format\" />" }.join(
             action(cards)
         } else {
             action(cards, args)
+        }
+    }
+
+    private static class CoreCompose {
+
+        final boolean forPrint
+
+        def CoreCompose(boolean forPrint=false) {
+            this.forPrint = forPrint
+        }
+
+        void compose(CardSet cards, List<String> args) {
+            if (args.size() < 1) {
+                println "You must specify the target format to use (svg, png, or pdf) after the descriptor."
+                System.exit(2)
+            }
+            Format format = Format.valueOf(args.first())
+            args = args.tail()
+            RenderSet rs = AssetDescriptor.fromStream(Main.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet('print')
+
+            File dir
+            if (args.size() >= 1) {
+                dir = new File(args.first())
+                args = args.tail()
+            } else {
+                dir = new File('.')
+            }
+            if (dir.exists() && ! dir.directory) {
+                println "You must specify a directory to compose into."
+                System.exit(2)
+            } else if (! dir.exists()) {
+                dir.mkdirs()
+            }
+
+            println "Composing '$cards.name' into $dir:"
+            int maxLen = cards*.title*.length().max() + cards.size().toString().length() + 5
+            def validator = new CardValidator()
+            def compositor = new SvgCompositor()
+            cards.each { card ->
+                println "#$card.cardOfSet $card.title".padRight(maxLen, '.')
+                try {
+                    validator.validate(card).each {
+                        println "  " + it
+                    }
+                    def baos = new ByteArrayOutputStream()
+                    compositor.compose(RenderModel.fromCard(card, rs), rs, baos)
+                    new File(dir, "${card.cardOfSet}.$format").bytes = format.formatter(baos.toByteArray())
+                } catch (e) {
+                    e.printStackTrace()
+                }
+            }
+            def proofs = new File(dir, "proofs.html")
+            if (format.proofed) {
+                proofs.text = """<html>
+<body>
+${cards.collect { "<$format.proofTag src=\"${it.cardOfSet}.$format\" />" }.join("\n")}
+</body>
+</html>"""
+            }
         }
     }
 
