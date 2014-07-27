@@ -16,7 +16,7 @@ class Main {
         }
         def command = args[0].toUpperCase().replace('-', '_')
         if (! Commands.enumConstants*.name().contains(command)) {
-            Commands.HELP.action "The '$command' command is not recognized (${Commands.enumConstants*.name()*.toLowerCase()})."
+            Commands.HELP.action "The '${args[0]}' command is not recognized (${Commands.enumConstants*.name()*.toLowerCase()})."
         }
         def cmd = Commands.valueOf(command)
         def desc = new File(args[1])
