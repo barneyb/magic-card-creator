@@ -56,8 +56,10 @@ class SvgCompositor implements Compositor {
     }
 
     protected void composeInto(SVGDocument doc, RenderSet rs, RenderModel model) {
-        doc.rootElement.setAttributeNS(null, "width", rs.frames.size.width.toString())
-        doc.rootElement.setAttributeNS(null, "height", rs.frames.size.height.toString())
+        elattr(doc.rootElement, [
+            width: rs.frames.size.width,
+            height: rs.frames.size.height
+        ])
 
         def defs = el(doc.rootElement, 'defs')
 
@@ -241,10 +243,14 @@ class SvgCompositor implements Compositor {
     @SuppressWarnings("GrMethodMayBeStatic")
     protected Element el(Element parent, String name, Map<String, ?> attrs=[:]) {
         def el = parent.ownerDocument.createElementNS(parent.namespaceURI, name)
+        parent.appendChild(elattr(el, attrs))
+    }
+
+    protected Element elattr(Element el, Map<String, ?> attrs) {
         attrs.each { n, v ->
             el.setAttributeNS(null, n, v.toString())
         }
-        parent.appendChild(el)
+        el
     }
 
 }
