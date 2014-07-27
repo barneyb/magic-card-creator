@@ -1,4 +1,5 @@
 package com.barneyb.magic.creator.compositor
+
 import com.barneyb.magic.creator.Cards
 import com.barneyb.magic.creator.asset.AssetDescriptor
 import com.barneyb.magic.creator.asset.RenderSet
@@ -6,9 +7,10 @@ import com.barneyb.magic.creator.compositor.awt.AwtCompositorTest
 import org.junit.Before
 import org.junit.Test
 
-import static com.barneyb.magic.creator.Assert.*
+import static com.barneyb.magic.creator.Assert.assertRenderModel
 import static com.barneyb.magic.creator.descriptor.CostType.*
 import static junit.framework.Assert.*
+
 /**
  *
  * @author bboisvert
@@ -76,6 +78,14 @@ class RenderModelTest {
         assertRenderModel(
             Cards.brothel(rs),
             RenderModel.fromCard(Cards.brothel(), rs)
+        )
+    }
+
+    @Test
+    void fromCard_cherub() {
+        assertRenderModel(
+            Cards.cherub(rs),
+            RenderModel.fromCard(Cards.cherub(), rs)
         )
     }
 

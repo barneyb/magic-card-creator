@@ -108,6 +108,21 @@ All legendary creatures, gods, and angels, get -1/-1.
 """,
             artist: "God of War: Ascension"
         )
+        s << new Card(
+            title: "Sleeping Cherub",
+            costString: "2WW",
+            artwork: _cl.getResource("artwork/sally.jpg"),
+            type: "Creature",
+            subtype: "Angel",
+            body: """
+Flying, double strike, lifelink
+
+{Serra's children are angels.  And fierce.}
+""",
+            power: "2",
+            toughness: "4",
+            artist: "Sally Mann"
+        )
         s
     }
 
@@ -137,7 +152,7 @@ All legendary creatures, gods, and angels, get -1/-1.
                 ]
             ],
             artist: "Zueuk",
-            footer: "\u00A9 2014 Barney Boisvert (2/6)"
+            footer: "\u00A9 2014 Barney Boisvert (2/7)"
         )
     }
 
@@ -172,7 +187,7 @@ All legendary creatures, gods, and angels, get -1/-1.
             powerToughness: "*/*",
             whiteFooterText: true,
             artist: "catfish08",
-            footer: "\u00A9 2014 Barney Boisvert (3/6)"
+            footer: "\u00A9 2014 Barney Boisvert (3/7)"
         )
     }
 
@@ -210,7 +225,7 @@ All legendary creatures, gods, and angels, get -1/-1.
             ],
             powerToughness: "1/1",
             artist: "Sally Mann",
-            footer: "\u00A9 2014 Barney Boisvert (1/6)"
+            footer: "\u00A9 2014 Barney Boisvert (1/7)"
         )
     }
 
@@ -270,7 +285,7 @@ All legendary creatures, gods, and angels, get -1/-1.
             ],
             powerToughness: "100/100",
             artist: "Dolores Boisvert",
-            footer: "\u00A9 2014 Barney Boisvert (5/6)"
+            footer: "\u00A9 2014 Barney Boisvert (5/7)"
         )
     }
 
@@ -304,7 +319,7 @@ All legendary creatures, gods, and angels, get -1/-1.
             ],
             powerToughness: "7/7",
             artist: "Anthony S. Waters",
-            footer: "\u00A9 2014 Barney Boisvert (4/6)"
+            footer: "\u00A9 2014 Barney Boisvert (4/7)"
         )
     }
 
@@ -331,8 +346,12 @@ All legendary creatures, gods, and angels, get -1/-1.
             ],
             whiteFooterText: true,
             artist: "God of War: Ascension",
-            footer: "\u00A9 2014 Barney Boisvert (6/6)"
+            footer: "\u00A9 2014 Barney Boisvert (6/7)"
         )
+    }
+
+    static Card cherub() {
+        set().get("Sleeping Cherub")
     }
 
     static RenderModel cherub(RenderSet rs) {
@@ -355,7 +374,7 @@ All legendary creatures, gods, and angels, get -1/-1.
             ],
             powerToughness: "2/4",
             artist: "Sally Mann",
-            footer: "\u00a9 2014 Barney Boisvert (0/1)"
+            footer: "\u00a9 2014 Barney Boisvert (7/7)"
         )
     }
 }

@@ -71,3 +71,13 @@ Legendary Land
 All legendary creatures, gods, and angels, get -1/-1.
 
 _They are selective in their clientele, but their service legendary._
+
+## Sleeping Cherub 2WW
+
+![Sally Mann](artwork/sally.jpg)
+
+Creature - Angel 2/4
+
+Flying, double strike, lifelink
+
+{Serra's children are angels.  And fierce.}
