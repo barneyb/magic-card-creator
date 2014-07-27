@@ -30,6 +30,7 @@ import java.awt.image.AffineTransformOp
  *
  * @author bboisvert
  */
+@SuppressWarnings("GrMethodMayBeStatic")
 class SvgCompositor implements Compositor {
 
     boolean forPrint = false
@@ -220,7 +221,6 @@ class SvgCompositor implements Compositor {
         }
     }
 
-    @SuppressWarnings("GrMethodMayBeStatic")
     protected boolean xlinkInsteadOfInline(ImageAsset asset) {
         if (asset instanceof RemoteImage) {
             return asset.url.protocol == 'file' || asset.url.protocol == 'http'
@@ -241,7 +241,6 @@ class SvgCompositor implements Compositor {
         )
     }
 
-    @SuppressWarnings("GrMethodMayBeStatic")
     protected void xmlImage(SVGGraphics2D svgg, Rectangle box, ImageAsset asset) {
         def img = ImageIO.read(asset.inputStream)
         def size = new Dimension(img.width, img.height) // this should match 'asset.size'
@@ -279,7 +278,6 @@ class SvgCompositor implements Compositor {
         ])
     }
 
-    @SuppressWarnings("GrMethodMayBeStatic")
     protected Element el(Element parent, String name, Map<String, ?> attrs=[:]) {
         def el = parent.ownerDocument.createElementNS(parent.namespaceURI, name)
         parent.appendChild(elattr(el, attrs))
