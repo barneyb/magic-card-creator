@@ -249,7 +249,7 @@ class LayoutUtils {
     }
 
     protected void render(RenderCtx ctx, ImageAsset it) {
-        float factor = ctx.fontSize / it.size.height
+        float factor = ctx.wrapOffset * 0.75 / it.size.height
         def width = it.size.width * factor
         def height = it.size.height * factor
         if (! ctx.measuring) {
