@@ -75,6 +75,14 @@ class SvgCompositor implements Compositor {
             width: h + ypad * 2,
             height: w + xpad * 2,
         ])
+        el(doc.rootElement, 'rect', [
+            x: 0,
+            y: 0,
+            width: h + ypad * 2,
+            height: w + xpad * 2,
+            fill: 'black',
+            'stroke-width': 0
+        ])
         def g = el(doc.rootElement, 'g', [
             transform: "translate($xpad $ypad)"
         ])
