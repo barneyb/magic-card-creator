@@ -32,11 +32,17 @@ import java.awt.image.AffineTransformOp
  */
 class SvgCompositor implements Compositor {
 
+    boolean forPrint = false
+
     @Override
     void compose(RenderModel model, RenderSet rs, OutputStream dest) {
         SVGDocument doc = newDoc()
 
         composeInto(doc, rs, model)
+
+        if (forPrint) {
+            doc = wrapForPrint(doc, rs)
+        }
 
         def tf = TransformerFactory.newInstance()
         Transformer t = tf.newTransformer()
@@ -53,6 +59,30 @@ class SvgCompositor implements Compositor {
             "svg",
             null
         )
+    }
+
+    protected SVGDocument wrapForPrint(SVGDocument base, RenderSet rs) {
+        // todo: this should eventually be parameterized in the descriptor...
+        def xpad = 17.5
+        def ypad = 17.5
+        def rotate = 90 // maybe -90?
+
+        def doc = newDoc()
+
+        def w = rs.frames.size.width
+        def h = rs.frames.size.height
+        elattr(doc.rootElement, [
+            width: h + ypad * 2,
+            height: w + xpad * 2,
+        ])
+        def g = el(doc.rootElement, 'g', [
+            transform: "translate($xpad $ypad)"
+        ])
+        g = el(g, 'g', [
+            transform: "translate(${(h - w) / 2} ${(w - h) / 2}) rotate($rotate ${(float) w / 2} ${(float) h / 2})"
+        ])
+        g.appendChild(doc.adoptNode(base.rootElement))
+        doc
     }
 
     protected void composeInto(SVGDocument doc, RenderSet rs, RenderModel model) {
@@ -119,6 +149,7 @@ class SvgCompositor implements Compositor {
 //        ])
 //
 //        // draw all the bounding boxes (for debugging)
+//        xmlBox(gbx, new Rectangle(1, 1, (int) rs.frames.size.width - 2, (int) rs.frames.size.height - 2))
 //        xmlBox(gbx, rs.titlebar) // title and cost
 //        xmlBox(gbx, titleBox) // just title, after constrained by cost
 //        xmlBox(gbx, rs.artwork)

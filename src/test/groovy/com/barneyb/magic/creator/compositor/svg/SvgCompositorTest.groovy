@@ -34,8 +34,9 @@ class SvgCompositorTest {
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8" />
 </head>
 <body>
-<embed src="brennas_white_card.svg" />
 <embed src="sally.svg" />
+<embed src="sally_print.svg" />
+<embed src="brennas_white_card.svg" />
 <embed src="counterspell.svg" />
 <embed src="nightmare.svg" />
 <embed src="blitz-hellion.svg" />
@@ -56,6 +57,12 @@ class SvgCompositorTest {
     void sally() {
         def m = Cards.sally(rs)
         new SvgCompositor().compose(m, rs, new File(outputDir, "sally.svg").newOutputStream())
+    }
+
+    @Test
+    void sally_print() {
+        def m = Cards.sally(rs)
+        new SvgCompositor(forPrint: true).compose(m, rs, new File(outputDir, "sally_print.svg").newOutputStream())
     }
 
     @Test
