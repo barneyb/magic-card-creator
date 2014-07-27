@@ -34,9 +34,7 @@ class SvgCompositor implements Compositor {
 
     @Override
     void compose(RenderModel model, RenderSet rs, OutputStream dest) {
-        def impl = SVGDOMImplementation.getDOMImplementation();
-        def svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
-        def doc = (SVGDocument) impl.createDocument(svgNS, "svg", null);
+        SVGDocument doc = newDoc()
 
         composeInto(doc, rs, model)
 
@@ -47,6 +45,14 @@ class SvgCompositor implements Compositor {
         t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4")
         t.transform(new DOMSource(doc), new StreamResult(dest))
         dest.close()
+    }
+
+    protected SVGDocument newDoc() {
+        (SVGDocument) SVGDOMImplementation.getDOMImplementation().createDocument(
+            SVGDOMImplementation.SVG_NAMESPACE_URI,
+            "svg",
+            null
+        )
     }
 
     protected void composeInto(SVGDocument doc, RenderSet rs, RenderModel model) {
