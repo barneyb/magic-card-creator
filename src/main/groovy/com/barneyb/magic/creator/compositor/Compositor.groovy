@@ -17,7 +17,7 @@ interface Compositor {
         (TextAttribute.WEIGHT)      : TextAttribute.WEIGHT_REGULAR,
     ]
     public static final Map<TextAttribute, ?> FLAVOR_FONT = [
-        (TextAttribute.FAMILY)      : "Garamond-italic",
+        (TextAttribute.FAMILY)      : "Garamond italic",
         (TextAttribute.WEIGHT)      : TextAttribute.WEIGHT_REGULAR,
     ]
     public static final Map<TextAttribute, ?> POWER_TOUGHNESS_FONT = [
