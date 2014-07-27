@@ -151,13 +151,12 @@ class SvgCompositor implements Compositor {
             (int) rs.titlebar.height
         )
 
+//        // draw all the bounding boxes (for debugging)
 //        def gbx = el(doc.rootElement, 'g', [
 //            fill          : "none",
 //            'stroke-width': 1,
 //            stroke        : 'red' // "#ebebeb"
 //        ])
-//
-//        // draw all the bounding boxes (for debugging)
 //        xmlBox(gbx, new Rectangle(1, 1, (int) rs.frames.size.width - 2, (int) rs.frames.size.height - 2))
 //        xmlBox(gbx, rs.titlebar) // title and cost
 //        xmlBox(gbx, titleBox) // just title, after constrained by cost
