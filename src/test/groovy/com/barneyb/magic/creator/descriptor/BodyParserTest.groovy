@@ -5,7 +5,6 @@ import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.AbilityText
 import com.barneyb.magic.creator.compositor.FlavorText
 import com.barneyb.magic.creator.compositor.Paragraph
-import com.barneyb.magic.creator.compositor.awt.AwtCompositorTest
 import org.junit.Before
 import org.junit.Test
 
@@ -21,7 +20,7 @@ class BodyParserTest {
 
     @Before
     void _makeRenderSet() {
-        rs = AssetDescriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("print")
+        rs = AssetDescriptor.fromStream(getClass().classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("print")
     }
 
     @Test
