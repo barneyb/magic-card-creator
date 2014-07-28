@@ -151,7 +151,7 @@ class SvgCompositor implements Compositor {
         if (rs.frames.type == 'svg') {
             throw new UnsupportedOperationException("SVG frames are not yet supported.")
         } else {
-            drawRaster(frameBox, model.frame).setAttributeNS(null, 'mask', 'url(#artwork-hole)')
+            drawRaster(frameBox, model.frame)?.setAttributeNS(null, 'mask', 'url(#artwork-hole)')
         }
 
         float iconWidth = rs.titlebar.height / rs.large.size.height * rs.large.size.width
