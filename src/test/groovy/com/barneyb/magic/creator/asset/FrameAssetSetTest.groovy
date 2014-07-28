@@ -6,7 +6,10 @@ import com.barneyb.magic.creator.descriptor.FrameModifier
 import org.junit.Before
 import org.junit.Test
 
-import static org.junit.Assert.*
+import java.awt.*
+
+import static org.junit.Assert.assertEquals
+
 /**
  *
  * @author bboisvert
@@ -14,7 +17,11 @@ import static org.junit.Assert.*
 class FrameAssetSetTest {
 
     FrameAssetSet fas
-    
+
+    protected ClasspathImage load(String path) {
+        new ClasspathImage("m", "assets/screen/frames/" + path, new Dimension(20, 20))
+    }
+
     @Before
     void makeFas() {
         fas = new FrameAssetSet(
@@ -29,7 +36,7 @@ class FrameAssetSetTest {
     @Test
     void stripDual() {
         assertEquals(
-            new ClasspathImage("assets/screen/frames/gold.png"),
+            load("gold.png"),
             fas.getImageAsset(new CompoundFrame(FrameBaseType.GOLD, [FrameModifier.Dual.BLACK_GREEN]))
         )
     }
@@ -37,7 +44,7 @@ class FrameAssetSetTest {
     @Test
     void stripEnchantmentCreature() {
         assertEquals(
-            new ClasspathImage("assets/screen/frames/red_creature.png"),
+            load("red_creature.png"),
             fas.getImageAsset(new CompoundFrame(FrameBaseType.RED, [FrameModifier.Type.ENCHANTMENT_CREATURE]))
         )
     }
@@ -45,7 +52,7 @@ class FrameAssetSetTest {
     @Test
     void stripJustDual() {
         assertEquals(
-            new ClasspathImage("assets/screen/frames/red_creature.png"),
+            load("red_creature.png"),
             fas.getImageAsset(new CompoundFrame(FrameBaseType.RED, [FrameModifier.Type.CREATURE, FrameModifier.Dual.BLACK_GREEN]))
         )
     }
