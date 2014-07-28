@@ -68,28 +68,37 @@ class SvgCompositor implements Compositor {
         def ypad = 17.5
         def rotate = 90 // maybe -90?
 
+        if (rotate % 90 != 0) {
+            throw new IllegalArgumentException("Only rotations of multiples of 90 degrees are supported.")
+        }
+
         def doc = newDoc()
 
         def w = rs.frames.size.width
         def h = rs.frames.size.height
+        def flip = rotate % 180 != 0
+        def newWidth = (flip ? h : w) + xpad * 2
+        def newHeight = (flip ? w : h) + ypad * 2
         elattr(doc.rootElement, [
-            width: h + ypad * 2,
-            height: w + xpad * 2,
+            width: newWidth,
+            height: newHeight,
         ])
         el(doc.rootElement, 'rect', [
             x: 0,
             y: 0,
-            width: h + ypad * 2,
-            height: w + xpad * 2,
+            width: newWidth,
+            height: newHeight,
             fill: 'black',
             'stroke-width': 0
         ])
         def g = el(doc.rootElement, 'g', [
             transform: "translate($xpad $ypad)"
         ])
-        g = el(g, 'g', [
-            transform: "translate(${(h - w) / 2} ${(w - h) / 2}) rotate($rotate ${(float) w / 2} ${(float) h / 2})"
-        ])
+        if (rotate % 360 != 0) {
+            g = el(g, 'g', [
+                transform: (flip ? "translate(${(h - w) / 2} ${(w - h) / 2}) " : "") + "rotate($rotate ${(float) w / 2} ${(float) h / 2})"
+            ])
+        }
         g.appendChild(doc.adoptNode(base.rootElement))
         doc
     }
