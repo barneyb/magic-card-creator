@@ -2,8 +2,7 @@ package com.barneyb.magic.creator.asset
 
 import org.junit.Test
 
-import java.awt.Dimension
-import java.awt.Rectangle
+import java.awt.*
 
 import static org.junit.Assert.assertEquals
 
@@ -27,8 +26,11 @@ class AssetDescriptorTest {
         assertEquals(new Dimension(400, 560), rs.frames.size)
         assertEquals('png', rs.frames.type)
 
+        assertEquals(new TextBox(36, 36, 328, 22, "Goudy Old Style", true), rs.titlebar)
+
         assertEquals(new Rectangle(36, 69, 328, 242), rs.artwork)
 
+        assertEquals(new TextBox(38, 352, 324, 150, "Garamond", false), rs.textbox)
     }
 
 }

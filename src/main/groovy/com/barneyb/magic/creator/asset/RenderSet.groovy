@@ -25,18 +25,18 @@ class RenderSet {
         assets.small
     }
 
-    Rectangle titlebar
+    TextBox titlebar
 
     Rectangle artwork
 
-    Rectangle typebar
+    TextBox typebar
 
-    Rectangle textbox
+    TextBox textbox
 
-    Rectangle powertoughness
+    TextBox powertoughness
 
-    Rectangle artist
+    TextBox artist
 
-    Rectangle footer
+    TextBox footer
 
 }

@@ -27,7 +27,9 @@
             "x": 36,
             "y": 36,
             "width": 328,
-            "height": 22
+            "height": 22,
+            "family": "Goudy Old Style",
+            "bold": true
         },
         "artwork": {
             "x": 36,
@@ -45,7 +47,8 @@
             "x": 38,
             "y": 352,
             "width": 324,
-            "height": 150
+            "height": 150,
+            "family": "Garamond"
         },
         "powertoughness": {
             "x": 307,
