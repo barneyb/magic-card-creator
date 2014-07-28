@@ -3,11 +3,7 @@ package com.barneyb.magic.creator.compositor.svg
 import com.barneyb.magic.creator.asset.ImageAsset
 import com.barneyb.magic.creator.asset.RemoteImage
 import com.barneyb.magic.creator.asset.RenderSet
-import com.barneyb.magic.creator.compositor.Align
-import com.barneyb.magic.creator.compositor.Compositor
-import com.barneyb.magic.creator.compositor.LayoutUtils
-import com.barneyb.magic.creator.compositor.PrintMorph
-import com.barneyb.magic.creator.compositor.RenderModel
+import com.barneyb.magic.creator.compositor.*
 import org.apache.batik.dom.svg.SAXSVGDocumentFactory
 import org.apache.batik.dom.svg.SVGDOMImplementation
 import org.apache.batik.svggen.SVGGraphics2D
@@ -121,14 +117,17 @@ class SvgCompositor implements Compositor {
 
         def defs = el(doc.rootElement, 'defs')
 
-        def mask = el(defs, 'mask', [
-            id            : 'artwork-hole',
-            fill          : '#000',
-            'stroke-width': 0
-        ])
         def frameBox = new Rectangle(new Point(0, 0), rs.frames.size)
-        xmlBox(mask, frameBox).setAttributeNS(null, 'fill', 'white')
-        xmlBox(mask, rs.artwork).setAttributeNS(null, 'fill', 'black')
+        if (rs.frames.type != 'svg') {
+            // assume fully-opaque raster
+            def mask = el(defs, 'mask', [
+                id            : 'artwork-hole',
+                fill          : '#000',
+                'stroke-width': 0
+            ])
+            xmlBox(mask, frameBox).setAttributeNS(null, 'fill', 'white')
+            xmlBox(mask, rs.artwork).setAttributeNS(null, 'fill', 'black')
+        }
 
         def withGraphics = { work ->
             SVGGraphics2D g = new SVGGraphics2D(doc)
@@ -149,7 +148,11 @@ class SvgCompositor implements Compositor {
             }
         }
         drawRaster(rs.artwork, model.artwork)
-        drawRaster(frameBox, model.frame).setAttributeNS(null, 'mask', 'url(#artwork-hole)')
+        if (rs.frames.type == 'svg') {
+            throw new UnsupportedOperationException("SVG frames are not yet supported.")
+        } else {
+            drawRaster(frameBox, model.frame).setAttributeNS(null, 'mask', 'url(#artwork-hole)')
+        }
 
         float iconWidth = rs.titlebar.height / rs.large.size.height * rs.large.size.width
 
