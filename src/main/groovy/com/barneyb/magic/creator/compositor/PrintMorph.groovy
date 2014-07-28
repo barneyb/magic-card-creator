@@ -9,12 +9,6 @@ import groovy.transform.Canonical
 class PrintMorph {
 
     /**
-     * The number of degrees to rotate.  Must be a multiple of 90, and should
-     * be 0, 90, 180, or 270.
-     */
-    int rotate
-
-    /**
      * The amount of bleed to add in the x (width) direction.
      */
     float xBleed
@@ -23,5 +17,11 @@ class PrintMorph {
      * The amount of bleed to add in the y (height) direction.
      */
     float yBleed
+
+    /**
+     * The number of degrees to rotate.  Must be a multiple of 90, and should
+     * be 0, 90, 180, or 270.
+     */
+    int rotate = 0
 
 }

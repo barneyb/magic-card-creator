@@ -40,7 +40,7 @@ class SvgCompositor implements Compositor {
         printMorph != null
     }
     void setForPrint(boolean val) {
-        printMorph = val ? new PrintMorph(90, 17.5f, 17.5f) : null
+        printMorph = val ? new PrintMorph(17.5f, 17.5f, 90) : null
     }
 
     @Override
