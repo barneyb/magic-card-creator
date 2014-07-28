@@ -157,7 +157,7 @@ class LayoutUtils {
     }
 
     void block(Graphics2D g, Rectangle box, List<List<Renderable>> items, Font bodyFont, Font flavorFont, Closure drawAsset) {
-        def fontSize = fontSizeForHeight(box.height / 6, ALL_ALPHANUMERICS, bodyFont.attributes, true)
+        def fontSize = fontSizeForHeight(box.height / 7, ALL_ALPHANUMERICS, bodyFont.attributes, true)
         RenderCtx rctx
         for (int _i = 0; _i < 5; _i++) {
             // measure first
