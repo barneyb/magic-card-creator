@@ -32,4 +32,6 @@ interface Compositor {
      */
     void compose(RenderModel model, RenderSet rs, OutputStream dest)
 
+    void setPrintMorph(PrintMorph morph)
+
 }

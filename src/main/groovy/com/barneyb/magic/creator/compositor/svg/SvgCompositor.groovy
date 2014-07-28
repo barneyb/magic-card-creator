@@ -6,6 +6,7 @@ import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.Align
 import com.barneyb.magic.creator.compositor.Compositor
 import com.barneyb.magic.creator.compositor.LayoutUtils
+import com.barneyb.magic.creator.compositor.PrintMorph
 import com.barneyb.magic.creator.compositor.RenderModel
 import org.apache.batik.dom.svg.SAXSVGDocumentFactory
 import org.apache.batik.dom.svg.SVGDOMImplementation
@@ -33,7 +34,14 @@ import java.awt.image.AffineTransformOp
 @SuppressWarnings("GrMethodMayBeStatic")
 class SvgCompositor implements Compositor {
 
-    boolean forPrint = false
+    PrintMorph printMorph
+
+    boolean getForPrint() {
+        printMorph != null
+    }
+    void setForPrint(boolean val) {
+        printMorph = val ? new PrintMorph(90, 17.5f, 17.5f) : null
+    }
 
     @Override
     void compose(RenderModel model, RenderSet rs, OutputStream dest) {
@@ -63,10 +71,12 @@ class SvgCompositor implements Compositor {
     }
 
     protected SVGDocument wrapForPrint(SVGDocument base, RenderSet rs) {
-        // todo: this should eventually be parameterized in the descriptor...
-        def xpad = 17.5
-        def ypad = 17.5
-        def rotate = 90 // maybe -90?
+        if (! forPrint) {
+            throw new IllegalStateException("You cannot wrap for print w/out setting a PrintMorph.")
+        }
+        def xpad = printMorph.xBleed
+        def ypad = printMorph.yBleed
+        def rotate = printMorph.rotate
 
         if (rotate % 90 != 0) {
             throw new IllegalArgumentException("Only rotations of multiples of 90 degrees are supported.")

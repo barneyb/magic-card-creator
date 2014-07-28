@@ -4,6 +4,7 @@ import com.barneyb.magic.creator.asset.RenderSet
 import com.barneyb.magic.creator.compositor.Align
 import com.barneyb.magic.creator.compositor.Compositor
 import com.barneyb.magic.creator.compositor.LayoutUtils
+import com.barneyb.magic.creator.compositor.PrintMorph
 import com.barneyb.magic.creator.compositor.RenderModel
 
 import javax.imageio.ImageIO
@@ -20,6 +21,11 @@ import java.awt.image.RenderedImage
 class AwtCompositor implements Compositor {
 
     public static final Font BASE_FONT = Font.decode("Goudy Old Style-bold")
+
+    @Override
+    void setPrintMorph(PrintMorph morph) {
+        throw new UnsupportedOperationException("This compositor does not support print morphing.")
+    }
 
     @Override
     void compose(RenderModel model, RenderSet rs, OutputStream dest) {
