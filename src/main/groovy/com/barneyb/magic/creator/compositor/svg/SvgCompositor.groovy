@@ -118,29 +118,19 @@ class SvgCompositor implements Compositor {
         }
 
         // if the art and frame are RemoteImage, reference them, otherwise inline as Base64
-        def art = model.artwork
-        if (art.exists) {
-            if (xlinkInsteadOfInline(art)) {
-                xmlImage(doc.rootElement, rs.artwork, (RemoteImage) art)
-            } else {
-                withGraphics { SVGGraphics2D it ->
-                    xmlImage(it, rs.artwork, art)
+        def drawRaster = { Rectangle box, ImageAsset asset ->
+            if (asset.exists) {
+                if (xlinkInsteadOfInline(asset)) {
+                    xmlImage(doc.rootElement, box, (RemoteImage) asset)
+                } else {
+                    withGraphics { SVGGraphics2D it ->
+                        xmlImage(it, box, asset)
+                    }
                 }
             }
         }
-
-        def frame = model.frame
-        if (frame.exists) {
-            def fel
-            if (xlinkInsteadOfInline(frame)) {
-                fel = xmlImage(doc.rootElement, frameBox, (RemoteImage) frame)
-            } else {
-                fel = withGraphics { SVGGraphics2D it ->
-                    xmlImage(it, frameBox, frame)
-                }
-            }
-            fel.setAttributeNS(null, 'mask', 'url(#artwork-hole)')
-        }
+        drawRaster(rs.artwork, model.artwork)
+        drawRaster(frameBox, model.frame).setAttributeNS(null, 'mask', 'url(#artwork-hole)')
 
         float iconWidth = rs.titlebar.height / rs.large.size.height * rs.large.size.width
 
