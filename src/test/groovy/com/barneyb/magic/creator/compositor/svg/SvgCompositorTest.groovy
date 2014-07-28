@@ -3,6 +3,7 @@ package com.barneyb.magic.creator.compositor.svg
 import com.barneyb.magic.creator.Cards
 import com.barneyb.magic.creator.asset.AssetDescriptor
 import com.barneyb.magic.creator.asset.RenderSet
+import com.barneyb.magic.creator.compositor.PrintMorph
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
@@ -13,6 +14,8 @@ import org.junit.Test
  */
 @org.junit.Ignore
 class SvgCompositorTest {
+
+    static final PrintMorph printMorph = new PrintMorph(20f, 20f, 90)
 
     static final File outputDir = new File("build")
 
@@ -57,7 +60,7 @@ class SvgCompositorTest {
     @Test
     void sally_print() {
         def m = Cards.sally(rs)
-        new SvgCompositor(forPrint: true).compose(m, rs, new File(outputDir, "sally_print.svg").newOutputStream())
+        new SvgCompositor(printMorph: printMorph).compose(m, rs, new File(outputDir, "sally_print.svg").newOutputStream())
     }
 
     @Test
@@ -99,7 +102,7 @@ class SvgCompositorTest {
     @Test
     void sleeping_cherub_print() {
         def m = Cards.cherub(rs)
-        new SvgCompositor(forPrint: true).compose(m, rs, new File(outputDir, "sleeping-cherub_print.svg").newOutputStream())
+        new SvgCompositor(printMorph: printMorph).compose(m, rs, new File(outputDir, "sleeping-cherub_print.svg").newOutputStream())
     }
 
 }

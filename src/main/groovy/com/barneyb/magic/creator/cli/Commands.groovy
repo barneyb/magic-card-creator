@@ -2,6 +2,7 @@ package com.barneyb.magic.creator.cli
 
 import com.barneyb.magic.creator.asset.AssetDescriptor
 import com.barneyb.magic.creator.asset.RenderSet
+import com.barneyb.magic.creator.compositor.PrintMorph
 import com.barneyb.magic.creator.compositor.RenderModel
 import com.barneyb.magic.creator.compositor.svg.SvgCompositor
 import com.barneyb.magic.creator.descriptor.CardSet
@@ -110,7 +111,7 @@ enum Commands {
             println "Composing '$cards.name' into $dir:"
             int maxLen = cards*.title*.length().max() + cards.size().toString().length() + 5
             def validator = new CardValidator()
-            def compositor = new SvgCompositor(forPrint: forPrint)
+            def compositor = new SvgCompositor(printMorph: new PrintMorph(17.5f, 17.5f, 90))
             cards.each { card ->
                 println "#$card.cardOfSet $card.title".padRight(maxLen, '.')
                 try {

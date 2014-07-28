@@ -32,20 +32,13 @@ class SvgCompositor implements Compositor {
 
     PrintMorph printMorph
 
-    boolean getForPrint() {
-        printMorph != null
-    }
-    void setForPrint(boolean val) {
-        printMorph = val ? new PrintMorph(17.5f, 17.5f, 90) : null
-    }
-
     @Override
     void compose(RenderModel model, RenderSet rs, OutputStream dest) {
         SVGDocument doc = newDoc()
 
         composeInto(doc, rs, model)
 
-        if (forPrint) {
+        if (printMorph != null) {
             doc = wrapForPrint(doc, rs)
         }
 
@@ -67,7 +60,7 @@ class SvgCompositor implements Compositor {
     }
 
     protected SVGDocument wrapForPrint(SVGDocument base, RenderSet rs) {
-        if (! forPrint) {
+        if (printMorph == null) {
             throw new IllegalStateException("You cannot wrap for print w/out setting a PrintMorph.")
         }
         def xpad = printMorph.xBleed
