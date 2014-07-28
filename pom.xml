@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.barneyb</groupId>
     <artifactId>card-creator</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.5.1</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.apache.xmlgraphics.batik.version>1.7</org.apache.xmlgraphics.batik.version>
