@@ -187,13 +187,13 @@ class SvgCompositor implements Compositor {
         ])
 
         // draw all the single-line text elements
-        xmlText(gtx, titleBox, model.title, TITLE_FONT)
-        xmlText(gtx, rs.typebar, model.type, TITLE_FONT)
+        xmlText(gtx, titleBox, model.title, rs.titlebar.textAttributes)
+        xmlText(gtx, rs.typebar, model.type, rs.typebar.textAttributes)
         if (model.isPowerToughnessVisible()) {
-            xmlText(gtx, rs.powertoughness, model.powerToughness, POWER_TOUGHNESS_FONT, Align.CENTER)
+            xmlText(gtx, rs.powertoughness, model.powerToughness, rs.powertoughness.textAttributes, Align.CENTER)
         }
-        xmlText(gtx, rs.artist, model.artist, TITLE_FONT)
-        xmlText(gtx, rs.footer, model.footer, BODY_FONT)
+        xmlText(gtx, rs.artist, model.artist, rs.artist.textAttributes)
+        xmlText(gtx, rs.footer, model.footer, rs.footer.textAttributes)
 
         // draw the casting cost
         def gc = el(doc.rootElement, 'g', [
@@ -223,7 +223,7 @@ class SvgCompositor implements Compositor {
 
         model.bodyIcons.each iconDef.curry('sm')
         withGraphics { Graphics2D it ->
-            new LayoutUtils().block(it, rs.textbox, model.body, BODY_FONT, FLAVOR_FONT, { Graphics2D g, Rectangle2D box, ImageAsset asset ->
+            new LayoutUtils().block(it, rs.textbox, model.body, rs.textbox.font, rs.textbox.italicFont, { Graphics2D g, Rectangle2D box, ImageAsset asset ->
                 el(doc.rootElement, 'use', [
                     'xlink:href': "#sm-$asset.id",
                     transform: "translate($box.x $box.y)" + (box.size == asset.size ? '' : " scale(${(float) box.width / asset.size.width} ${(float) box.height / asset.size.height})")

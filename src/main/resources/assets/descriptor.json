@@ -27,7 +27,9 @@
             "x": 70,
             "y": 69,
             "width": 738,
-            "height": 45
+            "height": 45,
+            "family": "Matrix",
+            "bold": true
         },
         "artwork": {
             "x": 68,
@@ -39,31 +41,39 @@
             "x": 72,
             "y": 706,
             "width": 730,
-            "height": 40
+            "height": 40,
+            "family": "Matrix",
+            "bold": true
         },
         "textbox": {
             "x": 74,
             "y": 780,
             "width": 720,
-            "height": 305
+            "height": 305,
+            "family": "Garamond"
         },
         "powertoughness": {
             "x": 675,
             "y": 1112,
             "width": 125,
-            "height": 46
+            "height": 46,
+            "family": "Goudy Old Style",
+            "bold": true
         },
         "artist": {
             "x": 135,
             "y": 1134,
             "width": 503,
-            "height": 28
+            "height": 28,
+            "family": "Matrix",
+            "bold": true
         },
         "footer": {
             "x": 55,
             "y": 1163,
             "width": 583,
-            "height": 24
+            "height": 24,
+            "family": "Garamond"
         }
     }
 }
