@@ -1,6 +1,5 @@
 {
     "print": {
-        "compositor": "svg",
         "assets": {
             "frames": {
                 "size": {
@@ -68,7 +67,6 @@
         }
     },
     "screen": {
-        "compositor": "awt",
         "assets": {
             "frames": {
                 "size": {
