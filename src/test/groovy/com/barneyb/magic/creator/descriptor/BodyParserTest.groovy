@@ -9,7 +9,8 @@ import com.barneyb.magic.creator.compositor.awt.AwtCompositorTest
 import org.junit.Before
 import org.junit.Test
 
-import static org.junit.Assert.*
+import static org.junit.Assert.assertEquals
+
 /**
  *
  * @author bboisvert
@@ -20,7 +21,7 @@ class BodyParserTest {
 
     @Before
     void _makeRenderSet() {
-        rs = AssetDescriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
+        rs = AssetDescriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("print")
     }
 
     @Test

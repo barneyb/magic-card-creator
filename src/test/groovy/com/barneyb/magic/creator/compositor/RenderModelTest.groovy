@@ -21,7 +21,7 @@ class RenderModelTest {
 
     @Before
     void _makeRenderSet() {
-        rs = AssetDescriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("screen")
+        rs = AssetDescriptor.fromStream(AwtCompositorTest.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet("print")
     }
 
     @Test
