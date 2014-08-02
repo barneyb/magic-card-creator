@@ -1,0 +1,80 @@
+<svg width="1800" height="1225" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <filter id="pullout">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur" />
+            <feOffset dy="3" dx="-3" />
+            <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="hlDiff" />
+            <feFlood flood-color="white" flood-opacity="1" />
+            <feComposite in2="hlDiff" operator="in" />
+            <feComposite in2="SourceGraphic" operator="over" result="withGlow" />
+
+            <feOffset in="blur" dy="-3" dx="3" />
+            <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowDiff" />
+            <feFlood flood-color="black" flood-opacity="1" />
+            <feComposite in2="shadowDiff" operator="in" />
+            <feComposite in2="withGlow" operator="over" />
+        </filter>
+        <filter id="pushin">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur" />
+            <feOffset dy="-3" dx="3" />
+            <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="hlDiff" />
+            <feFlood flood-color="white" flood-opacity="1" />
+            <feComposite in2="hlDiff" operator="in" />
+            <feComposite in2="SourceGraphic" operator="over" result="withGlow" />
+
+            <feOffset in="blur" dy="3" dx="-3" />
+            <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowDiff" />
+            <feFlood flood-color="black" flood-opacity="1" />
+            <feComposite in2="shadowDiff" operator="in" />
+            <feComposite in2="withGlow" operator="over" />
+        </filter>
+
+        <filter id="terrain" x="0" y="0" width="100%" height="100%">
+            <feTurbulence baseFrequency=".01" numOctaves="2" seed="10" type="turbulence" />
+            <feColorMatrix type="luminanceToAlpha" />
+            <feComponentTransfer>
+                <feFuncA type="table" tableValues="0 .7" />
+            </feComponentTransfer>
+            <feComposite in2="SourceGraphic" operator="atop" />
+        </filter>
+
+        <filter id="clouds" x="0" y="0" width="100%" height="100%">
+            <feTurbulence baseFrequency=".01" numOctaves="2" seed="20" type="turbulence" />
+            <feColorMatrix type="luminanceToAlpha" />
+            <feComponentTransfer>
+                <feFuncA type="table" tableValues="0 .6" />
+            </feComponentTransfer>
+            <feComposite in2="SourceGraphic" operator="atop" />
+        </filter>
+
+        <filter id="ptFilter">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+            <feOffset dx="-5" dy="5" result="shadow" />
+            <feFlood flood-color="#333" />
+            <feComposite in2="shadow" operator="in" />
+            <feMerge>
+                <feMergeNode />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+    </defs>
+
+    <g filter="url(#pullout)">
+        <path id="asdf" class="offset" filter="url(#terrain)" fill="#fed" d="
+            M 300 10
+            h 80
+            c 18 20 18 60 0 80
+            h -80
+            c -18 -20 -18 -60 0 -80
+            z
+        " />
+    </g>
+    <g filter="url(#pushin)">
+        <rect x="150" y="10" width="100" height="100" fill="white" filter="url(#clouds)" />
+    </g>
+    <g transform="translate(0 100)">
+        <use xlink:href="#asdf" filter="url(#pullout)" />
+        <rect width="100" height="100" x="150" y="50" filter="url(#terrain)" fill="none" stroke-width="0" />
+    </g>
+    <rect x="150" y="150" width="100" height="100" fill="white" filter="url(#ptFilter)" />
+</svg>
