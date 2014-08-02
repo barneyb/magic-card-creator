@@ -1,187 +1,160 @@
 <svg width="1800" height="1225" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
-        <filter id="shadow-filter">
-            <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
-            <feOffset in="blur" dx="-4" dy="4" result="offsetBlur"/>
-            <feSpecularLighting in="blur" surfaceScale="5" specularConstant="1" specularExponent="10" lighting-color="white" result="specOut">
-                <fePointLight x="5000" y="-10000" z="20000"/>
-            </feSpecularLighting>
-            <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"/>
-            <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litPaint"/>
+        <path id="-title" d="
+            M 0 0
+            h 754
+            c 18 20 18 60 0 80
+            h -754
+            c -18 -20 -18 -60 0 -80
+            z
+        " />
+        <path id="-art" d="
+            M 0 80
+            v 555
+            h 754
+            v -555
+            z
+        " />
+        <path id="-type" d="
+            M 0 635
+            h 754
+            c 15 20 15 55 0 75
+            h -754
+            c -15 -20 -15 -55 0 -75
+            z
+        " />
+        <path id="-text" d="
+            M 0 710
+            v 350
+            h 754
+            v -350
+            z
+        " />
+        <path id="-pt" d="
+            M 608 1048
+            h 138
+            c 12 20 12 47 0 67
+            h -138
+            c -12 -20 -12 -47 0 -67
+            z
+        " />
+        <!-- pullout and pushin are identical, just with flipped around coords -->
+        <filter id="pulloutFilter">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
+            <feOffset dy="4" dx="-4" />
+            <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="hlDiff" />
+            <feFlood flood-color="white" flood-opacity="1" />
+            <feComposite in2="hlDiff" operator="in" />
+            <feComposite in2="SourceGraphic" operator="over" result="withGlow" />
+
+            <feOffset in="blur" dy="-4" dx="4" />
+            <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowDiff" />
+            <feFlood flood-color="black" flood-opacity="1" />
+            <feComposite in2="shadowDiff" operator="in" />
+            <feComposite in2="withGlow" operator="over" />
+        </filter>
+        <filter id="pushinFilter">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
+            <feOffset dy="-4" dx="4" />
+            <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="hlDiff" />
+            <feFlood flood-color="white" flood-opacity="1" />
+            <feComposite in2="hlDiff" operator="in" />
+            <feComposite in2="SourceGraphic" operator="over" result="withGlow" />
+
+            <feOffset in="blur" dy="4" dx="-4" />
+            <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowDiff" />
+            <feFlood flood-color="black" flood-opacity="1" />
+            <feComposite in2="shadowDiff" operator="in" />
+            <feComposite in2="withGlow" operator="over" />
+        </filter>
+
+        <filter id="frameFilter" x="0" y="0" width="100%" height="100%">
+            <feTurbulence baseFrequency=".01" numOctaves="2" seed="10" type="turbulence" />
+            <feColorMatrix type="luminanceToAlpha" />
+            <feComponentTransfer>
+                <feFuncA type="table" tableValues="0 .7" />
+            </feComponentTransfer>
+            <feComposite in2="SourceGraphic" operator="atop" />
+        </filter>
+
+        <filter id="textboxFilter" x="0" y="0" width="100%" height="100%">
+            <feTurbulence baseFrequency=".007" numOctaves="2" seed="15" type="turbulence" />
+            <feColorMatrix type="luminanceToAlpha" />
+            <feComponentTransfer>
+                <feFuncA type="table" tableValues="0 .4" />
+            </feComponentTransfer>
+            <feComposite in2="SourceGraphic" operator="atop" />
+        </filter>
+
+        <filter id="dropFilter">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+            <feOffset dx="-5" dy="5" result="shadow" />
+            <feFlood flood-color="#000" />
+            <feComposite in2="shadow" operator="in" />
             <feMerge>
-                <feMergeNode in="offsetBlur"/>
-                <feMergeNode in="litPaint"/>
+                <feMergeNode />
+                <feMergeNode />
+                <feMergeNode in="SourceGraphic" />
             </feMerge>
         </filter>
-        <filter id="bg-filter" filterUnits="objectBoundingBox" x="0%" y="0%" width="100%" height="100%">
-            <feFlood flood-color="#f7eedd" />
-            <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="1" stitchTiles="stitch" result="turb" />
-            <feColorMatrix type="luminanceToAlpha" in="turb" result="turbAlpha"/>
-            <feBlend in="bg" in2="turbAlpha" mode="multiply" />
-        </filter>
-        <filter id="bar-filter">
-            <feConvolveMatrix in="SourceGraphic" order="3" kernelMatrix="-2 -1 0 -1 1 1 0 1 2" />
-        </filter>
-        <filter id="inset-shadow">
-
-            <feFlood flood-color="#f00" result="bg" />
-            <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="1" stitchTiles="stitch" result="turb" />
-            <feBlend in="bg" in2="turb" mode="multiply" result="texture-base" />
-            <feComposite operator='in' in='SourceGraphic' in2='bg' result='texture' />
-
-            <!-- Shadow Blur -->
-            <feGaussianBlur stdDeviation='4' result='blur' />
-
-            <!-- Shadow Offset -->
-            <feOffset in="blur" dx='7.5' dy='-7.5' result="offset-blur" />
-
-            <!-- Invert the drop shadow to create an inner shadow -->
-            <feComposite operator='out' in='SourceGraphic' in2='offset-blur' result='inverse' />
-
-            <!-- Color & Opacity -->
-            <feFlood flood-color='black' flood-opacity='1' result='color' />
-
-            <!-- Clip color inside shadow -->
-            <feComposite operator='in' in='color' in2='inverse' result='shadow' />
-
-            <!-- Put shadow over original object -->
-            <feComposite operator='over' in='shadow' in2='SourceGraphic' />
-        </filter>
     </defs>
-    <style type="text/css">
-        .offset {
-            stroke: #000;
-            stroke-width: 9px;
-            fill: #fff;
-            filter: url(#shadow-filter);
-        }
-        .border {
-            stroke: #fff7f0;
-            stroke-width: 5px;
-            fill: none;
-        }
-        .bar {
-            stroke-width: 0;
-            fill: #fff;
-            filter: url(#inset-shadow);
-        }
-    </style>
     <g transform="translate(900 0)">
         <rect width="875" height="1225" fill="#000" />
-        <rect x="35" y="35" width="805" height="1155" filter="url(#bg-filter)" />
+        <rect x="35" y="35" width="805" height="1155" fill="#f7eedd" filter="url(#frameFilter)" />
         <g transform="translate(62 52)">
-            <!-- artwork -->
-            <path class="offset" d="
-                M 0 80
-                v 555
-                h 754
-                v -555
-                z
-            " />
-
-            <!-- text box -->
-            <path class="offset" d="
-                M 0 710
-                v 350
-                h 754
-                v -350
-                z
-            " />
-            <path class="border" d="
-                M 0 710
-                v 350
-                h 754
-                v -350
-                z
-            " />
+            <!-- border drop shadow -->
+            <g filter="url(#dropFilter)" fill="none" stroke="#fff" stroke-width="5">
+                <use xlink:href="#-title" />
+                <use xlink:href="#-art" />
+                <use xlink:href="#-type" />
+                <use xlink:href="#-text" />
+            </g>
 
             <!-- title bar -->
-            <path class="offset" d="
-                M 0 0
-                h 754
-                c 18 20 18 60 0 80
-                h -754
-                c -18 -20 -18 -60 0 -80
-                z
-            " />
-            <path class="bar" d="
-                M 0 0
-                h 754
-                c 18 20 18 60 0 80
-                h -754
-                c -18 -20 -18 -60 0 -80
-                z
-            " />
-            <path class="border" d="
-                M 0 0
-                h 754
-                c 18 20 18 60 0 80
-                h -754
-                c -18 -20 -18 -60 0 -80
-                z
-            " />
+            <g transform="translate(3.5 2.5)">
+                <g transform="scale(.991 .935)">
+                    <g filter="url(#pulloutFilter)">
+                        <use xlink:href="#-title" fill="#fff7f0" filter="url(#frameFilter)" />
+                    </g>
+                    <use xlink:href="#-title" stroke="#000" stroke-width="3" fill="none" />
+                </g>
+            </g>
 
-            <!-- artwork -->
-            <path class="border" style="fill: #000" d="
-                M 0 80
-                v 555
-                h 754
-                v -555
-                z
-            " />
+            <!-- artwork hole -->
+            <use xlink:href="#-art" fill="#000" />
 
             <!-- type bar -->
-            <path class="offset" d="
-                M 0 635
-                h 754
-                c 15 20 15 55 0 75
-                h -754
-                c -15 -20 -15 -55 0 -75
-                z
-            " />
-            <path class="bar" d="
-                M 0 635
-                h 754
-                c 15 20 15 55 0 75
-                h -754
-                c -15 -20 -15 -55 0 -75
-                z
-            " />
-            <path class="border" d="
-                M 0 635
-                h 754
-                c 15 20 15 55 0 75
-                h -754
-                c -15 -20 -15 -55 0 -75
-                z
-            " />
+            <g transform="translate(2.5 2.5)">
+                <g transform="translate(0 710) scale(.9934 .9857) translate(0 -710)">
+                    <g filter="url(#pushinFilter)">
+                        <use xlink:href="#-text" fill="#fffafc" filter="url(#textboxFilter)" />
+                    </g>
+                </g>
+            </g>
 
-            <!-- text box -->
-            <path class="border" d="
-                M 0 710
-                v 350
-                h 754
-                v -350
-                z
-            " />
+            <!-- textbox -->
+            <g transform="translate(3.5 2.5)">
+                <g transform="translate(0 635) scale(.991 .935) translate(0 -635)">
+                    <g filter="url(#pulloutFilter)">
+                        <use xlink:href="#-type" fill="#fff7f0" filter="url(#frameFilter)" />
+                    </g>
+                    <use xlink:href="#-type" stroke="#000" stroke-width="3" fill="none" />
+                </g>
+            </g>
 
-            <!-- power/toughness box -->
-            <path class="offset" d="
-                M 608 1048
-                h 138
-                c 12 20 12 47 0 67
-                h -138
-                c -12 -20 -12 -47 0 -67
-                z
-            " />
-            <path class="border" d="
-                M 608 1048
-                h 138
-                c 12 20 12 47 0 67
-                h -138
-                c -12 -20 -12 -47 0 -67
-                z
-            " />
+            <!-- actual border -->
+            <g fill="none" stroke="#fff" stroke-width="5">
+                <use xlink:href="#-title" />
+                <use xlink:href="#-art" />
+                <use xlink:href="#-type" />
+                <use xlink:href="#-text" />
+            </g>
+
+            <!-- power/toughness block -->
+            <g filter="url(#dropFilter)">
+                <use xlink:href="#-pt" fill="#fff7f0" filter="url(#frameFilter)" />
+            </g>
+
         </g>
     </g>
     <g opacity="1">
