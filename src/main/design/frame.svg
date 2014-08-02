@@ -1,28 +1,190 @@
-<svg width="875" height="1225" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="1800" height="1225" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <filter id="shadow-filter">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
+            <feOffset in="blur" dx="-4" dy="4" result="offsetBlur"/>
+            <feSpecularLighting in="blur" surfaceScale="5" specularConstant="1" specularExponent="10" lighting-color="white" result="specOut">
+                <fePointLight x="5000" y="-10000" z="20000"/>
+            </feSpecularLighting>
+            <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"/>
+            <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litPaint"/>
+            <feMerge>
+                <feMergeNode in="offsetBlur"/>
+                <feMergeNode in="litPaint"/>
+            </feMerge>
+        </filter>
+        <filter id="bg-filter" filterUnits="objectBoundingBox" x="0%" y="0%" width="100%" height="100%">
+            <feFlood flood-color="#f7eedd" />
+            <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="1" stitchTiles="stitch" result="turb" />
+            <feColorMatrix type="luminanceToAlpha" in="turb" result="turbAlpha"/>
+            <feBlend in="bg" in2="turbAlpha" mode="multiply" />
+        </filter>
+        <filter id="bar-filter">
+            <feConvolveMatrix in="SourceGraphic" order="3" kernelMatrix="-2 -1 0 -1 1 1 0 1 2" />
+        </filter>
+        <filter id="inset-shadow">
+
+            <feFlood flood-color="#f00" result="bg" />
+            <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="1" stitchTiles="stitch" result="turb" />
+            <feBlend in="bg" in2="turb" mode="multiply" result="texture-base" />
+            <feComposite operator='in' in='SourceGraphic' in2='bg' result='texture' />
+
+            <!-- Shadow Blur -->
+            <feGaussianBlur stdDeviation='4' result='blur' />
+
+            <!-- Shadow Offset -->
+            <feOffset in="blur" dx='7.5' dy='-7.5' result="offset-blur" />
+
+            <!-- Invert the drop shadow to create an inner shadow -->
+            <feComposite operator='out' in='SourceGraphic' in2='offset-blur' result='inverse' />
+
+            <!-- Color & Opacity -->
+            <feFlood flood-color='black' flood-opacity='1' result='color' />
+
+            <!-- Clip color inside shadow -->
+            <feComposite operator='in' in='color' in2='inverse' result='shadow' />
+
+            <!-- Put shadow over original object -->
+            <feComposite operator='over' in='shadow' in2='SourceGraphic' />
+        </filter>
+    </defs>
     <style type="text/css">
-        rect {
-            fill: #ff0;
-            stroke-width: 0;
+        .offset {
+            stroke: #000;
+            stroke-width: 9px;
+            fill: #fff;
+            filter: url(#shadow-filter);
         }
         .border {
-            fill: #000;
+            stroke: #fff7f0;
+            stroke-width: 5px;
+            fill: none;
         }
-        .frame {
-            fill: #00f;
+        .bar {
+            stroke-width: 0;
+            fill: #fff;
+            filter: url(#inset-shadow);
         }
     </style>
-    <g>
-        <rect class="border"   x="0"   y="0"   width="910" height="1260" />
-        <rect class="frame"    x="45"  y="45"  width="784" height="1134" />
-        <rect class="titlebar" x="81"  y="78"   width="717" height="49" />
-        <rect class="artwork"  x="77"  y="147"  width="720" height="532" />
-        <rect class="typebar"  x="84"  y="697"  width="710" height="48" />
-        <rect class="textbox"  x="84"  y="780"  width="705" height="295" />
-        <rect class="pt"       x="670" y="1100" width="120" height="45" />
-        <rect class="artist"   x="138" y="1119" width="500" height="29" />
-        <rect class="footer"   x="70"  y="1153" width="568" height="22" />
+    <g transform="translate(900 0)">
+        <rect width="875" height="1225" fill="#000" />
+        <rect x="35" y="35" width="805" height="1155" filter="url(#bg-filter)" />
+        <g transform="translate(62 52)">
+            <!-- artwork -->
+            <path class="offset" d="
+                M 0 80
+                v 555
+                h 754
+                v -555
+                z
+            " />
+
+            <!-- text box -->
+            <path class="offset" d="
+                M 0 710
+                v 350
+                h 754
+                v -350
+                z
+            " />
+            <path class="border" d="
+                M 0 710
+                v 350
+                h 754
+                v -350
+                z
+            " />
+
+            <!-- title bar -->
+            <path class="offset" d="
+                M 0 0
+                h 754
+                c 18 20 18 60 0 80
+                h -754
+                c -18 -20 -18 -60 0 -80
+                z
+            " />
+            <path class="bar" d="
+                M 0 0
+                h 754
+                c 18 20 18 60 0 80
+                h -754
+                c -18 -20 -18 -60 0 -80
+                z
+            " />
+            <path class="border" d="
+                M 0 0
+                h 754
+                c 18 20 18 60 0 80
+                h -754
+                c -18 -20 -18 -60 0 -80
+                z
+            " />
+
+            <!-- artwork -->
+            <path class="border" style="fill: #000" d="
+                M 0 80
+                v 555
+                h 754
+                v -555
+                z
+            " />
+
+            <!-- type bar -->
+            <path class="offset" d="
+                M 0 635
+                h 754
+                c 15 20 15 55 0 75
+                h -754
+                c -15 -20 -15 -55 0 -75
+                z
+            " />
+            <path class="bar" d="
+                M 0 635
+                h 754
+                c 15 20 15 55 0 75
+                h -754
+                c -15 -20 -15 -55 0 -75
+                z
+            " />
+            <path class="border" d="
+                M 0 635
+                h 754
+                c 15 20 15 55 0 75
+                h -754
+                c -15 -20 -15 -55 0 -75
+                z
+            " />
+
+            <!-- text box -->
+            <path class="border" d="
+                M 0 710
+                v 350
+                h 754
+                v -350
+                z
+            " />
+
+            <!-- power/toughness box -->
+            <path class="offset" d="
+                M 608 1048
+                h 138
+                c 12 20 12 47 0 67
+                h -138
+                c -12 -20 -12 -47 0 -67
+                z
+            " />
+            <path class="border" d="
+                M 608 1048
+                h 138
+                c 12 20 12 47 0 67
+                h -138
+                c -12 -20 -12 -47 0 -67
+                z
+            " />
+        </g>
     </g>
-    <g transform="scale(2.1875,2.1875)">
-        <image opacity="0.35" width="400" height="560" xlink:href="../resources/assets/screen/frames/red_creature.png" />
+    <g opacity="1">
+        <image width="875" height="1225" xlink:href="../resources/assets/print/frames/white_creature.png" />
     </g>
 </svg>
