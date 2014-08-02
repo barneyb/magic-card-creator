@@ -1,38 +1,40 @@
 <svg width="1800" height="1225" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
         <path id="-title" d="
-            M 0 0
-            h 754
+            M 0 -40
+            h 377
             c 18 20 18 60 0 80
             h -754
             c -18 -20 -18 -60 0 -80
             z
         " />
         <path id="-art" d="
-            M 0 0
+            M 0 -277.5
+            h 377
             v 555
-            h 754
+            h -754
             v -555
             z
         " />
         <path id="-type" d="
-            M 0 0
-            h 754
+            M 0 -40
+            h 377
             c 15 20 15 55 0 75
             h -754
             c -15 -20 -15 -55 0 -75
             z
         " />
         <path id="-text" d="
-            M 0 0
+            M 0 -175
+            h 377
             v 350
-            h 754
+            h -754
             v -350
             z
         " />
         <path id="-pt" d="
-            M 0 0
-            h 130
+            M 0 -25
+            h 65
             c 7 20 7 30 0 50
             h -130
             c -7 -20 -7 -30 0 -50
@@ -104,15 +106,15 @@
         <g transform="translate(62 52)">
             <!-- border drop shadow -->
             <g filter="url(#dropFilter)" fill="none" stroke="#fff" stroke-width="5">
-                <use xlink:href="#-title" />
-                <use xlink:href="#-art" y="80" />
-                <use xlink:href="#-type" y="635" />
-                <use xlink:href="#-text" y="710" />
+                <use xlink:href="#-title" x="377" y="40" />
+                <use xlink:href="#-art" x="377" y="357.5" />
+                <use xlink:href="#-type" x="377" y="675" />
+                <use xlink:href="#-text" x="377" y="885" />
             </g>
 
             <!-- title bar -->
-            <g transform="translate(3.5 2.5)">
-                <g transform="scale(.991 .935)">
+            <g transform="translate(377 40)">
+                <g transform="scale(.99 .9)">
                     <g filter="url(#pulloutFilter)">
                         <use xlink:href="#-title" fill="#fff7f0" filter="url(#frameFilter)" />
                     </g>
@@ -121,20 +123,11 @@
             </g>
 
             <!-- artwork hole -->
-            <use xlink:href="#-art" y="80" fill="#000" />
+            <use xlink:href="#-art" x="377" y="357.5" fill="#000" />
 
             <!-- type bar -->
-            <g transform="translate(2.5 712.5)">
-                <g transform="scale(.9934 .9857)">
-                    <g filter="url(#pushinFilter)">
-                        <use xlink:href="#-text" fill="#fffafc" filter="url(#textboxFilter)" />
-                    </g>
-                </g>
-            </g>
-
-            <!-- textbox -->
-            <g transform="translate(3.5 637.5)">
-                <g transform="scale(.991 .935)">
+            <g transform="translate(377 675)">
+                <g transform="scale(.99 .9)">
                     <g filter="url(#pulloutFilter)">
                         <use xlink:href="#-type" fill="#fff7f0" filter="url(#frameFilter)" />
                     </g>
@@ -142,22 +135,31 @@
                 </g>
             </g>
 
+            <!-- textbox -->
+            <g transform="translate(377 885)">
+                <g transform="scale(.9934 .9857)">
+                    <g filter="url(#pushinFilter)">
+                        <use xlink:href="#-text" fill="#fffafc" filter="url(#textboxFilter)" />
+                    </g>
+                </g>
+            </g>
+
             <!-- actual border -->
             <g fill="none" stroke="#fff" stroke-width="5">
-                <use xlink:href="#-title" />
-                <use xlink:href="#-art" y="80" />
-                <use xlink:href="#-type" y="635" />
-                <use xlink:href="#-text" y="710" />
+                <use xlink:href="#-title" x="377" y="40" />
+                <use xlink:href="#-art" x="377" y="357.5" />
+                <use xlink:href="#-type" x="377" y="675" />
+                <use xlink:href="#-text" x="377" y="885" />
             </g>
 
             <!-- power/toughness block -->
-            <g transform="translate(610 1055)" filter="url(#dropFilter)">
+            <g transform="translate(675 1080)" filter="url(#dropFilter)">
                 <use xlink:href="#-pt" fill="#fff7f0" filter="url(#frameFilter)" />
             </g>
 
         </g>
     </g>
-    <g opacity=".5">
+    <g opacity="1">
         <image width="875" height="1225" xlink:href="../resources/assets/print/frames/white_creature.png" />
     </g>
 </svg>
