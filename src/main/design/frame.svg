@@ -9,14 +9,14 @@
             z
         " />
         <path id="-art" d="
-            M 0 80
+            M 0 0
             v 555
             h 754
             v -555
             z
         " />
         <path id="-type" d="
-            M 0 635
+            M 0 0
             h 754
             c 15 20 15 55 0 75
             h -754
@@ -24,14 +24,14 @@
             z
         " />
         <path id="-text" d="
-            M 0 710
+            M 0 0
             v 350
             h 754
             v -350
             z
         " />
         <path id="-pt" d="
-            M 608 1048
+            M 0 0
             h 138
             c 12 20 12 47 0 67
             h -138
@@ -105,9 +105,9 @@
             <!-- border drop shadow -->
             <g filter="url(#dropFilter)" fill="none" stroke="#fff" stroke-width="5">
                 <use xlink:href="#-title" />
-                <use xlink:href="#-art" />
-                <use xlink:href="#-type" />
-                <use xlink:href="#-text" />
+                <use xlink:href="#-art" y="80" />
+                <use xlink:href="#-type" y="635" />
+                <use xlink:href="#-text" y="710" />
             </g>
 
             <!-- title bar -->
@@ -121,11 +121,11 @@
             </g>
 
             <!-- artwork hole -->
-            <use xlink:href="#-art" fill="#000" />
+            <use xlink:href="#-art" y="80" fill="#000" />
 
             <!-- type bar -->
-            <g transform="translate(2.5 2.5)">
-                <g transform="translate(0 710) scale(.9934 .9857) translate(0 -710)">
+            <g transform="translate(2.5 712.5)">
+                <g transform="scale(.9934 .9857)">
                     <g filter="url(#pushinFilter)">
                         <use xlink:href="#-text" fill="#fffafc" filter="url(#textboxFilter)" />
                     </g>
@@ -133,8 +133,8 @@
             </g>
 
             <!-- textbox -->
-            <g transform="translate(3.5 2.5)">
-                <g transform="translate(0 635) scale(.991 .935) translate(0 -635)">
+            <g transform="translate(3.5 637.5)">
+                <g transform="scale(.991 .935)">
                     <g filter="url(#pulloutFilter)">
                         <use xlink:href="#-type" fill="#fff7f0" filter="url(#frameFilter)" />
                     </g>
@@ -145,19 +145,19 @@
             <!-- actual border -->
             <g fill="none" stroke="#fff" stroke-width="5">
                 <use xlink:href="#-title" />
-                <use xlink:href="#-art" />
-                <use xlink:href="#-type" />
-                <use xlink:href="#-text" />
+                <use xlink:href="#-art" y="80" />
+                <use xlink:href="#-type" y="635" />
+                <use xlink:href="#-text" y="710" />
             </g>
 
             <!-- power/toughness block -->
             <g filter="url(#dropFilter)">
-                <use xlink:href="#-pt" fill="#fff7f0" filter="url(#frameFilter)" />
+                <use xlink:href="#-pt" x="608" y="1048" fill="#fff7f0" filter="url(#frameFilter)" />
             </g>
 
         </g>
     </g>
     <g opacity="1">
-        <image width="875" height="1225" xlink:href="../resources/assets/print/frames/white_creature.png" />
+        <!--<image width="875" height="1225" xlink:href="../resources/assets/print/frames/white_creature.png" />-->
     </g>
 </svg>
