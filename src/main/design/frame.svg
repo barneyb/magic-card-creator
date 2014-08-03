@@ -35,9 +35,9 @@
         <path id="-pt" d="
             M 0 -25
             h 65
-            c 7 20 7 30 0 50
+            c 7 20 7 32 0 52
             h -130
-            c -7 -20 -7 -30 0 -50
+            c -7 -20 -7 -32 0 -52
             z
         " />
         <!-- pullout and pushin are identical, just with flipped around coords -->
@@ -153,13 +153,13 @@
             </g>
 
             <!-- power/toughness block -->
-            <g transform="translate(675 1080)" filter="url(#dropFilter)">
+            <g transform="translate(676 1081)">
                 <use xlink:href="#-pt" fill="#fff7f0" filter="url(#frameFilter)" />
             </g>
 
         </g>
     </g>
-    <g opacity="1">
+    <g opacity="1" transform="translate(0 0)">
         <image width="875" height="1225" xlink:href="../resources/assets/print/frames/white_creature.png" />
     </g>
 </svg>
