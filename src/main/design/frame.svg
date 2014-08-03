@@ -33,11 +33,11 @@
             z
         " />
         <path id="-pt" d="
-            M 0 -25
-            h 65
-            c 7 20 7 32 0 52
-            h -130
-            c -7 -20 -7 -32 0 -52
+            M 0 -31
+            h 68
+            c 7 20 7 42 0 62
+            h -136
+            c -7 -20 -7 -42 0 -62
             z
         " />
         <!-- pullout and pushin are identical, just with flipped around coords -->
@@ -99,6 +99,17 @@
                 <feMergeNode in="SourceGraphic" />
             </feMerge>
         </filter>
+
+        <filter id="ptDropFilter" filterUnits="objectBoundingBox" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="5" />
+            <feOffset dx="-4" dy="7" result="shadow" />
+            <feFlood flood-color="#000" />
+            <feComposite in2="shadow" operator="in" />
+            <feMerge>
+                <feMergeNode />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
     </defs>
     <g transform="translate(900 0)">
         <rect width="875" height="1225" fill="#000" />
@@ -153,8 +164,19 @@
             </g>
 
             <!-- power/toughness block -->
-            <g transform="translate(676 1081)">
-                <use xlink:href="#-pt" fill="#fff7f0" filter="url(#frameFilter)" />
+            <g transform="translate(680 1083)" filter="url(#ptDropFilter)">
+                <g transform="scale(.975 .93)">
+                    <g filter="url(#pushinFilter)">
+                        <use xlink:href="#-pt" fill="#fff7f0" filter="url(#frameFilter)" />
+                    </g>
+                    <!--<use xlink:href="#-pt" stroke="#000" stroke-width="3" fill="none" />-->
+                </g>
+                <g transform="scale(1.04 1.08)">
+                    <use xlink:href="#-pt" stroke="#000" stroke-width="3" fill="none" />
+                </g>
+                <g fill="none" stroke="#fff" stroke-width="4">
+                    <use xlink:href="#-pt" />
+                </g>
             </g>
 
         </g>
