@@ -111,77 +111,75 @@
             </feMerge>
         </filter>
     </defs>
-    <g transform="translate(900 0)">
+    <g>
         <rect width="875" height="1225" fill="#000" />
         <rect x="35" y="35" width="805" height="1155" fill="#f7eedd" filter="url(#frameFilter)" />
-        <g transform="translate(62 52)">
-            <!-- border drop shadow -->
-            <g filter="url(#dropFilter)" fill="none" stroke="#fff" stroke-width="5">
-                <use xlink:href="#-title" x="377" y="40" />
-                <use xlink:href="#-art" x="377" y="357.5" />
-                <use xlink:href="#-type" x="377" y="675" />
-                <use xlink:href="#-text" x="377" y="885" />
-            </g>
-
-            <!-- title bar -->
-            <g transform="translate(377 40)">
-                <g transform="scale(.99 .9)">
-                    <g filter="url(#pulloutFilter)">
-                        <use xlink:href="#-title" fill="#fff7f0" filter="url(#frameFilter)" />
-                    </g>
-                    <use xlink:href="#-title" stroke="#000" stroke-width="3" fill="none" />
-                </g>
-            </g>
-
-            <!-- artwork hole -->
-            <use xlink:href="#-art" x="377" y="357.5" fill="#000" />
-
-            <!-- type bar -->
-            <g transform="translate(377 675)">
-                <g transform="scale(.99 .9)">
-                    <g filter="url(#pulloutFilter)">
-                        <use xlink:href="#-type" fill="#fff7f0" filter="url(#frameFilter)" />
-                    </g>
-                    <use xlink:href="#-type" stroke="#000" stroke-width="3" fill="none" />
-                </g>
-            </g>
-
-            <!-- textbox -->
-            <g transform="translate(377 885)">
-                <g transform="scale(.9934 .9857)">
-                    <g filter="url(#pushinFilter)">
-                        <use xlink:href="#-text" fill="#fffafc" filter="url(#textboxFilter)" />
-                    </g>
-                </g>
-            </g>
-
-            <!-- actual border -->
-            <g fill="none" stroke="#fff" stroke-width="5">
-                <use xlink:href="#-title" x="377" y="40" />
-                <use xlink:href="#-art" x="377" y="357.5" />
-                <use xlink:href="#-type" x="377" y="675" />
-                <use xlink:href="#-text" x="377" y="885" />
-            </g>
-
-            <!-- power/toughness block -->
-            <g transform="translate(680 1083)" filter="url(#ptDropFilter)">
-                <g transform="scale(.975 .93)">
-                    <g filter="url(#pushinFilter)">
-                        <use xlink:href="#-pt" fill="#fff7f0" filter="url(#frameFilter)" />
-                    </g>
-                    <!--<use xlink:href="#-pt" stroke="#000" stroke-width="3" fill="none" />-->
-                </g>
-                <g transform="scale(1.04 1.08)">
-                    <use xlink:href="#-pt" stroke="#000" stroke-width="3" fill="none" />
-                </g>
-                <g fill="none" stroke="#fff" stroke-width="4">
-                    <use xlink:href="#-pt" />
-                </g>
-            </g>
-
+        <!-- border drop shadow -->
+        <g filter="url(#dropFilter)" fill="none" stroke="#fff" stroke-width="5">
+            <use xlink:href="#-title" x="439" y="92" />
+            <use xlink:href="#-art" x="439" y="409.5" />
+            <use xlink:href="#-type" x="439" y="727" />
+            <use xlink:href="#-text" x="439" y="937" />
         </g>
+
+        <!-- title bar -->
+        <g transform="translate(439 92)">
+            <g transform="scale(.99 .9)">
+                <g filter="url(#pulloutFilter)">
+                    <use xlink:href="#-title" fill="#fff7f0" filter="url(#frameFilter)" />
+                </g>
+                <use xlink:href="#-title" stroke="#000" stroke-width="3" fill="none" />
+            </g>
+        </g>
+
+        <!-- artwork hole -->
+        <use xlink:href="#-art" x="439" y="409.5" fill="#000" />
+
+        <!-- type bar -->
+        <g transform="translate(439 727)">
+            <g transform="scale(.99 .9)">
+                <g filter="url(#pulloutFilter)">
+                    <use xlink:href="#-type" fill="#fff7f0" filter="url(#frameFilter)" />
+                </g>
+                <use xlink:href="#-type" stroke="#000" stroke-width="3" fill="none" />
+            </g>
+        </g>
+
+        <!-- textbox -->
+        <g transform="translate(439 937)">
+            <g transform="scale(.9934 .9857)">
+                <g filter="url(#pushinFilter)">
+                    <use xlink:href="#-text" fill="#fffafc" filter="url(#textboxFilter)" />
+                </g>
+            </g>
+        </g>
+
+        <!-- actual border -->
+        <g fill="none" stroke="#fff" stroke-width="5">
+            <use xlink:href="#-title" x="439" y="92" />
+            <use xlink:href="#-art" x="439" y="409.5" />
+            <use xlink:href="#-type" x="439" y="727" />
+            <use xlink:href="#-text" x="439" y="937" />
+        </g>
+
+        <!-- power/toughness block -->
+        <g transform="translate(742 1135)" filter="url(#ptDropFilter)">
+            <g transform="scale(.975 .93)">
+                <g filter="url(#pushinFilter)">
+                    <use xlink:href="#-pt" fill="#fff7f0" filter="url(#frameFilter)" />
+                </g>
+                <!--<use xlink:href="#-pt" stroke="#000" stroke-width="3" fill="none" />-->
+            </g>
+            <g transform="scale(1.04 1.08)">
+                <use xlink:href="#-pt" stroke="#000" stroke-width="3" fill="none" />
+            </g>
+            <g fill="none" stroke="#fff" stroke-width="4">
+                <use xlink:href="#-pt" />
+            </g>
+        </g>
+
     </g>
-    <g opacity="1" transform="translate(0 0)">
+    <g opacity="1" transform="translate(900 0)">
         <image width="875" height="1225" xlink:href="../resources/assets/print/frames/white_creature.png" />
     </g>
 </svg>
