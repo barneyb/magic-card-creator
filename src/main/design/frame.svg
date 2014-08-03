@@ -81,6 +81,10 @@
             <feComposite in2="color" operator="atop" />
         </filter>
 
+        <filter id="enchantmentFrameFilter" x="0" y="0" width="100%" height="100%">
+            <feTurbulence baseFrequency=".1" numOctaves="7" seed="1" type="fractalNoise" />
+        </filter>
+
         <filter id="whiteFrameFilter" x="0" y="0" width="100%" height="100%">
             <feFlood flood-color="#f7eedd" result="color" />
             <feTurbulence baseFrequency=".01" numOctaves="2" seed="10" type="turbulence" />
@@ -151,22 +155,31 @@
             <stop offset=".4" stop-color="white" stop-opacity="0" />
             <stop offset=".6" stop-color="white" stop-opacity="1" />
         </linearGradient>
-        <mask id="frameRight">
+        <mask id="frameRightMask">
             <rect x="35" y="35" width="805" height="1155" fill="url(#frameRightGradient)" />
+        </mask>
+
+        <linearGradient id="frameTopGradient" gradientTransform="rotate(90)">
+            <stop offset=".5" stop-color="white" stop-opacity="1" />
+            <stop offset=".8" stop-color="white" stop-opacity="0" />
+        </linearGradient>
+        <mask id="frameTopMask">
+            <rect x="35" y="35" width="805" height="1155" fill="url(#frameTopGradient)" />
         </mask>
 
         <linearGradient id="textboxRightGradient">
             <stop offset=".4" stop-color="white" stop-opacity="0" />
             <stop offset=".6" stop-color="white" stop-opacity="1" />
         </linearGradient>
-        <mask id="textboxRight">
+        <mask id="textboxRightMask">
             <rect x="-377" y="-175" width="754" height="350" fill="url(#textboxRightGradient)" />
         </mask>
     </defs>
     <g>
         <rect width="875" height="1225" fill="#000" />
         <rect x="35" y="35" width="805" height="1155" filter="url(#redFrameFilter)" />
-        <rect x="35" y="35" width="805" height="1155" filter="url(#whiteFrameFilter)" mask="url(#frameRight)" />
+        <rect x="35" y="35" width="805" height="1155" filter="url(#whiteFrameFilter)" mask="url(#frameRightMask)" />
+        <rect x="35" y="35" width="805" height="1155" filter="url(#enchantmentFrameFilter)" mask="url(#frameTopMask)" />
         <!-- border drop shadow -->
         <g filter="url(#dropFilter)" fill="none" stroke="#fff" stroke-width="5">
             <use xlink:href="#-title" x="439" y="92" />
@@ -203,7 +216,7 @@
             <g transform="scale(.9934 .9857)">
                 <g filter="url(#pushinFilter)">
                     <use xlink:href="#-text" fill="#fee" filter="url(#redTextboxFilter)" />
-                    <use xlink:href="#-text" fill="#fffafc" filter="url(#whiteTextboxFilter)" mask="url(#textboxRight)" />
+                    <use xlink:href="#-text" fill="#fffafc" filter="url(#whiteTextboxFilter)" mask="url(#textboxRightMask)" />
                 </g>
             </g>
         </g>
