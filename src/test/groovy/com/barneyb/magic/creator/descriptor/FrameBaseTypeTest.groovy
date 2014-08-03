@@ -18,12 +18,12 @@ class FrameBaseTypeTest {
 
     @Test
     void plus() {
-        assertEquals(new CompoundFrame(ARTIFACT, [Type.CREATURE]), ARTIFACT + Type.CREATURE)
+        assertEquals(new CompoundFrame(ARTIFACT, [Animated.CREATURE]), ARTIFACT + Animated.CREATURE)
     }
 
     @Test
     void minus() {
-        assertEquals(ARTIFACT, ARTIFACT - Type.CREATURE)
+        assertEquals(ARTIFACT, ARTIFACT - Animated.CREATURE)
     }
 
 }

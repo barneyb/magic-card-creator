@@ -5,11 +5,20 @@ package com.barneyb.magic.creator.descriptor
  */
 interface FrameModifier extends AssetKeyed {
 
-    static enum Type implements FrameModifier {
-        CREATURE,
-        ENCHANTMENT_CREATURE
+    static enum Enchanted implements FrameModifier {
+        ENCHANTMENT
 
         final int priority = 1
+
+        String getAssetKey() {
+            name().toLowerCase()
+        }
+    }
+
+    static enum Animated implements FrameModifier {
+        CREATURE
+
+        final int priority = 2
 
         String getAssetKey() {
             name().toLowerCase()
@@ -28,7 +37,7 @@ interface FrameModifier extends AssetKeyed {
         BLACK_GREEN,
         RED_GREEN
 
-        final int priority = 2
+        final int priority = 3
 
         String getAssetKey() {
             name().toLowerCase()

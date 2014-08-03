@@ -45,7 +45,7 @@ class FrameAssetSetTest {
     void stripEnchantmentCreature() {
         assertEquals(
             load("red_creature.png"),
-            fas.getImageAsset(new CompoundFrame(FrameBaseType.RED, [FrameModifier.Type.ENCHANTMENT_CREATURE]))
+            fas.getImageAsset(new CompoundFrame(FrameBaseType.RED, [FrameModifier.Animated.CREATURE, FrameModifier.Enchanted.ENCHANTMENT]))
         )
     }
 
@@ -53,7 +53,7 @@ class FrameAssetSetTest {
     void stripJustDual() {
         assertEquals(
             load("red_creature.png"),
-            fas.getImageAsset(new CompoundFrame(FrameBaseType.RED, [FrameModifier.Type.CREATURE, FrameModifier.Dual.BLACK_GREEN]))
+            fas.getImageAsset(new CompoundFrame(FrameBaseType.RED, [FrameModifier.Animated.CREATURE, FrameModifier.Dual.BLACK_GREEN]))
         )
     }
 

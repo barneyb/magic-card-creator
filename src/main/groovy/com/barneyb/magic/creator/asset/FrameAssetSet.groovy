@@ -22,11 +22,10 @@ class FrameAssetSet extends AssetSet {
         }
         if (keyed instanceof CompoundFrame && ! asset.exists) {
             def type = keyed.modifiers.find {
-                it instanceof FrameModifier.Type
+                it instanceof FrameModifier.Enchanted
             }
-            if (type == FrameModifier.Type.ENCHANTMENT_CREATURE) {
+            if (type == FrameModifier.Enchanted.ENCHANTMENT) {
                 keyed -= type
-                keyed += FrameModifier.Type.CREATURE
                 asset = super.getImageAsset(keyed)
             }
         }

@@ -41,8 +41,11 @@ class RenderModel {
             artist: c.artist,
         )
         if (c.creature) {
-            frame += c.enchantment ? FrameModifier.Type.ENCHANTMENT_CREATURE : FrameModifier.Type.CREATURE
+            frame += FrameModifier.Animated.CREATURE
             m.powerToughness = c.power + '/' + c.toughness
+        }
+        if (c.enchantment && (c.artifact || c.creature)) {
+            frame += FrameModifier.Enchanted.ENCHANTMENT
         }
         m.frame = rs.frames.getImageAsset(frame)
         m.body = BodyParser.parse(c.body).collect { line ->

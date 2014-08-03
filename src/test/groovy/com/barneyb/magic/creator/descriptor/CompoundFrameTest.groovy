@@ -12,25 +12,25 @@ class CompoundFrameTest {
 
     @Test
     void keys() {
-        assertEquals("artifact_creature", (ARTIFACT + Type.CREATURE).assetKey)
-        assertEquals("gold_enchantment_creature_blue_black", (GOLD + Type.ENCHANTMENT_CREATURE + Dual.BLUE_BLACK).assetKey)
+        assertEquals("artifact_creature", (ARTIFACT + Animated.CREATURE).assetKey)
+        assertEquals("gold_enchantment_creature_blue_black", (GOLD + Animated.CREATURE + Enchanted.ENCHANTMENT + Dual.BLUE_BLACK).assetKey)
     }
 
     @Test
     void plus() {
-        assertEquals(new CompoundFrame(ARTIFACT, [Type.CREATURE, Dual.BLUE_BLACK]), ARTIFACT + Type.CREATURE + Dual.BLUE_BLACK)
-        assertEquals(new CompoundFrame(ARTIFACT, [Type.CREATURE]), ARTIFACT + Type.CREATURE + Type.CREATURE)
+        assertEquals(new CompoundFrame(ARTIFACT, [Animated.CREATURE, Dual.BLUE_BLACK]), ARTIFACT + Animated.CREATURE + Dual.BLUE_BLACK)
+        assertEquals(new CompoundFrame(ARTIFACT, [Animated.CREATURE]), ARTIFACT + Animated.CREATURE + Animated.CREATURE)
     }
 
     @Test(expected = IllegalArgumentException)
     void multipleModsOfSameType() {
-        assertEquals(new CompoundFrame(ARTIFACT, [Type.CREATURE]), ARTIFACT + Type.CREATURE + Type.ENCHANTMENT_CREATURE)
+        ARTIFACT + Dual.BLACK_GREEN + Dual.BLUE_RED
     }
 
     @Test
     void minus() {
-        assertEquals(ARTIFACT, ARTIFACT + Type.CREATURE - Type.CREATURE)
-        assertEquals(new CompoundFrame(ARTIFACT, [Dual.BLUE_BLACK]), ARTIFACT + Dual.BLUE_BLACK - Type.CREATURE)
+        assertEquals(ARTIFACT, ARTIFACT + Animated.CREATURE - Animated.CREATURE)
+        assertEquals(new CompoundFrame(ARTIFACT, [Dual.BLUE_BLACK]), ARTIFACT + Dual.BLUE_BLACK - Animated.CREATURE)
     }
 
 }

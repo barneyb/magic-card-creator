@@ -162,7 +162,7 @@ Flying, double strike, lifelink
 
     static RenderModel nightmare(RenderSet rs) {
         new RenderModel(
-            frame: rs.frames.getImageAsset(FrameBaseType.BLACK + FrameModifier.Type.CREATURE),
+            frame: rs.frames.getImageAsset(FrameBaseType.BLACK + FrameModifier.Animated.CREATURE),
             title: "Nightmare",
             cost: [CostType.COLORLESS_5, CostType.BLACK].collect(rs.large.&getImageAsset),
             artwork: new RemoteImage(_cl.getResource("artwork/nightmare.jpg")),
@@ -197,7 +197,7 @@ Flying, double strike, lifelink
 
     static RenderModel sally(RenderSet rs) {
         new RenderModel(
-            frame: rs.frames.getImageAsset(FrameBaseType.RED + FrameModifier.Type.CREATURE),
+            frame: rs.frames.getImageAsset(FrameBaseType.RED + FrameModifier.Animated.CREATURE),
             title: "Sally",
             cost: [CostType.COLORLESS_1, CostType.RED].collect(rs.large.&getImageAsset),
             artwork: new RemoteImage(_cl.getResource("artwork/sally.jpg")),
@@ -235,7 +235,7 @@ Flying, double strike, lifelink
 
     static RenderModel barney(RenderSet rs) {
         new RenderModel(
-            frame: rs.frames.getImageAsset(FrameBaseType.GOLD + FrameModifier.Type.ENCHANTMENT_CREATURE),
+            frame: rs.frames.getImageAsset(FrameBaseType.GOLD + FrameModifier.Animated.CREATURE + FrameModifier.Enchanted.ENCHANTMENT),
             title: "Barney of the Green Woods",
             cost: [CostType.COLORLESS_2, CostType.WHITE, CostType.BLUE, CostType.BLACK, CostType.RED, CostType.GREEN].collect(rs.large.&getImageAsset),
             artwork: new RemoteImage(_cl.getResource("artwork/barney_fake.png")),
@@ -295,7 +295,7 @@ Flying, double strike, lifelink
 
     static RenderModel hellion(RenderSet rs) {
         new RenderModel(
-            frame: rs.frames.getImageAsset(FrameBaseType.GOLD + FrameModifier.Type.CREATURE + FrameModifier.Dual.RED_GREEN),
+            frame: rs.frames.getImageAsset(FrameBaseType.GOLD + FrameModifier.Animated.CREATURE + FrameModifier.Dual.RED_GREEN),
             title: "Blitz Hellion",
             cost: [CostType.COLORLESS_2, CostType.RED, CostType.GREEN].collect(rs.large.&getImageAsset),
             artwork: new RemoteImage(_cl.getResource("artwork/hellion.jpg")),
@@ -356,7 +356,7 @@ Flying, double strike, lifelink
 
     static RenderModel cherub(RenderSet rs) {
         new RenderModel(
-            frame: rs.frames.getImageAsset(FrameBaseType.WHITE + FrameModifier.Type.CREATURE),
+            frame: rs.frames.getImageAsset(FrameBaseType.WHITE + FrameModifier.Animated.CREATURE),
             title: "Sleeping Cherub",
             cost: [CostType.COLORLESS_2, CostType.WHITE, CostType.WHITE].collect(rs.large.&getImageAsset),
             artwork: new ClasspathImage("artwork/sally.jpg"),
