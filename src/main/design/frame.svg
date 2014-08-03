@@ -70,13 +70,25 @@
             <feComposite in2="withGlow" operator="over" />
         </filter>
 
-        <filter id="frameFilter" x="0" y="0" width="100%" height="100%">
+        <filter id="barFilter" x="0" y="0" width="100%" height="100%">
+            <feFlood flood-color="#ccc" result="color" />
+            <feComposite in2="SourceGraphic" operator="in" result="color" />
             <feTurbulence baseFrequency=".01" numOctaves="2" seed="10" type="turbulence" />
             <feColorMatrix type="luminanceToAlpha" />
             <feComponentTransfer>
                 <feFuncA type="table" tableValues="0 .7" />
             </feComponentTransfer>
-            <feComposite in2="SourceGraphic" operator="atop" />
+            <feComposite in2="color" operator="atop" />
+        </filter>
+
+        <filter id="whiteFrameFilter" x="0" y="0" width="100%" height="100%">
+            <feFlood flood-color="#f7eedd" result="color" />
+            <feTurbulence baseFrequency=".01" numOctaves="2" seed="10" type="turbulence" />
+            <feColorMatrix type="luminanceToAlpha" />
+            <feComponentTransfer>
+                <feFuncA type="table" tableValues="0 .7" />
+            </feComponentTransfer>
+            <feComposite in2="color" operator="atop" />
         </filter>
 
         <filter id="whiteTextboxFilter" x="0" y="0" width="100%" height="100%">
@@ -88,8 +100,18 @@
             <feComposite in2="SourceGraphic" operator="atop" />
         </filter>
 
+        <filter id="redFrameFilter" x="0" y="0" width="100%" height="100%">
+            <feFlood flood-color="#f63" result="color" />
+            <feTurbulence baseFrequency=".03" numOctaves="7" seed="10" type="turbulence" />
+            <feColorMatrix type="luminanceToAlpha" />
+            <feComponentTransfer>
+                <feFuncA type="table" tableValues="0 .5" />
+            </feComponentTransfer>
+            <feComposite in2="color" operator="atop" />
+        </filter>
+
         <filter id="redTextboxFilter" x="0" y="0" width="100%" height="100%">
-            <feTurbulence baseFrequency=".02" numOctaves="7" seed="5" type="turbulence" />
+            <feTurbulence baseFrequency=".02" numOctaves="7" seed="15" type="turbulence" />
             <feColorMatrix type="luminanceToAlpha" />
             <feComponentTransfer>
                 <feFuncA type="table" tableValues="0 .4" />
@@ -125,6 +147,14 @@
             <stop offset=".6" stop-color="#fff" />
         </linearGradient>
 
+        <linearGradient id="frameRightGradient">
+            <stop offset=".4" stop-color="white" stop-opacity="0" />
+            <stop offset=".6" stop-color="white" stop-opacity="1" />
+        </linearGradient>
+        <mask id="frameRight">
+            <rect x="35" y="35" width="805" height="1155" fill="url(#frameRightGradient)" />
+        </mask>
+
         <linearGradient id="textboxRightGradient">
             <stop offset=".4" stop-color="white" stop-opacity="0" />
             <stop offset=".6" stop-color="white" stop-opacity="1" />
@@ -135,7 +165,8 @@
     </defs>
     <g>
         <rect width="875" height="1225" fill="#000" />
-        <rect x="35" y="35" width="805" height="1155" fill="#f7eedd" filter="url(#frameFilter)" />
+        <rect x="35" y="35" width="805" height="1155" filter="url(#redFrameFilter)" />
+        <rect x="35" y="35" width="805" height="1155" filter="url(#whiteFrameFilter)" mask="url(#frameRight)" />
         <!-- border drop shadow -->
         <g filter="url(#dropFilter)" fill="none" stroke="#fff" stroke-width="5">
             <use xlink:href="#-title" x="439" y="92" />
@@ -146,11 +177,11 @@
 
         <!-- title bar -->
         <g transform="translate(439 92)">
-            <g transform="scale(.99 .9)">
+            <g transform="scale(.993 .93)">
                 <g filter="url(#pulloutFilter)">
-                    <use xlink:href="#-title" fill="#fff7f0" filter="url(#frameFilter)" />
+                    <use xlink:href="#-title" filter="url(#barFilter)" />
                 </g>
-                <use xlink:href="#-title" stroke="#000" stroke-width="3" fill="none" />
+                <use xlink:href="#-title" stroke="#000" stroke-width="5" fill="none" />
             </g>
         </g>
 
@@ -159,11 +190,11 @@
 
         <!-- type bar -->
         <g transform="translate(439 727)">
-            <g transform="scale(.99 .9)">
+            <g transform="scale(.993 .93)">
                 <g filter="url(#pulloutFilter)">
-                    <use xlink:href="#-type" fill="#fff7f0" filter="url(#frameFilter)" />
+                    <use xlink:href="#-type" filter="url(#barFilter)" />
                 </g>
-                <use xlink:href="#-type" stroke="#000" stroke-width="3" fill="none" />
+                <use xlink:href="#-type" stroke="#000" stroke-width="5" fill="none" />
             </g>
         </g>
 
@@ -189,7 +220,7 @@
         <g transform="translate(742 1135)" filter="url(#ptDropFilter)">
             <g transform="scale(.975 .93)">
                 <g filter="url(#pushinFilter)">
-                    <use xlink:href="#-pt" fill="#fff7f0" filter="url(#frameFilter)" />
+                    <use xlink:href="#-pt" filter="url(#barFilter)" />
                 </g>
                 <!--<use xlink:href="#-pt" stroke="#000" stroke-width="3" fill="none" />-->
             </g>
