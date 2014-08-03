@@ -30,7 +30,7 @@ class Card {
     }
 
     Collection<ManaColor> getColors() {
-        (cost*.colors.flatten().unique() - ManaColor.COLORLESS).sort()
+        ManaColor.sort(cost*.colors.flatten().unique() - ManaColor.COLORLESS)
     }
 
     String artwork
