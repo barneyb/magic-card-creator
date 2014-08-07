@@ -1,4 +1,4 @@
-<svg width="1800" height="1225" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="875" height="1225" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
         <path id="-title" d="
             M 0 -40
@@ -81,47 +81,27 @@
             <feComposite in2="color" operator="atop" />
         </filter>
 
-        <filter id="enchantmentFrameFilter" x="0" y="0" width="100%" height="100%">
-            <feTurbulence baseFrequency=".1" numOctaves="7" seed="1" type="fractalNoise" />
-        </filter>
+        <pattern id="enchantmentFrame" patternUnits="userSpaceOnUse" height="480" width="640">
+            <image width="640" height="480" xlink:href="starfield.jpg" opacity=".8" />
+        </pattern>
 
-        <filter id="whiteFrameFilter" x="0" y="0" width="100%" height="100%">
-            <feFlood flood-color="#f7eedd" result="color" />
-            <feTurbulence baseFrequency=".01" numOctaves="2" seed="10" type="turbulence" />
-            <feColorMatrix type="luminanceToAlpha" />
-            <feComponentTransfer>
-                <feFuncA type="table" tableValues="0 .7" />
-            </feComponentTransfer>
-            <feComposite in2="color" operator="atop" />
-        </filter>
+        <pattern id="whiteFrame" patternUnits="userSpaceOnUse" height="600" width="600">
+            <image width="600" height="600" xlink:href="white.jpg" />
+        </pattern>
 
-        <filter id="whiteTextboxFilter" x="0" y="0" width="100%" height="100%">
-            <feTurbulence baseFrequency=".007" numOctaves="2" seed="15" type="turbulence" />
-            <feColorMatrix type="luminanceToAlpha" />
-            <feComponentTransfer>
-                <feFuncA type="table" tableValues="0 .4" />
-            </feComponentTransfer>
-            <feComposite in2="SourceGraphic" operator="atop" />
-        </filter>
+        <pattern id="whiteTextbox" patternUnits="userSpaceOnUse" height="480" width="640">
+            <image width="640" height="480" xlink:href="cloud.jpg" />
+            <rect width="640" height="480" fill="#fffafc" opacity=".8" />
+        </pattern>
 
-        <filter id="redFrameFilter" x="0" y="0" width="100%" height="100%">
-            <feFlood flood-color="#f63" result="color" />
-            <feTurbulence baseFrequency=".03" numOctaves="7" seed="10" type="turbulence" />
-            <feColorMatrix type="luminanceToAlpha" />
-            <feComponentTransfer>
-                <feFuncA type="table" tableValues="0 .5" />
-            </feComponentTransfer>
-            <feComposite in2="color" operator="atop" />
-        </filter>
+        <pattern id="redFrame" patternUnits="userSpaceOnUse" height="400" width="640">
+            <image width="640" height="400" xlink:href="red.jpg" />
+        </pattern>
 
-        <filter id="redTextboxFilter" x="0" y="0" width="100%" height="100%">
-            <feTurbulence baseFrequency=".02" numOctaves="7" seed="15" type="turbulence" />
-            <feColorMatrix type="luminanceToAlpha" />
-            <feComponentTransfer>
-                <feFuncA type="table" tableValues="0 .4" />
-            </feComponentTransfer>
-            <feComposite in2="SourceGraphic" operator="atop" />
-        </filter>
+        <pattern id="redTextbox" patternUnits="userSpaceOnUse" height="400" width="640">
+            <image width="640" height="400" xlink:href="red.jpg" />
+            <rect width="640" height="400" fill="#fee" opacity=".8" />
+        </pattern>
 
         <filter id="dropFilter">
             <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
@@ -156,7 +136,7 @@
             <stop offset=".6" stop-color="white" stop-opacity="1" />
         </linearGradient>
         <mask id="frameRightMask">
-            <rect x="35" y="35" width="805" height="1155" fill="url(#frameRightGradient)" />
+            <rect width="100%" height="100%" fill="url(#frameRightGradient)" />
         </mask>
 
         <linearGradient id="frameTopGradient" gradientTransform="rotate(90)">
@@ -164,7 +144,7 @@
             <stop offset=".8" stop-color="white" stop-opacity="0" />
         </linearGradient>
         <mask id="frameTopMask">
-            <rect x="35" y="35" width="805" height="1155" fill="url(#frameTopGradient)" />
+            <rect width="100%" height="100%" fill="url(#frameTopGradient)" />
         </mask>
 
         <linearGradient id="textboxRightGradient">
@@ -177,9 +157,9 @@
     </defs>
     <g>
         <rect width="875" height="1225" fill="#000" />
-        <rect x="35" y="35" width="805" height="1155" filter="url(#redFrameFilter)" />
-        <rect x="35" y="35" width="805" height="1155" filter="url(#whiteFrameFilter)" mask="url(#frameRightMask)" />
-        <rect x="35" y="35" width="805" height="1155" filter="url(#enchantmentFrameFilter)" mask="url(#frameTopMask)" />
+        <rect x="35" y="35" width="805" height="1155" fill="url(#redFrame)" />
+        <rect x="35" y="35" width="805" height="1155" fill="url(#whiteFrame)" mask="url(#frameRightMask)" />
+        <rect x="35" y="35" width="805" height="1155" fill="url(#enchantmentFrame)" mask="url(#frameTopMask)" />
         <!-- border drop shadow -->
         <g filter="url(#dropFilter)" fill="none" stroke="#fff" stroke-width="5">
             <use xlink:href="#-title" x="439" y="92" />
@@ -215,8 +195,8 @@
         <g transform="translate(439 937)">
             <g transform="scale(.9934 .9857)">
                 <g filter="url(#pushinFilter)">
-                    <use xlink:href="#-text" fill="#fee" filter="url(#redTextboxFilter)" />
-                    <use xlink:href="#-text" fill="#fffafc" filter="url(#whiteTextboxFilter)" mask="url(#textboxRightMask)" />
+                    <use xlink:href="#-text" fill="url(#redTextbox)" />
+                    <use xlink:href="#-text" fill="url(#whiteTextbox)" mask="url(#textboxRightMask)" />
                 </g>
             </g>
         </g>
@@ -304,7 +284,7 @@
         </g>
 
     </g>
-    <g opacity="1" transform="translate(900 0)">
-        <image width="875" height="1225" xlink:href="../resources/assets/print/frames/white_creature.png" />
-    </g>
+    <!--<g opacity="1" transform="translate(900 0)">-->
+        <!--<image width="875" height="1225" xlink:href="../resources/assets/print/frames/white_creature.png" />-->
+    <!--</g>-->
 </svg>
