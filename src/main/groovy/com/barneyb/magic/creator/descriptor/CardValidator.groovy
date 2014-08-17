@@ -21,9 +21,13 @@ class CardValidator {
     Collection<ValidationException> validate(Card c) {
         def props = [
             title     : validateTitle(c.title),
-            costString: validateCost(c.costString),
             type      : validateType(c.type)
         ]
+        if (c.land) {
+            props.costString = c.costString == null || c.costString.allWhitespace ? [] : ["Lands may not have casting costs."]
+        } else {
+            props.costString = validateCost(c.costString)
+        }
         if (c.creature) {
             props.subtype = validateCreatureSubtype(c.subtype)
         }
@@ -53,7 +57,7 @@ class CardValidator {
     Collection<String> validateCost(String cost) {
         def msgs = []
         if (cost == null || cost.allWhitespace) {
-            msgs << "Casting costs may not be null or empty (use '0' for a no-cost spell)."
+            msgs << "Casting costs may not be null or empty except for lands (use '0' for a no-cost spell)."
         }
         def parts = CostParser.parts(cost)
         if (parts.any { ! CostType.isSymbol(it) }) {
