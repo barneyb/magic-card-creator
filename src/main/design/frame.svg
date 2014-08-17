@@ -82,7 +82,7 @@
         </filter>
 
         <pattern id="enchantmentFrame" patternUnits="userSpaceOnUse" height="480" width="640">
-            <image width="640" height="480" xlink:href="starfield.jpg" opacity=".8" />
+            <image width="640" height="480" xlink:href="starfield.jpg" opacity=".6" />
         </pattern>
 
         <pattern id="whiteFrame" patternUnits="userSpaceOnUse" height="600" width="600">
