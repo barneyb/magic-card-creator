@@ -111,7 +111,7 @@ enum Commands {
             println "Composing '$cards.name' into $dir:"
             int maxLen = cards*.title*.length().max() + cards.size().toString().length() + 5
             def validator = new CardValidator()
-            def compositor = new SvgCompositor(printMorph: new PrintMorph(17.5f, 17.5f, 90))
+            def compositor = new SvgCompositor(printMorph: forPrint ? new PrintMorph(17.5f, 17.5f, 90) : null)
             cards.each { card ->
                 println "#$card.cardOfSet $card.title".padRight(maxLen, '.')
                 try {
