@@ -61,7 +61,7 @@ enum Commands {
     }),
 
     COMPOSE_PRINT({ CardSet cards, List<String> args ->
-        new CoreCompose(true).compose(cards, args, Format.pdf)
+        new CoreCompose(true).compose(cards, args)
     })
 
     final Closure action
@@ -82,25 +82,15 @@ enum Commands {
             this.forPrint = forPrint
         }
 
-        void compose(CardSet cards, List<String> args, Format format=null) {
-            if (args.empty) {
-                if (format == null) {
-                    println "You must specify the target format to use (svg, png, or pdf) after the descriptor."
-                    System.exit(2)
-                }
-            } else {
-                format = Format.valueOf(args.first())
-            }
-            args = args.tail()
+        void compose(CardSet cards, List<String> args) {
             RenderSet rs = AssetDescriptor.fromStream(Main.classLoader.getResourceAsStream("assets/descriptor.json")).getRenderSet('print')
 
             File dir
-            if (args.size() >= 1) {
-                dir = new File(args.first())
-                args = args.tail()
-            } else {
-                dir = new File('.')
+            if (args.size() == 0) {
+                println "You must specify the directory to compose into after the descriptor"
+                System.exit(2)
             }
+            dir = new File(args.first())
             if (dir.exists() && ! dir.directory) {
                 println "You must specify a directory to compose into."
                 System.exit(2)
@@ -118,21 +108,22 @@ enum Commands {
                     validator.validate(card).each {
                         println "  " + it
                     }
-                    def baos = new ByteArrayOutputStream()
-                    compositor.compose(RenderModel.fromCard(card, rs), rs, baos)
-                    new File(dir, "${card.cardOfSet}.$format").bytes = format.formatter(baos.toByteArray())
+                    compositor.compose(
+                        RenderModel.fromCard(card, rs),
+                        rs,
+                        new File(dir, "${card.cardOfSet}.svg").newOutputStream()
+                    )
                 } catch (e) {
                     e.printStackTrace()
                 }
             }
-            def proofs = new File(dir, "proofs.html")
-            if (format.proofed) {
-                proofs.text = """<html>
+
+            new File(dir, "proofs.html").text = """<!DOCTYPE html>
+<html>
 <body>
-${cards.collect { "<$format.proofTag src=\"${it.cardOfSet}.$format\" />" }.join("\n")}
+${cards.collect { "<embed src=\"${it.cardOfSet}.svg\" />" }.join("\n")}
 </body>
 </html>"""
-            }
         }
     }
 
