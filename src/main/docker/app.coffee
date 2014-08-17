@@ -11,7 +11,7 @@ app.get "/", (req, res) ->
 app.post "/convert/png", (req, res) ->
     fn = req.files.svg.path
     out = "#{fn}.png"
-    cmd = "/usr/bin/rsvg-convert -f png -o #{out} #{fn}"
+    cmd = "/usr/bin/rsvg-convert -f png --width #{req.query.w ? 400} -o #{out} #{fn}"
     exec cmd, (e, so, se) ->
         res.sendfile out
 
