@@ -76,7 +76,7 @@ enum Commands {
 
     private static class CoreCompose {
 
-        final boolean forPrint = false
+        final boolean forPrint
 
         def CoreCompose(boolean forPrint=false) {
             this.forPrint = forPrint
