@@ -70,16 +70,9 @@
             <feComposite in2="withGlow" operator="over" />
         </filter>
 
-        <filter id="barFilter" x="0" y="0" width="100%" height="100%">
-            <feFlood flood-color="#ccc" result="color" />
-            <feComposite in2="SourceGraphic" operator="in" result="color" />
-            <feTurbulence baseFrequency=".01" numOctaves="2" seed="10" type="turbulence" />
-            <feColorMatrix type="luminanceToAlpha" />
-            <feComponentTransfer>
-                <feFuncA type="table" tableValues="0 .7" />
-            </feComponentTransfer>
-            <feComposite in2="color" operator="atop" />
-        </filter>
+        <pattern id="bar" patternUnits="userSpaceOnUse" height="240" width="240">
+            <image x="-10" y="-10" width="256" height="256" xlink:href="metal.jpg" />
+        </pattern>
 
         <pattern id="enchantmentFrame" patternUnits="userSpaceOnUse" height="480" width="640">
             <image width="640" height="480" xlink:href="starfield.jpg" opacity=".6" />
@@ -172,7 +165,7 @@
         <g transform="translate(439 92)">
             <g transform="scale(.993 .93)">
                 <g filter="url(#pulloutFilter)">
-                    <use xlink:href="#-title" filter="url(#barFilter)" />
+                    <use xlink:href="#-title" fill="url(#bar)" />
                 </g>
                 <use xlink:href="#-title" stroke="#000" stroke-width="5" fill="none" />
             </g>
@@ -185,7 +178,7 @@
         <g transform="translate(439 727)">
             <g transform="scale(.993 .93)">
                 <g filter="url(#pulloutFilter)">
-                    <use xlink:href="#-type" filter="url(#barFilter)" />
+                    <use xlink:href="#-type" fill="url(#bar)" />
                 </g>
                 <use xlink:href="#-type" stroke="#000" stroke-width="5" fill="none" />
             </g>
@@ -213,7 +206,7 @@
         <g transform="translate(742 1135)" filter="url(#ptDropFilter)">
             <g transform="scale(.975 .93)">
                 <g filter="url(#pushinFilter)">
-                    <use xlink:href="#-pt" filter="url(#barFilter)" />
+                    <use xlink:href="#-pt" fill="url(#bar)" />
                 </g>
                 <!--<use xlink:href="#-pt" stroke="#000" stroke-width="3" fill="none" />-->
             </g>
