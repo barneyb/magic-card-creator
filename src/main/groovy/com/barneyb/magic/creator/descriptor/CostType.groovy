@@ -23,6 +23,7 @@ enum CostType implements AssetKeyed {
     RED('r', ManaColor.RED),
     GREEN('g', ManaColor.GREEN),
     TAP('t', []),
+    UNTAP('q', []),
 
     final String symbol
     final Collection<ManaColor> colors

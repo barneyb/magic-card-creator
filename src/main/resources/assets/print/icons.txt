@@ -52,8 +52,13 @@ g #89cc9c
 </g>
 
 t
-<g transform="matrix(1 .851 -.851 1 6 25)">
-    <text font-family="Goudy Old Style" font-weight="bold" font-size="30px">T</text>
+<g transform="rotate(45 22 25) translate(9 36)">
+    <text font-family="Goudy Old Style" font-weight="bold" font-size="40px">T</text>
+</g>
+
+q
+<g transform="rotate(-45 22 25) translate(13 40)">
+    <text font-family="Goudy Old Style" font-weight="bold" font-size="40px">T</text>
 </g>
 
 x
