@@ -57,6 +57,25 @@
                 <feMergeNode in="SourceGraphic" />
             </feMerge>
         </filter>
+
+
+        <filter id="dropShadow" filterUnits="objectBoundingBox" width="1.4" height="1.4">
+            <desc>A filter to do a drop shadow</desc>
+            <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+            <feOffset dx="-4" dy="4" />
+            <feComponentTransfer result="shadow">
+                <feFuncA type="linear" slope=".5" intercept="0" />
+            </feComponentTransfer>
+        </filter>
+        <filter id="emboss">
+            <desc>A filter to do embossing</desc>
+            <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur" />
+            <feSpecularLighting in="blur" surfaceScale="-3" style="lighting-color:white" specularConstant="1" specularExponent="16" result="spec" kernelUnitLength="1">
+                <feDistantLight azimuth="135" elevation="45" />
+            </feSpecularLighting>
+            <feComposite in="spec" in2="SourceGraphic" operator="in" result="specOut" />
+        </filter>
+
     </defs>
 
     <g filter="url(#pullout)">
@@ -77,4 +96,10 @@
         <rect width="100" height="100" x="150" y="50" filter="url(#terrain)" fill="none" stroke-width="0" />
     </g>
     <rect x="150" y="150" width="100" height="100" fill="white" filter="url(#ptFilter)" />
+
+    <g transform="translate(100 300)">
+        <use xlink:href="#asdf" filter="url(#dropShadow)" />
+        <use xlink:href="#asdf" />
+        <use xlink:href="#asdf" filter="url(#emboss)" />
+    </g>
 </svg>
