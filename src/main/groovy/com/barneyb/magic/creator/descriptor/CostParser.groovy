@@ -13,7 +13,7 @@ class CostParser {
             .findAll(CostType.&isSymbol)
             .collect(CostType.&fromSymbol)
             .findAll {
-                it != null && (allowTap || it != TAP)
+                it != null && (allowTap || (it != TAP && it != UNTAP))
             }
         def cl = l.findAll {
             it != COLORLESS_X && it.colors == [ManaColor.COLORLESS]
@@ -22,7 +22,7 @@ class CostParser {
             l.removeAll(cl)
             l << fromSymbol(cl*.symbol*.toInteger().sum().toString())
         }
-        l.sort()
+        l
     }
 
     static List<String> parts(String cost) {

@@ -30,6 +30,8 @@ class CostParserTest {
         assertEquals([COLORLESS_7], parse("7"))
         assertEquals([COLORLESS_8], parse("8"))
         assertEquals([COLORLESS_9], parse("9"))
+        assertEquals([new CostType('3', ManaColor.COLORLESS)], parse("12"))
+        assertEquals([new CostType('12', ManaColor.COLORLESS)], parse("{12}"))
         assertEquals([COLORLESS_X], parse("x"))
     }
 
@@ -65,6 +67,12 @@ class CostParserTest {
     }
 
     @Test
+    void untap() {
+        assertEquals([], parse("q"))
+        assertEquals([UNTAP], CostParser.parse("q", true))
+    }
+
+    @Test
     void addNumericColorless() {
         assertEquals([COLORLESS_6], parse("123"))
     }
@@ -76,7 +84,7 @@ class CostParserTest {
 
     @Test
     void garbage() {
-        assertEquals([COLORLESS_X, COLORLESS_6, WHITE, BLUE, BLACK, RED, GREEN], parse("123qwertyuiopsdfghjklzxcvbnm"))
+        assertEquals([WHITE, RED, BLUE, GREEN, COLORLESS_X, BLACK, COLORLESS_6], parse("123qwertyuiopsdfghjklzxcvbnm"))
     }
 
     @Test
@@ -95,10 +103,25 @@ class CostParserTest {
     }
 
     @Test
+    void akroanHoplite() {
+        assertEquals([RED, WHITE], parse("rw"))
+    }
+
+    @Test
     void nicolBolas() {
         assertEquals([COLORLESS_2, BLUE, BLUE, BLACK, BLACK, RED, RED], parse("2uubbrr"))
         // this cost string is deliberately ordered "weird"
-        assertEquals([COLORLESS_2, BLUE, BLUE, BLACK, BLACK, RED, RED], parse("RUBR2UB"))
+        assertEquals([RED, BLUE, BLACK, RED, COLORLESS_2, BLUE, BLACK], parse("RUBR2UB"))
+    }
+
+    @Test
+    void hybrids() {
+        assertEquals([
+            new CostType('2', ManaColor.COLORLESS),
+            new CostType('2/u', [ManaColor.COLORLESS, ManaColor.BLUE]),
+            new CostType('w/g', [ManaColor.WHITE, ManaColor.GREEN]),
+            new CostType('g/p', ManaColor.GREEN)
+        ], parse("2{2/u}{w/g}{g/p}"))
     }
 
     @Test

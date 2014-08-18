@@ -63,7 +63,7 @@ class CardValidator {
         if (parts.any { ! CostType.isSymbol(it) }) {
             msgs << "The cost '$cost' contains an invalid symbol."
         }
-        if (parts.any { CostType.isSymbol(it) && CostType.fromSymbol(it) == CostType.TAP }) {
+        if (parts.any { it in [CostType.TAP, CostType.UNTAP]*.symbol }) {
             msgs << "Casting costs cannot contain the tap symbol."
         }
         msgs
