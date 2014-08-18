@@ -120,19 +120,50 @@ if (! dir.exists()) {
 
 def lg = new File(dir, 'large')
 def sm = new File(dir, 'small')
-def icons = new File(dir, 'icons.txt').text.trim().readLines().findAll {
+Map<String, Icon> icons = [:]
+def add = { Icon i ->
+    icons[i.id] = i
+}
+// base icons
+new File(dir, 'icons.txt').text.trim().readLines().findAll {
     ! it.trim().startsWith('#')
-}.join('\n').split('\n\n')*.trim().collect {
+}.join('\n').split('\n\n')*.trim().each {
     def lines = it.readLines()
     def top = lines.first().trim().tokenize()
     def i = new SimpleIcon(id: top.first(), body: lines.tail().join('\n'))
     if (top.size() > 1) {
         i.color = top.get(1)
     }
-    i
-}.collectEntries {
-    [it.id, it]
-} as Map<String, SimpleIcon>
+    add i
+}
+
+// numeric icons...
+def nadd = { Icon base, int it ->
+    add new SimpleIcon(id: it, body: base.body.replace('${num}', it.toString()))
+}
+(0..9).each nadd.curry(icons.remove("0"))
+(10..20).each nadd.curry(icons.remove("00"))
+
+// dual-color hybrid icons
+[
+    ['w', 'u'],
+    ['w', 'b'],
+    ['u', 'b'],
+    ['u', 'r'],
+    ['b', 'r'],
+    ['b', 'g'],
+    ['r', 'g'],
+    ['r', 'w'],
+    ['g', 'w'],
+    ['g', 'u'],
+].each { ids ->
+    add new HybridIcon(icons[ids.first()], icons[ids.last()])
+}
+
+// colorless hybrid icons
+['w', 'u', 'b', 'r', 'g'].each {
+    add new HybridIcon(icons['2'], icons[it])
+}
 
 def view = new File(dir, 'icons.html').newPrintWriter()
 view.print("""\
@@ -147,8 +178,7 @@ img { margin: 10px; }
 </head>
 <body>
 """)
-
-def spew = { Icon it ->
+icons.values().each {
     print "generating '$it.id' icon..."
     new File(lg, it.filename).text = it.large
     new File(sm, it.filename).text = it.small
@@ -160,36 +190,6 @@ def spew = { Icon it ->
 """)
     println "done"
 }
-def nspew = { Icon base, int it ->
-    spew new SimpleIcon(id: it, body: base.body.replace('${num}', it.toString()))
-}
-
-icons.each { id, it ->
-    if (id == '0') {
-        (0..9).each nspew.curry(it)
-    } else if (id == '00') {
-        (10..20).each nspew.curry(it)
-    } else {
-        spew(it)
-    }
-}
-
-[
-    ['w', 'u'],
-    ['w', 'b'],
-    ['u', 'b'],
-    ['u', 'r'],
-    ['b', 'r'],
-    ['b', 'g'],
-    ['r', 'g'],
-    ['r', 'w'],
-    ['g', 'w'],
-    ['g', 'u'],
-].each { ids ->
-    spew new HybridIcon(icons[ids.first()], icons[ids.last()])
-}
-
-println icons.keySet()
 
 view.print("""\
 </body>
