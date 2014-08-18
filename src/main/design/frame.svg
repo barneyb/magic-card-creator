@@ -72,6 +72,7 @@
 
         <pattern id="bar" patternUnits="userSpaceOnUse" height="240" width="240">
             <image x="-10" y="-10" width="256" height="256" xlink:href="metal.jpg" />
+            <rect width="240" height="240" fill="white" opacity=".3" />
         </pattern>
 
         <pattern id="enchantmentFrame" patternUnits="userSpaceOnUse" height="480" width="640">
