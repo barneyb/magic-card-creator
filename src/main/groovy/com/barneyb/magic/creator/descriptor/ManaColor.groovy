@@ -10,11 +10,27 @@ package com.barneyb.magic.creator.descriptor
 enum ManaColor {
 
     COLORLESS,
-    WHITE,
-    BLUE,
-    BLACK,
-    RED,
-    GREEN
+    WHITE('w'),
+    BLUE('u'),
+    BLACK('b'),
+    RED('r'),
+    GREEN('g')
+
+    final String symbol
+
+    def ManaColor(String symbol=null) {
+        this.symbol = symbol
+    }
+
+    static ManaColor fromSymbol(String symbol) {
+        def c = ManaColor.enumConstants.find {
+            it.symbol == symbol
+        }
+        if (c == null) {
+            throw new IllegalArgumentException("There is no '$symbol' mana color.")
+        }
+        c
+    }
 
     /*
      from http://archive.wizards.com/Magic/magazine/article.aspx?x=mtgcom/askwizards/0604
