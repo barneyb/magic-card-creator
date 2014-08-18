@@ -1,6 +1,13 @@
 package assets.print
 
-class Icon {
+interface Icon {
+    String getId()
+    String getFilename()
+    String getLarge()
+    String getSmall()
+}
+
+class SimpleIcon implements Icon {
 
     String id
     String color = '#d0cac3'
@@ -34,6 +41,74 @@ class Icon {
     }
 }
 
+class HybridIcon implements Icon {
+
+    SimpleIcon top
+    SimpleIcon bottom
+    String body
+
+    def HybridIcon(SimpleIcon t, SimpleIcon b) {
+        this.top = t
+        this.bottom = b
+        this.body = """\
+            <g transform="translate(10 10)">
+                ${top.body}
+            </g>
+            <g transform="translate(45 45)">
+                ${bottom.body}
+            </g>
+        """
+    }
+
+    String getId() {
+        top.id + '_' + bottom.id
+    }
+
+    String getFilename() {
+        id + ".svg"
+    }
+
+    String getLarge() {
+        """\
+<svg xmlns="http://www.w3.org/2000/svg" width="45" height="47">
+    <defs>
+        <clipPath id="top-half">
+            <rect width="47" height="22" />
+        </clipPath>
+    </defs>
+    <circle r="22" cx="22" cy="25" fill="#000" opacity="0.75" />
+    <g transform="rotate(-45 23 22)">
+        <circle r="22" cx="23" cy="22" fill="$bottom.color" />
+        <circle r="22" cx="23" cy="22" fill="$top.color" clip-path="url(#top-half)" />
+    </g>
+    <g transform="scale(.45)">
+        $body
+    </g>
+</svg>
+"""
+    }
+
+    String getSmall() {
+        """\
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+    <defs>
+        <clipPath id="top-half">
+            <rect width="22" height="11" />
+        </clipPath>
+    </defs>
+    <g transform="rotate(-45 11 11)">
+        <circle r="11" cx="11" cy="11" fill="$bottom.color" />
+        <circle r="11" cx="11" cy="11" fill="$top.color" clip-path="url(#top-half)" />
+    </g>
+    <g transform="scale(.22)">
+        $body
+    </g>
+</svg>
+"""
+    }
+
+}
+
 def dir = new File('.')
 def path = 'src/main/resources/assets/print'
 if (! dir.canonicalPath.endsWith(path)) {
@@ -50,12 +125,14 @@ def icons = new File(dir, 'icons.txt').text.trim().readLines().findAll {
 }.join('\n').split('\n\n')*.trim().collect {
     def lines = it.readLines()
     def top = lines.first().trim().tokenize()
-    def i = new Icon(id: top.first(), body: lines.tail().join('\n'))
+    def i = new SimpleIcon(id: top.first(), body: lines.tail().join('\n'))
     if (top.size() > 1) {
         i.color = top.get(1)
     }
     i
-}
+}.collectEntries {
+    [it.id, it]
+} as Map<String, SimpleIcon>
 
 def view = new File(dir, 'icons.html').newPrintWriter()
 view.print("""\
@@ -84,18 +161,35 @@ def spew = { Icon it ->
     println "done"
 }
 def nspew = { Icon base, int it ->
-    spew new Icon(id: it, body: base.body.replace('${num}', it.toString()))
+    spew new SimpleIcon(id: it, body: base.body.replace('${num}', it.toString()))
 }
 
-icons.each {
-    if (it.id == '0') {
+icons.each { id, it ->
+    if (id == '0') {
         (0..9).each nspew.curry(it)
-    } else if (it.id == '00') {
+    } else if (id == '00') {
         (10..20).each nspew.curry(it)
     } else {
         spew(it)
     }
 }
+
+[
+    ['w', 'u'],
+    ['w', 'b'],
+    ['u', 'b'],
+    ['u', 'r'],
+    ['b', 'r'],
+    ['b', 'g'],
+    ['r', 'g'],
+    ['r', 'w'],
+    ['g', 'w'],
+    ['g', 'u'],
+].each { ids ->
+    spew new HybridIcon(icons[ids.first()], icons[ids.last()])
+}
+
+println icons.keySet()
 
 view.print("""\
 </body>
