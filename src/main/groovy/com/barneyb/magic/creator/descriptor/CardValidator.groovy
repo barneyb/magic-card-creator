@@ -20,14 +20,14 @@ class CardValidator {
 
     Collection<ValidationException> validate(Card c) {
         def props = [
-            title     : validateTitle(c.title),
-            type      : validateType(c.type)
+            title     : validateTitle(c.title)
         ]
         if (c.land) {
             props.costString = c.costString == null || c.costString.allWhitespace ? [] : ["Lands may not have casting costs."]
         } else {
             props.costString = validateCost(c.costString)
         }
+        props.type = validateType(c.type)
         if (c.creature) {
             props.subtype = validateCreatureSubtype(c.subtype)
         }
