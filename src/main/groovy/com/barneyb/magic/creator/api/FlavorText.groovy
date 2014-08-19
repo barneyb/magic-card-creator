@@ -1,8 +1,11 @@
 package com.barneyb.magic.creator.api
+
 /**
  *
  * @author bboisvert
  */
-interface BodyItem {
+interface FlavorText extends BodyItem {
+
+    String getText()
 
 }
