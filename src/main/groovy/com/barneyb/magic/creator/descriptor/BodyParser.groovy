@@ -35,7 +35,7 @@ class BodyParser {
     }
 
     static protected List<String> toLines(String text) {
-        text.trim().replace('\r', '').replaceAll(/\n\n+/, '\n\n').readLines()
+        text == null || text.allWhitespace ? [] : text.trim().replace('\r', '').replaceAll(/\n\n+/, '\n\n').readLines()
     }
 
     static protected List toItems(String text) {

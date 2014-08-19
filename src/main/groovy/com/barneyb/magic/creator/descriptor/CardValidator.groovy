@@ -63,8 +63,16 @@ class CardValidator {
         if (parts.any { ! CostType.isSymbol(it) }) {
             msgs << "The cost '$cost' contains an invalid symbol."
         }
-        if (parts.any { it in [CostType.TAP, CostType.UNTAP]*.symbol }) {
+        def cts = CostParser.parse(cost, true)
+        if (cts.contains(CostType.TAP)) {
             msgs << "Casting costs cannot contain the tap symbol."
+        }
+        if (cts.contains(CostType.UNTAP)) {
+            msgs << "Casting costs cannot contain the untap symbol."
+        }
+        def sorted = CostType.sort(cts)
+        if (cts != sorted) {
+            msgs << "The cost '$cost' is in a non-standard order (expected ${sorted.join('')})."
         }
         msgs
     }
@@ -100,17 +108,41 @@ class CardValidator {
             if (c == '{') {
                 depth += 1
                 if (depth > 1) {
-                    msgs << "Invalid brace nesting (nested open) $depth"
+                    msgs << "Invalid brace nesting (nested open) $depth."
                 }
             } else if (c == '}') {
                 depth -= 1
                 if (depth < 0) {
-                    msgs << "Invalid brace nesting (extra close) $depth"
+                    msgs << "Invalid brace nesting (extra close) $depth."
                 }
             }
         }
         if (depth > 0) {
-            msgs << "Invalid brace nesting (missing close) $depth"
+            msgs << "Invalid brace nesting (missing close) $depth."
+        }
+        BodyParser.parse(body).each { line ->
+            def runs = []
+            def run = null
+            line.each {
+                if (it instanceof CostType) {
+                    if (run == null) {
+                        run = []
+                    }
+                    run << it
+                } else if (run != null) {
+                    runs << run
+                    run = null
+                }
+            }
+            if (run != null) {
+                runs << run
+            }
+            runs.each {
+                def sorted = CostType.sort(it)
+                if (it != sorted) {
+                    msgs << "Cost ${it.join('')} is in a non-standard order (expected ${sorted.join('')})."
+                }
+            }
         }
         msgs
     }

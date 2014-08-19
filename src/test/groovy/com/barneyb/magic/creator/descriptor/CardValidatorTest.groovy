@@ -90,6 +90,8 @@ class CardValidatorTest {
         check 0, "2u"
         check 1, "ut"
         check 1, "q"
+        check 1, "u2" // colorless should be first
+        check 1, "uw" // white should be first
     }
 
     @Test
@@ -149,6 +151,10 @@ and you are short."""
 nested
 
 newlines}"""
+        check 1, "{U}{W}: non-standard order of colors"
+        check 1, "{U}{1}{B}: non-standard order of colors w/ colorless"
+        check 1, "{t}{w}: non-standard order of tap"
+        check 3, "{t}{1}: die unless {w}{r} or {b}{u} is paid"
     }
 
     @Test
