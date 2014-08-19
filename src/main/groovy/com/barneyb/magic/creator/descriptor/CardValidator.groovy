@@ -142,6 +142,12 @@ class CardValidator {
                 if (it != sorted) {
                     msgs << "Cost ${it.join('')} is in a non-standard order (expected ${sorted.join('')})."
                 }
+                if (it.contains(CostType.TAP) && it.size() > 1) {
+                    msgs << "The tap symbol in an activation cost is usually placed after the other costs, separated by a comma and space."
+                }
+                if (it.contains(CostType.UNTAP) && it.size() > 1) {
+                    msgs << "The untap symbol in an activation cost is usually placed after the other costs, separated by a comma and space."
+                }
             }
         }
         msgs

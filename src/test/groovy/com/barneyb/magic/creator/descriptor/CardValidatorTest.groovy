@@ -153,8 +153,8 @@ nested
 newlines}"""
         check 1, "{U}{W}: non-standard order of colors"
         check 1, "{U}{1}{B}: non-standard order of colors w/ colorless"
-        check 1, "{t}{w}: non-standard order of tap"
-        check 3, "{t}{1}: die unless {w}{r} or {b}{u} is paid"
+        check 2, "{t}{w}: non-standard order of tap and grouped"
+        check 4, "{t}{1}: die unless {w}{r} or {b}{u} is paid"
     }
 
     @Test
