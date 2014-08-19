@@ -52,13 +52,34 @@ g #89cc9c
 </g>
 
 t
-<g transform="rotate(45 22 25) translate(9 36)">
-    <text font-family="Goudy Old Style" font-weight="bold" font-size="40px">T</text>
-</g>
+<path stroke-width="0" fill="#000" d="
+    M 20 39
+    c -10 -10 -10 -21 -6 -25
+    c 5 -6 18 -1 20 2
+    l 4 -6
+    l 2 15
+    h -16
+    l 5 -4
+    c -2 -3 -8 -4 -10 -2
+    c -3 5 1 11 5 16
+    z
+    " />
 
-q
-<g transform="rotate(-45 22 25) translate(13 40)">
-    <text font-family="Goudy Old Style" font-weight="bold" font-size="40px">T</text>
+# untap is the same path as tap, just flipped around and recolored
+q #000
+<g transform="translate(49 3) scale(-1 1) rotate(-90 23 22)">
+    <path stroke-width="0" fill="#fff" d="
+        M 20 39
+        c -10 -10 -10 -21 -6 -25
+        c 5 -6 18 -1 20 2
+        l 4 -6
+        l 2 15
+        h -16
+        l 5 -4
+        c -2 -3 -8 -4 -10 -2
+        c -3 5 1 11 5 16
+        z
+        " />
 </g>
 
 x
