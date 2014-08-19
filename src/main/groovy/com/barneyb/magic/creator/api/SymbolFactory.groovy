@@ -12,6 +12,8 @@ interface SymbolFactory {
      * <tt>{u}</tt> are equivalent), and the wrapping braces are optional (e.g.,
      * <tt>{U}</tt> and <tt>U</tt> are equivalent).
      *
+     * <p>This method is symmetrical with {@link Symbol#toString()}.
+     *
      * @param symbol the symbol string to create a symbol for.
      * @return the Symbol instance
      * @throws IllegalArgumentException if the symbol string is unrecognized.

@@ -13,7 +13,7 @@ interface Theme {
      */
     ColorTheme getColorTheme(ThemedColor color)
 
-    IconFactory getIconFactory()
+    SymbolIconFactory getIconFactory()
 
     /**
      * I return the Layout for the specified layout type.

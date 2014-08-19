@@ -13,7 +13,7 @@ import org.w3c.dom.svg.SVGDocument
  *
  * @author bboisvert
  */
-interface IconFactory {
+interface SymbolIconFactory {
 
     /**
      * I construct a standard icon for the symbol as would be found in a card

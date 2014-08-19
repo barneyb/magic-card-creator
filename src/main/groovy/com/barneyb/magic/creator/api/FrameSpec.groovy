@@ -41,4 +41,6 @@ interface FrameSpec {
 
     boolean isMultiTextbox()
 
+    Rarity getRarity()
+
 }
