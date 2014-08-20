@@ -77,14 +77,20 @@ enum ManaColor {
         [GREEN, WHITE, BLUE, BLACK], // witch-maw nephilim
         [WHITE, BLUE, BLACK, RED], // yore-tiller nephilim
     ]
-    static List<ManaColor> sort(Collection<ManaColor> all) {
+    /**
+     * I will sort the passed Collection of mana colors and return them as a
+     * List.  If the passed Colleciton is already a List and <tt>mutate</tt> is
+     * passed as 'true', then the list will be mutated in place.  Otherwise a
+     * new list will be created and returned.
+     */
+    static List<ManaColor> sort(Collection<ManaColor> all, boolean mutate=false) {
         def colors = all.groupBy { it }
         def unique = colors.keySet()
         def hasColorless = unique.contains(COLORLESS)
         if (hasColorless) {
             unique -= COLORLESS
         }
-        (hasColorless ? colors[COLORLESS] : []) + ({
+        def result = (hasColorless ? colors[COLORLESS] : []) + ({
             switch (unique.size()) {
                 case 5:
                     // natural order
@@ -120,6 +126,13 @@ enum ManaColor {
         }()).collect {
             colors[it]
         }.flatten()
+        if (mutate && all instanceof List) {
+            all.removeAll(all)
+            all.addAll(result)
+            all
+        } else {
+            result
+        }
     }
 
 }

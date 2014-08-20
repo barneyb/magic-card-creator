@@ -3,7 +3,7 @@ package com.barneyb.magic.creator.descriptor
 import org.junit.Test
 
 import static com.barneyb.magic.creator.descriptor.ManaColor.*
-import static org.junit.Assert.assertEquals
+import static org.junit.Assert.*
 
 /**
  *
@@ -86,6 +86,32 @@ class ManaColorOrderingTest {
         check([COLORLESS, WHITE, WHITE, BLACK, BLACK]) // angel of dispair
         check([COLORLESS, BLUE, BLACK, BLACK, RED]) // nicol bolas, planeswalker
         check([COLORLESS, COLORLESS, WHITE, WHITE, BLACK, BLACK, RED, RED])
+    }
+
+    @Test
+    void mutate() {
+        // angel of dispair
+        def first = [BLACK, WHITE, COLORLESS, WHITE, BLACK]
+        def dupe = new ArrayList(first)
+        def expected = [COLORLESS, WHITE, WHITE, BLACK, BLACK]
+        // sort and return new list
+        def result = sort(first)
+        assertEquals("sorting didn't work", expected, result)
+        assertEquals("first has changed", first, dupe)
+        assertNotSame("sorting didn't create new", first, result)
+
+        // sort in place
+        result = sort(first, true)
+        assertTrue("sort created new", first.is(result))
+        assertEquals("sorting didn't work", expected, first)
+
+        // can't sort non-list in place
+        // lightning angel
+        first = [WHITE, BLUE, RED, COLORLESS] as Set
+        expected = [COLORLESS, RED, WHITE, BLUE]
+        result = sort(first, true)
+        assertEquals("sorting didn't work", expected, result)
+        assertNotSame("sorting didn't create new", first, result)
     }
 
 }
