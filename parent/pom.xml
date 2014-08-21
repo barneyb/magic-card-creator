@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.barneyb.magic</groupId>
+    <version>0.6.0-SNAPSHOT</version>
+    <artifactId>card-creator-parent</artifactId>
+    <packaging>pom</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <org.apache.xmlgraphics.batik.version>1.7</org.apache.xmlgraphics.batik.version>
+        <xml-apis.xml-apis-ext.version>1.3.04</xml-apis.xml-apis-ext.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <sourceDirectory>src/main/groovy</sourceDirectory>
+        <testSourceDirectory>src/test/groovy</testSourceDirectory>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.7</version>
+                    <executions>
+                        <execution>
+                            <id>compile-run</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <target>
+                                    <taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc">
+                                        <classpath refid="maven.compile.classpath" />
+                                    </taskdef>
+                                    <mkdir dir="${project.build.outputDirectory}" />
+                                    <groovyc destdir="${project.build.outputDirectory}" verbose="yes" srcdir="${project.build.sourceDirectory}">
+                                        <classpath refid="maven.compile.classpath" />
+                                        <javac source="${java.version}" target="${java.version}" />
+                                    </groovyc>
+                                </target>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>test-compile-run</id>
+                            <phase>test-compile</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <target>
+                                    <taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc">
+                                        <classpath refid="maven.compile.classpath" />
+                                    </taskdef>
+                                    <mkdir dir="${project.build.testOutputDirectory}" />
+                                    <groovyc destdir="${project.build.testOutputDirectory}" verbose="yes" srcdir="${project.build.testSourceDirectory}">
+                                        <classpath refid="maven.test.classpath" />
+                                        <javac source="${java.version}" target="${java.version}" />
+                                    </groovyc>
+                                </target>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>verify-run</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <target>
+                                    <taskdef name="groovydoc" classname="org.codehaus.groovy.ant.Groovydoc">
+                                        <classpath refid="maven.compile.classpath" />
+                                    </taskdef>
+                                    <groovydoc destdir="${project.reporting.outputDirectory}/groovydoc" sourcepath="${project.build.sourceDirectory}" use="true" windowtitle="${project.name}" doctitle="${project.name}">
+                                        <link packages="java.,javax." href="http://docs.oracle.com/javase/7/docs/api/" />
+                                    </groovydoc>
+                                    <jar destfile="${project.build.directory}/${project.artifactId}-${project.version}-javadoc.jar" basedir="${project.reporting.outputDirectory}/groovydoc" />
+                                    <attachartifact file="${project.build.directory}/${project.artifactId}-${project.version}-javadoc.jar" classifier="javadoc" type="jar" />
+                                </target>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
