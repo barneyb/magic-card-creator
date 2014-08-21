@@ -29,7 +29,21 @@ interface Card {
 
     List<String> getSubtypes()
 
-    List<List<BodyItem>> getBody()
+    /**
+     * I am the List of paragraphs of rules text for the card, potentially
+     * including {@link NonNormativeText} and {@link SymbolGroup}s.  Each item
+     * in the list is a run of {@link BodyItem} that should be laid out as a
+     * single line.
+     */
+    List<List<BodyItem>> getRulesText()
+
+    /**
+     * I am a list of paragraphs of flavor text for the card.  I should only
+     * contain {@link NonNormativeText} and {@link LineBreak} elements. Each
+     * item in the list is a run of {@link BodyItem} that should be laid out as
+     * a single line.
+     */
+    List<List<BodyItem>> getFlavorText()
 
     /**
      * I indicate the colors this card and/or the permanent it represents
