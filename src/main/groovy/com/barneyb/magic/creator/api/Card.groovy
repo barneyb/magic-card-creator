@@ -33,9 +33,10 @@ interface Card {
 
     /**
      * I indicate the colors this card and/or the permanent it represents
-     * belongs to.  In nearly all cases, this is based wholly on the spell's
-     * casting cost.  Note that every card has at least one color, though it
-     * may be {@link ManaColor#COLORLESS}.
+     * belongs to.  In nearly all cases, this is based wholly on the card's
+     * casting cost (an exception is Transguild Courier).  Note that every card
+     * has at least one color, though it may be {@link ManaColor#COLORLESS}
+     * (e.g., most artifacts and lands).
      */
     List<ManaColor> getColors()
 
