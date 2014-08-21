@@ -25,9 +25,9 @@ interface Card {
      */
     Artwork getOverArtwork()
 
-    String getType()
+    List<String> getTypes()
 
-    String getSubtype()
+    List<String> getSubtypes()
 
     List<List<BodyItem>> getBody()
 
