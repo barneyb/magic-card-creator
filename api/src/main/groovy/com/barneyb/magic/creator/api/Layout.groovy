@@ -15,7 +15,7 @@ interface Layout {
      * I will lay out the given {@link Card} according to the the rules
      * encapsulated by this object.
      */
-    SVGDocument layOut(Card card)
+    SVGDocument layout(Card card)
 
 
 }

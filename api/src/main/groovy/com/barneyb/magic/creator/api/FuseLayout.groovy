@@ -16,6 +16,6 @@ interface FuseLayout {
      * I will lay out the given {@link Card}s according to the the rules
      * encapsulated by this object.
      */
-    SVGDocument layOut(Card left, Card right)
+    SVGDocument layout(Card left, Card right)
 
 }
