@@ -17,18 +17,19 @@ interface ColorTheme {
     String getName()
 
     /**
-     * I am the base color of this theme, at full saturation.
+     * I am the base color of this color theme, at full saturation.
      */
     Color getBaseColor()
 
     /**
-     * I am used for the card frame.
+     * I am used for the card frame (inside the black border, outside all card
+     * elements).
      */
     Texture getFrameTexture()
 
     /**
-     * I am used for the two or three bars on a card (title, type, and
-     * optionally power/toughness).
+     * I am used for the bars on a card (title, type, and optionally
+     * power/toughness and/or level indicators).
      */
     Texture getBarTexture()
 
@@ -41,10 +42,5 @@ interface ColorTheme {
      * I am used for the textbox of mana-producing cards.
      */
     Texture getManaTextboxTexture()
-
-    /**
-     * I am a frame overlay used to indicate semi-enchantment cards.
-     */
-    Texture getSemiEnchantmentTexture()
 
 }

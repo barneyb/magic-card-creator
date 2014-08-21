@@ -16,9 +16,16 @@ interface Theme {
     SymbolIconFactory getIconFactory()
 
     /**
+     * I am a frame overlay used to indicate semi-enchantment cards.
+     */
+    Texture getSemiEnchantmentTexture()
+
+    /**
      * I return the Layout for the specified layout type.
      */
     Layout getLayout(LayoutType type)
+
+    boolean supports(LayoutType type)
 
     /**
      * I return the FuseLayout for this theme.  Note that only the INSTANT and
