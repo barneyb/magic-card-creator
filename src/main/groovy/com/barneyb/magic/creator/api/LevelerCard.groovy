@@ -30,4 +30,23 @@ interface LevelerCard extends CreatureCard {
 
     List<Level> getLevels()
 
+    /**
+     * I am the creature's zero-level body, which will nearly always contain the
+     * actual leveling cost.
+     */
+    @Override
+    List<List<BodyItem>> getBody()
+
+    /**
+     * I am the creature's zero-level power.
+     */
+    @Override
+    String getPower()
+
+    /**
+     * I am the creature's zero-level toughness.
+     */
+    @Override
+    String getToughness()
+
 }
