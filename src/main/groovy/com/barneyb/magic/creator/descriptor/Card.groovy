@@ -1,5 +1,6 @@
 package com.barneyb.magic.creator.descriptor
 
+import com.barneyb.magic.creator.api.ManaColor
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import groovy.transform.TupleConstructor

@@ -1,4 +1,4 @@
-package com.barneyb.magic.creator.descriptor
+package com.barneyb.magic.creator.api
 
 /**
  * This enum lists the 6 colors of mana and sorts them in their canonical order.

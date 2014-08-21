@@ -1,10 +1,9 @@
-package com.barneyb.magic.creator.descriptor
+package com.barneyb.magic.creator.api
 
 import org.junit.Test
 
-import static com.barneyb.magic.creator.descriptor.ManaColor.*
+import static com.barneyb.magic.creator.api.ManaColor.*
 import static org.junit.Assert.*
-
 /**
  *
  * @author bboisvert

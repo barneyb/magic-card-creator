@@ -1,5 +1,4 @@
 package com.barneyb.magic.creator.api
-import com.barneyb.magic.creator.descriptor.ManaColor
 /**
  * I represent a symbol (blue mana, tap, etc.) used in magic rules.  Not all
  * symbols have color, and some may have multiple colors.

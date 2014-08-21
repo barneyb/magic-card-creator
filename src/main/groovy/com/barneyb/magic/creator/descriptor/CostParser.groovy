@@ -1,5 +1,7 @@
 package com.barneyb.magic.creator.descriptor
 
+import com.barneyb.magic.creator.api.ManaColor
+
 import static com.barneyb.magic.creator.descriptor.CostType.*
 
 /**

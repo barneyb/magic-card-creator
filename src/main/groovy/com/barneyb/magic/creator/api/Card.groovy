@@ -1,7 +1,4 @@
 package com.barneyb.magic.creator.api
-
-import com.barneyb.magic.creator.descriptor.ManaColor
-
 /**
  *
  * @author bboisvert
