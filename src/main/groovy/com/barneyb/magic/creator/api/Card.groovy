@@ -41,6 +41,13 @@ interface Card {
     List<ManaColor> getColors()
 
     /**
+     * I indicate whether the ManaColor(s) of this card are explicit (meaning
+     * they are explicitly stipulated, instead of being implicitly based on the
+     * c cost of the spell or COLORLESS for lands).
+     */
+    boolean isColorExplicit()
+
+    /**
      * I indicate whether this card is multiple colors
      * ({@link ManaColor#COLORLESS} counts).
      */
