@@ -10,8 +10,6 @@ import org.w3c.dom.svg.SVGDocument
  */
 interface Layout {
 
-    String getName()
-
     SVGDocument getFrame(FrameSpec fs)
 
     SVGDocument getCard(FrameSpec fs, Card card)
