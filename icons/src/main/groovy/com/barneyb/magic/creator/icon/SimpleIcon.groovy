@@ -8,7 +8,7 @@ package com.barneyb.magic.creator.icon
 class SimpleIcon implements Icon {
 
     String id
-    String color = '#d0cac3'
+    String color = '#CAC5C0'
     String body
 
     String getShadowed() {

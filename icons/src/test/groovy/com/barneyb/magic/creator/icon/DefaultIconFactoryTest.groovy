@@ -49,7 +49,7 @@ div > svg { margin: 10px; }
             "tap": ['t', 'q'],
             "hybrid": ['w/u', 'w/b', 'u/b', 'u/r', 'b/r', 'b/g', 'r/g', 'r/w', 'g/w', 'g/u'],
             "mono-hybrid": ['2/w', '2/u', '2/b', '2/r', '2/g'],
-//            "phyrexian": ['w/p', 'u/p', 'b/p', 'r/p', 'g/p'],
+            "phyrexian": ['w/p', 'u/p', 'b/p', 'r/p', 'g/p'],
             "colorless": ['x'] + (0..20)*.toString(),
         ].each { n, ss ->
             println n

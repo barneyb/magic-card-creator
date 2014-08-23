@@ -94,6 +94,8 @@ class DefaultIconFactory implements SymbolIconFactory {
         } else if (symbol.matches(~/^[2WUBRG]\/[WUBRG]$/)) {
             // hybrid/ icons
             return addIcon(new HybridIcon(getIconInternal(symbol.substring(0, 1)), getIconInternal(symbol.substring(2))))
+        } else if (symbol.matches(~/^[2WUBRG]\/P$/)) {
+            return addIcon(new SimpleIcon(id: symbol, color: getIconInternal(symbol.substring(0, 1)).color, body: getIconInternal("P").body))
         }
         throw new IllegalArgumentException("Cannot create an icon for symbol '{$symbol}'.")
     }
