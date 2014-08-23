@@ -8,6 +8,9 @@
     <modules>
         <module>api</module>
         <module>parent</module>
+        <module>icons</module>
+        <module>symbols</module>
+        <module>utils</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
