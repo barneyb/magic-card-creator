@@ -8,6 +8,7 @@
     <modules>
         <module>api</module>
         <module>parent</module>
+        <module>icons</module>
         <module>symbols</module>
         <module>utils</module>
     </modules>
