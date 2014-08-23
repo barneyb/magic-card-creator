@@ -13,11 +13,11 @@ package com.barneyb.magic.creator.api
 enum ManaColor {
 
     COLORLESS,
-    WHITE('w'),
-    BLUE('u'),
-    BLACK('b'),
-    RED('r'),
-    GREEN('g')
+    WHITE('W'),
+    BLUE('U'),
+    BLACK('B'),
+    RED('R'),
+    GREEN('G')
 
     final String symbol
 
@@ -26,6 +26,7 @@ enum ManaColor {
     }
 
     static ManaColor fromSymbol(String symbol) {
+        symbol = symbol.toUpperCase()
         def c = ManaColor.enumConstants.find {
             it.symbol == symbol
         }
