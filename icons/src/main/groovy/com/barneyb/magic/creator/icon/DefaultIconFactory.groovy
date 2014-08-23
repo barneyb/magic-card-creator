@@ -7,7 +7,6 @@ import org.apache.batik.svggen.SVGGraphics2D
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
 
-import java.awt.Font
 import java.awt.font.TextAttribute
 import java.awt.geom.AffineTransform
 import java.text.AttributedString
@@ -82,9 +81,9 @@ class DefaultIconFactory implements SymbolIconFactory {
                     def attrStr = new AttributedString(symbol, [
                         (TextAttribute.FAMILY): "Norasi", // todo: Goudy Old Style
                         (TextAttribute.SIZE): 53,
-                        (TextAttribute.WEIGHT): TextAttribute.WEIGHT_BOLD,
                     ])
                     if (n < 10) {
+                        attrStr.addAttribute(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD)
                         g.drawString(attrStr.iterator, 12, 39)
                     } else {
                         attrStr.addAttribute(TextAttribute.TRANSFORM, AffineTransform.getScaleInstance(0.58, 1))

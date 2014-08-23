@@ -73,7 +73,6 @@ div > svg { margin: 10px; }
         out.flush()
         out.close()
         tmp.renameTo(tgt)
-        println tgt.canonicalPath
     }
 
 }
