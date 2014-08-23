@@ -37,7 +37,7 @@ class DefaultIconFactoryTest {
 <head>
 <style>
 html { text-align: center; }
-body { max-width: 980px; margin: auto; }
+body { max-width: 980px; margin: auto; background-color: #eed; }
 div { float: left; margin-bottom: 20px; }
 div > svg { margin: 10px; }
 </style>
