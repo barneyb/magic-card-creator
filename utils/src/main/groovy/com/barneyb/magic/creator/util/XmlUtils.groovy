@@ -4,6 +4,7 @@ import org.apache.batik.dom.svg.SAXSVGDocumentFactory
 import org.apache.batik.dom.svg.SVGDOMImplementation
 import org.apache.batik.util.XMLResourceDescriptor
 import org.w3c.dom.Document
+import org.w3c.dom.Node
 import org.w3c.dom.svg.SVGDocument
 import org.xml.sax.InputSource
 
@@ -24,13 +25,13 @@ import javax.xml.transform.stream.StreamSource
 class XmlUtils {
 
     /**
-     * I write the specified SVGDocument out to the specified Writer using
-     * 4-space indentation.  The Writer is not closed by this operation, so you
-     * may continue to write to it after this method returns.
+     * I write the specified Node out to the specified Writer using 4-space
+     * indentation.  The Writer is not closed by this operation, so you may
+     * continue to write to it after this method returns.
      */
-    static void write(SVGDocument doc, Writer dest) {
+    static void write(Node doc, Writer dest) {
         if (doc == null) {
-            throw new IllegalArgumentException("You cannot write out a null Document")
+            throw new IllegalArgumentException("You cannot write out a null Node")
         }
         if (dest == null) {
             throw new IllegalArgumentException("You cannot write to a null Writer")
@@ -44,11 +45,11 @@ class XmlUtils {
     }
 
     /**
-     * I convert the specified SVGDocument to a 4-space indented string of XML.
-     * If you are intending to save the string to a file or other character
-     * sink, the two-arg version of write should be preferred.
+     * I convert the specified Node to a 4-space indented string of XML. If you
+     * are intending to save the string to a file or other character sink, the
+     * two-arg version of write should be preferred.
      */
-    static String write(SVGDocument doc) {
+    static String write(Node doc) {
         def sw = new StringWriter()
         write(doc, sw)
         sw.close()
