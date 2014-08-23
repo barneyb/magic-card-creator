@@ -3,18 +3,17 @@ package com.barneyb.magic.creator.api
 import org.w3c.dom.svg.SVGDocument
 
 /**
- * I represent a single way of laying out frames and cards, for example
- * "post-2015 planeswalker".
+ * I represent a single way of laying out cards within a theme.
  *
  * @author bboisvert
  */
 interface Layout {
 
-    SVGDocument getFrame(FrameSpec fs)
-
-    SVGDocument getCard(FrameSpec fs, Card card)
-
-    SVGDocument getCard(SVGDocument frame, Card card)
+    /**
+     * I will lay out the given {@link Card} according to the the rules
+     * encapsulated by this object.
+     */
+    SVGDocument layout(Card card)
 
 
 }

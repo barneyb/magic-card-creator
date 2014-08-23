@@ -3,8 +3,8 @@ package com.barneyb.magic.creator.api
 import org.w3c.dom.svg.SVGDocument
 
 /**
- * I represent the layout of a fuse card.  Note that only non-permanent spells
- * (i.e., instants and sorceries) may be fused, so a given theme will only ever
+ * I represent the layout of a "fuse" card.  Since only non-permanent spells
+ * (i.e., instants and sorceries) may be fused, a given theme will only ever
  * have a single FuseLayout (likely mirroring much of the normal non-fused
  * layout for non-permanent spells).
  *
@@ -12,10 +12,10 @@ import org.w3c.dom.svg.SVGDocument
  */
 interface FuseLayout {
 
-    SVGDocument getFrame(FrameSpec left, FrameSpec right)
-
-    SVGDocument getCard(FrameSpec leftFs, FrameSpec rightFs, Card leftCard, Card rightCard)
-
-    SVGDocument getCard(SVGDocument frame, Card left, Card right)
+    /**
+     * I will lay out the given {@link Card}s according to the the rules
+     * encapsulated by this object.
+     */
+    SVGDocument layout(Card left, Card right)
 
 }
