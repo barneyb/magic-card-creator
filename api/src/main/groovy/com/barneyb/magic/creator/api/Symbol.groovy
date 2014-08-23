@@ -8,6 +8,14 @@ package com.barneyb.magic.creator.api
 interface Symbol {
 
     /**
+     * The raw string version of the symbol, expressed in uppercase, but NOT
+     * wrapped in braces like toString().
+     *
+     * <p>This method is symmetrical with {@link SymbolFactory#getSymbol(java.lang.String)}.
+     */
+    String getSymbol()
+
+    /**
      * I indicate the ManaColors this symbol is associated with, which may
      * include {@link ManaColor#COLORLESS}, and may be empty (e.g., for the
      * {T} or tap symbol)
