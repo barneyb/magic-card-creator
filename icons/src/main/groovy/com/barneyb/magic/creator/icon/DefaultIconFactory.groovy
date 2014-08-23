@@ -81,9 +81,9 @@ class DefaultIconFactory implements SymbolIconFactory {
                     def attrStr = new AttributedString(symbol, [
                         (TextAttribute.FAMILY): "Norasi", // todo: Goudy Old Style
                         (TextAttribute.SIZE): 53,
+                        (TextAttribute.WEIGHT): TextAttribute.WEIGHT_BOLD,
                     ])
                     if (n < 10) {
-                        attrStr.addAttribute(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD)
                         g.drawString(attrStr.iterator, 12, 39)
                     } else {
                         attrStr.addAttribute(TextAttribute.TRANSFORM, AffineTransform.getScaleInstance(0.58, 1))
