@@ -3,7 +3,14 @@ package com.barneyb.magic.creator.icon
 import com.barneyb.magic.creator.api.Symbol
 import com.barneyb.magic.creator.api.SymbolIconFactory
 import com.barneyb.magic.creator.util.XmlUtils
+import org.apache.batik.svggen.SVGGraphics2D
+import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
+
+import java.awt.Font
+import java.awt.font.TextAttribute
+import java.awt.geom.AffineTransform
+import java.text.AttributedString
 
 /**
  * I am the default SymbolIconFactory creating symbol icons a la Magic 2014.
@@ -46,17 +53,44 @@ class DefaultIconFactory implements SymbolIconFactory {
         getClass().classLoader.getResourceAsStream(DESCRIPTOR_PATH)
     }
 
+    protected Element withGraphics(Closure work) {
+        def doc = XmlUtils.create()
+        SVGGraphics2D g = new SVGGraphics2D(doc)
+        work(g)
+        g.topLevelGroup
+    }
+
     Icon getIconInternal(String symbol) {
         if (icons.containsKey(symbol)) {
             // preexisting
             return icons[symbol]
+        } else if (symbol == 'X') {
+            // X colorless
+            return addIcon(new SimpleIcon(id: symbol, body: XmlUtils.write(withGraphics { SVGGraphics2D g ->
+                def attrStr = new AttributedString("X", [
+                    (TextAttribute.FAMILY): "Norasi", // todo: Goudy Old Style
+                    (TextAttribute.SIZE): 45,
+                    (TextAttribute.TRANSFORM): AffineTransform.getScaleInstance(0.8, 1)
+                ])
+                g.drawString(attrStr.iterator, 13, 37)
+            })))
         } else if (symbol.isInteger()) {
             // numeric
             int n = symbol.toInteger()
-            if (n >= 0 && n < 10) {
-                return addNumericIcon(icons["DIGIT"], n)
-            } else if (n >= 10 && n < 100) {
-                return addNumericIcon(icons["DIGITDIGIT"], n)
+            if (n >= 0 && n < 100) {
+                return addIcon(new SimpleIcon(id: symbol, body: XmlUtils.write(withGraphics { SVGGraphics2D g ->
+                    def attrStr = new AttributedString(symbol, [
+                        (TextAttribute.FAMILY): "Norasi", // todo: Goudy Old Style
+                        (TextAttribute.SIZE): 53,
+                        (TextAttribute.WEIGHT): TextAttribute.WEIGHT_BOLD,
+                    ])
+                    if (n < 10) {
+                        g.drawString(attrStr.iterator, 12, 39)
+                    } else {
+                        attrStr.addAttribute(TextAttribute.TRANSFORM, AffineTransform.getScaleInstance(0.58, 1))
+                        g.drawString(attrStr.iterator, 8.5f, 40)
+                    }
+                })))
             }
         } else if (symbol.matches(~/^[2WUBRG]\/[WUBRG]$/)) {
             // hybrid/ icons
