@@ -20,7 +20,8 @@ class DefaultSymbolFactoryTest {
     @Test
     void noErrors() {
         [
-            "mana": ['w', 'u', 'b', 'r', 'g'],
+            "colored": ['w', 'u', 'b', 'r', 'g'],
+            "colorless": (0..20)*.toString() + ['x'],
             "tap": ['t', 'q'],
             "hybrid": ['w/u', 'w/b', 'u/b', 'u/r', 'b/r', 'b/g', 'r/g', 'r/w', 'g/w', 'g/u'],
             "mono-hybrid": ['2/w', '2/u', '2/b', '2/r', '2/g'],
