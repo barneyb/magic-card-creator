@@ -71,4 +71,12 @@ class XmlUtils {
         )
     }
 
+    static SVGDocument create() {
+        (SVGDocument) SVGDOMImplementation.getDOMImplementation().createDocument(
+            SVGDOMImplementation.SVG_NAMESPACE_URI,
+            "svg",
+            null
+        )
+    }
+
 }
