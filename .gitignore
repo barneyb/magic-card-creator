@@ -9,3 +9,4 @@ target
 .project
 build
 dependency-reduced-pom.xml
+proof-*.html
