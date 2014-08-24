@@ -1,0 +1,228 @@
+<svg width="2.5in" height="3.5in" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 875 1225">
+    #* @vtlvariable name="spec" type="com.barneyb.magic.creator.theme.FrameSpec" *#
+    <defs>
+        <path id="-title" d="
+            M 0 -40
+            h 377
+            c 18 20 18 60 0 80
+            h -754
+            c -18 -20 -18 -60 0 -80
+            z
+        " />
+        <path id="-art" d="
+            M 0 -277.5
+            h 377
+            v 555
+            h -754
+            v -555
+            z
+        " />
+        <path id="-type" d="
+            M 0 -40
+            h 377
+            c 15 20 15 55 0 75
+            h -754
+            c -15 -20 -15 -55 0 -75
+            z
+        " />
+        <path id="-text" d="
+            M 0 -175
+            h 377
+            v 350
+            h -754
+            v -350
+            z
+        " />
+        <path id="-pt" d="
+            M 0 -31
+            h 68
+            c 7 20 7 42 0 62
+            h -136
+            c -7 -20 -7 -42 0 -62
+            z
+        " />
+        <!-- pullout and pushin are identical, just with flipped around coords -->
+        <filter id="pulloutFilter">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
+            <feOffset dy="4" dx="-4" />
+            <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="hlDiff" />
+            <feFlood flood-color="white" flood-opacity="1" />
+            <feComposite in2="hlDiff" operator="in" />
+            <feComposite in2="SourceGraphic" operator="over" result="withGlow" />
+
+            <feOffset in="blur" dy="-4" dx="4" />
+            <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowDiff" />
+            <feFlood flood-color="black" flood-opacity="1" />
+            <feComposite in2="shadowDiff" operator="in" />
+            <feComposite in2="withGlow" operator="over" />
+        </filter>
+        <filter id="pushinFilter">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
+            <feOffset dy="-4" dx="4" />
+            <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="hlDiff" />
+            <feFlood flood-color="white" flood-opacity="1" />
+            <feComposite in2="hlDiff" operator="in" />
+            <feComposite in2="SourceGraphic" operator="over" result="withGlow" />
+
+            <feOffset in="blur" dy="4" dx="-4" />
+            <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowDiff" />
+            <feFlood flood-color="black" flood-opacity="1" />
+            <feComposite in2="shadowDiff" operator="in" />
+            <feComposite in2="withGlow" operator="over" />
+        </filter>
+
+        <filter id="dropFilter">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+            <feOffset dx="-5" dy="5" result="shadow" />
+            <feFlood flood-color="#000" />
+            <feComposite in2="shadow" operator="in" />
+            <feMerge>
+                <feMergeNode />
+                <feMergeNode />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+
+        #if($spec.creature)
+            <filter id="ptDropFilter" filterUnits="objectBoundingBox" height="140%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="5" />
+                <feOffset dx="-4" dy="7" result="shadow" />
+                <feFlood flood-color="#000" />
+                <feComposite in2="shadow" operator="in" />
+                <feMerge>
+                    <feMergeNode />
+                    <feMergeNode in="SourceGraphic" />
+                </feMerge>
+            </filter>
+        #end
+
+        <pattern id="bar" patternUnits="userSpaceOnUse" height="240" width="240">
+            <image x="-10" y="-10" width="256" height="256" xlink:href="metal.jpg" />
+            <rect width="240" height="240" fill="white" opacity=".3" />
+        </pattern>
+
+        <pattern id="enchantmentFrame" patternUnits="userSpaceOnUse" height="480" width="640">
+            <image width="640" height="480" xlink:href="starfield.jpg" opacity=".6" />
+        </pattern>
+
+        <pattern id="whiteFrame" patternUnits="userSpaceOnUse" height="600" width="600">
+            <image width="600" height="600" xlink:href="white.jpg" />
+        </pattern>
+
+        <pattern id="whiteTextbox" patternUnits="userSpaceOnUse" height="480" width="640">
+            <image width="640" height="480" xlink:href="cloud.jpg" />
+            <rect width="640" height="480" fill="#fffafc" opacity=".8" />
+        </pattern>
+
+        <pattern id="redFrame" patternUnits="userSpaceOnUse" height="400" width="640">
+            <image width="640" height="400" xlink:href="red.jpg" />
+        </pattern>
+
+        <pattern id="redTextbox" patternUnits="userSpaceOnUse" height="400" width="640">
+            <image width="640" height="400" xlink:href="red.jpg" />
+            <rect width="640" height="400" fill="#fee" opacity=".8" />
+        </pattern>
+
+        <linearGradient id="redWhite">
+            <stop offset=".4" stop-color="#f00" />
+            <stop offset=".6" stop-color="#fff" />
+        </linearGradient>
+
+        <linearGradient id="frameRightGradient">
+            <stop offset=".4" stop-color="white" stop-opacity="0" />
+            <stop offset=".6" stop-color="white" stop-opacity="1" />
+        </linearGradient>
+        <mask id="frameRightMask">
+            <rect width="100%" height="100%" fill="url(#frameRightGradient)" />
+        </mask>
+
+        <linearGradient id="frameTopGradient" gradientTransform="rotate(90)">
+            <stop offset=".5" stop-color="white" stop-opacity="1" />
+            <stop offset=".8" stop-color="white" stop-opacity="0" />
+        </linearGradient>
+        <mask id="frameTopMask">
+            <rect width="100%" height="100%" fill="url(#frameTopGradient)" />
+        </mask>
+
+        <linearGradient id="textboxRightGradient">
+            <stop offset=".4" stop-color="white" stop-opacity="0" />
+            <stop offset=".6" stop-color="white" stop-opacity="1" />
+        </linearGradient>
+        <mask id="textboxRightMask">
+            <rect x="-377" y="-175" width="754" height="350" fill="url(#textboxRightGradient)" />
+        </mask>
+    </defs>
+    <g>
+        <rect width="875" height="1225" fill="#000" />
+        <rect x="35" y="35" width="805" height="1155" fill="url(#redFrame)" />
+        <rect x="35" y="35" width="805" height="1155" fill="url(#whiteFrame)" mask="url(#frameRightMask)" />
+        <rect x="35" y="35" width="805" height="1155" fill="url(#enchantmentFrame)" mask="url(#frameTopMask)" />
+
+        <!-- border drop shadow -->
+        <g filter="url(#dropFilter)" fill="none" stroke="#fff" stroke-width="5">
+            <use xlink:href="#-title" x="439" y="92" />
+            <use xlink:href="#-art" x="439" y="409.5" />
+            <use xlink:href="#-type" x="439" y="727" />
+            <use xlink:href="#-text" x="439" y="937" />
+        </g>
+
+        <!-- title bar -->
+        <g transform="translate(439 92)">
+            <g transform="scale(.993 .93)">
+                <g filter="url(#pulloutFilter)">
+                    <use xlink:href="#-title" fill="url(#bar)" />
+                </g>
+                <use xlink:href="#-title" stroke="#000" stroke-width="5" fill="none" />
+            </g>
+        </g>
+
+        <!-- artwork hole -->
+        <use xlink:href="#-art" x="439" y="409.5" fill="#000" />
+
+        <!-- type bar -->
+        <g transform="translate(439 727)">
+            <g transform="scale(.993 .93)">
+                <g filter="url(#pulloutFilter)">
+                    <use xlink:href="#-type" fill="url(#bar)" />
+                </g>
+                <use xlink:href="#-type" stroke="#000" stroke-width="5" fill="none" />
+            </g>
+        </g>
+
+        <!-- textbox -->
+        <g transform="translate(439 937)">
+            <g transform="scale(.9934 .9857)">
+                <g filter="url(#pushinFilter)">
+                    <use xlink:href="#-text" fill="url(#redTextbox)" />
+                    <use xlink:href="#-text" fill="url(#whiteTextbox)" mask="url(#textboxRightMask)" />
+                </g>
+            </g>
+        </g>
+
+        <!-- actual border -->
+        <g fill="none" stroke="url(#redWhite)" stroke-width="5">
+            <use xlink:href="#-title" x="439" y="92" />
+            <use xlink:href="#-art" x="439" y="409.5" />
+            <use xlink:href="#-type" x="439" y="727" />
+            <use xlink:href="#-text" x="439" y="937" />
+        </g>
+
+        #if($spec.creature)
+            <!-- power/toughness block -->
+            <g transform="translate(742 1135)" filter="url(#ptDropFilter)">
+                <g transform="scale(.975 .93)">
+                    <g filter="url(#pushinFilter)">
+                        <use xlink:href="#-pt" fill="url(#bar)" />
+                    </g>
+                    <!--<use xlink:href="#-pt" stroke="#000" stroke-width="3" fill="none" />-->
+                </g>
+                <g transform="scale(1.04 1.08)">
+                    <use xlink:href="#-pt" stroke="#000" stroke-width="3" fill="none" />
+                </g>
+                <g fill="none" stroke="#fff" stroke-width="4">
+                    <use xlink:href="#-pt" />
+                </g>
+            </g>
+        #end
+    </g>
+</svg>
