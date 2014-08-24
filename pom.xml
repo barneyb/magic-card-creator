@@ -13,6 +13,7 @@
         <module>utils</module>
         <module>theme</module>
         <module>cli</module>
+        <module>descriptor</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
