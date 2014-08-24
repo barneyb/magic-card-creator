@@ -16,7 +16,8 @@ interface Theme {
     SymbolIconFactory getIconFactory()
 
     /**
-     * I am a frame overlay used to indicate semi-enchantment cards.
+     * I am a frame overlay used to indicate semi-enchantment cards, or null if
+     * this theme doesn't support visual semi-enchantment differentiation.
      */
     Texture getSemiEnchantmentTexture()
 
