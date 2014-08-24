@@ -24,7 +24,7 @@ interface LevelerCard extends CreatureCard {
 
         String getToughness()
 
-        List<List<BodyItem>> getBody()
+        List<List<BodyItem>> getRulesText()
 
     }
 
@@ -35,16 +35,16 @@ interface LevelerCard extends CreatureCard {
      * actual leveling cost.
      */
     @Override
-    List<List<BodyItem>> getBody()
+    List<List<BodyItem>> getRulesText()
 
     /**
-     * I am the creature's zero-level power.
+     * I am the creature's base-level power.
      */
     @Override
     String getPower()
 
     /**
-     * I am the creature's zero-level toughness.
+     * I am the creature's base-level toughness.
      */
     @Override
     String getToughness()

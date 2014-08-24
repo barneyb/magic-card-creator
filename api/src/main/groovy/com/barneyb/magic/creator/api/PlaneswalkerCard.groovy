@@ -4,7 +4,7 @@ package com.barneyb.magic.creator.api
  *
  * @author bboisvert
  */
-interface PlaneswalkerCard extends SpellCard {
+interface PlaneswalkerCard extends Card {
 
     static interface LoyaltyAbility {
 
@@ -13,7 +13,7 @@ interface PlaneswalkerCard extends SpellCard {
          */
         String getCost()
 
-        List<List<BodyItem>> getBody()
+        List<List<BodyItem>> getRulesText()
 
     }
 
