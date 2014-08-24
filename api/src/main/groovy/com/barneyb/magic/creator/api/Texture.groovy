@@ -12,8 +12,6 @@ interface Texture extends Transparent {
 
     RasterImage getImage()
 
-    float getImageOpacity() // default 1
-
     boolean isUnderFlooded()
 
     Flood getUnderFlood()
