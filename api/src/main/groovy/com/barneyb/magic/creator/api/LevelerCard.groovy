@@ -10,7 +10,7 @@ interface LevelerCard extends CreatureCard {
 
         /**
          * The start of the range this level applies to.  If null, <tt>"0"</tt>
-         * is assumed.
+         * is assumed, which is silly (because that'd be the default state).
          */
         String getStart()
 
