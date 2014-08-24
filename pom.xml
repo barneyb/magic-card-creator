@@ -12,6 +12,7 @@
         <module>symbols</module>
         <module>utils</module>
         <module>theme</module>
+        <module>cli</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
