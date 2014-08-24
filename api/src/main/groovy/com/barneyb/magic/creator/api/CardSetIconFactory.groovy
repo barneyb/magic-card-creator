@@ -9,7 +9,7 @@ import org.w3c.dom.svg.SVGDocument
  *
  * @author bboisvert
  */
-interface SetIconFactory {
+interface CardSetIconFactory {
 
     /**
      * I construct the icon for the named set assuming the COMMON rarity.
