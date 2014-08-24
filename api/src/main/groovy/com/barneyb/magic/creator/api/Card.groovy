@@ -10,7 +10,8 @@ interface Card {
     /**
      * I am the main artwork for the card, which will be rendered into the
      * designated artwork area in the Layout.  If the image dimensions do not
-     * match the Layout's expected dimensions, it will be scaled to fit.
+     * match the Layout's expected dimensions, it will be scaled to cover and
+     * the other dimension centered.
      */
     Artwork getArtwork()
 
