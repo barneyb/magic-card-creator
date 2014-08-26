@@ -6,18 +6,11 @@
            elementFormDefault="qualified">
 
     <xs:element name="card-set" type="c:CardSetType">
+        <xs:key name="CardName">
+            <xs:selector xpath="./c:card"/>
+            <xs:field xpath="@name"/>
+        </xs:key>
     </xs:element>
-
-    <xs:simpleType name="TypeEnum">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="land" />
-            <xs:enumeration value="instant" />
-            <xs:enumeration value="sorcery" />
-            <xs:enumeration value="enchantment" />
-            <xs:enumeration value="creature" />
-            <xs:enumeration value="planeswalker" />
-        </xs:restriction>
-    </xs:simpleType>
 
     <xs:simpleType name="RarityEnum">
         <xs:restriction base="xs:string">
@@ -36,10 +29,10 @@
 
     <xs:complexType name="CardSetType">
         <xs:sequence>
+            <xs:element name="name" type="xs:string" />
             <xs:element name="copyright" type="xs:string" minOccurs="0" />
             <xs:element name="card" type="CardType" maxOccurs="unbounded" />
         </xs:sequence>
-        <xs:attribute name="name" type="xs:string" />
     </xs:complexType>
 
     <xs:complexType name="CardType">
@@ -50,6 +43,7 @@
             <xs:element name="color-indicator" type="xs:string" minOccurs="0" />
             <xs:element name="type" type="xs:string" />
             <xs:element name="subtype" type="xs:string" minOccurs="0" />
+            <xs:element name="rarity" type="RarityEnum" default="common" />
             <xs:element name="rules-text" type="xs:string" minOccurs="0" />
             <xs:element name="flavor-text" type="xs:string" minOccurs="0" />
             <xs:element name="watermark" type="xs:string" minOccurs="0" />
@@ -70,9 +64,7 @@
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
-        <xs:attribute name="title" type="xs:string" use="required" />
-        <xs:attribute name="type" type="TypeEnum" use="required" />
-        <xs:attribute name="rarity" type="RarityEnum" />
+        <xs:attribute name="name" type="xs:string" use="required" />
     </xs:complexType>
 
     <xs:complexType name="ArtworkType">
