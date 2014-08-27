@@ -65,7 +65,7 @@
             <xs:element name="color-indicator" type="xs:token" minOccurs="0" />
             <xs:element name="type" type="xs:token" />
             <xs:element name="subtype" type="xs:token" minOccurs="0" />
-            <xs:element name="rarity" type="RarityEnum" default="common" />
+            <xs:element name="rarity" type="RarityEnum" minOccurs="0" default="common" />
             <xs:element name="rules-text" type="RulesTextType" minOccurs="0" />
             <xs:element name="flavor-text" type="xs:string" minOccurs="0" />
             <xs:element name="watermark" type="xs:token" minOccurs="0" />
