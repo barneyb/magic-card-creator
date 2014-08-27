@@ -1,7 +1,8 @@
 package com.barneyb.magic.creator.descriptor
 
-import com.barneyb.magic.creator.descriptor.schema.Level
-import com.barneyb.magic.creator.descriptor.schema.LoyaltyAbility
+import com.barneyb.magic.creator.descriptor.schema.LevelType
+import com.barneyb.magic.creator.descriptor.schema.LoyaltyAbilityType
+
 /**
  *
  *
@@ -29,7 +30,7 @@ abstract class BaseCardType implements CardType {
         throw new UnsupportedOperationException("This card doesn't have toughness")
     }
 
-    List<Level> getLevels() {
+    List<LevelType> getLevels() {
         throw new UnsupportedOperationException("This card doesn't have levels")
     }
 
@@ -37,7 +38,7 @@ abstract class BaseCardType implements CardType {
         throw new UnsupportedOperationException("This card doesn't have loyalty")
     }
 
-    List<LoyaltyAbility> getLoyaltyAbilities() {
+    List<LoyaltyAbilityType> getLoyaltyAbilities() {
         throw new UnsupportedOperationException("This card doesn't have loyalty abilities")
     }
 
