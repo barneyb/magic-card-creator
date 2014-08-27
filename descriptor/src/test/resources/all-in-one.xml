@@ -2,8 +2,7 @@
         title="All In One"
         key="AiO">
     <copyright>&#0169; Wizards of the Coast</copyright>
-    <land title="Nykthos, Shrine to Nyx" rarity="rare">
-        <type-modifiers>Legendary</type-modifiers>
+    <land title="Nykthos, Shrine to Nyx" type-modifiers="Legendary" rarity="rare">
         <artwork>
             <src>artwork/nykthos-shrine-to-nyx.jpg</src>
             <artist>Jung Park</artist>
@@ -13,8 +12,7 @@
             {2}, {T}: Choose a color. Add to your mana pool an amount of mana of that color equal to your devotion to that color. <reminder>(Your devotion to a color is the number of mana symbols of that color in the mana costs of permanents you control.)</reminder>
         </rules-text>
     </land>
-    <spell title="Lightning Bolt" casting-cost="R" rarity="common">
-        <type>instant</type>
+    <spell title="Lightning Bolt" casting-cost="R" type="Instant" rarity="common">
         <artwork>
             <src>artwork/lightning-bolt.jpg</src>
             <artist>Christopher Moeller</artist>
@@ -22,8 +20,7 @@
         <rules-text>Lightning Bolt deals 3 damage to target creature or player.</rules-text>
         <flavor-text>The sparkmage shrieked, calling on the rage of the storms of his youth. To his surprise, the sky responded with a fierce energy he'd never thought to see again.</flavor-text>
     </spell>
-    <creature title="White Knight" casting-cost="WW" rarity="uncommon">
-        <subtype>Human Knight</subtype>
+    <creature title="White Knight" casting-cost="WW" subtype="Human Knight" rarity="uncommon">
         <artwork>
             <src>artwork/white-knight.jpg</src>
             <artist>Christopher Moeller</artist>
@@ -36,8 +33,7 @@
         <power>2</power>
         <toughness>2</toughness>
     </creature>
-    <planeswalker title="Garruk, Apex Predator" casting-cost="5BG" rarity="mythic-rare">
-        <subtype>Garruk</subtype>
+    <planeswalker title="Garruk, Apex Predator" casting-cost="5BG" subtype="Garruk" rarity="mythic-rare">
         <artwork>
             <src>artwork/garruk-apex-predator.jpg</src>
             <artist>Tyler Jacobson</artist>
@@ -62,8 +58,7 @@
             </rules-text>
         </ability>
     </planeswalker>
-    <creature title="Guul Draz Assassin" casting-cost="B" rarity="rare">
-        <subtype>Vampire Assassin</subtype>
+    <creature title="Guul Draz Assassin" casting-cost="B" subtype="Vampire Assassin" rarity="rare">
         <artwork>
             <src>artwork/guul-draz-assassin.jpg</src>
             <artist>James Ryman</artist>

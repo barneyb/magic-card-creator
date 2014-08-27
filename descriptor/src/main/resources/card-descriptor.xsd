@@ -92,11 +92,11 @@
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="type-modifiers" type="xs:token" minOccurs="0" />
-            <xs:element name="subtype" type="xs:token" minOccurs="0" />
             <xs:group ref="CoreGroup" />
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
+        <xs:attribute name="type-modifiers" type="xs:token" />
+        <xs:attribute name="subtype" type="xs:token" />
     </xs:complexType>
 
     <xs:complexType name="SpellType">
@@ -106,12 +106,12 @@
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="type" type="xs:token" />
-            <xs:element name="subtype" type="xs:token" minOccurs="0" />
             <xs:group ref="CoreGroup" />
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
         <xs:attributeGroup ref="CastAttributes" />
+        <xs:attribute name="type" type="xs:token" use="required" />
+        <xs:attribute name="subtype" type="xs:token" />
     </xs:complexType>
 
     <xs:complexType name="CreatureType">
@@ -121,8 +121,6 @@
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="type-modifiers" type="xs:token" minOccurs="0" />
-            <xs:element name="subtype" type="xs:token" />
             <xs:group ref="CoreGroup" />
             <xs:group ref="PowerToughnessGroup" />
             <xs:element name="level" type="LevelType" minOccurs="0" maxOccurs="unbounded">
@@ -135,6 +133,8 @@
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
         <xs:attributeGroup ref="CastAttributes" />
+        <xs:attribute name="type-modifiers" type="xs:token" />
+        <xs:attribute name="subtype" type="xs:token" use="required" />
     </xs:complexType>
 
     <xs:complexType name="LevelType">
@@ -152,7 +152,6 @@
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="subtype" type="xs:token" />
             <xs:group ref="CoreGroup" />
             <xs:element name="loyalty" type="xs:token" />
             <xs:element name="ability" type="LoyaltyAbilityType" maxOccurs="unbounded">
@@ -165,6 +164,7 @@
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
         <xs:attributeGroup ref="CastAttributes" />
+        <xs:attribute name="subtype" type="xs:token" use="required" />
     </xs:complexType>
 
     <xs:complexType name="LoyaltyAbilityType">
