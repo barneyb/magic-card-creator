@@ -13,7 +13,7 @@
     </xs:element>
 
     <xs:simpleType name="RarityEnum">
-        <xs:restriction base="xs:string">
+        <xs:restriction base="xs:token">
             <xs:enumeration value="common" />
             <xs:enumeration value="uncommon" />
             <xs:enumeration value="rare" />
@@ -23,44 +23,44 @@
 
     <xs:complexType name="CardSetType">
         <xs:sequence>
-            <xs:element name="name" type="xs:string">
+            <xs:element name="name" type="xs:token">
                 <xs:annotation>
                     <xs:documentation>
                         The full name of the set (e.g., "Magic 2015 Core Set") used in prose.
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="key" type="xs:string">
+            <xs:element name="key" type="xs:token">
                 <xs:annotation>
                     <xs:documentation>
                         The short key for this set (e.g., "M15") used as an identifier.
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="copyright" type="xs:string" minOccurs="0" />
+            <xs:element name="copyright" type="xs:token" minOccurs="0" />
             <xs:element name="card" type="CardType" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="CardType">
         <xs:sequence>
-            <xs:element name="casting-cost" type="xs:string" minOccurs="0" />
+            <xs:element name="casting-cost" type="xs:token" minOccurs="0" />
             <xs:element name="artwork" type="ArtworkType" />
             <xs:element name="over-artwork" type="ArtworkType" minOccurs="0" />
-            <xs:element name="color-indicator" type="xs:string" minOccurs="0" />
-            <xs:element name="type" type="xs:string" />
-            <xs:element name="subtype" type="xs:string" minOccurs="0" />
+            <xs:element name="color-indicator" type="xs:token" minOccurs="0" />
+            <xs:element name="type" type="xs:token" />
+            <xs:element name="subtype" type="xs:token" minOccurs="0" />
             <xs:element name="rarity" type="RarityEnum" default="common" />
             <xs:element name="rules-text" type="RulesTextType" minOccurs="0" />
             <xs:element name="flavor-text" type="xs:string" minOccurs="0" />
-            <xs:element name="watermark" type="xs:string" minOccurs="0" />
+            <xs:element name="watermark" type="xs:token" minOccurs="0" />
             <xs:choice minOccurs="0">
                 <xs:element name="creature" type="CreatureType" />
                 <xs:element name="leveler" type="LevelerType" />
                 <xs:element name="planeswalker" type="PlaneswalkerType" />
             </xs:choice>
         </xs:sequence>
-        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="name" type="xs:token" use="required" />
     </xs:complexType>
 
     <xs:complexType name="RulesTextType" mixed="true">
@@ -70,14 +70,16 @@
     </xs:complexType>
 
     <xs:complexType name="ArtworkType">
-        <xs:attribute name="src" type="xs:string" use="required" />
-        <xs:attribute name="artist" type="xs:string" use="required" />
+        <xs:sequence>
+            <xs:element name="src" type="xs:token" />
+            <xs:element name="artist" type="xs:token" />
+        </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="CreatureType">
         <xs:sequence>
-            <xs:element name="power" type="xs:string" />
-            <xs:element name="toughness" type="xs:string" />
+            <xs:element name="power" type="xs:token" />
+            <xs:element name="toughness" type="xs:token" />
         </xs:sequence>
     </xs:complexType>
 
@@ -97,21 +99,21 @@
                 <xs:sequence>
                     <xs:element name="rules-text" type="RulesTextType" />
                 </xs:sequence>
-                <xs:attribute name="level" type="xs:string" use="required" />
+                <xs:attribute name="level" type="xs:token" use="required" />
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
     <xs:complexType name="PlaneswalkerType">
         <xs:sequence>
-            <xs:element name="loyalty" type="xs:string" />
+            <xs:element name="loyalty" type="xs:token" />
             <xs:element name="loyalty-ability" type="LoyaltyAbility" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="LoyaltyAbility">
         <xs:sequence>
-            <xs:element name="cost" type="xs:string" />
+            <xs:element name="cost" type="xs:token" />
             <xs:element name="rules-text" type="RulesTextType" />
         </xs:sequence>
     </xs:complexType>
