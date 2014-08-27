@@ -4,13 +4,14 @@
            xmlns:c="http://barneyb.com/schema/magic/card-descriptor"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
            jaxb:version="2.1"
            elementFormDefault="qualified"
            jaxb:extensionBindingPrefixes="inheritance">
 
     <xs:element name="card-set" type="c:CardSetType">
         <xs:key name="CardName">
-            <xs:selector xpath="./c:card" />
+            <xs:selector xpath="./c:land|./c:spell|./c:creature|./c:planeswalker" />
             <xs:field xpath="@title" />
         </xs:key>
     </xs:element>
@@ -41,13 +42,24 @@
                 </xs:annotation>
             </xs:element>
             <xs:element name="copyright" type="xs:token" minOccurs="0" />
-            <xs:element name="card" type="CardType" maxOccurs="unbounded" />
+            <xs:choice maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <jaxb:property name="cards">
+                            <jaxb:baseType name="com.barneyb.magic.creator.descriptor.CardType" />
+                        </jaxb:property>
+                    </xs:appinfo>
+                </xs:annotation>
+                <xs:element name="land" type="LandType" />
+                <xs:element name="spell" type="SpellType" />
+                <xs:element name="creature" type="CreatureType" />
+                <xs:element name="planeswalker" type="PlaneswalkerType" />
+            </xs:choice>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="CardType">
+    <xs:group name="CoreGroup">
         <xs:sequence>
-            <xs:element name="casting-cost" type="xs:token" minOccurs="0" />
             <xs:element name="artwork" type="ArtworkType" />
             <xs:element name="over-artwork" type="ArtworkType" minOccurs="0" />
             <xs:element name="color-indicator" type="xs:token" minOccurs="0" />
@@ -57,13 +69,88 @@
             <xs:element name="rules-text" type="RulesTextType" minOccurs="0" />
             <xs:element name="flavor-text" type="xs:string" minOccurs="0" />
             <xs:element name="watermark" type="xs:token" minOccurs="0" />
-            <xs:choice minOccurs="0">
-                <xs:element name="creature" type="CreatureType" />
-                <xs:element name="leveler" type="LevelerType" />
-                <xs:element name="planeswalker" type="PlaneswalkerType" />
-            </xs:choice>
         </xs:sequence>
+    </xs:group>
+
+    <xs:group name="PowerToughnessGroup">
+        <xs:sequence>
+            <xs:element name="power" type="xs:token" />
+            <xs:element name="toughness" type="xs:token" />
+        </xs:sequence>
+    </xs:group>
+
+    <xs:attributeGroup name="CoreAttributes">
         <xs:attribute name="title" type="xs:token" use="required" />
+    </xs:attributeGroup>
+
+    <xs:complexType name="LandType">
+        <xs:annotation>
+            <xs:appinfo>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.CardType</inheritance:implements>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:group ref="CoreGroup" />
+        </xs:sequence>
+        <xs:attributeGroup ref="CoreAttributes" />
+    </xs:complexType>
+
+    <xs:complexType name="SpellType">
+        <xs:annotation>
+            <xs:appinfo>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.CardType</inheritance:implements>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="casting-cost" type="xs:token" minOccurs="0" />
+            <xs:group ref="CoreGroup" />
+        </xs:sequence>
+        <xs:attributeGroup ref="CoreAttributes" />
+    </xs:complexType>
+
+    <xs:complexType name="CreatureType">
+        <xs:annotation>
+            <xs:appinfo>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.CardType</inheritance:implements>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="casting-cost" type="xs:token" minOccurs="0" />
+            <xs:group ref="CoreGroup" />
+            <xs:group ref="PowerToughnessGroup" />
+            <xs:element name="level" type="Level" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attributeGroup ref="CoreAttributes" />
+    </xs:complexType>
+
+    <xs:complexType name="Level">
+        <xs:sequence>
+            <xs:element name="rules-text" type="RulesTextType" />
+            <xs:group ref="PowerToughnessGroup" />
+        </xs:sequence>
+        <xs:attribute name="level" type="xs:token" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="PlaneswalkerType">
+        <xs:annotation>
+            <xs:appinfo>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.CardType</inheritance:implements>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="casting-cost" type="xs:token" minOccurs="0" />
+            <xs:group ref="CoreGroup" />
+            <xs:element name="loyalty" type="xs:token" />
+            <xs:element name="ability" type="LoyaltyAbility" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attributeGroup ref="CoreAttributes" />
+    </xs:complexType>
+
+    <xs:complexType name="LoyaltyAbility">
+        <xs:sequence>
+            <xs:element name="cost" type="xs:token" />
+            <xs:element name="rules-text" type="RulesTextType" />
+        </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="RulesTextType" mixed="true">
@@ -76,48 +163,6 @@
         <xs:sequence>
             <xs:element name="src" type="xs:token" />
             <xs:element name="artist" type="xs:token" />
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="CreatureType">
-        <xs:sequence>
-            <xs:element name="power" type="xs:token" />
-            <xs:element name="toughness" type="xs:token" />
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="LevelerType">
-        <xs:complexContent>
-            <xs:extension base="CreatureType">
-                <xs:sequence>
-                    <xs:element name="level" type="Level" maxOccurs="unbounded" />
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <xs:complexType name="Level">
-        <xs:complexContent>
-            <xs:extension base="CreatureType">
-                <xs:sequence>
-                    <xs:element name="rules-text" type="RulesTextType" />
-                </xs:sequence>
-                <xs:attribute name="level" type="xs:token" use="required" />
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <xs:complexType name="PlaneswalkerType">
-        <xs:sequence>
-            <xs:element name="loyalty" type="xs:token" />
-            <xs:element name="ability" type="LoyaltyAbility" maxOccurs="unbounded" />
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="LoyaltyAbility">
-        <xs:sequence>
-            <xs:element name="cost" type="xs:token" />
-            <xs:element name="rules-text" type="RulesTextType" />
         </xs:sequence>
     </xs:complexType>
 
