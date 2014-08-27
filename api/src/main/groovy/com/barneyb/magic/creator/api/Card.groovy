@@ -87,7 +87,7 @@ interface Card {
     /**
      * The name of the set this Card belongs to, or null if standalone.
      */
-    String getSetName()
+    String getSetTitle()
 
     /**
      * This Card's number w/in its set, or null if standalone.
