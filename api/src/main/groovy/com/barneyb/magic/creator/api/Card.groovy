@@ -28,9 +28,9 @@ interface Card {
      */
     Artwork getOverArtwork()
 
-    List<String> getTypes()
+    List<String> getTypeParts()
 
-    List<String> getSubtypes()
+    List<String> getSubtypeParts()
 
     boolean isSemiEnchantment()
 
