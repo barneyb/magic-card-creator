@@ -122,7 +122,7 @@
             <xs:element name="subtype" type="xs:token" />
             <xs:group ref="CoreGroup" />
             <xs:group ref="PowerToughnessGroup" />
-            <xs:element name="level" type="Level" minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="level" type="LevelType" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation>
                     <xs:appinfo>
                         <jaxb:property name="levels" />
@@ -133,7 +133,7 @@
         <xs:attributeGroup ref="CoreAttributes" />
     </xs:complexType>
 
-    <xs:complexType name="Level">
+    <xs:complexType name="LevelType">
         <xs:sequence>
             <xs:element name="rules-text" type="RulesTextType" />
             <xs:group ref="PowerToughnessGroup" />
@@ -152,7 +152,7 @@
             <xs:element name="subtype" type="xs:token" />
             <xs:group ref="CoreGroup" />
             <xs:element name="loyalty" type="xs:token" />
-            <xs:element name="ability" type="LoyaltyAbility" maxOccurs="unbounded">
+            <xs:element name="ability" type="LoyaltyAbilityType" maxOccurs="unbounded">
                 <xs:annotation>
                     <xs:appinfo>
                         <jaxb:property name="loyaltyAbilities" />
@@ -163,7 +163,7 @@
         <xs:attributeGroup ref="CoreAttributes" />
     </xs:complexType>
 
-    <xs:complexType name="LoyaltyAbility">
+    <xs:complexType name="LoyaltyAbilityType">
         <xs:sequence>
             <xs:element name="cost" type="xs:token" />
             <xs:element name="rules-text" type="RulesTextType" />
