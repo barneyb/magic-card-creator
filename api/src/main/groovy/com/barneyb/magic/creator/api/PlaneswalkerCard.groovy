@@ -13,7 +13,7 @@ interface PlaneswalkerCard extends SpellCard {
          */
         String getCost()
 
-        List<List<BodyItem>> getBody()
+        List<List<BodyItem>> getRulesText()
 
     }
 
