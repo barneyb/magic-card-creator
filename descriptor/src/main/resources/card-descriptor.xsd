@@ -62,8 +62,6 @@
         <xs:sequence>
             <xs:element name="artwork" type="ArtworkType" />
             <xs:element name="over-artwork" type="ArtworkType" minOccurs="0" />
-            <xs:element name="color-indicator" type="xs:token" minOccurs="0" />
-            <xs:element name="rarity" type="RarityEnum" minOccurs="0" default="common" />
             <xs:element name="rules-text" type="RulesTextType" minOccurs="0" />
             <xs:element name="flavor-text" type="xs:string" minOccurs="0" />
             <xs:element name="watermark" type="xs:token" minOccurs="0" />
@@ -79,6 +77,8 @@
 
     <xs:attributeGroup name="CoreAttributes">
         <xs:attribute name="title" type="xs:token" use="required" />
+        <xs:attribute name="rarity" type="RarityEnum" default="common" />
+        <xs:attribute name="color-indicator" type="xs:token" />
     </xs:attributeGroup>
 
     <xs:complexType name="LandType">
