@@ -10,8 +10,8 @@
 
     <xs:element name="card-set" type="c:CardSetType">
         <xs:key name="CardName">
-            <xs:selector xpath="./c:card"/>
-            <xs:field xpath="@name"/>
+            <xs:selector xpath="./c:card" />
+            <xs:field xpath="@name" />
         </xs:key>
     </xs:element>
 
@@ -68,7 +68,7 @@
 
     <xs:complexType name="RulesTextType" mixed="true">
         <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="reminder" type="xs:string"/>
+            <xs:element name="reminder" type="xs:string" />
         </xs:sequence>
     </xs:complexType>
 
