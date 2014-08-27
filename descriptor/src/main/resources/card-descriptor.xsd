@@ -3,7 +3,10 @@
            xmlns="http://barneyb.com/schema/magic/card-descriptor"
            xmlns:c="http://barneyb.com/schema/magic/card-descriptor"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           elementFormDefault="qualified">
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           jaxb:version="2.1"
+           elementFormDefault="qualified"
+           jaxb:extensionBindingPrefixes="inheritance">
 
     <xs:element name="card-set" type="c:CardSetType">
         <xs:key name="CardName">
@@ -107,7 +110,7 @@
     <xs:complexType name="PlaneswalkerType">
         <xs:sequence>
             <xs:element name="loyalty" type="xs:token" />
-            <xs:element name="loyalty-ability" type="LoyaltyAbility" maxOccurs="unbounded" />
+            <xs:element name="ability" type="LoyaltyAbility" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
 

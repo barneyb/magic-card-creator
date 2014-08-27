@@ -51,6 +51,17 @@
                             </schemaIncludes>
                             <generateDirectory>${project.build.sourceDirectory}</generateDirectory>
                             <generatePackage>com.barneyb.magic.creator.descriptor.schema</generatePackage>
+                            <extension>true</extension>
+                            <args>
+                                <arg>-Xinheritance</arg>
+                            </args>
+                            <plugins>
+                                <plugin>
+                                    <groupId>org.jvnet.jaxb2_commons</groupId>
+                                    <artifactId>jaxb2-basics</artifactId>
+                                    <version>0.6.4</version>
+                                </plugin>
+                            </plugins>
                         </configuration>
                     </execution>
                 </executions>
