@@ -1,14 +1,31 @@
 package com.barneyb.magic.creator.descriptor;
 
-import com.barneyb.magic.creator.descriptor.schema.LevelType;
-import com.barneyb.magic.creator.descriptor.schema.LoyaltyAbilityType;
+import com.barneyb.magic.creator.descriptor.schema.*;
 
 import java.util.List;
 
 /**
  * @author barneyb
  */
-public abstract class BaseCardType implements CardType {
+public abstract class BaseCardType {
+
+    public abstract ArtworkType getArtwork();
+
+    public abstract ArtworkType getOverArtwork();
+
+    public abstract String getColorIndicator();
+
+    public abstract String getSubtype();
+
+    public abstract RarityEnum getRarity();
+
+    public abstract RulesTextType getRulesText();
+
+    public abstract String getFlavorText();
+
+    public abstract String getWatermark();
+
+    public abstract String getTitle();
 
     public String getCastingCost() {
         throw new UnsupportedOperationException("This card doesn't have a casting cost");
