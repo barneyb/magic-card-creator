@@ -27,7 +27,7 @@
 
     <xs:complexType name="CardSetType">
         <xs:sequence>
-            <xs:element name="name" type="xs:token">
+            <xs:element name="title" type="xs:token">
                 <xs:annotation>
                     <xs:documentation>
                         The full name of the set (e.g., "Magic 2015 Core Set") used in prose.
