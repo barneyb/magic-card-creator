@@ -27,20 +27,6 @@
 
     <xs:complexType name="CardSetType">
         <xs:sequence>
-            <xs:element name="title" type="xs:token">
-                <xs:annotation>
-                    <xs:documentation>
-                        The full name of the set (e.g., "Magic 2015 Core Set") used in prose.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="key" type="xs:token">
-                <xs:annotation>
-                    <xs:documentation>
-                        The short key for this set (e.g., "M15") used as an identifier.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
             <xs:element name="copyright" type="xs:token" minOccurs="0" />
             <xs:choice maxOccurs="unbounded">
                 <xs:annotation>
@@ -56,6 +42,20 @@
                 <xs:element name="planeswalker" type="PlaneswalkerType" />
             </xs:choice>
         </xs:sequence>
+        <xs:attribute name="title" type="xs:token">
+            <xs:annotation>
+                <xs:documentation>
+                    The full name of the set (e.g., "Magic 2015 Core Set") used in prose.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="key" type="xs:token">
+            <xs:annotation>
+                <xs:documentation>
+                    The short key for this set (e.g., "M15") used as an identifier.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
     <xs:group name="CoreGroup">
