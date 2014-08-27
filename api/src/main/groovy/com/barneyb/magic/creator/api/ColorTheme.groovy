@@ -11,12 +11,6 @@ import java.awt.*
 interface ColorTheme {
 
     /**
-     * I am the name of the color, which will be one of: white, blue, black,
-     * red, green, gold, artifact, or land.
-     */
-    String getName()
-
-    /**
      * I am the base color of this color theme, at full saturation.
      */
     Color getBaseColor()

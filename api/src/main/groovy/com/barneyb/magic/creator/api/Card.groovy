@@ -7,10 +7,13 @@ interface Card {
 
     String getTitle()
 
+    List<Symbol> getCastingCost()
+
     /**
      * I am the main artwork for the card, which will be rendered into the
      * designated artwork area in the Layout.  If the image dimensions do not
-     * match the Layout's expected dimensions, it will be scaled to fit.
+     * match the Layout's expected dimensions, it will be scaled to cover and
+     * the other dimension centered.
      */
     Artwork getArtwork()
 
@@ -28,6 +31,8 @@ interface Card {
     List<String> getTypes()
 
     List<String> getSubtypes()
+
+    boolean isSemiEnchantment()
 
     /**
      * I am the List of paragraphs of rules text for the card, potentially

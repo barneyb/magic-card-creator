@@ -4,7 +4,7 @@ package com.barneyb.magic.creator.api
  *
  * @author bboisvert
  */
-interface PlaneswalkerCard extends SpellCard {
+interface PlaneswalkerCard extends Card {
 
     static interface LoyaltyAbility {
 

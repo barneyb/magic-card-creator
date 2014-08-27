@@ -9,8 +9,6 @@ import org.w3c.dom.svg.SVGDocument
  */
 interface Layout {
 
-    String getName()
-
     /**
      * I will lay out the given {@link Card} according to the the rules
      * encapsulated by this object.

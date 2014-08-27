@@ -10,7 +10,7 @@ interface LevelerCard extends CreatureCard {
 
         /**
          * The start of the range this level applies to.  If null, <tt>"0"</tt>
-         * is assumed.
+         * is assumed, which is silly (because that'd be the default state).
          */
         String getStart()
 
@@ -38,13 +38,13 @@ interface LevelerCard extends CreatureCard {
     List<List<BodyItem>> getRulesText()
 
     /**
-     * I am the creature's zero-level power.
+     * I am the creature's base-level power.
      */
     @Override
     String getPower()
 
     /**
-     * I am the creature's zero-level toughness.
+     * I am the creature's base-level toughness.
      */
     @Override
     String getToughness()

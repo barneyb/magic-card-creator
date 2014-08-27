@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://barneyb.com/schema/magic/card-descriptor"
+           xmlns="http://barneyb.com/schema/magic/card-descriptor"
+           xmlns:c="http://barneyb.com/schema/magic/card-descriptor"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:element name="card-set" type="c:CardSetType">
+    </xs:element>
+
+    <xs:simpleType name="TypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="land" />
+            <xs:enumeration value="instant" />
+            <xs:enumeration value="sorcery" />
+            <xs:enumeration value="enchantment" />
+            <xs:enumeration value="creature" />
+            <xs:enumeration value="planeswalker" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="RarityEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="common" />
+            <xs:enumeration value="uncommon" />
+            <xs:enumeration value="rare" />
+            <xs:enumeration value="mythic-rare" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="PowerToughness">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="^[^/]+/[^/]+$" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="CardSetType">
+        <xs:sequence>
+            <xs:element name="copyright" type="xs:string" minOccurs="0" />
+            <xs:element name="card" type="CardType" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" />
+    </xs:complexType>
+
+    <xs:complexType name="CardType">
+        <xs:sequence>
+            <xs:element name="casting-cost" type="xs:string" minOccurs="0" />
+            <xs:element name="artwork" type="ArtworkType" />
+            <xs:element name="over-artwork" type="ArtworkType" minOccurs="0" />
+            <xs:element name="color-indicator" type="xs:string" minOccurs="0" />
+            <xs:element name="type" type="xs:string" />
+            <xs:element name="subtype" type="xs:string" minOccurs="0" />
+            <xs:element name="rules-text" type="xs:string" minOccurs="0" />
+            <xs:element name="flavor-text" type="xs:string" minOccurs="0" />
+            <xs:element name="watermark" type="xs:string" minOccurs="0" />
+            <xs:element name="power-toughness" type="PowerToughness" minOccurs="0" />
+            <xs:element name="loyalty" type="xs:string" minOccurs="0" />
+            <xs:element name="loyalty-abilities" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ability" type="LoyaltyAbility" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="levels" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="level" type="Level" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="title" type="xs:string" use="required" />
+        <xs:attribute name="type" type="TypeEnum" use="required" />
+        <xs:attribute name="rarity" type="RarityEnum" />
+    </xs:complexType>
+
+    <xs:complexType name="ArtworkType">
+        <xs:attribute name="src" type="xs:string" />
+        <xs:attribute name="artist" type="xs:string" />
+    </xs:complexType>
+
+    <xs:complexType name="LoyaltyAbility">
+        <xs:sequence>
+            <xs:element name="rules-text" type="xs:string" />
+        </xs:sequence>
+        <xs:attribute name="cost" type="xs:string" />
+    </xs:complexType>
+
+    <xs:complexType name="Level">
+        <xs:sequence>
+            <xs:element name="rules-text" type="xs:string" />
+            <xs:element name="power-toughness" type="PowerToughness" />
+        </xs:sequence>
+        <xs:attribute name="level" type="xs:string" />
+    </xs:complexType>
+
+</xs:schema>

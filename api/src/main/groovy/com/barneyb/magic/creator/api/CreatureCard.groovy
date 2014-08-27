@@ -4,7 +4,7 @@ package com.barneyb.magic.creator.api
  *
  * @author bboisvert
  */
-interface CreatureCard extends SpellCard {
+interface CreatureCard extends Card {
 
     String getPower()
 
