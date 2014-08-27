@@ -13,8 +13,7 @@
             {2}, {T}: Choose a color. Add to your mana pool an amount of mana of that color equal to your devotion to that color. <reminder>(Your devotion to a color is the number of mana symbols of that color in the mana costs of permanents you control.)</reminder>
         </rules-text>
     </land>
-    <spell title="Lightning Bolt" rarity="common">
-        <casting-cost>R</casting-cost>
+    <spell title="Lightning Bolt" casting-cost="R" rarity="common">
         <type>instant</type>
         <artwork>
             <src>artwork/lightning-bolt.jpg</src>
@@ -23,8 +22,7 @@
         <rules-text>Lightning Bolt deals 3 damage to target creature or player.</rules-text>
         <flavor-text>The sparkmage shrieked, calling on the rage of the storms of his youth. To his surprise, the sky responded with a fierce energy he'd never thought to see again.</flavor-text>
     </spell>
-    <creature title="White Knight" rarity="uncommon">
-        <casting-cost>WW</casting-cost>
+    <creature title="White Knight" casting-cost="WW" rarity="uncommon">
         <subtype>Human Knight</subtype>
         <artwork>
             <src>artwork/white-knight.jpg</src>
@@ -38,8 +36,7 @@
         <power>2</power>
         <toughness>2</toughness>
     </creature>
-    <planeswalker title="Garruk, Apex Predator" rarity="mythic-rare">
-        <casting-cost>5BG</casting-cost>
+    <planeswalker title="Garruk, Apex Predator" casting-cost="5BG" rarity="mythic-rare">
         <subtype>Garruk</subtype>
         <artwork>
             <src>artwork/garruk-apex-predator.jpg</src>
@@ -65,8 +62,7 @@
             </rules-text>
         </ability>
     </planeswalker>
-    <creature title="Guul Draz Assassin" rarity="rare">
-        <casting-cost>B</casting-cost>
+    <creature title="Guul Draz Assassin" casting-cost="B" rarity="rare">
         <subtype>Vampire Assassin</subtype>
         <artwork>
             <src>artwork/guul-draz-assassin.jpg</src>

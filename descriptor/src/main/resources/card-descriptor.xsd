@@ -81,6 +81,10 @@
         <xs:attribute name="watermark" type="xs:token" />
     </xs:attributeGroup>
 
+    <xs:attributeGroup name="CastAttributes">
+        <xs:attribute name="casting-cost" type="xs:token" use="required" />
+    </xs:attributeGroup>
+
     <xs:complexType name="LandType">
         <xs:annotation>
             <xs:appinfo>
@@ -102,12 +106,12 @@
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="casting-cost" type="xs:token" minOccurs="0" />
             <xs:element name="type" type="xs:token" />
             <xs:element name="subtype" type="xs:token" minOccurs="0" />
             <xs:group ref="CoreGroup" />
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
+        <xs:attributeGroup ref="CastAttributes" />
     </xs:complexType>
 
     <xs:complexType name="CreatureType">
@@ -117,7 +121,6 @@
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="casting-cost" type="xs:token" minOccurs="0" />
             <xs:element name="type-modifiers" type="xs:token" minOccurs="0" />
             <xs:element name="subtype" type="xs:token" />
             <xs:group ref="CoreGroup" />
@@ -131,6 +134,7 @@
             </xs:element>
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
+        <xs:attributeGroup ref="CastAttributes" />
     </xs:complexType>
 
     <xs:complexType name="LevelType">
@@ -148,7 +152,6 @@
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="casting-cost" type="xs:token" minOccurs="0" />
             <xs:element name="subtype" type="xs:token" />
             <xs:group ref="CoreGroup" />
             <xs:element name="loyalty" type="xs:token" />
@@ -161,6 +164,7 @@
             </xs:element>
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
+        <xs:attributeGroup ref="CastAttributes" />
     </xs:complexType>
 
     <xs:complexType name="LoyaltyAbilityType">
