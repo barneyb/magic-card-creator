@@ -10,7 +10,7 @@
            jaxb:extensionBindingPrefixes="inheritance">
 
     <xs:element name="card-set" type="c:CardSetType">
-        <xs:key name="CardName">
+        <xs:key name="CardTitle">
             <xs:selector xpath="./c:land|./c:spell|./c:creature|./c:planeswalker" />
             <xs:field xpath="@title" />
         </xs:key>
