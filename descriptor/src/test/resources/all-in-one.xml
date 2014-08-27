@@ -111,4 +111,19 @@
         <power>3</power>
         <toughness>3</toughness>
     </creature>
+    <spell title="Paralyze" casting-cost="B" type="Enchantment" subtype="Aura" rarity="common">
+        <artwork>
+            <src>artwork/paralyze.jpg</src>
+            <artist>Anson Maddocks</artist>
+        </artwork>
+        <rules-text>
+            Enchant creature
+
+            When Paralyze enters the battlefield, tap enchanted creature.
+
+            Enchanted creature doesn't untap during its controller's untap step.
+
+            At the beginning of the upkeep of enchanted creature's controller, that player may pay {4}. If he or she does, untap the creature.
+        </rules-text>
+    </spell>
 </card-set>
