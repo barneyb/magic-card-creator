@@ -42,14 +42,14 @@
                 <xs:element name="planeswalker" type="PlaneswalkerType" />
             </xs:choice>
         </xs:sequence>
-        <xs:attribute name="title" type="xs:token">
+        <xs:attribute name="title" type="xs:token" use="required">
             <xs:annotation>
                 <xs:documentation>
                     The full name of the set (e.g., "Magic 2015 Core Set") used in prose.
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="key" type="xs:token">
+        <xs:attribute name="key" type="xs:token" use="required">
             <xs:annotation>
                 <xs:documentation>
                     The short key for this set (e.g., "M15") used as an identifier.
