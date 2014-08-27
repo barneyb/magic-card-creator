@@ -79,4 +79,32 @@
             <toughness>4</toughness>
         </level>
     </creature>
+    <spell title="Dimir Cluestone" casting-cost="3" type="Artifact" rarity="common">
+        <artwork>
+            <src>artwork/dimir-cluestone.jpg</src>
+            <artist>Raoul Vitale</artist>
+        </artwork>
+        <rules-text>
+            {T}: Add Blue or Black to your mana pool.
+
+            {U}{B}, {T}, Sacrifice Dimir Cluestone: Draw a card.
+        </rules-text>
+        <flavor-text>
+            It waits in the chill of the undercity, holding nameless secrets for those who dare to touch it.
+        </flavor-text>
+    </spell>
+    <creature title="Transguild Courier" casting-cost="4" type-modifiers="Artifact" subtype="golem" color-indicator="WUBRG" rarity="uncommon">
+        <artwork>
+            <src>artwork/transguild-courier.jpg</src>
+            <artist>John Avon</artist>
+        </artwork>
+        <rules-text>
+            Transguild Courier is all colors <reminder>(even if this card isn't in play)</reminder>.
+        </rules-text>
+        <flavor-text>
+            Reluctant to meet face to face, the leaders of the ten guilds prefer to do official business through a go-between immune to bribes and threats.
+        </flavor-text>
+        <power>3</power>
+        <toughness>3</toughness>
+    </creature>
 </card-set>
