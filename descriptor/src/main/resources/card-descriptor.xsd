@@ -32,7 +32,7 @@
                 <xs:annotation>
                     <xs:appinfo>
                         <jaxb:property name="cards">
-                            <jaxb:baseType name="com.barneyb.magic.creator.descriptor.CardType" />
+                            <jaxb:baseType name="com.barneyb.magic.creator.descriptor.BaseCardType" />
                         </jaxb:property>
                     </xs:appinfo>
                 </xs:annotation>
@@ -63,8 +63,6 @@
             <xs:element name="artwork" type="ArtworkType" />
             <xs:element name="over-artwork" type="ArtworkType" minOccurs="0" />
             <xs:element name="color-indicator" type="xs:token" minOccurs="0" />
-            <xs:element name="type" type="xs:token" />
-            <xs:element name="subtype" type="xs:token" minOccurs="0" />
             <xs:element name="rarity" type="RarityEnum" minOccurs="0" default="common" />
             <xs:element name="rules-text" type="RulesTextType" minOccurs="0" />
             <xs:element name="flavor-text" type="xs:string" minOccurs="0" />
@@ -86,10 +84,12 @@
     <xs:complexType name="LandType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:implements>com.barneyb.magic.creator.descriptor.CardType</inheritance:implements>
+                <inheritance:extends>com.barneyb.magic.creator.descriptor.BaseCardType</inheritance:extends>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
+            <xs:element name="type-modifiers" type="xs:token" minOccurs="0" />
+            <xs:element name="subtype" type="xs:token" minOccurs="0" />
             <xs:group ref="CoreGroup" />
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
@@ -98,11 +98,13 @@
     <xs:complexType name="SpellType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:implements>com.barneyb.magic.creator.descriptor.CardType</inheritance:implements>
+                <inheritance:extends>com.barneyb.magic.creator.descriptor.BaseCardType</inheritance:extends>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="casting-cost" type="xs:token" minOccurs="0" />
+            <xs:element name="type" type="xs:token" />
+            <xs:element name="subtype" type="xs:token" minOccurs="0" />
             <xs:group ref="CoreGroup" />
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
@@ -111,11 +113,13 @@
     <xs:complexType name="CreatureType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:implements>com.barneyb.magic.creator.descriptor.CardType</inheritance:implements>
+                <inheritance:extends>com.barneyb.magic.creator.descriptor.BaseCardType</inheritance:extends>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="casting-cost" type="xs:token" minOccurs="0" />
+            <xs:element name="type-modifiers" type="xs:token" minOccurs="0" />
+            <xs:element name="subtype" type="xs:token" />
             <xs:group ref="CoreGroup" />
             <xs:group ref="PowerToughnessGroup" />
             <xs:element name="level" type="Level" minOccurs="0" maxOccurs="unbounded">
@@ -140,11 +144,12 @@
     <xs:complexType name="PlaneswalkerType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:implements>com.barneyb.magic.creator.descriptor.CardType</inheritance:implements>
+                <inheritance:extends>com.barneyb.magic.creator.descriptor.BaseCardType</inheritance:extends>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="casting-cost" type="xs:token" minOccurs="0" />
+            <xs:element name="subtype" type="xs:token" />
             <xs:group ref="CoreGroup" />
             <xs:element name="loyalty" type="xs:token" />
             <xs:element name="ability" type="LoyaltyAbility" maxOccurs="unbounded">
