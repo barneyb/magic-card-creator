@@ -11,7 +11,7 @@
     <xs:element name="card-set" type="c:CardSetType">
         <xs:key name="CardName">
             <xs:selector xpath="./c:card" />
-            <xs:field xpath="@name" />
+            <xs:field xpath="@title" />
         </xs:key>
     </xs:element>
 
@@ -63,7 +63,7 @@
                 <xs:element name="planeswalker" type="PlaneswalkerType" />
             </xs:choice>
         </xs:sequence>
-        <xs:attribute name="name" type="xs:token" use="required" />
+        <xs:attribute name="title" type="xs:token" use="required" />
     </xs:complexType>
 
     <xs:complexType name="RulesTextType" mixed="true">
