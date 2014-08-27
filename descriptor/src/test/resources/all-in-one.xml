@@ -83,20 +83,20 @@
             <toughness>4</toughness>
         </level>
     </creature>
-    <spell title="Dimir Cluestone" casting-cost="3" type="Artifact" rarity="common">
+    <land title="Dimir Guildgate" subtype="Gate" rarity="common" watermark="dimir">
         <artwork>
-            <src>artwork/dimir-cluestone.jpg</src>
-            <artist>Raoul Vitale</artist>
+            <src>artwork/dimir-guildgate.jpg</src>
+            <artist>Cliff Childs</artist>
         </artwork>
         <rules-text>
-            {T}: Add Blue or Black to your mana pool.
+            Dimir Guildgate enters the battlefield tapped.
 
-            {U}{B}, {T}, Sacrifice Dimir Cluestone: Draw a card.
+            {T}: Add Blue or Black to your mana pool.
         </rules-text>
         <flavor-text>
-            It waits in the chill of the undercity, holding nameless secrets for those who dare to touch it.
+            In the cold corridors of the undercity, misinformation unfurls from Duskmantle like a spreading stain.
         </flavor-text>
-    </spell>
+    </land>
     <creature title="Transguild Courier" casting-cost="4" type-modifiers="Artifact" subtype="golem" color-indicator="WUBRG" rarity="uncommon">
         <artwork>
             <src>artwork/transguild-courier.jpg</src>
