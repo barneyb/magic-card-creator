@@ -118,7 +118,13 @@
             <xs:element name="casting-cost" type="xs:token" minOccurs="0" />
             <xs:group ref="CoreGroup" />
             <xs:group ref="PowerToughnessGroup" />
-            <xs:element name="level" type="Level" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="level" type="Level" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <jaxb:property name="levels" />
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
     </xs:complexType>
@@ -141,7 +147,13 @@
             <xs:element name="casting-cost" type="xs:token" minOccurs="0" />
             <xs:group ref="CoreGroup" />
             <xs:element name="loyalty" type="xs:token" />
-            <xs:element name="ability" type="LoyaltyAbility" maxOccurs="unbounded" />
+            <xs:element name="ability" type="LoyaltyAbility" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <jaxb:property name="loyaltyAbilities" />
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
     </xs:complexType>
