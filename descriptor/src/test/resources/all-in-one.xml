@@ -38,6 +38,10 @@
             <src>artwork/garruk-apex-predator.jpg</src>
             <artist>Tyler Jacobson</artist>
         </artwork>
+        <over-artwork>
+            <src>artwork/garruk-apex-predator-over.jpg</src>
+            <artist>Tyler Jacobson</artist>
+        </over-artwork>
         <loyalty>5</loyalty>
         <ability>
             <cost>+1</cost>
