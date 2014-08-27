@@ -6,7 +6,7 @@ package com.barneyb.magic.creator.api
  */
 interface CardSet {
 
-    String getName()
+    String getTitle()
 
     List<Card> getCards()
 
