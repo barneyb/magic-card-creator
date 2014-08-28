@@ -1,4 +1,4 @@
-package com.barneyb.magic.creator.theme
+package com.barneyb.magic.creator.core
 
 import com.barneyb.magic.creator.api.RasterImage
 

@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>card-creator-theme</artifactId>
+    <artifactId>card-creator-core</artifactId>
     <parent>
         <artifactId>card-creator-parent</artifactId>
         <groupId>com.barneyb.magic</groupId>
@@ -15,26 +15,6 @@
             <groupId>com.barneyb.magic</groupId>
             <artifactId>card-creator-api</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.barneyb.magic</groupId>
-            <artifactId>card-creator-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.barneyb.magic</groupId>
-            <artifactId>card-creator-icons</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.xmlgraphics</groupId>
-            <artifactId>batik-svggen</artifactId>
-            <version>${org.apache.xmlgraphics.batik.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-            <version>1.7</version>
         </dependency>
     </dependencies>
     <build>

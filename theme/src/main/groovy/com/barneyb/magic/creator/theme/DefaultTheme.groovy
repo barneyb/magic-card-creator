@@ -1,6 +1,10 @@
 package com.barneyb.magic.creator.theme
 
 import com.barneyb.magic.creator.api.*
+import com.barneyb.magic.creator.core.ClasspathRasterImage
+import com.barneyb.magic.creator.core.SimpleColorTheme
+import com.barneyb.magic.creator.core.SimpleFlood
+import com.barneyb.magic.creator.core.SimpleTexture
 import com.barneyb.magic.creator.icon.DefaultIconFactory
 import com.barneyb.magic.creator.util.ColorUtils
 
