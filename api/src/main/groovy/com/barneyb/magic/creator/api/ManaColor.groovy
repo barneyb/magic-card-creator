@@ -12,7 +12,7 @@ package com.barneyb.magic.creator.api
  */
 enum ManaColor {
 
-    COLORLESS,
+    COLORLESS('-'),
     WHITE('W'),
     BLUE('U'),
     BLACK('B'),
