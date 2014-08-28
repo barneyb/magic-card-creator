@@ -1,19 +1,27 @@
 package com.barneyb.magic.creator.symbol
-
 import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Symbol
-import groovy.transform.Immutable
+import groovy.transform.EqualsAndHashCode
 
 /**
  *
  *
  * @author barneyb
  */
-@Immutable
+@EqualsAndHashCode(includes = "symbol")
 class DefaultSymbol implements Symbol {
 
-    String symbol
-    List<ManaColor> colors
+    final String symbol
+    final List<ManaColor> colors
+
+    def DefaultSymbol(String symbol, ManaColor color) {
+        this(symbol, [color])
+    }
+
+    def DefaultSymbol(String symbol, List<ManaColor> colors) {
+        this.symbol = symbol.toUpperCase()
+        this.colors = colors
+    }
 
     @Override
     boolean isColored() {

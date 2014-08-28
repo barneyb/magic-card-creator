@@ -3,6 +3,7 @@ package com.barneyb.magic.creator.symbol
 import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Symbol
 import com.barneyb.magic.creator.api.SymbolFactory
+import com.barneyb.magic.creator.api.SymbolGroup
 
 /**
  *
@@ -44,6 +45,38 @@ class DefaultSymbolFactory implements SymbolFactory {
         } else {
             throw new IllegalArgumentException("No '$symbol' symbol is known.")
         }
+    }
+
+    @Override
+    SymbolGroup getCost(String cost) {
+        def l = parts(cost)
+            .collect(this.&getSymbol)
+        def cl = l.findAll {
+            it.symbol != 'X' && it.colors == [ManaColor.COLORLESS]
+        }
+        if (cl.size() > 1) {
+            l.removeAll(cl)
+            l << getSymbol(cl*.symbol*.toInteger().sum().toString())
+        }
+        new DefaultSymbolGroup(l)
+    }
+
+    List<String> parts(String cost) {
+        def result = []
+        StringBuilder hunk = null
+        cost.each { c ->
+            if (c == '{') {
+                hunk = new StringBuilder()
+            } else if (c == '}') {
+                result << hunk.toString()
+                hunk = null
+            } else if (hunk != null) {
+                hunk.append(c)
+            } else {
+                result << c
+            }
+        }
+        result
     }
 
 }

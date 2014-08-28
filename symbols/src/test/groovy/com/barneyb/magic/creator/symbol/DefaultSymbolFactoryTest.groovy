@@ -1,16 +1,25 @@
 package com.barneyb.magic.creator.symbol
-
+import com.barneyb.magic.creator.api.ManaColor
+import com.barneyb.magic.creator.api.Symbol
 import org.junit.Before
 import org.junit.Test
 
 import static org.junit.Assert.assertEquals
-
 /**
  *
  *
  * @author barneyb
  */
 class DefaultSymbolFactoryTest {
+
+    static final Symbol COLORLESS_2 = new DefaultSymbol('2', ManaColor.COLORLESS)
+    static final Symbol BLUE = new DefaultSymbol('u', ManaColor.BLUE)
+    static final Symbol BLACK = new DefaultSymbol('b', ManaColor.BLACK)
+    static final Symbol RED = new DefaultSymbol('r', ManaColor.RED)
+    static final Symbol MONO_BLUE = new DefaultSymbol('2/u', [ManaColor.COLORLESS, ManaColor.BLUE])
+    static final Symbol WHITE_GREEN = new DefaultSymbol('w/g', [ManaColor.WHITE, ManaColor.GREEN])
+    static final Symbol PHYREXIAN_GREEN = new DefaultSymbol('g/p', ManaColor.GREEN)
+
 
     DefaultSymbolFactory factory
 
@@ -46,6 +55,29 @@ class DefaultSymbolFactoryTest {
                 println "  $it : ${factory.getSymbol(it.toLowerCase())} : ${factory.getSymbol('{' + it.toUpperCase() + '}')}"
             }
         }
+    }
+
+    @Test
+    void nicolBolas() {
+        assertEquals([COLORLESS_2, BLUE, BLUE, BLACK, BLACK, RED, RED], factory.getCost("2uubbrr"))
+        // this cost string is deliberately ordered "weird"
+        assertEquals([RED, BLUE, BLACK, RED, COLORLESS_2, BLUE, BLACK], factory.getCost("RUBR2UB"))
+    }
+
+    @Test
+    void hybrids() {
+        assertEquals([
+            COLORLESS_2,
+            MONO_BLUE,
+            WHITE_GREEN,
+            PHYREXIAN_GREEN
+        ], factory.getCost("2{2/u}{w/g}{g/p}"))
+    }
+
+    @Test
+    void parts() {
+        assertEquals(['w', 'u', 'b', 'r', 'g'], factory.parts("wubrg"))
+        assertEquals(['2', '2/u', 'w/g', 'g/p'], factory.parts("2{2/u}{w/g}{g/p}"))
     }
 
 }
