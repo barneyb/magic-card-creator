@@ -88,6 +88,11 @@ interface Card {
     String getSetTitle()
 
     /**
+     * The key of the set this Card belongs to, or null if standalone.
+     */
+    String getSetKey()
+
+    /**
      * This Card's number w/in its set, or null if standalone.
      */
     Integer getCardNumber()

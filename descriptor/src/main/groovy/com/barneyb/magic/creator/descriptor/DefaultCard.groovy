@@ -59,6 +59,11 @@ class DefaultCard implements Card {
         cardSet?.title
     }
 
+    @Override
+    String getSetKey() {
+        cardSet?.key
+    }
+
     Integer cardNumber = null
 
     @Override
