@@ -113,7 +113,7 @@
             like a spreading stain.
         </flavor-text>
     </land>
-    <creature title="Transguild Courier" casting-cost="4" type-modifiers="Artifact" subtype="golem" color-indicator="WUBRG" rarity="uncommon">
+    <creature title="Transguild Courier" casting-cost="4" type-modifiers="Artifact" subtype="Golem" color-indicator="WUBRG" rarity="uncommon">
         <artwork>
             <src>artwork/transguild-courier.jpg</src>
             <artist>John Avon</artist>
