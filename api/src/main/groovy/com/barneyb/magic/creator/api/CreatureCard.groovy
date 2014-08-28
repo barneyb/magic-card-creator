@@ -9,16 +9,9 @@ interface CreatureCard extends Card {
     static interface Level {
 
         /**
-         * The start of the range this level applies to.  If null, <tt>"0"</tt>
-         * is assumed, which is silly (because that'd be the default state).
+         * The label for this level or range of levels.
          */
-        String getStart()
-
-        /**
-         * The end of the range this level applies to.  If null, it is assumed
-         * to be unbounded.
-         */
-        String getEnd()
+        String getLabel()
 
         String getPower()
 

@@ -149,8 +149,14 @@
             <xs:element name="rules-text" type="RulesTextType" />
             <xs:group ref="PowerToughnessGroup" />
         </xs:sequence>
-        <xs:attribute name="level" type="xs:token" use="required" />
+        <xs:attribute name="level" type="LevelLabelType" use="required" />
     </xs:complexType>
+
+    <xs:simpleType name="LevelLabelType">
+        <xs:restriction base="xs:token">
+            <xs:pattern value="\d+|\d+-\d+|\d+\+" />
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="PlaneswalkerType">
         <xs:annotation>

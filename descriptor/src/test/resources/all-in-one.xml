@@ -87,12 +87,12 @@
         </rules-text>
         <power>1</power>
         <toughness>1</toughness>
-        <level level="2">
+        <level level="2-3">
             <rules-text>{B}, {T}: Target creature gets -2/-2 until end of turn.</rules-text>
             <power>2</power>
             <toughness>2</toughness>
         </level>
-        <level level="4">
+        <level level="4+">
             <rules-text>{B}, {T}: Target creature gets -4/-4 until end of turn.</rules-text>
             <power>4</power>
             <toughness>4</toughness>
