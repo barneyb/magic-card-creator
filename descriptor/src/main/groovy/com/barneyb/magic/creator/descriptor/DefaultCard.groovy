@@ -38,6 +38,8 @@ class DefaultCard implements Card {
 
     List<ManaColor> colors = null
 
+    List<ManaColor> alliedColors = null
+
     boolean colorExplicit = false
 
     @Override

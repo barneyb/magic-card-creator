@@ -98,7 +98,7 @@
             <toughness>4</toughness>
         </level>
     </creature>
-    <land title="Dimir Guildgate" subtype="Gate" rarity="common" watermark="dimir">
+    <land title="Dimir Guildgate" subtype="Gate" rarity="common" watermark="dimir" allied-colors="UB">
         <artwork>
             <src>artwork/dimir-guildgate.jpg</src>
             <artist>Cliff Childs</artist>

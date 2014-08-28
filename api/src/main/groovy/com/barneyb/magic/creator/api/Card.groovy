@@ -62,7 +62,7 @@ interface Card {
     /**
      * I indicate whether the ManaColor(s) of this card are explicit (meaning
      * they are explicitly stipulated, instead of being implicitly based on the
-     * c cost of the spell or COLORLESS for lands).
+     * cost of the spell or COLORLESS for lands).
      */
     boolean isColorExplicit()
 
@@ -71,6 +71,14 @@ interface Card {
      * ({@link ManaColor#COLORLESS} counts).
      */
     boolean isMultiColor()
+
+    /**
+     * I indicate the colors this card is allied with.  Color alliance is used
+     * for visual hinting, and is NOT a game mechanic.  Only colorless cards
+     * can have allied colors (e.g., Ravnica's Guildgates or the "pain" lands),
+     * and to this point Wizards hasn't made any color-allied artifacts.
+     */
+    List<ManaColor> getAlliedColors()
 
     /**
      * I am the name of the watermark that should be placed in the textbox

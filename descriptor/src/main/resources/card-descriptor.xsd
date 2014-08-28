@@ -85,6 +85,7 @@
         <xs:attribute name="title" type="xs:token" use="required" />
         <xs:attribute name="rarity" type="RarityEnum" default="common" />
         <xs:attribute name="color-indicator" type="ColorSetType" />
+        <xs:attribute name="allied-colors" type="ColorSetType" />
         <xs:attribute name="watermark" type="xs:token" />
     </xs:attributeGroup>
 
