@@ -9,7 +9,11 @@
         </artwork>
         <rules-text>
             {T}: Add {1} to your mana pool.
-            {2}, {T}: Choose a color. Add to your mana pool an amount of mana of that color equal to your devotion to that color. <reminder>(Your devotion to a color is the number of mana symbols of that color in the mana costs of permanents you control.)</reminder>
+
+            {2}, {T}: Choose a color. Add to your mana pool an amount of mana of that color
+            equal to your devotion to that color. <reminder>(Your devotion to a color is the
+            number of mana symbols of that color in the mana costs of permanents you
+            control.)</reminder>
         </rules-text>
     </land>
     <spell title="Lightning Bolt" casting-cost="R" type="Instant" rarity="common">
@@ -18,7 +22,10 @@
             <artist>Christopher Moeller</artist>
         </artwork>
         <rules-text>Lightning Bolt deals 3 damage to target creature or player.</rules-text>
-        <flavor-text>The sparkmage shrieked, calling on the rage of the storms of his youth. To his surprise, the sky responded with a fierce energy he'd never thought to see again.</flavor-text>
+        <flavor-text>
+            The sparkmage shrieked, calling on the rage of the storms of his youth. To his
+            surprise, the sky responded with a fierce energy he'd never thought to see again.
+        </flavor-text>
     </spell>
     <creature title="White Knight" casting-cost="WW" subtype="Human Knight" rarity="uncommon">
         <artwork>
@@ -26,9 +33,11 @@
             <artist>Christopher Moeller</artist>
         </artwork>
         <rules-text>
-            First strike <reminder>(This creature deals combat damage before creatures without first strike.)</reminder>
+            First strike <reminder>(This creature deals combat damage before creatures
+            without first strike.)</reminder>
 
-            Protection from black <reminder>(This creature can't be blocked, targeted, dealt damage, or enchanted by anything black.)</reminder>
+            Protection from black <reminder>(This creature can't be blocked, targeted, dealt
+            damage, or enchanted by anything black.)</reminder>
         </rules-text>
         <power>2</power>
         <toughness>2</toughness>
@@ -49,16 +58,21 @@
         </ability>
         <ability>
             <cost>+1</cost>
-            <rules-text>Put a 3/3 black Beast creature token with deathtouch onto the battlefield.</rules-text>
+            <rules-text>
+                Put a 3/3 black Beast creature token with deathtouch onto the battlefield.
+            </rules-text>
         </ability>
         <ability>
             <cost>-3</cost>
-            <rules-text>Destroy target creature. You gain life equal to its toughness.</rules-text>
+            <rules-text>
+                Destroy target creature. You gain life equal to its toughness.
+            </rules-text>
         </ability>
         <ability>
             <cost>-8</cost>
             <rules-text>
-                Target opponent gets an emblem with "Whenever a creature attacks you, it gets +5/+5 and gains trample until end of turn."
+                Target opponent gets an emblem with "Whenever a creature attacks you, it gets
+                +5/+5 and gains trample until end of turn."
             </rules-text>
         </ability>
     </planeswalker>
@@ -68,7 +82,8 @@
             <artist>James Ryman</artist>
         </artwork>
         <rules-text>
-            Level up {1}{B} <reminder>({1}{B}: Put a level counter on this. Level up only as a sorcery.)</reminder>
+            Level up {1}{B} <reminder>({1}{B}: Put a level counter on this. Level up only as
+            a sorcery.)</reminder>
         </rules-text>
         <power>1</power>
         <toughness>1</toughness>
@@ -94,7 +109,8 @@
             {T}: Add Blue or Black to your mana pool.
         </rules-text>
         <flavor-text>
-            In the cold corridors of the undercity, misinformation unfurls from Duskmantle like a spreading stain.
+            In the cold corridors of the undercity, misinformation unfurls from Duskmantle
+            like a spreading stain.
         </flavor-text>
     </land>
     <creature title="Transguild Courier" casting-cost="4" type-modifiers="Artifact" subtype="golem" color-indicator="WUBRG" rarity="uncommon">
@@ -106,7 +122,8 @@
             Transguild Courier is all colors <reminder>(even if this card isn't in play)</reminder>.
         </rules-text>
         <flavor-text>
-            Reluctant to meet face to face, the leaders of the ten guilds prefer to do official business through a go-between immune to bribes and threats.
+            Reluctant to meet face to face, the leaders of the ten guilds prefer to do official
+            business through a go-between immune to bribes and threats.
         </flavor-text>
         <power>3</power>
         <toughness>3</toughness>
@@ -123,7 +140,8 @@
 
             Enchanted creature doesn't untap during its controller's untap step.
 
-            At the beginning of the upkeep of enchanted creature's controller, that player may pay {4}. If he or she does, untap the creature.
+            At the beginning of the upkeep of enchanted creature's controller, that player
+            may pay {4}. If he or she does, untap the creature.
         </rules-text>
     </spell>
 </card-set>
