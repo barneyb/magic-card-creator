@@ -14,16 +14,22 @@ import java.awt.image.BufferedImage
 class UrlRasterImage implements RasterImage {
 
     final URL url
-    final Dimension size
 
     def UrlRasterImage(URL url) {
         this.url = url
-        this.size = new Dimension(image.width, image.height)
     }
 
     def UrlRasterImage(URL url, Dimension size) {
         this.url = url
-        this.size = size
+        this.__size = size
+    }
+
+    private Dimension __size
+    Dimension getSize() {
+        if (__size == null) {
+            __size = new Dimension(image.width, image.height)
+        }
+        __size
     }
 
     private transient BufferedImage __image
