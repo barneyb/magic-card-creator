@@ -74,7 +74,7 @@ class CardSetImporter {
             // dereference off 'base'
             c.artwork // todo
             c.overArtwork // todo
-            c.cardNumber = cs.cards.indexOf(cEl) + 1 // one-indexed
+            c.cardNumber = csEl.cards.indexOf(cEl) + 1 // one-indexed
             c.rarity = Rarity.valueOf(cEl.rarity.name())
             c.flavorText // todo
             c.rulesText // todo
