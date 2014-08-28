@@ -1,6 +1,6 @@
 package com.barneyb.magic.creator.api
 
-import java.awt.Dimension
+import java.awt.*
 import java.awt.image.BufferedImage
 
 /**
@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage
  * @author bboisvert
  */
 interface RasterImage {
+
+    URL getUrl()
 
     Dimension getSize()
 
