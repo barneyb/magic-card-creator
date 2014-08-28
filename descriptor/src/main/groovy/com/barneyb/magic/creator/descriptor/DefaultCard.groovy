@@ -49,8 +49,6 @@ class DefaultCard implements Card {
 
     Rarity rarity = null
 
-    Locale locale = Locale.default
-
     @Override
     String getCopyright() {
         cardSet?.copyright

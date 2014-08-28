@@ -82,8 +82,6 @@ interface Card {
 
     Rarity getRarity()
 
-    Locale getLocale()
-
     /**
      * The name of the set this Card belongs to, or null if standalone.
      */
