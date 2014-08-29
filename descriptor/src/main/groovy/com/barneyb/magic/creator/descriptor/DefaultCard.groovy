@@ -1,6 +1,12 @@
 package com.barneyb.magic.creator.descriptor
 
-import com.barneyb.magic.creator.api.*
+import com.barneyb.magic.creator.api.Artwork
+import com.barneyb.magic.creator.api.BodyItem
+import com.barneyb.magic.creator.api.Card
+import com.barneyb.magic.creator.api.CardSet
+import com.barneyb.magic.creator.api.ManaColor
+import com.barneyb.magic.creator.api.Rarity
+import com.barneyb.magic.creator.api.Symbol
 
 /**
  *
@@ -44,7 +50,7 @@ class DefaultCard implements Card {
 
     @Override
     boolean isMultiColor() {
-        (colors - ManaColor.COLORLESS).size() > 0
+        colors.size() > 1
     }
 
     String watermarkName = null
