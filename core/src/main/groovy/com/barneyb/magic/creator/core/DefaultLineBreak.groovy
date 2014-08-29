@@ -10,4 +10,9 @@ import groovy.transform.Immutable
  */
 @Immutable
 class DefaultLineBreak implements LineBreak {
+
+    String toString() {
+        "lb()"
+    }
+
 }

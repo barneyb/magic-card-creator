@@ -1,8 +1,6 @@
 package com.barneyb.magic.creator.core
-
 import com.barneyb.magic.creator.api.RulesText
 import groovy.transform.Immutable
-
 /**
  *
  *
@@ -11,6 +9,10 @@ import groovy.transform.Immutable
 @Immutable
 class DefaultRulesText implements RulesText {
 
-    final String text
+    String text
+
+    String toString() {
+        "rt($text)"
+    }
 
 }

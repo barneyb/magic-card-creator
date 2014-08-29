@@ -9,6 +9,10 @@ import groovy.transform.Immutable
 @Immutable
 class DefaultNonNormativeText implements NonNormativeText {
 
-    final String text
+    String text
+
+    String toString() {
+        "nnt($text)"
+    }
     
 }
