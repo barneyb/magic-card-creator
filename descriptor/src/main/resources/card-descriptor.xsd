@@ -85,7 +85,6 @@
         <xs:attribute name="title" type="xs:token" use="required" />
         <xs:attribute name="rarity" type="RarityEnum" default="common" />
         <xs:attribute name="color-indicator" type="ColorSetType" />
-        <xs:attribute name="allied-colors" type="ColorSetType" />
         <xs:attribute name="watermark" type="xs:token" />
     </xs:attributeGroup>
 
@@ -103,6 +102,7 @@
             <xs:group ref="CoreGroup" />
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
+        <xs:attribute name="allied-colors" type="ColorSetType" />
         <xs:attribute name="type-modifiers" type="xs:token" />
         <xs:attribute name="subtype" type="xs:token" />
     </xs:complexType>
@@ -150,7 +150,7 @@
             <xs:element name="rules-text" type="RulesTextType" />
             <xs:group ref="PowerToughnessGroup" />
         </xs:sequence>
-        <xs:attribute name="level" type="LevelLabelType" use="required" />
+        <xs:attribute name="levels" type="LevelLabelType" use="required" />
     </xs:complexType>
 
     <xs:simpleType name="LevelLabelType">
