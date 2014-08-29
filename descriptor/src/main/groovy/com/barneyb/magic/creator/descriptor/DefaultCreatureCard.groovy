@@ -1,6 +1,7 @@
 package com.barneyb.magic.creator.descriptor
 
 import com.barneyb.magic.creator.api.CreatureCard
+import com.barneyb.magic.creator.api.CreatureLevel
 
 /**
  *
@@ -18,5 +19,5 @@ class DefaultCreatureCard extends DefaultCard implements CreatureCard {
         levels != null && ! levels.empty
     }
 
-    List<CreatureCard.Level> levels = null
+    List<CreatureLevel> levels = null
 }

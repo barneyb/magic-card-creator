@@ -132,7 +132,7 @@ class CardSetImporter {
         c.toughness = el.toughness
         if (el.levels.size() > 0) {
             c.levels = el.levels.collect { lel ->
-                def l = new DefaultLevel(lel.levels, lel.power, lel.toughness)
+                def l = new DefaultCreatureLevel(lel.levels, lel.power, lel.toughness)
                 l.rulesText = textParser.getRulesText(lel.rulesText)
                 l
             }

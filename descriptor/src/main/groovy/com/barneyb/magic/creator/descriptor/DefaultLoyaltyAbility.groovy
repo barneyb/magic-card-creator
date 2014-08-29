@@ -1,7 +1,7 @@
 package com.barneyb.magic.creator.descriptor
 
 import com.barneyb.magic.creator.api.BodyItem
-import com.barneyb.magic.creator.api.PlaneswalkerCard
+import com.barneyb.magic.creator.api.LoyaltyAbility
 import groovy.transform.TupleConstructor
 
 /**
@@ -10,7 +10,7 @@ import groovy.transform.TupleConstructor
  * @author barneyb
  */
 @TupleConstructor
-class DefaultLoyaltyAbility implements PlaneswalkerCard.LoyaltyAbility {
+class DefaultLoyaltyAbility implements LoyaltyAbility {
 
     String cost = null
 

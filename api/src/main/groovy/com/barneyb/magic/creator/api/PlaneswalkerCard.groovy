@@ -6,17 +6,6 @@ package com.barneyb.magic.creator.api
  */
 interface PlaneswalkerCard extends Card {
 
-    static interface LoyaltyAbility {
-
-        /**
-         * The change in loyalty this ability causes.
-         */
-        String getCost()
-
-        List<List<BodyItem>> getRulesText()
-
-    }
-
     String getLoyalty()
 
     List<LoyaltyAbility> getLoyaltyAbilities()

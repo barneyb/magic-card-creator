@@ -1,7 +1,7 @@
 package com.barneyb.magic.creator.descriptor
 
 import com.barneyb.magic.creator.api.BodyItem
-import com.barneyb.magic.creator.api.CreatureCard
+import com.barneyb.magic.creator.api.CreatureLevel
 import groovy.transform.TupleConstructor
 
 /**
@@ -10,7 +10,7 @@ import groovy.transform.TupleConstructor
  * @author barneyb
  */
 @TupleConstructor
-class DefaultLevel implements CreatureCard.Level {
+class DefaultCreatureLevel implements CreatureLevel {
 
     String label = null
 
