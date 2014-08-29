@@ -3,19 +3,32 @@ package com.barneyb.magic.creator.descriptor
 import com.barneyb.magic.creator.api.CardSet
 import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Rarity
-import com.barneyb.magic.creator.descriptor.schema.*
+import com.barneyb.magic.creator.api.SymbolFactory
+import com.barneyb.magic.creator.core.SimpleArtwork
+import com.barneyb.magic.creator.descriptor.schema.CardSetType
+import com.barneyb.magic.creator.descriptor.schema.CreatureType
+import com.barneyb.magic.creator.descriptor.schema.LandType
+import com.barneyb.magic.creator.descriptor.schema.PlaneswalkerType
+import com.barneyb.magic.creator.descriptor.schema.RulesTextType
+import com.barneyb.magic.creator.descriptor.schema.SpellType
+import com.barneyb.magic.creator.symbol.DefaultSymbolFactory
 
 import javax.xml.XMLConstants
 import javax.xml.bind.JAXBContext
 import javax.xml.bind.JAXBElement
 import javax.xml.transform.stream.StreamSource
 import javax.xml.validation.SchemaFactory
+
 /**
  *
  *
  * @author barneyb
  */
 class CardSetImporter {
+
+    SymbolFactory symbolFactory = new DefaultSymbolFactory()
+
+    TextParser textParser = new TextParser()
 
     CardSet fromUrl(URL url) {
         fromReader(url, url.newReader())
@@ -48,37 +61,44 @@ class CardSetImporter {
         fromCardSetType(base, (u.unmarshal(descriptor) as JAXBElement).getValue() as CardSetType)
     }
 
-    protected CardSet fromCardSetType(URL base, CardSetType csEl) {
-        def cs = new DefaultCardSet(csEl.title, csEl.key, csEl.copyright)
-        cs.cards = csEl.cards.collect { cEl->
+    protected CardSet fromCardSetType(URL base, CardSetType csel) {
+        def cs = new DefaultCardSet(csel.title, csel.key, csel.copyright)
+        cs.cards = csel.cards.collect { el->
             DefaultCard c
-            if (cEl instanceof PlaneswalkerType) {
-                c = fromPlaneswalkerType(cEl)
-            } else if (cEl instanceof CreatureType) {
-                c = fromCreatureType(cEl)
-            } else if (cEl instanceof SpellType) {
-                c = fromSpellType(cEl)
-            } else if (cEl instanceof LandType) {
-                c = fromLandType(cEl)
+            if (el instanceof PlaneswalkerType) {
+                c = fromPlaneswalkerType(el)
+            } else if (el instanceof CreatureType) {
+                c = fromCreatureType(el)
+            } else if (el instanceof SpellType) {
+                c = fromSpellType(el)
+            } else if (el instanceof LandType) {
+                c = fromLandType(el)
             } else {
-                throw new IllegalArgumentException("Unknown card type: ${cEl.getClass()}")
+                throw new IllegalArgumentException("Unknown card type: ${el.getClass()}")
             }
             c.cardSet = cs
-            c.title = cEl.title
-            if (cEl.colorIndicator) {
-                c.colors // todo: whatever was set off casting cost needs to be overwritten
+            c.title = el.title
+            if (el.colorIndicator) {
+                c.colors = getColors(el.colorIndicator)
                 c.colorExplicit = true
             } else {
                 c.colorExplicit = false
             }
-            // dereference off 'base'
-            c.artwork // todo
-            c.overArtwork // todo
-            c.cardNumber = csEl.cards.indexOf(cEl) + 1 // one-indexed
-            c.rarity = Rarity.valueOf(cEl.rarity.name())
-            c.flavorText // todo
-            c.rulesText // todo
-            c.watermarkName // todo
+            c.artwork = new SimpleArtwork(
+                new URL(base, el.artwork.src),
+                el.artwork.artist
+            )
+            if (el.overArtwork) {
+                c.overArtwork = new SimpleArtwork(
+                    new URL(base, el.overArtwork.src),
+                    el.overArtwork.artist
+                )
+            }
+            c.cardNumber = csel.cards.indexOf(el) + 1 // one-indexed
+            c.rarity = Rarity.valueOf(el.rarity.name())
+            c.flavorText = textParser.getNonNormativeText(el.flavorText)
+            c.rulesText = textParser.getRulesText(el.rulesText as RulesTextType)
+            c.watermarkName = el.watermark
             c
         }
         cs
@@ -87,41 +107,63 @@ class CardSetImporter {
     DefaultCard fromLandType(LandType el) {
         def c = new DefaultCard()
         c.colors = [ManaColor.COLORLESS]
+        if (el.alliedColors != null) {
+            c.alliedColors = getColors(el.alliedColors)
+        }
         c.typeParts = (el.typeModifiers?.tokenize() ?: []) + "Land"
-        c.subtypeParts = el.subtype?.tokenize() ?: []
+        c.subtypeParts = el.subtype?.tokenize()
         c
     }
 
     DefaultCard fromSpellType(SpellType el) {
         def c = new DefaultCard()
-        c.castingCost // todo
-        c.colors = [ManaColor.COLORLESS] // todo: parse out of cast cost
-        c.typeParts = el.type?.tokenize() ?: []
-        c.subtypeParts = el.subtype?.tokenize() ?: []
+        populateCost(c, el)
+        c.typeParts = el.type?.tokenize()
+        c.subtypeParts = el.subtype?.tokenize()
         c
     }
 
     DefaultCreatureCard fromCreatureType(CreatureType el) {
         def c = new DefaultCreatureCard()
-        c.castingCost // todo
-        c.colors = [ManaColor.COLORLESS] // todo: parse out of cast cost
+        populateCost(c, el)
         c.typeParts = (el.typeModifiers?.tokenize() ?: []) + "Creature"
-        c.subtypeParts = el.subtype?.tokenize() ?: []
-        c.power // todo
-        c.toughness // todo
-        c.levels // todo
+        c.subtypeParts = el.subtype?.tokenize()
+        c.power = el.power
+        c.toughness = el.toughness
+        if (el.levels.size() > 0) {
+            c.levels = el.levels.collect { lel ->
+                def l = new DefaultLevel(lel.levels, lel.power, lel.toughness)
+                l.rulesText = textParser.getRulesText(lel.rulesText)
+                l
+            }
+        }
         c
     }
 
     DefaultPlaneswalkerCard fromPlaneswalkerType(PlaneswalkerType el) {
         def c = new DefaultPlaneswalkerCard()
-        c.castingCost // todo
-        c.colors = [ManaColor.COLORLESS] // todo: parse out of cast cost
+        populateCost(c, el)
         c.typeParts = ["Planeswalker"]
         c.subtypeParts = el.subtype.tokenize()
-        c.loyalty // todo
-        c.loyaltyAbilities // todo
+        c.loyalty = el.loyalty
+        c.loyaltyAbilities = el.loyaltyAbilities.collect { ael ->
+            def a = new DefaultLoyaltyAbility(ael.cost)
+            a.rulesText = textParser.getRulesText(ael.rulesText)
+            a
+        }
         c
+    }
+
+    protected List<ManaColor> getColors(String spec) {
+        symbolFactory.getCost(spec)*.colors.flatten().unique() - ManaColor.COLORLESS
+    }
+
+    protected void populateCost(DefaultCard c, BaseCardType el) {
+        c.castingCost = symbolFactory.getCost(el.castingCost)
+        c.colors = c.castingCost*.colors.flatten().unique()
+        if (c.colors.size() > 1 && c.colors.contains(ManaColor.COLORLESS)) {
+            c.colors -= ManaColor.COLORLESS
+        }
     }
 
 }
