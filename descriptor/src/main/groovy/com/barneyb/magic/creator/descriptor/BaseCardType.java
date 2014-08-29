@@ -31,6 +31,10 @@ public abstract class BaseCardType {
         throw new UnsupportedOperationException("This card doesn't have a casting cost");
     }
 
+    public String getAlliedColors() {
+        throw new UnsupportedOperationException("This card doesn't have type modifiers");
+    }
+
     public String getType() {
         throw new UnsupportedOperationException("This card doesn't have type");
     }
