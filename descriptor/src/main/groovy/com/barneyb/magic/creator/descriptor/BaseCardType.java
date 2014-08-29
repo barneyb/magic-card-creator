@@ -21,7 +21,7 @@ public abstract class BaseCardType {
 
     public abstract RulesTextType getRulesText();
 
-    public abstract String getFlavorText();
+    public abstract NonNormativeTextType getFlavorText();
 
     public abstract String getWatermark();
 

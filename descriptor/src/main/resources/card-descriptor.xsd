@@ -70,7 +70,7 @@
             <xs:element name="artwork" type="ArtworkType" />
             <xs:element name="over-artwork" type="ArtworkType" minOccurs="0" />
             <xs:element name="rules-text" type="RulesTextType" minOccurs="0" />
-            <xs:element name="flavor-text" type="xs:string" minOccurs="0" />
+            <xs:element name="flavor-text" type="NonNormativeTextType" minOccurs="0" />
         </xs:sequence>
     </xs:group>
 
@@ -189,9 +189,19 @@
     </xs:complexType>
 
     <xs:complexType name="RulesTextType" mixed="true">
-        <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="reminder" type="xs:string" />
-        </xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="reminder" type="NonNormativeTextType" />
+            <xs:element name="br" type="BreakType" />
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="NonNormativeTextType" mixed="true">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="br" type="BreakType" />
+        </xs:choice>
+    </xs:complexType>
+    
+    <xs:complexType name="BreakType">
     </xs:complexType>
 
     <xs:complexType name="ArtworkType">
