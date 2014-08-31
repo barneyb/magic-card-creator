@@ -58,11 +58,11 @@ div > svg { margin: 10px; }
             }.each {
                 println "  $it"
                 out.println "<div>"
-                XmlUtils.write factory.getBareIcon(it), out
+                XmlUtils.write factory.getBareIcon(it).document, out
                 out.println "<br>"
-                XmlUtils.write factory.getIcon(it), out
+                XmlUtils.write factory.getIcon(it).document, out
                 out.println "<br>"
-                XmlUtils.write factory.getShadowedIcon(it), out
+                XmlUtils.write factory.getShadowedIcon(it).document, out
                 out.println "</div>"
             }
         }
