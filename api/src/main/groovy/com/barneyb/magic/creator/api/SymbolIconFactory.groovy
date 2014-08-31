@@ -1,7 +1,4 @@
 package com.barneyb.magic.creator.api
-
-import org.w3c.dom.svg.SVGDocument
-
 /**
  * I am in charge of converting Symbols into SVGDocuments that visually
  * represent them.  All documents will contain a single <tt>&lt;g&gt;</tt>
@@ -19,18 +16,18 @@ interface SymbolIconFactory {
      * I construct a standard icon for the symbol as would be found in a card
      * ability cost (flat with a disc).
      */
-    SVGDocument getIcon(Symbol symbol)
+    Icon getIcon(Symbol symbol)
 
     /**
      * I construct a icon for the symbol as would be found in a card's casting
      * cost (with a disc and a drop shadow).
      */
-    SVGDocument getShadowedIcon(Symbol symbol)
+    Icon getShadowedIcon(Symbol symbol)
 
     /**
      * I construct a icon for the symbol without a disc or shadow (i.e., just
      * the stuff that would be found w/in the disk on a normal icon).
      */
-    SVGDocument getBareIcon(Symbol symbol)
+    Icon getBareIcon(Symbol symbol)
 
 }

@@ -2,10 +2,10 @@ package com.barneyb.magic.creator.icon
 
 import com.barneyb.magic.creator.api.Symbol
 import com.barneyb.magic.creator.api.SymbolIconFactory
+import com.barneyb.magic.creator.core.DefaultIcon
 import com.barneyb.magic.creator.util.XmlUtils
 import org.apache.batik.svggen.SVGGraphics2D
 import org.w3c.dom.Element
-import org.w3c.dom.svg.SVGDocument
 
 import java.awt.font.TextAttribute
 import java.awt.geom.AffineTransform
@@ -27,10 +27,6 @@ class DefaultIconFactory implements SymbolIconFactory {
 
     protected addIcon(Icon i) {
         icons[i.id] = i
-    }
-
-    protected addNumericIcon(SimpleIcon base, int n) {
-        addIcon new SimpleIcon(id: n, body: base.body.replace('${num}', n.toString()))
     }
 
     protected void load() {
@@ -93,7 +89,7 @@ class DefaultIconFactory implements SymbolIconFactory {
             }
         } else if (symbol.matches(~/^[2WUBRG]\/[WUBRG]$/)) {
             // hybrid/ icons
-            return addIcon(new HybridIcon(getIconInternal(symbol.substring(0, 1)), getIconInternal(symbol.substring(2))))
+            return addIcon(new HybridIcon((SimpleIcon) getIconInternal(symbol.substring(0, 1)), (SimpleIcon) getIconInternal(symbol.substring(2))))
         } else if (symbol.matches(~/^[2WUBRG]\/P$/)) {
             return addIcon(new SimpleIcon(id: symbol, color: getIconInternal(symbol.substring(0, 1)).color, body: getIconInternal("P").body))
         }
@@ -101,18 +97,18 @@ class DefaultIconFactory implements SymbolIconFactory {
     }
 
     @Override
-    SVGDocument getIcon(Symbol symbol) {
-        XmlUtils.read getIconInternal(symbol.symbol).flat
+    com.barneyb.magic.creator.api.Icon getIcon(Symbol symbol) {
+        new DefaultIcon(symbol.symbol, XmlUtils.read(getIconInternal(symbol.symbol).flat))
     }
 
     @Override
-    SVGDocument getShadowedIcon(Symbol symbol) {
-        XmlUtils.read getIconInternal(symbol.symbol).shadowed
+    com.barneyb.magic.creator.api.Icon getShadowedIcon(Symbol symbol) {
+        new DefaultIcon(symbol.symbol, XmlUtils.read(getIconInternal(symbol.symbol).shadowed))
     }
 
     @Override
-    SVGDocument getBareIcon(Symbol symbol) {
-        XmlUtils.read getIconInternal(symbol.symbol).bare
+    com.barneyb.magic.creator.api.Icon getBareIcon(Symbol symbol) {
+        new DefaultIcon(symbol.symbol, XmlUtils.read(getIconInternal(symbol.symbol).bare))
     }
 
 }
