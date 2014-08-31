@@ -35,18 +35,16 @@ interface Card {
     boolean isSemiEnchantment()
 
     /**
-     * I am the List of paragraphs of rules text for the card, potentially
-     * including {@link NonNormativeText} and {@link SymbolGroup}s.  Each item
-     * in the list is a run of {@link BodyItem} that should be laid out as a
+     * I am the List of paragraphs of rules text for the card. Each item in the
+     * list is a run of {@link BodyItem} that should be laid out as a
      * single line.
      */
     List<List<BodyItem>> getRulesText()
 
     /**
-     * I am a list of paragraphs of flavor text for the card.  I should only
-     * contain {@link NonNormativeText} and {@link LineBreak} elements. Each
-     * item in the list is a run of {@link BodyItem} that should be laid out as
-     * a single line.
+     * I am a list of paragraphs of flavor text for the card. I MAY NOT contain
+     * {@link RulesText} elements.  Each item in the list is a run of
+     * {@link BodyItem} that should be laid out as a single line.
      */
     List<List<BodyItem>> getFlavorText()
 
