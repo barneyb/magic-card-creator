@@ -105,8 +105,4 @@ class DefaultTheme implements Theme {
         new DefaultLayout(card.layoutType).layout(card)
     }
 
-    @Override
-    SVGDocument layoutFused(Card left, Card right) {
-        return null
-    }
 }

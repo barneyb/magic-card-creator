@@ -18,11 +18,4 @@ interface Theme {
      */
     SVGDocument layout(Card card)
 
-    /**
-     * I will lay out the given {@link Card}s as a single "fused" card,
-     * according to the rules of this theme.  Note that only cards representing
-     * non-permanent spells may be fused.
-     */
-    SVGDocument layoutFused(Card left, Card right)
-
 }
