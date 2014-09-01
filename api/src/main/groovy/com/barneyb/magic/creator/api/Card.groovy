@@ -91,6 +91,14 @@ interface Card {
     Rarity getRarity()
 
     /**
+     * If this card is a fused card, all other card-level properties are
+     * ignored and this property contains two Card objects which describe the
+     * two halves of the fused card.  In all other cases, this property is
+     * ignored in favor of the others.
+     */
+    List<Card> getFusedCards()
+
+    /**
      * The name of the set this Card belongs to, or null if standalone.
      */
     String getSetTitle()

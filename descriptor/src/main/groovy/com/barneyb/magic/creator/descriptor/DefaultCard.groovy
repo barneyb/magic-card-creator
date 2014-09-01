@@ -63,6 +63,10 @@ class DefaultCard implements Card {
 
     Rarity rarity = null
 
+    List<Card> getFusedCards() {
+        throw new UnsupportedOperationException("This is not a fused card.")
+    }
+
     @Override
     String getCopyright() {
         cardSet?.copyright
