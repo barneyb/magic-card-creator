@@ -5,7 +5,8 @@ import groovy.transform.EqualsAndHashCode
 import groovy.transform.TupleConstructor
 import org.w3c.dom.svg.SVGDocument
 
-import java.awt.*
+import java.awt.geom.Dimension2D
+
 
 /**
  *
@@ -21,7 +22,7 @@ class DefaultIcon implements Icon {
     SVGDocument document
 
     @Override
-    Dimension getSize() {
+    Dimension2D getSize() {
         new DoubleDimension(
             document.rootElement.width.baseVal.value,
             document.rootElement.height.baseVal.value

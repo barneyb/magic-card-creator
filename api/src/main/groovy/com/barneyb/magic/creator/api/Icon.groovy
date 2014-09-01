@@ -1,9 +1,7 @@
 package com.barneyb.magic.creator.api
-
 import org.w3c.dom.svg.SVGDocument
 
-import java.awt.*
-
+import java.awt.geom.Dimension2D
 /**
  *
  *
@@ -22,7 +20,7 @@ interface Icon {
      * The natural size of the icon, which is primarily a way of accessing the
      * aspect ratio, though may be useful for for semi-raster SVGs.
      */
-    Dimension getSize()
+    Dimension2D getSize()
 
     /**
      * The SVGDocument which visually represents this icon.
