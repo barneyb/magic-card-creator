@@ -4,6 +4,7 @@ import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Symbol
 import com.barneyb.magic.creator.api.SymbolFactory
 import com.barneyb.magic.creator.api.SymbolGroup
+import com.barneyb.magic.creator.core.DefaultSymbolGroup
 
 /**
  *
@@ -56,7 +57,9 @@ class DefaultSymbolFactory implements SymbolFactory {
         }
         if (cl.size() > 1) {
             l.removeAll(cl)
-            l << getSymbol(cl*.symbol*.toInteger().sum().toString())
+            l << getSymbol(cl*.symbol.collect {
+                it.toInteger()
+            }.sum().toString())
         }
         new DefaultSymbolGroup(l)
     }
@@ -69,6 +72,7 @@ class DefaultSymbolFactory implements SymbolFactory {
                 hunk = new StringBuilder()
             } else if (c == '}') {
                 result << hunk.toString()
+                //noinspection GrReassignedInClosureLocalVar
                 hunk = null
             } else if (hunk != null) {
                 hunk.append(c)
