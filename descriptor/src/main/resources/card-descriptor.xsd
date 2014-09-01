@@ -11,7 +11,7 @@
 
     <xs:element name="card-set" type="c:CardSetType">
         <xs:key name="CardTitle">
-            <xs:selector xpath="./c:land|./c:spell|./c:creature|./c:planeswalker" />
+            <xs:selector xpath="./c:land|./c:spell|c:fused/c:spell|./c:creature|./c:planeswalker" />
             <xs:field xpath="@title" />
         </xs:key>
     </xs:element>
@@ -45,6 +45,7 @@
                 </xs:annotation>
                 <xs:element name="land" type="LandType" />
                 <xs:element name="spell" type="SpellType" />
+                <xs:element name="fused" type="FuseType" />
                 <xs:element name="creature" type="CreatureType" />
                 <xs:element name="planeswalker" type="PlaneswalkerType" />
             </xs:choice>
@@ -83,9 +84,12 @@
 
     <xs:attributeGroup name="CoreAttributes">
         <xs:attribute name="title" type="xs:token" use="required" />
-        <xs:attribute name="rarity" type="RarityEnum" default="common" />
         <xs:attribute name="color-indicator" type="ColorSetType" />
         <xs:attribute name="watermark" type="xs:token" />
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="RarityAttributes">
+        <xs:attribute name="rarity" type="RarityEnum" default="common" />
     </xs:attributeGroup>
 
     <xs:attributeGroup name="CastAttributes">
@@ -102,12 +106,41 @@
             <xs:group ref="CoreGroup" />
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
+        <xs:attributeGroup ref="RarityAttributes" />
         <xs:attribute name="allied-colors" type="ColorSetType" />
         <xs:attribute name="type-modifiers" type="xs:token" />
         <xs:attribute name="subtype" type="xs:token" />
     </xs:complexType>
 
     <xs:complexType name="SpellType">
+        <xs:annotation>
+            <xs:appinfo>
+                <inheritance:extends>com.barneyb.magic.creator.descriptor.BaseCardType</inheritance:extends>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:group ref="CoreGroup" />
+        </xs:sequence>
+        <xs:attributeGroup ref="CoreAttributes" />
+        <xs:attributeGroup ref="RarityAttributes" />
+        <xs:attributeGroup ref="CastAttributes" />
+        <xs:attribute name="type" type="xs:token" use="required" />
+        <xs:attribute name="subtype" type="xs:token" />
+    </xs:complexType>
+
+    <xs:complexType name="FuseType">
+        <xs:annotation>
+            <xs:appinfo>
+                <inheritance:extends>com.barneyb.magic.creator.descriptor.BaseCardType</inheritance:extends>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="spell" type="FusedSpellType" minOccurs="2" maxOccurs="2" />
+        </xs:sequence>
+        <xs:attributeGroup ref="RarityAttributes" />
+    </xs:complexType>
+
+    <xs:complexType name="FusedSpellType">
         <xs:annotation>
             <xs:appinfo>
                 <inheritance:extends>com.barneyb.magic.creator.descriptor.BaseCardType</inheritance:extends>
@@ -140,6 +173,7 @@
             </xs:element>
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
+        <xs:attributeGroup ref="RarityAttributes" />
         <xs:attributeGroup ref="CastAttributes" />
         <xs:attribute name="type-modifiers" type="xs:token" />
         <xs:attribute name="subtype" type="xs:token" use="required" />
@@ -177,6 +211,7 @@
             </xs:element>
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
+        <xs:attributeGroup ref="RarityAttributes" />
         <xs:attributeGroup ref="CastAttributes" />
         <xs:attribute name="subtype" type="xs:token" use="required" />
     </xs:complexType>
