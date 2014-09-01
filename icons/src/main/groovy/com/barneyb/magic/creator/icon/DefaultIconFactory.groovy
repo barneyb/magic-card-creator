@@ -1,8 +1,11 @@
 package com.barneyb.magic.creator.icon
 
+import com.barneyb.magic.creator.api.IconGroup
 import com.barneyb.magic.creator.api.Symbol
+import com.barneyb.magic.creator.api.SymbolGroup
 import com.barneyb.magic.creator.api.SymbolIconFactory
 import com.barneyb.magic.creator.core.DefaultIcon
+import com.barneyb.magic.creator.core.DefaultIconGroup
 import com.barneyb.magic.creator.util.XmlUtils
 import org.apache.batik.svggen.SVGGraphics2D
 import org.w3c.dom.Element
@@ -111,4 +114,18 @@ class DefaultIconFactory implements SymbolIconFactory {
         new DefaultIcon(symbol.symbol, XmlUtils.read(getIconInternal(symbol.symbol).bare))
     }
 
+    @Override
+    IconGroup getIcons(SymbolGroup symbols) {
+        new DefaultIconGroup(symbols.collect(this.&getIcon))
+    }
+
+    @Override
+    IconGroup getShadowedIcons(SymbolGroup symbols) {
+        new DefaultIconGroup(symbols.collect(this.&getShadowedIcon))
+    }
+
+    @Override
+    IconGroup getBareIcons(SymbolGroup symbols) {
+        new DefaultIconGroup(symbols.collect(this.&getBareIcon))
+    }
 }

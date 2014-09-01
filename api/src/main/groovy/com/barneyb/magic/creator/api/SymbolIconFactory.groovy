@@ -30,4 +30,22 @@ interface SymbolIconFactory {
      */
     Icon getBareIcon(Symbol symbol)
 
+    /**
+     * I do the same as {@link #getIcon(com.barneyb.magic.creator.api.Symbol)},
+     * but with a {@link SymbolGroup}.
+     */
+    IconGroup getIcons(SymbolGroup symbols)
+
+    /**
+     * I do the same as {@link #getShadowedIcon(com.barneyb.magic.creator.api.Symbol)},
+     * but with a {@link SymbolGroup}.
+     */
+    IconGroup getShadowedIcons(SymbolGroup symbols)
+
+    /**
+     * I do the same as {@link #getBareIcon(com.barneyb.magic.creator.api.Symbol)},
+     * but with a {@link SymbolGroup}.
+     */
+    IconGroup getBareIcons(SymbolGroup symbols)
+
 }

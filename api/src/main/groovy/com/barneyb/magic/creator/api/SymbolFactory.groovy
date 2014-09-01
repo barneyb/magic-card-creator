@@ -21,7 +21,7 @@ interface SymbolFactory {
     Symbol getSymbol(String symbol)
 
     /**
-     * I create a List of Symbols from the provided string versions.  The string
+     * I create a SymbolGroup from the provided string versions.  The string
      * will be parsed according to the rules of {@link #getSymbol(java.lang.String)}
      * with the addition that multiple symbols are supported.
      *
