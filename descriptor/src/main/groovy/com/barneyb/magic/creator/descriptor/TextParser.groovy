@@ -1,4 +1,5 @@
 package com.barneyb.magic.creator.descriptor
+
 import com.barneyb.magic.creator.api.BodyItem
 import com.barneyb.magic.creator.api.RulesText
 import com.barneyb.magic.creator.api.Symbol
@@ -7,12 +8,13 @@ import com.barneyb.magic.creator.api.SymbolGroup
 import com.barneyb.magic.creator.core.DefaultLineBreak
 import com.barneyb.magic.creator.core.DefaultNonNormativeText
 import com.barneyb.magic.creator.core.DefaultRulesText
+import com.barneyb.magic.creator.core.DefaultSymbolGroup
 import com.barneyb.magic.creator.descriptor.schema.NonNormativeTextType
 import com.barneyb.magic.creator.descriptor.schema.RulesTextType
 import com.barneyb.magic.creator.symbol.DefaultSymbolFactory
-import com.barneyb.magic.creator.symbol.DefaultSymbolGroup
 
 import javax.xml.bind.JAXBElement
+
 /**
  *
  *
