@@ -5,6 +5,8 @@ package com.barneyb.magic.creator.api
  */
 interface Card {
 
+    LayoutType getLayoutType()
+
     String getTitle()
 
     List<Symbol> getCastingCost()

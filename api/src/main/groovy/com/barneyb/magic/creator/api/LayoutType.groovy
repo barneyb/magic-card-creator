@@ -12,5 +12,7 @@ enum LayoutType {
     // these are more complicated layouts
     LEVELER,
     PLANESWALKER,
+    // and this one is nuts
+    FUSE
 
 }

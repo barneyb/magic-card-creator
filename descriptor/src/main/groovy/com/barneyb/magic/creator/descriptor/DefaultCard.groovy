@@ -4,6 +4,7 @@ import com.barneyb.magic.creator.api.Artwork
 import com.barneyb.magic.creator.api.BodyItem
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CardSet
+import com.barneyb.magic.creator.api.LayoutType
 import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Rarity
 import com.barneyb.magic.creator.api.Symbol
@@ -30,11 +31,16 @@ class DefaultCard implements Card {
     List<String> subtypeParts = null
 
     @Override
+    LayoutType getLayoutType() {
+        typeParts*.toLowerCase().contains("land") ? LayoutType.LAND : LayoutType.SPELL
+    }
+
+    @Override
     boolean isSemiEnchantment() {
-        def lcps = typeParts*.toLowerCase()
-        lcps.contains("enchantment") &&
-            (lcps.contains("creature") ||
-                lcps.contains("artifact")
+        def lctps = typeParts*.toLowerCase()
+        lctps.contains("enchantment") &&
+            (lctps.contains("creature") ||
+                lctps.contains("artifact")
             )
     }
 

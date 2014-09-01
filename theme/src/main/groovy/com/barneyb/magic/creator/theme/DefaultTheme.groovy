@@ -1,12 +1,19 @@
 package com.barneyb.magic.creator.theme
 
-import com.barneyb.magic.creator.api.*
+import com.barneyb.magic.creator.api.Card
+import com.barneyb.magic.creator.api.ColorTheme
+import com.barneyb.magic.creator.api.LayoutType
+import com.barneyb.magic.creator.api.SymbolIconFactory
+import com.barneyb.magic.creator.api.Texture
+import com.barneyb.magic.creator.api.Theme
+import com.barneyb.magic.creator.api.ThemedColor
 import com.barneyb.magic.creator.core.ClasspathRasterImage
 import com.barneyb.magic.creator.core.SimpleColorTheme
 import com.barneyb.magic.creator.core.SimpleFlood
 import com.barneyb.magic.creator.core.SimpleTexture
 import com.barneyb.magic.creator.icon.DefaultIconFactory
 import com.barneyb.magic.creator.util.ColorUtils
+import org.w3c.dom.svg.SVGDocument
 
 import java.awt.*
 
@@ -22,7 +29,7 @@ class DefaultTheme implements Theme {
 //    <pattern id="enchantmentFrame" patternUnits="userSpaceOnUse" height="480" width="640">
 //        <image width="640" height="480" xlink:href="starfield.jpg" opacity=".6" />
 //    </pattern>
-    Texture semiEnchantmentTexture = new SimpleTexture(
+    protected Texture semiEnchantmentTexture = new SimpleTexture(
         image: new ClasspathRasterImage("theme/default/starfield.jpg"),
         opacity: 0.6f
     )
@@ -78,25 +85,11 @@ class DefaultTheme implements Theme {
         "Default M14-ish Theme"
     }
 
-    @Override
-    ColorTheme getColorTheme(ThemedColor color) {
+    protected ColorTheme getColorTheme(ThemedColor color) {
         if (! colors.containsKey(color)) {
             throw new IllegalArgumentException("This theme does not support the $color color.")
         }
         colors[color]
-    }
-
-    @Override
-    SymbolIconFactory getIconFactory() {
-        iconFactory
-    }
-
-    @Override
-    Layout getLayout(LayoutType type) {
-        if (! supports(type)) {
-            throw new IllegalArgumentException("This theme doesn't support the $type layout.")
-        }
-        new DefaultLayout(type)
     }
 
     @Override
@@ -108,8 +101,12 @@ class DefaultTheme implements Theme {
     }
 
     @Override
-    FuseLayout getFuseLayout() {
-        throw new UnsupportedOperationException("This theme does not support fuse layouts.")
+    SVGDocument layout(Card card) {
+        new DefaultLayout(card.layoutType).layout(card)
     }
 
+    @Override
+    SVGDocument layoutFused(Card left, Card right) {
+        return null
+    }
 }

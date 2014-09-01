@@ -1,7 +1,5 @@
 package com.barneyb.magic.creator.theme
-
 import com.barneyb.magic.creator.api.Card
-import com.barneyb.magic.creator.api.Layout
 import com.barneyb.magic.creator.api.LayoutType
 import com.barneyb.magic.creator.util.XmlUtils
 import org.apache.velocity.VelocityContext
@@ -9,13 +7,12 @@ import org.apache.velocity.app.VelocityEngine
 import org.apache.velocity.runtime.RuntimeConstants
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
 import org.w3c.dom.svg.SVGDocument
-
 /**
  *
  *
  * @author barneyb
  */
-class DefaultLayout implements Layout {
+class DefaultLayout {
 
     final LayoutType type
 
@@ -23,7 +20,6 @@ class DefaultLayout implements Layout {
         this.type = type
     }
 
-    @Override
     SVGDocument layout(Card card) {
         def ve = new VelocityEngine()
         ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");

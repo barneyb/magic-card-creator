@@ -2,6 +2,7 @@ package com.barneyb.magic.creator.descriptor
 
 import com.barneyb.magic.creator.api.CreatureCard
 import com.barneyb.magic.creator.api.CreatureLevel
+import com.barneyb.magic.creator.api.LayoutType
 
 /**
  *
@@ -9,6 +10,11 @@ import com.barneyb.magic.creator.api.CreatureLevel
  * @author barneyb
  */
 class DefaultCreatureCard extends DefaultCard implements CreatureCard {
+
+    @Override
+    LayoutType getLayoutType() {
+        leveler ? LayoutType.LEVELER : LayoutType.CREATURE
+    }
 
     String power = null
 
