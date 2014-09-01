@@ -1,4 +1,4 @@
-package com.barneyb.magic.creator.symbol
+package com.barneyb.magic.creator.core
 import com.barneyb.magic.creator.api.Symbol
 import com.barneyb.magic.creator.api.SymbolGroup
 /**
@@ -35,4 +35,5 @@ class DefaultSymbolGroup implements SymbolGroup {
     String toString() {
         _list.toString()
     }
+
 }
