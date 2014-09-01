@@ -9,23 +9,41 @@ import java.util.List;
  */
 public abstract class BaseCardType {
 
-    public abstract ArtworkType getArtwork();
+    public ArtworkType getArtwork() {
+        throw new UnsupportedOperationException("This card doesn't have artwork");
+    }
 
-    public abstract ArtworkType getOverArtwork();
+    public ArtworkType getOverArtwork() {
+        throw new UnsupportedOperationException("This card doesn't have over artwork");
+    }
 
-    public abstract String getColorIndicator();
+    public String getColorIndicator() {
+        throw new UnsupportedOperationException("This card doesn't have a color indicator");
+    }
 
-    public abstract String getSubtype();
+    public String getSubtype() {
+        throw new UnsupportedOperationException("This card doesn't have a subtype");
+    }
 
-    public abstract RarityEnum getRarity();
+    public RarityEnum getRarity() {
+        throw new UnsupportedOperationException("This card doesn't have a rarity");
+    }
 
-    public abstract RulesTextType getRulesText();
+    public RulesTextType getRulesText() {
+        throw new UnsupportedOperationException("This card doesn't have rules text");
+    }
 
-    public abstract NonNormativeTextType getFlavorText();
+    public NonNormativeTextType getFlavorText() {
+        throw new UnsupportedOperationException("This card doesn't have flavor text");
+    }
 
-    public abstract String getWatermark();
+    public String getWatermark() {
+        throw new UnsupportedOperationException("This card doesn't have a watermark");
+    }
 
-    public abstract String getTitle();
+    public String getTitle() {
+        throw new UnsupportedOperationException("This card doesn't have a title");
+    }
 
     public String getCastingCost() {
         throw new UnsupportedOperationException("This card doesn't have a casting cost");
