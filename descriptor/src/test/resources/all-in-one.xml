@@ -157,4 +157,26 @@
         <power>2</power>
         <toughness>1</toughness>
     </creature>
+    <fused rarity="rare">
+        <spell title="Breaking" casting-cost="ub" type="Sorcery">
+            <artwork>
+                <src>artwork/breaking.jpg</src>
+                <artist>Mathias Kollros</artist>
+            </artwork>
+            <rules-text>
+                Target player puts the top eight cards of his or her library into
+                his or her graveyard.
+            </rules-text>
+        </spell>
+        <spell title="Entering" casting-cost="4br" type="Sorcery">
+            <artwork>
+                <src>artwork/breaking.jpg</src>
+                <artist>Mathias Kollros</artist>
+            </artwork>
+            <rules-text>
+                Put a creature card from a graveyard onto the battlefield under your
+                control. It gains haste until end of turn.
+            </rules-text>
+        </spell>
+    </fused>
 </card-set>

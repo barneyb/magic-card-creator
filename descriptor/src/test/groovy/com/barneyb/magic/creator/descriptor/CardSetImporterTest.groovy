@@ -25,7 +25,7 @@ class CardSetImporterTest {
         def cs = new CardSetImporter().fromUrl(descriptor)
         def title = "All In One"
         def key = "AiO"
-        def cardCount = 9
+        def cardCount = 10
         def copyright = "\u00A9 Wizards of the Coast"
         assertEquals(title, cs.title)
         assertEquals(key, cs.key)
@@ -40,9 +40,10 @@ class CardSetImporterTest {
             "Dimir Guildgate",
             "Transguild Courier",
             "Paralyze",
-            "Goblin Bully"
+            "Goblin Bully",
+            "Breaking // Entering"
         ], cs.cards*.title)
-        def (shrine, bolt, knight, garruk, assassin, gate, courier, paralyze, bully) = cs.cards
+        def (shrine, bolt, knight, garruk, assassin, gate, courier, paralyze, bully, breakEnter) = cs.cards
 
         Card c = shrine
         assertEquals(Rarity.RARE, c.rarity)
@@ -307,6 +308,63 @@ class CardSetImporterTest {
         assertEquals(key, c.setKey)
         assertEquals(['Goblin'], c.subtypeParts)
         assertEquals(['Creature'], c.typeParts)
+        assertEquals(null, c.watermarkName)
+
+        c = breakEnter
+        assertEquals(Rarity.RARE, c.rarity)
+        assertEquals(10, c.cardNumber)
+        assertEquals(cardCount, c.setCardCount)
+        assertEquals(title, c.setTitle)
+        assertEquals(key, c.setKey)
+
+        c = breakEnter
+        c = c.fusedCards.first()
+        assertEquals(Rarity.RARE, c.rarity)
+        assertEquals(null, c.flavorText)
+        assertEquals(10, c.cardNumber)
+        relativeUrl("artwork/breaking.jpg", c.artwork.url)
+        assertEquals("Mathias Kollros", c.artwork.artist)
+        assertEquals(sg('u', 'b'), c.castingCost)
+        assertEquals(false, c.colorExplicit)
+        assertEquals(mcs('u', 'b'), c.colors)
+        assertEquals(null, c.alliedColors)
+        assertEquals(copyright, c.copyright)
+        assertEquals(true, c.multiColor)
+        assertEquals(null, c.overArtwork)
+        assertEquals([
+            [rt('Target player puts the top eight cards of his or her library into his or her graveyard.')],
+        ], c.rulesText)
+        assertEquals(false, c.semiEnchantment)
+        assertEquals(cardCount, c.setCardCount)
+        assertEquals(title, c.setTitle)
+        assertEquals(key, c.setKey)
+        assertEquals(null, c.subtypeParts)
+        assertEquals(['Sorcery'], c.typeParts)
+        assertEquals(null, c.watermarkName)
+
+        c = breakEnter
+        c = c.fusedCards.last()
+        assertEquals(Rarity.RARE, c.rarity)
+        assertEquals(null, c.flavorText)
+        assertEquals(10, c.cardNumber)
+        relativeUrl("artwork/entering.jpg", c.artwork.url)
+        assertEquals("Mathias Kollros", c.artwork.artist)
+        assertEquals(sg('4', 'b', 'r'), c.castingCost)
+        assertEquals(false, c.colorExplicit)
+        assertEquals(mcs('b', 'r'), c.colors)
+        assertEquals(null, c.alliedColors)
+        assertEquals(copyright, c.copyright)
+        assertEquals(true, c.multiColor)
+        assertEquals(null, c.overArtwork)
+        assertEquals([
+            [rt('Put a creature card from a graveyard onto the battlefield under your control. It gains haste until end of turn.')],
+        ], c.rulesText)
+        assertEquals(false, c.semiEnchantment)
+        assertEquals(cardCount, c.setCardCount)
+        assertEquals(title, c.setTitle)
+        assertEquals(key, c.setKey)
+        assertEquals(null, c.subtypeParts)
+        assertEquals(['Sorcery'], c.typeParts)
         assertEquals(null, c.watermarkName)
     }
 
