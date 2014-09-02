@@ -31,6 +31,12 @@ class LayoutUtils {
     public static final String ALL_ALPHANUMERICS = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890"
 
     /**
+     * The amount of spacing to be added around icons, as a fraction of the
+     * icon's natural width.
+     */
+    public static final float ICON_SPACING = 0.07
+
+    /**
      * Defers to {@link #line(java.awt.geom.Dimension2D, java.lang.String, java.util.Map, Align)}.
      */
     LineLayout line(Dimension2D box, String text, Font font, Align align=Align.LEADING) {
@@ -246,7 +252,9 @@ class LayoutUtils {
 
     protected void render(RenderCtx ctx, IconGroup it) {
         //noinspection GroovyAssignabilityCheck
-        if (ctx.XOffset + it*.size*.width.sum(0) > ctx.bounds.width) {
+        if (ctx.XOffset + it.collect {
+            it.size.width * (1 + ICON_SPACING)
+        }.sum() > ctx.bounds.width) {
             ctx.XOffset = 0
             ctx.y += ctx.wrapOffset
         }
@@ -261,11 +269,11 @@ class LayoutUtils {
         if (! ctx.measuring) {
             ctx.drawAsset(
                 ctx.graphics,
-                new Rectangle2D.Float(
-                    ctx.x,
-                    (float) ctx.y + (ctx.wrapOffset - height) * 0.5,
-                    (float) width,
-                    (float) height
+                new Rectangle2D.Double(
+                    ctx.x + width * ICON_SPACING / 2,
+                    ctx.y + (ctx.wrapOffset - height) * 0.5,
+                    width,
+                    height
                 ) {
                     Dimension2D getSize() {
                         new DoubleDimension(width, height)
@@ -274,7 +282,7 @@ class LayoutUtils {
                 it
             )
         }
-        ctx.XOffset += width * 1.07
+        ctx.XOffset += width * (1 + ICON_SPACING)
     }
 
 
