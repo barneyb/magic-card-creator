@@ -1,5 +1,6 @@
 package com.barneyb.magic.creator.theme
 import com.barneyb.magic.creator.api.Card
+import com.barneyb.magic.creator.api.Theme
 import com.barneyb.magic.creator.util.XmlUtils
 import groovy.transform.TupleConstructor
 import org.apache.velocity.VelocityContext
@@ -13,9 +14,11 @@ import org.w3c.dom.svg.SVGDocument
  * @author barneyb
  */
 @TupleConstructor
-class DefaultLayout {
+class VelocityLayout {
 
-    DefaultTheme theme
+    final Theme theme
+
+    final String template
 
     SVGDocument layout(Card card) {
         def ve = new VelocityEngine()
@@ -23,7 +26,7 @@ class DefaultLayout {
         ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
         ve.setProperty("runtime.references.strict", true)
         ve.init()
-        def t = ve.getTemplate("theme/default/frame.svg.vm")
+        def t = ve.getTemplate(template)
         def ctx = new VelocityContext([
             tool: new FrameTool(theme, card)
         ])

@@ -121,7 +121,7 @@ class DefaultTheme implements Theme {
         if (! supports(card.layoutType)) {
             throw new IllegalArgumentException("This theme does not support the $card.layoutType layout type.")
         }
-        new DefaultLayout(this).layout(card)
+        new VelocityLayout(this, "theme/default/frame.svg.vm").layout(card)
     }
 
 }
