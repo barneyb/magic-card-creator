@@ -66,10 +66,22 @@
         </xs:attribute>
     </xs:complexType>
 
-    <xs:group name="CoreGroup">
+    <xs:group name="ArtGroup">
         <xs:sequence>
             <xs:element name="artwork" type="ArtworkType" />
             <xs:element name="over-artwork" type="ArtworkType" minOccurs="0" />
+        </xs:sequence>
+    </xs:group>
+
+    <xs:group name="RulesGroup">
+        <xs:sequence>
+            <xs:element name="rules-text" type="RulesTextType" />
+            <xs:element name="flavor-text" type="NonNormativeTextType" minOccurs="0" />
+        </xs:sequence>
+    </xs:group>
+
+    <xs:group name="RulesOptionalGroup">
+        <xs:sequence>
             <xs:element name="rules-text" type="RulesTextType" minOccurs="0" />
             <xs:element name="flavor-text" type="NonNormativeTextType" minOccurs="0" />
         </xs:sequence>
@@ -103,7 +115,8 @@
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
-            <xs:group ref="CoreGroup" />
+            <xs:group ref="ArtGroup" />
+            <xs:group ref="RulesOptionalGroup" />
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
         <xs:attributeGroup ref="RarityAttributes" />
@@ -119,7 +132,8 @@
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
-            <xs:group ref="CoreGroup" />
+            <xs:group ref="ArtGroup" />
+            <xs:group ref="RulesGroup" />
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
         <xs:attributeGroup ref="RarityAttributes" />
@@ -147,7 +161,8 @@
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
-            <xs:group ref="CoreGroup" />
+            <xs:group ref="ArtGroup" />
+            <xs:group ref="RulesGroup" />
         </xs:sequence>
         <xs:attributeGroup ref="CoreAttributes" />
         <xs:attributeGroup ref="CastAttributes" />
@@ -162,7 +177,8 @@
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
-            <xs:group ref="CoreGroup" />
+            <xs:group ref="ArtGroup" />
+            <xs:group ref="RulesOptionalGroup" />
             <xs:group ref="PowerToughnessGroup" />
             <xs:element name="level" type="LevelType" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation>
@@ -200,7 +216,8 @@
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
-            <xs:group ref="CoreGroup" />
+            <xs:group ref="ArtGroup" />
+            <xs:group ref="RulesOptionalGroup" />
             <xs:element name="loyalty" type="xs:token" />
             <xs:element name="ability" type="LoyaltyAbilityType" maxOccurs="unbounded">
                 <xs:annotation>
