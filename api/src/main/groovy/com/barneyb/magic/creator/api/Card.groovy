@@ -60,6 +60,14 @@ interface Card {
     List<ManaColor> getColors()
 
     /**
+     * I indicate whether this card is a hybrid card, meaning that not only is
+     * it multicolor, but that it is multicolor BECAUSE it is hybrid.  In
+     * practice this effectively means "does the casting cost contain hybrid
+     * mana", but doesn't necessarily limit itself to that.
+     */
+    boolean isHybrid()
+
+    /**
      * I indicate whether the ManaColor(s) of this card are explicit (meaning
      * they are explicitly stipulated, instead of being implicitly based on the
      * cost of the spell or COLORLESS for lands).

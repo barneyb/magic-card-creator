@@ -55,6 +55,13 @@ class DefaultCard implements Card {
     boolean colorExplicit = false
 
     @Override
+    boolean isHybrid() {
+        multiColor && castingCost.any {
+            it.hybrid
+        }
+    }
+
+    @Override
     boolean isMultiColor() {
         colors.size() > 1
     }
