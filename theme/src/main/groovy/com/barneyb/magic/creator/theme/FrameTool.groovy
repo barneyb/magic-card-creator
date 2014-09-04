@@ -109,7 +109,8 @@ class FrameTool {
         if (land) {
             if (card.alliedColors != null && card.alliedColors.size() in 1..2) {
                 return card.alliedColors.collect {
-                    theme.getColorTheme(color(it)).manaTextboxTexture
+                    def ct = theme.getColorTheme(color(it))
+                    ct.manaTextboxTexture ?: ct.textboxTexture
                 }
             } else {
                 tcs = [ThemedColor.LAND]
