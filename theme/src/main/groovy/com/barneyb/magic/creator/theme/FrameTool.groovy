@@ -84,8 +84,8 @@ class FrameTool {
         img
     }
 
-    float invert(Number n) {
-        (float) -1 * n
+    float negate(Number n) {
+        n == 0 ? n : (float) -1 * n
     }
 
     List<Texture> getFrameTextures() {

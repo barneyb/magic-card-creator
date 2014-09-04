@@ -109,7 +109,7 @@
                 #if($texture.underFlooded)
                     #flood($texture.bounds, $texture.underFlood)
                 #end
-                <image x="$tool.invert($texture.bounds.x)" y="$tool.invert($texture.bounds.y)"
+                <image x="$tool.negate($texture.bounds.x)" y="$tool.negate($texture.bounds.y)"
                        width="$texture.image.size.width" height="$texture.image.size.height"
                        xlink:href="$tool.toDataUrl($texture.image.image)"#if($texture.nonOpaque)
                        opacity="$texture.opacity"#end />
@@ -213,7 +213,7 @@
         <g transform="translate(439 937)">
             <g transform="scale(.9934 .9857)">
                 <g filter="url(#pushinFilter)">
-                    #foreach($t in $tool.frameTextures)
+                    #foreach($t in $tool.textboxTextures)
                         <use xlink:href="#-text" fill="url(#textbox_$foreach.index)"#if(! $foreach.first) mask="url(#textboxMask_$foreach.index)"#end />
                     #end
                 </g>
