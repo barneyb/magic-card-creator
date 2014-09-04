@@ -3,6 +3,7 @@ import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.LayoutType
 import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Texture
+import com.barneyb.magic.creator.api.Theme
 import com.barneyb.magic.creator.api.ThemedColor
 import com.barneyb.magic.creator.util.ColorUtils
 import groovy.transform.TupleConstructor
@@ -18,7 +19,7 @@ import java.awt.image.BufferedImage
 @TupleConstructor
 class FrameTool {
 
-    DefaultTheme theme
+    Theme theme
     Card card
 
     boolean isLand() {
