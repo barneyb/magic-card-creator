@@ -20,7 +20,10 @@ class SimpleTexture implements Texture {
 
     RasterImage image
 
-    float opacity = 1
+    Float opacity
+    float getOpacity() {
+        opacity ?: 1
+    }
 
     Flood overFlood
 
@@ -33,7 +36,7 @@ class SimpleTexture implements Texture {
 
     @Override
     boolean isNonOpaque() {
-        opacity != 1
+        opacity != null && opacity != 1
     }
 
     @Override
@@ -56,6 +59,16 @@ class SimpleTexture implements Texture {
 
     SimpleTexture derive(float o) {
         new SimpleTexture(image, o, overFlood, underFlood)
+    }
+
+    SimpleTexture plus(SimpleTexture t) {
+        new SimpleTexture(
+            t.image ?: image,
+            t.opacity ?: opacity,
+            t.overFlood ?: overFlood,
+            t.underFlood ?: underFlood,
+            t.@bounds ?: bounds
+        )
     }
 
 }
