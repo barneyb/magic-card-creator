@@ -1,5 +1,9 @@
-<svg width="2.5in" height="3.5in" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 875 1225">
-    #* @vtlvariable name="spec" type="com.barneyb.magic.creator.theme.FrameSpec" *#
+<svg width="2.5in" height="3.5in" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 875 1225">
+#* @vtlvariable name="tool" type="com.barneyb.magic.creator.theme.FrameTool" *#
+#* @vtlvariable name="bounds" type="java.awt.Rectangle" *#
+#* @vtlvariable name="texture" type="com.barneyb.magic.creator.api.Texture" *#
+#* @vtlvariable name="flood" type="com.barneyb.magic.creator.api.Flood" *#
     <defs>
         <path id="-title" d="
             M 0 -40
@@ -83,7 +87,7 @@
             </feMerge>
         </filter>
 
-        #if($spec.creature)
+        #if($tool.creature)
             <filter id="ptDropFilter" filterUnits="objectBoundingBox" height="140%">
                 <feGaussianBlur in="SourceAlpha" stdDeviation="5" />
                 <feOffset dx="-4" dy="7" result="shadow" />
@@ -96,14 +100,30 @@
             </filter>
         #end
 
-        <pattern id="bar" patternUnits="userSpaceOnUse" height="240" width="240">
-            <image x="-10" y="-10" width="256" height="256" xlink:href="metal.jpg" />
-            <rect width="240" height="240" fill="white" opacity=".3" />
-        </pattern>
+        #macro(flood $bounds $flood)
+            <rect width="$bounds.width" height="$bounds.height" fill="$tool.toValue($flood.color)"#if($flood.nonOpaque)
+                  opacity="$flood.opacity"#end />
+        #end
+        #macro(texture $id $texture)
+            <pattern id="$id" patternUnits="userSpaceOnUse" width="$texture.bounds.width" height="$texture.bounds.height">
+                #if($texture.underFlooded)
+                    #flood($texture.bounds, $texture.underFlood)
+                #end
+                <image x="$tool.invert($texture.bounds.x)" y="$tool.invert($texture.bounds.y)"
+                       width="$texture.image.size.width" height="$texture.image.size.height"
+                       xlink:href="$tool.toDataUrl($texture.image.image)"#if($texture.nonOpaque)
+                       opacity="$texture.opacity"#end />
+                #if($texture.overFlooded)
+                    #flood($texture.bounds, $texture.overFlood)
+                #end
+            </pattern>
+        #end
 
-        <pattern id="enchantmentFrame" patternUnits="userSpaceOnUse" height="480" width="640">
-            <image width="640" height="480" xlink:href="starfield.jpg" opacity=".6" />
-        </pattern>
+        #texture("bar", $tool.barTexture)
+
+        #if($tool.semiEnchantment)
+            #texture("enchantmentFrame", $tool.semiEnchantmentTexture)
+        #end
 
         <pattern id="whiteFrame" patternUnits="userSpaceOnUse" height="600" width="600">
             <image width="600" height="600" xlink:href="white.jpg" />
@@ -207,7 +227,7 @@
             <use xlink:href="#-text" x="439" y="937" />
         </g>
 
-        #if($spec.creature)
+        #if($tool.creature)
             <!-- power/toughness block -->
             <g transform="translate(742 1135)" filter="url(#ptDropFilter)">
                 <g transform="scale(.975 .93)">

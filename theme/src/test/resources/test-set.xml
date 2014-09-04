@@ -1,0 +1,19 @@
+<card-set xmlns="http://barneyb.com/schema/magic/card-descriptor"
+          title="Test Set"
+          key="TS">
+    <copyright>&#169; 2014 Barney Boisvert</copyright>
+    <creature title="Barney of the Green Woods" casting-cost="{r/w}rw" subtype="Human Legend" type-modifiers="Legendary Enchantment">
+        <artwork>
+            <src>artwork/barney.jpg</src>
+            <artist>Dolores Boisvert</artist>
+        </artwork>
+        <rules-text>
+            Indestructable, hexproof
+
+            {1}{U}{G}{T}: Every opponent dies in a fire unless all pay {X}{U}{B}{G} or {X}{R}{B}{W} or {X}{X}{B} where X equals your life total.
+        </rules-text>
+        <flavor-text>For the first time in his life, Barney felt warm. And hungry.</flavor-text>
+        <power>100</power>
+        <toughness>100</toughness>
+    </creature>
+</card-set>

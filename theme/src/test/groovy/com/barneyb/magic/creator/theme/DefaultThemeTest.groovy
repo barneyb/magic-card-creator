@@ -1,8 +1,8 @@
 package com.barneyb.magic.creator.theme
 
-import com.barneyb.magic.creator.api.ThemedColor
+import com.barneyb.magic.creator.descriptor.CardSetImporter
+import com.barneyb.magic.creator.util.XmlUtils
 import org.junit.Test
-
 /**
  *
  *
@@ -11,20 +11,13 @@ import org.junit.Test
 class DefaultThemeTest {
 
     @Test
-    void d() {
-        def ct = new DefaultTheme().getColorTheme(ThemedColor.WHITE)
-        println ct.baseColor
-        println ct.frameTexture
-        println ct.frameTexture.image
-        println ct.frameTexture.opacity
-        println ct.barTexture
-
-        ct = new DefaultTheme().getColorTheme(ThemedColor.RED)
-        println ct.baseColor
-        println ct.frameTexture
-        println ct.frameTexture.image
-        println ct.frameTexture.opacity
-        println ct.barTexture
+    void getBarneyLaid() {
+        def cs = new CardSetImporter().fromUrl(getClass().classLoader.getResource("test-set.xml"))
+        def beb = cs.cards.find {
+            it.title == 'Barney of the Green Woods'
+        }
+        def svg = XmlUtils.write(new DefaultTheme().layout(beb))
+        new File("barney.svg").text = svg
     }
 
 }

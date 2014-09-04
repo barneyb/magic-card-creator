@@ -34,7 +34,6 @@ class DefaultTheme implements Theme {
         opacity: 0.6f
     )
 
-
 //    <pattern id="bar" patternUnits="userSpaceOnUse" height="240" width="240">
 //        <image x="-10" y="-10" width="256" height="256" xlink:href="metal.jpg" />
 //        <rect width="240" height="240" fill="white" opacity=".3" />
@@ -78,6 +77,9 @@ class DefaultTheme implements Theme {
                 overFlood: new SimpleFlood(ColorUtils.fromHex("#ffeeee"), 0.8f)
             ),
         ),
+        (ThemedColor.GOLD): new SimpleColorTheme(
+            barTexture: barTexture,
+        ),
     ]
 
     @Override
@@ -95,6 +97,7 @@ class DefaultTheme implements Theme {
     @Override
     boolean supports(LayoutType type) {
         type in [
+            LayoutType.LAND,
             LayoutType.SPELL,
             LayoutType.CREATURE
         ]
@@ -102,7 +105,10 @@ class DefaultTheme implements Theme {
 
     @Override
     SVGDocument layout(Card card) {
-        new DefaultLayout().layout(card)
+        if (! supports(card.layoutType)) {
+            throw new IllegalArgumentException("This theme does not support the $card.layoutType layout type.")
+        }
+        new DefaultLayout(this).layout(card)
     }
 
 }
