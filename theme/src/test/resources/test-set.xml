@@ -2,7 +2,63 @@
           title="Test Set"
           key="TS">
     <copyright>&#169; 2014 Barney Boisvert</copyright>
-    <creature title="Barney of the Green Woods" casting-cost="{r/w}rw" subtype="Human Legend" type-modifiers="Legendary Enchantment">
+    <creature title="Sally" casting-cost="1r" subtype="Human">
+        <artwork>
+            <src>artwork/sally.jpg</src>
+            <artist>Sally Mann</artist>
+        </artwork>
+        <rules-text>{U}{T}: Tap target creature and pay 1 life.</rules-text>
+        <flavor-text>
+            Sally doesn't like you.
+
+            _Or you.
+        </flavor-text>
+        <power>1</power>
+        <toughness>1</toughness>
+    </creature>
+    <spell title="Counterspell" casting-cost="uu" type="Instant">
+        <artwork>
+            <src>artwork/counterspell.jpg</src>
+            <artist>Zueuk</artist>
+        </artwork>
+        <rules-text>Counter target spell.</rules-text>
+        <flavor-text>
+            How about "never".<br />
+            -- Barney of the Green Woods
+        </flavor-text>
+    </spell>
+    <creature title="Nightmare" casting-cost="5b" subtype="Nightmare Horse">
+        <artwork>
+            <src>artwork/nightmare.jpg</src>
+            <artist>catfish08</artist>
+        </artwork>
+        <rules-text>
+            Flying
+
+            Nightmare's power and toughness are each equal to the number of Swamps you control.
+        </rules-text>
+        <flavor-text>The thunder of its hooves beats dreams into despair.</flavor-text>
+        <power>*</power>
+        <toughness>*</toughness>
+    </creature>
+    <creature title="Blitz Hellion" casting-cost="3RG" subtype="Hellion">
+        <artwork>
+            <src>artwork/hellion.jpg</src>
+            <artist>Anthony S. Waters</artist>
+        </artwork>
+        <rules-text>
+            Trample, haste
+
+            At the beginning of the end step, Blitz Hellion's owner shuffles it into his or her library.
+        </rules-text>
+        <flavor-text>
+            Alarans commemorated its appearances with new holidays bearing names like the Great
+            Cataclysm and the Fall of Ilson Gate.
+        </flavor-text>
+        <power>7</power>
+        <toughness>7</toughness>
+    </creature>
+    <creature title="Barney of the Green Woods" casting-cost="2{r/w}{u/b}gb" subtype="Human Legend" type-modifiers="Legendary Enchantment">
         <artwork>
             <src>artwork/barney.jpg</src>
             <artist>Dolores Boisvert</artist>
@@ -10,10 +66,32 @@
         <rules-text>
             Indestructable, hexproof
 
-            {1}{U}{G}{T}: Every opponent dies in a fire unless all pay {X}{U}{B}{G} or {X}{R}{B}{W} or {X}{X}{B} where X equals your life total.
+            {1}{U}{G}, {T}: Every opponent dies in a fire unless all pay {X}{U}{B}{G} or {X}{R}{B}{W} or {X}{X}{B} where X equals your life total.
         </rules-text>
         <flavor-text>For the first time in his life, Barney felt warm. And hungry.</flavor-text>
         <power>100</power>
         <toughness>100</toughness>
+    </creature>
+    <land title="Elysian Brothel">
+        <artwork>
+            <src>artwork/brothel.jpg</src>
+            <artist>God of War: Ascension</artist>
+        </artwork>
+        <rules-text>
+            Legendary Land
+
+            All legendary creatures, gods, and angels, get -1/-1.
+        </rules-text>
+        <flavor-text>_They are selective in their clientele, but their service legendary.</flavor-text>
+    </land>
+    <creature title="Sleeping Cherub" casting-cost="2ww" subtype="Angel">
+        <artwork>
+            <src>artwork/sally.jpg</src>
+            <artist>Sally Mann</artist>
+        </artwork>
+        <rules-text>Flying, double strike, lifelink</rules-text>
+        <flavor-text>Serra's children are angels.  And fierce.</flavor-text>
+        <power>2</power>
+        <toughness>4</toughness>
     </creature>
 </card-set>
