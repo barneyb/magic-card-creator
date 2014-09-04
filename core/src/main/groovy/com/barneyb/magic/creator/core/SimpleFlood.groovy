@@ -1,17 +1,18 @@
 package com.barneyb.magic.creator.core
-
 import com.barneyb.magic.creator.api.Flood
-import groovy.transform.Immutable
+import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
+import groovy.transform.TupleConstructor
 
-import java.awt.*
+import java.awt.Color
 
 /**
  *
  *
  * @author barneyb
  */
-@Immutable
+@TupleConstructor
+@EqualsAndHashCode
 @ToString(includeNames = true, includePackage = false, ignoreNulls = true)
 class SimpleFlood implements Flood {
 
