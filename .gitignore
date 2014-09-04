@@ -4,9 +4,9 @@ target
 *.ipr
 *.iws
 .idea
-*.properties
 .settings
 .project
 build
 dependency-reduced-pom.xml
 proof-*.html
+/*.svg
