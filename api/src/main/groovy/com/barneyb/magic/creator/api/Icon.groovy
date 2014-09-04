@@ -27,4 +27,9 @@ interface Icon {
      */
     SVGDocument getDocument()
 
+    /**
+     * The raw SVG XML which visually represents this icon as a String.
+     */
+    String getDocumentString()
+
 }
