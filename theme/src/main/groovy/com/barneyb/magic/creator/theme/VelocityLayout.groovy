@@ -7,12 +7,14 @@ import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.VelocityEngine
 import org.apache.velocity.runtime.RuntimeConstants
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+import org.apache.velocity.runtime.resource.loader.URLResourceLoader
 import org.w3c.dom.svg.SVGDocument
 /**
  *
  *
  * @author barneyb
  */
+@SuppressWarnings("GrFinalVariableAccess")
 @TupleConstructor
 class VelocityLayout {
 
@@ -22,8 +24,10 @@ class VelocityLayout {
 
     SVGDocument layout(Card card) {
         def ve = new VelocityEngine()
-        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath, url");
+        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.getName());
+        ve.setProperty("url.resource.loader.class", URLResourceLoader.getName());
+        ve.setProperty("url.resource.loader.root", "");
         ve.setProperty("runtime.references.strict", true)
         ve.init()
         def t = ve.getTemplate(template)
