@@ -170,7 +170,7 @@
         </spell>
         <spell title="Entering" casting-cost="4br" type="Sorcery">
             <artwork>
-                <src>artwork/breaking.jpg</src>
+                <src>artwork/entering.jpg</src>
                 <artist>Mathias Kollros</artist>
             </artwork>
             <rules-text>

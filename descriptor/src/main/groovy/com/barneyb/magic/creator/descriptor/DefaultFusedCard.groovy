@@ -1,6 +1,7 @@
 package com.barneyb.magic.creator.descriptor
 import com.barneyb.magic.creator.api.Artwork
 import com.barneyb.magic.creator.api.BodyItem
+import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.LayoutType
 import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Symbol
@@ -10,6 +11,8 @@ import com.barneyb.magic.creator.api.Symbol
  * @author barneyb
  */
 class DefaultFusedCard extends DefaultCard {
+
+    List<Card> fusedCards = []
 
     @Override
     LayoutType getLayoutType() {

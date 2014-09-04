@@ -1,5 +1,4 @@
 package com.barneyb.magic.creator.descriptor
-
 import com.barneyb.magic.creator.api.CardSet
 import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Rarity
@@ -7,6 +6,8 @@ import com.barneyb.magic.creator.api.SymbolFactory
 import com.barneyb.magic.creator.core.SimpleArtwork
 import com.barneyb.magic.creator.descriptor.schema.CardSetType
 import com.barneyb.magic.creator.descriptor.schema.CreatureType
+import com.barneyb.magic.creator.descriptor.schema.FuseType
+import com.barneyb.magic.creator.descriptor.schema.FusedSpellType
 import com.barneyb.magic.creator.descriptor.schema.LandType
 import com.barneyb.magic.creator.descriptor.schema.PlaneswalkerType
 import com.barneyb.magic.creator.descriptor.schema.RulesTextType
@@ -18,7 +19,6 @@ import javax.xml.bind.JAXBContext
 import javax.xml.bind.JAXBElement
 import javax.xml.transform.stream.StreamSource
 import javax.xml.validation.SchemaFactory
-
 /**
  *
  *
@@ -65,43 +65,51 @@ class CardSetImporter {
         def cs = new DefaultCardSet(csel.title, csel.key, csel.copyright)
         cs.cards = csel.cards.collect { el->
             DefaultCard c
-            if (el instanceof PlaneswalkerType) {
-                c = fromPlaneswalkerType(el)
-            } else if (el instanceof CreatureType) {
-                c = fromCreatureType(el)
-            } else if (el instanceof SpellType) {
-                c = fromSpellType(el)
-            } else if (el instanceof LandType) {
-                c = fromLandType(el)
+            if (el instanceof FuseType) {
+                c = fromFuseType(base, el)
             } else {
-                throw new IllegalArgumentException("Unknown card type: ${el.getClass()}")
+                if (el instanceof PlaneswalkerType) {
+                    c = fromPlaneswalkerType(el)
+                } else if (el instanceof CreatureType) {
+                    c = fromCreatureType(el)
+                } else if (el instanceof SpellType) {
+                    c = fromSpellType(el)
+                } else if (el instanceof LandType) {
+                    c = fromLandType(el)
+                } else {
+                    throw new IllegalArgumentException("Unknown card type: ${el.getClass()}")
+                }
+                coreProps(base, el, c)
             }
-            c.cardSet = cs
-            c.title = el.title
-            if (el.colorIndicator) {
-                c.colors = getColors(el.colorIndicator)
-                c.colorExplicit = true
-            } else {
-                c.colorExplicit = false
-            }
-            c.artwork = new SimpleArtwork(
-                new URL(base, el.artwork.src),
-                el.artwork.artist
-            )
-            if (el.overArtwork) {
-                c.overArtwork = new SimpleArtwork(
-                    new URL(base, el.overArtwork.src),
-                    el.overArtwork.artist
-                )
-            }
-            c.cardNumber = csel.cards.indexOf(el) + 1 // one-indexed
             c.rarity = Rarity.valueOf(el.rarity.name())
-            c.flavorText = textParser.getNonNormativeText(el.flavorText)
-            c.rulesText = textParser.getRulesText(el.rulesText as RulesTextType)
-            c.watermarkName = el.watermark
+            c.cardSet = cs
+            c.cardNumber = csel.cards.indexOf(el) + 1 // one-indexed
             c
         }
         cs
+    }
+
+    protected void coreProps(URL base, BaseCardType el, DefaultCard c) {
+        c.title = el.title
+        if (el.colorIndicator) {
+            c.colors = getColors(el.colorIndicator)
+            c.colorExplicit = true
+        } else {
+            c.colorExplicit = false
+        }
+        c.artwork = new SimpleArtwork(
+            new URL(base, el.artwork.src),
+            el.artwork.artist
+        )
+        if (el.overArtwork) {
+            c.overArtwork = new SimpleArtwork(
+                new URL(base, el.overArtwork.src),
+                el.overArtwork.artist
+            )
+        }
+        c.flavorText = textParser.getNonNormativeText(el.flavorText)
+        c.rulesText = textParser.getRulesText(el.rulesText as RulesTextType)
+        c.watermarkName = el.watermark
     }
 
     DefaultCard fromLandType(LandType el) {
@@ -151,6 +159,24 @@ class CardSetImporter {
             a.rulesText = textParser.getRulesText(ael.rulesText)
             a
         }
+        c
+    }
+
+    DefaultFusedCard fromFuseType(URL base, FuseType el) {
+        def c = new DefaultFusedCard()
+        c.fusedCards = [
+            fromSpellType(base, el.spell.first()),
+            fromSpellType(base, el.spell.last())
+        ]
+        c
+    }
+
+    DefaultCard fromSpellType(URL base, FusedSpellType el) {
+        def c = new DefaultCard()
+        populateCost(c, el)
+        c.typeParts = el.type?.tokenize()
+        c.subtypeParts = el.subtype?.tokenize()
+        coreProps(base, el, c)
         c
     }
 
