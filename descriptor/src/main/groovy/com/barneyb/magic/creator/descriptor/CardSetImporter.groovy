@@ -112,7 +112,7 @@ class CardSetImporter {
         c.watermarkName = el.watermark
     }
 
-    DefaultCard fromLandType(LandType el) {
+    protected DefaultCard fromLandType(LandType el) {
         def c = new DefaultCard()
         c.colors = [ManaColor.COLORLESS]
         if (el.alliedColors != null) {
@@ -123,7 +123,7 @@ class CardSetImporter {
         c
     }
 
-    DefaultCard fromSpellType(SpellType el) {
+    protected DefaultCard fromSpellType(SpellType el) {
         def c = new DefaultCard()
         populateCost(c, el)
         c.typeParts = el.type?.tokenize()
@@ -131,7 +131,7 @@ class CardSetImporter {
         c
     }
 
-    DefaultCreatureCard fromCreatureType(CreatureType el) {
+    protected DefaultCreatureCard fromCreatureType(CreatureType el) {
         def c = new DefaultCreatureCard()
         populateCost(c, el)
         c.typeParts = (el.typeModifiers?.tokenize() ?: []) + "Creature"
@@ -148,7 +148,7 @@ class CardSetImporter {
         c
     }
 
-    DefaultPlaneswalkerCard fromPlaneswalkerType(PlaneswalkerType el) {
+    protected DefaultPlaneswalkerCard fromPlaneswalkerType(PlaneswalkerType el) {
         def c = new DefaultPlaneswalkerCard()
         populateCost(c, el)
         c.typeParts = ["Planeswalker"]
@@ -162,7 +162,7 @@ class CardSetImporter {
         c
     }
 
-    DefaultFusedCard fromFuseType(URL base, FuseType el) {
+    protected DefaultFusedCard fromFuseType(URL base, FuseType el) {
         def c = new DefaultFusedCard()
         c.fusedCards = [
             fromSpellType(base, el.spell.first()),
@@ -171,7 +171,7 @@ class CardSetImporter {
         c
     }
 
-    DefaultCard fromSpellType(URL base, FusedSpellType el) {
+    protected DefaultCard fromSpellType(URL base, FusedSpellType el) {
         def c = new DefaultCard()
         populateCost(c, el)
         c.typeParts = el.type?.tokenize()
