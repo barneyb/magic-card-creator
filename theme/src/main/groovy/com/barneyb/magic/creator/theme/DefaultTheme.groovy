@@ -27,7 +27,7 @@ class DefaultTheme implements Theme {
 
     protected SymbolIconFactory iconFactory = new DefaultIconFactory()
 
-    protected Texture semiEnchantmentTexture = new SimpleTexture(
+    Texture semiEnchantmentTexture = new SimpleTexture(
         image: new ClasspathRasterImage("theme/default/starfield.jpg"),
         opacity: 0.6f
     )
@@ -100,7 +100,7 @@ class DefaultTheme implements Theme {
         "Default M14-ish Theme"
     }
 
-    protected ColorTheme getColorTheme(ThemedColor color) {
+    ColorTheme getColorTheme(ThemedColor color) {
         if (! colors.containsKey(color)) {
             throw new IllegalArgumentException("This theme does not support the $color color.")
         }

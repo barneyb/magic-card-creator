@@ -12,6 +12,10 @@ interface Theme {
 
     boolean supports(LayoutType type)
 
+    ColorTheme getColorTheme(ThemedColor color)
+
+    Texture getSemiEnchantmentTexture()
+
     /**
      * I will lay out the given {@link Card} according to the the rules
      * of this theme.
