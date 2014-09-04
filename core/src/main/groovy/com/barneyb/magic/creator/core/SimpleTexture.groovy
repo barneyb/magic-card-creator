@@ -3,6 +3,7 @@ package com.barneyb.magic.creator.core
 import com.barneyb.magic.creator.api.Flood
 import com.barneyb.magic.creator.api.RasterImage
 import com.barneyb.magic.creator.api.Texture
+import groovy.transform.ToString
 import groovy.transform.TupleConstructor
 
 import java.awt.*
@@ -13,6 +14,7 @@ import java.awt.*
  * @author barneyb
  */
 @TupleConstructor
+@ToString(includeNames = true, includePackage = false, ignoreNulls = true)
 class SimpleTexture implements Texture {
 
     RasterImage image
