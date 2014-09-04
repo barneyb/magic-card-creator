@@ -102,7 +102,7 @@ class DefaultTheme implements Theme {
 
     @Override
     SVGDocument layout(Card card) {
-        new DefaultLayout(card.layoutType).layout(card)
+        new DefaultLayout().layout(card)
     }
 
 }
