@@ -24,7 +24,7 @@ class DefaultSymbolFactory implements SymbolFactory {
         } else if (symbol == 'X') {
             new DefaultSymbol(symbol, [ManaColor.COLORLESS])
         } else if (symbol.matches(~/[WUBRG]\/[WUBRG]/)) {
-            new DefaultSymbol(symbol, [ManaColor.fromSymbol(symbol.substring(0, 1)), ManaColor.fromSymbol(symbol.substring(2, 3))])
+            new DefaultSymbol(symbol, [ManaColor.fromSymbol(symbol.substring(0, 1)), ManaColor.fromSymbol(symbol.substring(2, 3))], true)
         } else if (symbol.matches(~/2\/[WUBRG]/)) {
             new DefaultSymbol(symbol, [ManaColor.COLORLESS, ManaColor.fromSymbol(symbol.substring(2, 3))])
         } else if (symbol.matches(~/[WUBRG]\/P/)) {

@@ -13,14 +13,16 @@ class DefaultSymbol implements Symbol {
 
     final String symbol
     final List<ManaColor> colors
+    final boolean hybrid
 
     def DefaultSymbol(String symbol, ManaColor color) {
         this(symbol, [color])
     }
 
-    def DefaultSymbol(String symbol, List<ManaColor> colors) {
+    def DefaultSymbol(String symbol, List<ManaColor> colors, boolean hybrid=false) {
         this.symbol = symbol.toUpperCase()
         this.colors = colors
+        this.hybrid = hybrid
     }
 
     @Override

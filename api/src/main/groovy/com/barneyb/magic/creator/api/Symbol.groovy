@@ -30,9 +30,13 @@ interface Symbol {
 
     /**
      * I indicate whether this symbol is associated with multiple colors.
-     * @return
      */
     boolean isMultiColor()
+
+    /**
+     * I indicate whether this shymbol is a hybrid symbol.
+     */
+    boolean isHybrid()
 
     /**
      * I return the symbol's primary color.
