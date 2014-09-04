@@ -1,0 +1,118 @@
+{
+    "name": "Default M14-ish Theme",
+    "layouts": {
+        "land": "frame.svg.vm",
+        "spell": "frame.svg.vm",
+        "creature": "frame.svg.vm"
+    },
+    "textures": {
+        "bar": {
+            "image": "metal.jpg",
+            "over": 0x4cffffff,
+            "bounds": [10, 10, 240, 240]
+        }
+    },
+    "semiEnchantment": {
+        "image": "starfield.jpg",
+        "opacity": 0.6
+    },
+    "colors": {
+        "white": {
+            "raw": 0xffffff,
+            "frame": {
+                "image": "white.jpg"
+            },
+            "bar": "bar",
+            "textbox": {
+                "image": "cloud.jpg",
+                "over": 0xccfffafc
+            }
+        },
+        "blue": {
+            "raw": 0x9FC5FF,
+            "frame": {
+                "base": "bar",
+                "over": {
+                    "color": 0xD9E8FF,
+                    "opacity": 0.6
+                }
+            },
+            "bar": "bar",
+            "textbox": {
+                "base": "bar",
+                "over": 0xccD9E8FF
+            }
+        },
+        "black": {
+            "raw": 0x666666,
+            "frame": {
+                "base": "bar",
+                "over": 0x99A6A6A6
+            },
+            "bar": "bar",
+            "textbox": {
+                "base": "bar",
+                "over": 0xA6A6A6
+            }
+        },
+        "red": {
+            "raw": 0xff0000,
+            "frame": {
+                "image": "red.jpg"
+            },
+            "bar": "bar",
+            "textbox": {
+                "image": "red.jpg",
+                "over": 0xccffeeee
+            }
+        },
+        "green": {
+            "raw": 0xA2D192,
+            "frame": {
+                "base": "bar",
+                "over": 0x99BDD1B6
+            },
+            "bar": "bar",
+            "textbox": {
+                "base": "bar",
+                "over": 0xccBDD1B6
+            }
+        },
+        "gold": {
+            "raw": 0xE8E78D,
+            "frame": {
+                "base": "bar",
+                "over": 0x99E8E8B7
+            },
+            "bar": "bar",
+            "textbox": {
+                "base": "bar",
+                "over": 0xccE8E8B7
+            }
+        },
+        "artifact": {
+            "raw": 0xAAD7EC,
+            "frame": {
+                "base": "bar",
+                "over": 0x99C4DFEC
+            },
+            "bar": "bar",
+            "textbox": {
+                "base": "bar",
+                "over": 0xccC4DFEC
+            }
+        },
+        "land": {
+            "raw": 0xFFD798,
+            "frame": {
+                "base": "bar",
+                "over": 0x99FFEED4
+            },
+            "bar": "bar",
+            "textbox": {
+                "base": "bar",
+                "over": 0xccFFEED4
+            }
+        }
+    }
+}
