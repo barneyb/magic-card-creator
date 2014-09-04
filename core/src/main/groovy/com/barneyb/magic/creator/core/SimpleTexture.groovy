@@ -26,6 +26,9 @@ class SimpleTexture implements Texture {
     Flood underFlood
 
     Rectangle bounds
+    Rectangle getBounds() {
+        bounds ?: new Rectangle(new Point(0, 0), image.size)
+    }
 
     @Override
     boolean isNonOpaque() {
