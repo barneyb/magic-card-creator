@@ -101,17 +101,17 @@ class DefaultIconFactory implements SymbolIconFactory {
 
     @Override
     com.barneyb.magic.creator.api.Icon getIcon(Symbol symbol) {
-        new DefaultIcon(symbol.symbol, XmlUtils.read(getIconInternal(symbol.symbol).flat))
+        new DefaultIcon(symbol.symbol, getIconInternal(symbol.symbol).flat)
     }
 
     @Override
     com.barneyb.magic.creator.api.Icon getShadowedIcon(Symbol symbol) {
-        new DefaultIcon(symbol.symbol, XmlUtils.read(getIconInternal(symbol.symbol).shadowed))
+        new DefaultIcon(symbol.symbol, getIconInternal(symbol.symbol).shadowed)
     }
 
     @Override
     com.barneyb.magic.creator.api.Icon getBareIcon(Symbol symbol) {
-        new DefaultIcon(symbol.symbol, XmlUtils.read(getIconInternal(symbol.symbol).bare))
+        new DefaultIcon(symbol.symbol, getIconInternal(symbol.symbol).bare)
     }
 
     @Override
