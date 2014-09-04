@@ -8,9 +8,8 @@ import com.barneyb.magic.creator.util.ColorUtils
 import groovy.transform.TupleConstructor
 
 import javax.imageio.ImageIO
-import java.awt.*
+import java.awt.Color
 import java.awt.image.BufferedImage
-
 /**
  *
  *
@@ -44,12 +43,12 @@ class FrameTool {
 
     Texture getBarTexture() {
         def tc
-        if (land) {
+        if (land || card.hybrid) {
             tc = ThemedColor.LAND
         } else if (artifact) {
             tc = ThemedColor.ARTIFACT
         } else if (card.colors.size() == 1) {
-            tc = color card.colors.first()
+            tc = color(card.colors.first())
         } else {
             tc = ThemedColor.GOLD
         }
@@ -87,6 +86,93 @@ class FrameTool {
 
     float invert(Number n) {
         (float) -1 * n
+    }
+
+    List<Texture> getFrameTextures() {
+        def tcs
+        if (land) {
+            tcs = [ThemedColor.LAND]
+        } else if (artifact) {
+            tcs = [ThemedColor.ARTIFACT]
+        } else if (card.multiColor && (! card.hybrid || card.colors.size() > 2)) {
+            tcs = [ThemedColor.GOLD]
+        } else {
+            tcs = card.colors.collect this.&color
+        }
+        tcs.collect {
+            theme.getColorTheme(it).frameTexture
+        }
+    }
+
+    List<Texture> getTextboxTextures() {
+        def tcs
+        if (land) {
+            if (card.alliedColors != null && card.alliedColors.size() in 1..2) {
+                return card.alliedColors.collect {
+                    theme.getColorTheme(color(it)).manaTextboxTexture
+                }
+            } else {
+                tcs = [ThemedColor.LAND]
+            }
+        } else if (card.colors.contains(ManaColor.COLORLESS) && card.colors.size() in 2..3) {
+            tcs = (card.colors - ManaColor.COLORLESS).collect this.&color
+        } else if (card.colors.size() in 1..2) {
+            tcs = card.colors.collect this.&color
+        } else if (card.multiColor) {
+            tcs = [ThemedColor.GOLD]
+        } else if (artifact) {
+            tcs = [ThemedColor.ARTIFACT]
+        } else {
+            tcs = card.colors.collect this.&color
+        }
+        tcs.collect {
+            theme.getColorTheme(it).textboxTexture
+        }
+    }
+
+    List<Color> getBorderColors() {
+        def tcs
+        if (land) {
+            if (card.alliedColors != null && card.alliedColors.size() in 1..2) {
+                tcs = card.alliedColors.collect this.&color
+            } else {
+                tcs = [ThemedColor.LAND]
+            }
+        } else if (card.colors.contains(ManaColor.COLORLESS) && card.colors.size() in 2..3) {
+            tcs = (card.colors - ManaColor.COLORLESS).collect this.&color
+        } else if (card.colors.size() in 1..2) {
+            tcs = card.colors.collect this.&color
+        } else if (card.multiColor) {
+            tcs = [ThemedColor.GOLD]
+        } else if (artifact) {
+            tcs = [ThemedColor.ARTIFACT]
+        } else {
+            tcs = card.colors.collect this.&color
+        }
+        tcs.collect {
+            theme.getColorTheme(it).baseColor
+        }
+    }
+
+    Color getPowerToughnessBoxColor() {
+        borderColors.last()
+    }
+
+    float gradientStart(int index, int count) {
+        float step = 1.0 / count
+        float point = step * index
+        point - step / 5
+    }
+
+    float gradientEnd(int index, int count) {
+        float step = 1.0 / count
+        float point = step * index
+        point + step / 5
+    }
+
+    float gradientPoint(int index, int count) {
+        float step = 1.0 / (count + 1)
+        step * (index + 1)
     }
 
 }

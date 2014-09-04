@@ -15,7 +15,8 @@ import com.barneyb.magic.creator.icon.DefaultIconFactory
 import com.barneyb.magic.creator.util.ColorUtils
 import org.w3c.dom.svg.SVGDocument
 
-import java.awt.*
+import java.awt.Color
+import java.awt.Rectangle
 
 /**
  *
@@ -77,7 +78,7 @@ class DefaultTheme implements Theme {
                 overFlood: new SimpleFlood(ColorUtils.fromHex("#ffeeee"), 0.8f)
             ),
         ),
-        (ThemedColor.GOLD): new SimpleColorTheme(
+        (ThemedColor.LAND): new SimpleColorTheme(
             barTexture: barTexture,
         ),
     ]

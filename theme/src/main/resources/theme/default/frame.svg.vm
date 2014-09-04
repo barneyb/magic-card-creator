@@ -123,63 +123,63 @@
 
         #if($tool.semiEnchantment)
             #texture("enchantmentFrame", $tool.semiEnchantmentTexture)
+
+            <linearGradient id="frameTopGradient" gradientTransform="rotate(90)">
+                <stop offset=".5" stop-color="white" stop-opacity="1" />
+                <stop offset=".8" stop-color="white" stop-opacity="0" />
+            </linearGradient>
+            <mask id="frameTopMask">
+                <rect width="100%" height="100%" fill="url(#frameTopGradient)" />
+            </mask>
         #end
 
-        <pattern id="whiteFrame" patternUnits="userSpaceOnUse" height="600" width="600">
-            <image width="600" height="600" xlink:href="white.jpg" />
-        </pattern>
+        #set($txs = $tool.frameTextures)
+        #foreach($t in $txs)
+            #texture("frame_$foreach.index" $t)
+            #if(! $foreach.first)
+                <linearGradient id="frameGradient_$foreach.index">
+                    <stop offset="$tool.gradientStart($foreach.index, $txs.size())" stop-color="white" stop-opacity="0" />
+                    <stop offset="$tool.gradientEnd($foreach.index, $txs.size())" stop-color="white" stop-opacity="1" />
+                </linearGradient>
+                <mask id="frameMask_$foreach.index">
+                    <rect width="100%" height="100%" fill="url(#frameGradient_$foreach.index)" />
+                </mask>
+            #end
+        #end
 
-        <pattern id="whiteTextbox" patternUnits="userSpaceOnUse" height="480" width="640">
-            <image width="640" height="480" xlink:href="cloud.jpg" />
-            <rect width="640" height="480" fill="#fffafc" opacity=".8" />
-        </pattern>
+        #set($txs = $tool.textboxTextures)
+        #foreach($t in $txs)
+            #texture("textbox_$foreach.index" $t)
+            #if(! $foreach.first)
+                <linearGradient id="textboxGradient_1">
+                    <stop offset="$tool.gradientStart($foreach.index, $txs.size())" stop-color="white" stop-opacity="0" />
+                    <stop offset="$tool.gradientEnd($foreach.index, $txs.size())" stop-color="white" stop-opacity="1" />
+                </linearGradient>
+                <mask id="textboxMask_1">
+                    <rect x="-377" y="-175" width="754" height="350" fill="url(#textboxGradient_1)" />
+                </mask>
+            #end
+        #end
 
-        <pattern id="redFrame" patternUnits="userSpaceOnUse" height="400" width="640">
-            <image width="640" height="400" xlink:href="red.jpg" />
-        </pattern>
-
-        <pattern id="redTextbox" patternUnits="userSpaceOnUse" height="400" width="640">
-            <image width="640" height="400" xlink:href="red.jpg" />
-            <rect width="640" height="400" fill="#fee" opacity=".8" />
-        </pattern>
-
-        <linearGradient id="redWhite">
-            <stop offset=".4" stop-color="#f00" />
-            <stop offset=".6" stop-color="#fff" />
+        <linearGradient id="border">
+            #set($cs = $tool.borderColors)
+            #foreach($c in $cs)
+                <stop offset="$tool.gradientPoint($foreach.index, $cs.size())" stop-color="$tool.toValue($c)" />
+            #end
         </linearGradient>
 
-        <linearGradient id="frameRightGradient">
-            <stop offset=".4" stop-color="white" stop-opacity="0" />
-            <stop offset=".6" stop-color="white" stop-opacity="1" />
-        </linearGradient>
-        <mask id="frameRightMask">
-            <rect width="100%" height="100%" fill="url(#frameRightGradient)" />
-        </mask>
-
-        <linearGradient id="frameTopGradient" gradientTransform="rotate(90)">
-            <stop offset=".5" stop-color="white" stop-opacity="1" />
-            <stop offset=".8" stop-color="white" stop-opacity="0" />
-        </linearGradient>
-        <mask id="frameTopMask">
-            <rect width="100%" height="100%" fill="url(#frameTopGradient)" />
-        </mask>
-
-        <linearGradient id="textboxRightGradient">
-            <stop offset=".4" stop-color="white" stop-opacity="0" />
-            <stop offset=".6" stop-color="white" stop-opacity="1" />
-        </linearGradient>
-        <mask id="textboxRightMask">
-            <rect x="-377" y="-175" width="754" height="350" fill="url(#textboxRightGradient)" />
-        </mask>
     </defs>
     <g>
         <rect width="875" height="1225" fill="#000" />
-        <rect x="35" y="35" width="805" height="1155" fill="url(#redFrame)" />
-        <rect x="35" y="35" width="805" height="1155" fill="url(#whiteFrame)" mask="url(#frameRightMask)" />
-        <rect x="35" y="35" width="805" height="1155" fill="url(#enchantmentFrame)" mask="url(#frameTopMask)" />
+        #foreach($t in $tool.frameTextures)
+            <rect x="35" y="35" width="805" height="1155" fill="url(#frame_$foreach.index)"#if(! $foreach.first) mask="url(#frameMask_$foreach.index)"#end />
+        #end
+        #if($tool.semiEnchantment)
+            <rect x="35" y="35" width="805" height="1155" fill="url(#enchantmentFrame)" mask="url(#frameTopMask)" />
+        #end
 
         <!-- border drop shadow -->
-        <g filter="url(#dropFilter)" fill="none" stroke="#fff" stroke-width="5">
+        <g filter="url(#dropFilter)" fill="none" stroke="#000" stroke-width="5">
             <use xlink:href="#-title" x="439" y="92" />
             <use xlink:href="#-art" x="439" y="409.5" />
             <use xlink:href="#-type" x="439" y="727" />
@@ -213,14 +213,15 @@
         <g transform="translate(439 937)">
             <g transform="scale(.9934 .9857)">
                 <g filter="url(#pushinFilter)">
-                    <use xlink:href="#-text" fill="url(#redTextbox)" />
-                    <use xlink:href="#-text" fill="url(#whiteTextbox)" mask="url(#textboxRightMask)" />
+                    #foreach($t in $tool.frameTextures)
+                        <use xlink:href="#-text" fill="url(#textbox_$foreach.index)"#if(! $foreach.first) mask="url(#textboxMask_$foreach.index)"#end />
+                    #end
                 </g>
             </g>
         </g>
 
         <!-- actual border -->
-        <g fill="none" stroke="url(#redWhite)" stroke-width="5">
+        <g fill="none" stroke="url(#border)" stroke-width="5">
             <use xlink:href="#-title" x="439" y="92" />
             <use xlink:href="#-art" x="439" y="409.5" />
             <use xlink:href="#-type" x="439" y="727" />
@@ -234,12 +235,11 @@
                     <g filter="url(#pushinFilter)">
                         <use xlink:href="#-pt" fill="url(#bar)" />
                     </g>
-                    <!--<use xlink:href="#-pt" stroke="#000" stroke-width="3" fill="none" />-->
                 </g>
                 <g transform="scale(1.04 1.08)">
                     <use xlink:href="#-pt" stroke="#000" stroke-width="3" fill="none" />
                 </g>
-                <g fill="none" stroke="#fff" stroke-width="4">
+                <g fill="none" stroke="$tool.toValue($tool.powerToughnessBoxColor)" stroke-width="4">
                     <use xlink:href="#-pt" />
                 </g>
             </g>
