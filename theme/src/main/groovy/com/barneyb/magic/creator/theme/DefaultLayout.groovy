@@ -21,6 +21,7 @@ class DefaultLayout {
         def ve = new VelocityEngine()
         ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
         ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        ve.setProperty("runtime.references.strict", true)
         ve.init()
         def t = ve.getTemplate("theme/default/frame.svg.vm")
         def ctx = new VelocityContext([
