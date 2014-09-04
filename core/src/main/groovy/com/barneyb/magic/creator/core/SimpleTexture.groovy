@@ -6,7 +6,8 @@ import com.barneyb.magic.creator.api.Texture
 import groovy.transform.ToString
 import groovy.transform.TupleConstructor
 
-import java.awt.*
+import java.awt.Point
+import java.awt.Rectangle
 
 /**
  *
@@ -43,6 +44,18 @@ class SimpleTexture implements Texture {
     @Override
     boolean isUnderFlooded() {
         underFlood != null
+    }
+
+    SimpleTexture floodOver(Flood f) {
+        new SimpleTexture(image, opacity, f, underFlood)
+    }
+
+    SimpleTexture floodUnder(Flood f) {
+        new SimpleTexture(image, opacity, overFlood, f)
+    }
+
+    SimpleTexture derive(float o) {
+        new SimpleTexture(image, o, overFlood, underFlood)
     }
 
 }
