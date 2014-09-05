@@ -16,11 +16,11 @@ import org.w3c.dom.svg.SVGDocument
  */
 @SuppressWarnings("GrFinalVariableAccess")
 @TupleConstructor
-class VelocityLayout {
+abstract class VelocityLayout {
 
-    final Theme theme
+    Theme theme
 
-    final String template
+    String template
 
     SVGDocument layout(Card card) {
         def ve = new VelocityEngine()
@@ -37,8 +37,10 @@ class VelocityLayout {
         def writer = new StringWriter()
         t.merge(ctx, writer)
         def doc = XmlUtils.read(writer.toString())
-        // todo: do the card layout
+        layoutInternal(doc, card)
         doc
     }
+
+    abstract void layoutInternal(SVGDocument doc, Card card)
 
 }

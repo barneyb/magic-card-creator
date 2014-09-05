@@ -3,7 +3,10 @@
     "layouts": {
         "land": "frame.svg.vm",
         "spell": "frame.svg.vm",
-        "creature": "frame.svg.vm"
+        "creature": {
+            "template": "frame.svg.vm",
+            "impl": "com.barneyb.magic.creator.theme.DefaultLayout"
+        }
     },
     "textures": {
         "bar": {

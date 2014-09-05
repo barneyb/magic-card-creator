@@ -25,7 +25,7 @@ class DynamicTheme implements Theme {
     protected SymbolIconFactory iconFactory = new DefaultIconFactory()
 
     protected ThemeSpec desc
-    protected Map<LayoutType, String> layouts
+    protected Map<LayoutType, VelocityLayout> layouts
     protected Map<ThemedColor, ColorTheme> colors
     Texture semiEnchantmentTexture
 
@@ -33,8 +33,14 @@ class DynamicTheme implements Theme {
         this.desc = desc
         semiEnchantmentTexture = textureFromSpec(desc.semiEnchantment)
         //noinspection GroovyAssignabilityCheck
-        layouts = desc.layouts.collectEntries { k, URL v ->
-            new MapEntry(LayoutType.valueOf(k.toUpperCase()), v.toString())
+        layouts = desc.layouts.collectEntries { k, LayoutSpec v ->
+            def layout = v.impl.newInstance()
+            layout.theme = this
+            layout.template = v.template.toString()
+            new MapEntry(
+                LayoutType.valueOf(k.toUpperCase()),
+                layout
+            )
         }
         //noinspection GroovyAssignabilityCheck
         colors = desc.colors.collectEntries { k, v ->
@@ -110,7 +116,7 @@ class DynamicTheme implements Theme {
         if (! supports(card.layoutType)) {
             throw new IllegalArgumentException("This theme does not support the $card.layoutType layout type.")
         }
-        new VelocityLayout(this, layouts[card.layoutType]).layout(card)
+        layouts[card.layoutType].layout(card)
     }
 
 }

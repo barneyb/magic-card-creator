@@ -22,7 +22,6 @@ import groovy.transform.TupleConstructor
 import java.awt.Color
 import java.awt.Rectangle
 import java.lang.reflect.Type
-
 /**
  * I load a theme from a descriptor, which is a JSON file describing all aspects
  * of a theme, as described by {@link ThemeSpec} and it's referenced classes,
@@ -58,10 +57,14 @@ class ThemeLoader {
                         return new ColorAdapter()
                     case Flood:
                         return new FloodAdapter(gson.getDelegateAdapter(this, TypeToken.get(SimpleFlood)))
+                    case LayoutSpec:
+                        return new LayoutAdapter(delegate, gson.getAdapter(URL))
                     case Rectangle:
                         return new RectangleAdapter()
                     case URL:
                         return new URLAdapter(descUrl)
+                    case Class:
+                        return new ClassAdapter()
                     default:
                         return null
                 }
@@ -98,6 +101,22 @@ class ThemeLoader {
 
     }
 
+    @TupleConstructor(includeSuperProperties = true, callSuper = true)
+    static class LayoutAdapter extends BaseAdapter<LayoutSpec> {
+
+        TypeAdapter<URL> urlAdapter
+
+        @Override
+        LayoutSpec read(JsonReader r) throws IOException {
+            if (r.peek() == JsonToken.STRING) {
+                new LayoutSpec(template: urlAdapter.read(r))
+            } else {
+                delegate.read(r)
+            }
+        }
+
+    }
+
     static class ColorAdapter extends BaseAdapter<Color> {
 
         @Override
@@ -109,6 +128,17 @@ class ThemeLoader {
                 }
             }
             throw new JsonSyntaxException("cannot parse color")
+        }
+    }
+
+    static class ClassAdapter extends BaseAdapter<Class> {
+
+        @Override
+        Class read(JsonReader jsonReader) throws IOException {
+            if (jsonReader.peek() == JsonToken.STRING) {
+                return Class.forName(jsonReader.nextString())
+            }
+            throw new JsonSyntaxException("cannot parse class")
         }
     }
 
