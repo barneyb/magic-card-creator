@@ -82,7 +82,7 @@
 
             All legendary creatures, gods, and angels, get -1/-1.
         </rules-text>
-        <flavor-text>_They are selective in their clientele, but their service legendary.</flavor-text>
+        <flavor-text>They are selective in their clientele, but their service legendary.</flavor-text>
     </land>
     <creature title="Sleeping Cherub" casting-cost="2ww" subtype="Angel">
         <artwork>
