@@ -39,19 +39,24 @@ class DynamicThemeTest {
 
     @After
     void proofsheet() {
+        def files = ['sally', 'cherub', 'counterspell', 'nightmare', 'hellion', 'barney', 'brothel'].collect {
+            it + ".svg"
+        }
         new File("proof-default-theme.html").text = """\
 <html>
 <head>
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8" />
 </head>
 <body>
-<embed src="sally.svg" />
-<embed src="cherub.svg" />
-<embed src="counterspell.svg" />
-<embed src="nightmare.svg" />
-<embed src="hellion.svg" />
-<embed src="barney.svg" />
-<embed src="brothel.svg" />
+${files.collect {
+    new File(it)
+}.findAll {
+    it.exists()
+}.collect {
+    it.deleteOnExit()
+    it.text
+}.join("\n")}
+<p>Generated at: ${new Date()}
 </body>
 </html>"""
     }
