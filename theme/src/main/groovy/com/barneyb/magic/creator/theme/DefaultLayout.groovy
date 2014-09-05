@@ -1,6 +1,7 @@
 package com.barneyb.magic.creator.theme
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CreatureCard
+import com.barneyb.magic.creator.api.Icon
 import com.barneyb.magic.creator.api.RasterImage
 import com.barneyb.magic.creator.core.DoubleDimension
 import com.barneyb.magic.creator.textlayout.Align
@@ -8,6 +9,7 @@ import com.barneyb.magic.creator.textlayout.LayoutUtils
 import com.barneyb.magic.creator.util.FontLoader
 import groovy.transform.InheritConstructors
 import org.apache.batik.svggen.SVGGraphics2D
+import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
 
 import java.awt.Color
@@ -44,14 +46,40 @@ class DefaultLayout extends VelocityLayout {
     void layoutInternal(SVGDocument doc, Card card) {
         SVGGraphics2D g = new SVGGraphics2D(doc)
         def tool = new FrameTool(theme, card)
+        def defs = el(doc.rootElement, 'defs', [
+            id: "icons"
+        ])
+        def iconDef = { String idPrefix, Icon it ->
+            def icon = it.document.rootElement.cloneNode(true)
+            doc.adoptNode(icon)
+            el(defs, 'g', [
+                id: "$idPrefix-$it.key"
+            ]).appendChild(icon)
+        }
 
         TextBox titleBar
-        if (tool.land) {
+        if (card.castingCost == null) {
             titleBar = TITLE_BAR
         } else {
             def cost = tool.costAsIcons
-            // todo: casting cost
             def totalCostIconWidth = (double) cost*.size*.width.sum(0)
+
+            cost.unique(false).each iconDef.curry("cost")
+            def gc = el(doc.rootElement, 'g', [
+                id: "casting-cost",
+                transform: "translate(${TITLE_BAR.x + TITLE_BAR.width - totalCostIconWidth} $TITLE_BAR.y)"
+            ])
+            float x = 0
+            cost.each {
+                def factor = (float) TITLE_BAR.height / it.size.height
+                def width = it.size.width * factor
+                el(gc, 'use', [
+                    'xlink:href': "#cost-$it.key",
+                    transform: "translate($x 0) scale($factor)"
+                ])
+                x += width
+            }
+            // constrain the title bar to what's left after the cost plus half the average icon width
             def avgCostIconWidth = 1.0 * totalCostIconWidth / cost.size()
             titleBar = TITLE_BAR - new DoubleDimension(totalCostIconWidth + avgCostIconWidth / 2, 0)
         }
@@ -68,6 +96,7 @@ class DefaultLayout extends VelocityLayout {
 
         g.color = Color.YELLOW
         g.draw(TITLE_BAR)
+        g.draw(titleBar)
         g.draw(ARTWORK)
         g.draw(TYPE_BAR)
         g.draw(TEXTBOX)
@@ -89,6 +118,18 @@ class DefaultLayout extends VelocityLayout {
         def y = box.y + (box.height - size.height * f) / 2
         svgg.drawImage(img, new AffineTransformOp(AffineTransform.getScaleInstance(f, f), AffineTransformOp.TYPE_BICUBIC), (int) x, (int) y)
         svgg.clip = null
+    }
+
+    protected Element el(Element parent, String name, Map<String, ?> attrs=[:]) {
+        def el = parent.ownerDocument.createElementNS(parent.namespaceURI, name)
+        parent.appendChild(elattr(el, attrs))
+    }
+
+    protected Element elattr(Element el, Map<String, ?> attrs) {
+        attrs.each { n, v ->
+            el.setAttributeNS(null, n, v.toString())
+        }
+        el
     }
 
 }
