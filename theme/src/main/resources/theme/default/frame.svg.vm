@@ -157,7 +157,7 @@
                     <stop offset="$tool.gradientEnd($foreach.index, $txs.size())" stop-color="white" stop-opacity="1" />
                 </linearGradient>
                 <mask id="textboxMask_${foreach.index}_$docid">
-                    <rect x="-377" y="-175" width="754" height="350" fill="url(#textboxGradient_1)" />
+                    <rect x="-377" y="-175" width="754" height="350" fill="url(#textboxGradient_${foreach.index}_$docid)" />
                 </mask>
             #end
         #end
