@@ -3,6 +3,7 @@ import com.barneyb.magic.creator.api.BodyItem
 import com.barneyb.magic.creator.api.BodyText
 import com.barneyb.magic.creator.api.Icon
 import com.barneyb.magic.creator.api.IconGroup
+import com.barneyb.magic.creator.api.LineBreak
 import com.barneyb.magic.creator.api.NonNormativeText
 import com.barneyb.magic.creator.api.RulesText
 import com.barneyb.magic.creator.core.DoubleDimension
@@ -169,6 +170,11 @@ class LayoutUtils {
         Point getLocation() {
             new Point((int) x, (int) y)
         }
+
+        float getParagraphOffset() {
+            wrapOffset + paragraphBreakSize
+        }
+
     }
 
     void block(Graphics2D g, Rectangle2D box, List<List<BodyItem>> items, Map<TextAttribute, ?> bodyAttrs, Map<TextAttribute, ?> flavorAttrs, Closure drawAsset) {
@@ -185,10 +191,10 @@ class LayoutUtils {
             def mctx = new RenderCtx(g, box, fontSize, fm.ascent + fm.descent, true)
             mctx.rulesFont = rulesFont
             mctx.nonNormativeFont = nonNormativeFont
-            items.each { line ->
+            items.each { para ->
                 mctx.XOffset = 0
-                line.each this.&render.curry(mctx)
-                mctx.y += mctx.wrapOffset
+                para.each this.&render.curry(mctx)
+                mctx.y += mctx.paragraphOffset
             }
             // check how we did
             int extraSpace = box.y + box.height - mctx.y
@@ -215,15 +221,20 @@ class LayoutUtils {
         rctx.rulesFont = rulesFont
         rctx.nonNormativeFont = nonNormativeFont
         // draw it
-        items.each { line ->
+        items.each { para ->
             rctx.XOffset = 0
-            line.each this.&render.curry(rctx)
-            rctx.y += rctx.wrapOffset
+            para.each this.&render.curry(rctx)
+            rctx.y += rctx.paragraphOffset
         }
     }
 
     protected void render(RenderCtx ctx, BodyItem it) {
         throw new UnsupportedOperationException("BodyItem '${it.getClass().name}' is not supported.")
+    }
+
+    protected void render(RenderCtx ctx, LineBreak it) {
+        ctx.XOffset = 0
+        ctx.y += ctx.wrapOffset
     }
 
     protected void render(RenderCtx ctx, RulesText it) {
