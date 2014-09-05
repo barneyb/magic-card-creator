@@ -1,10 +1,13 @@
 package com.barneyb.magic.creator.icon
 
+import groovy.transform.PackageScope
+
 /**
  *
  *
  * @author barneyb
  */
+@PackageScope
 class SimpleIcon implements Icon {
 
     String id
