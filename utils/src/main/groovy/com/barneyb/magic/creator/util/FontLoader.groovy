@@ -12,7 +12,7 @@ class FontLoader {
 
     static void fromClasspath(String... paths) {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
-        def cl = getClass().classLoader
+        def cl = FontLoader.classLoader
         paths.each {
             def type
             if (it.endsWith("ttf") || it.endsWith("TTF")) {
