@@ -124,7 +124,7 @@ class LayoutUtils {
     /**
      * Defers to {@link #line(java.awt.Rectangle, java.lang.String, java.util.Map, Align)}.
      */
-    LineLayout line(Rectangle box, String text, Font font, Align align=Align.LEADING) {
+    LineLayout line(Rectangle2D box, String text, Font font, Align align=Align.LEADING) {
         line(box, text, font.attributes, align)
     }
 
@@ -132,7 +132,7 @@ class LayoutUtils {
      * Defers to {@link #line(java.awt.geom.Dimension2D, java.lang.String, java.util.Map, Align)},
      * and then offsets the coordinates by those in the Rectangle.
      */
-    LineLayout line(Rectangle box, String text, Map<TextAttribute, ?> attrs, Align align=Align.LEADING) {
+    LineLayout line(Rectangle2D box, String text, Map<TextAttribute, ?> attrs, Align align=Align.LEADING) {
         line(new DoubleDimension(box.width, box.height), text, attrs, align) + new Point2D.Double(box.x, box.y)
     }
 
