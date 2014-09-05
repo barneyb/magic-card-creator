@@ -2,6 +2,7 @@ package com.barneyb.magic.creator.theme
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CreatureCard
 import com.barneyb.magic.creator.api.RasterImage
+import com.barneyb.magic.creator.core.DoubleDimension
 import com.barneyb.magic.creator.textlayout.Align
 import com.barneyb.magic.creator.textlayout.LayoutUtils
 import groovy.transform.InheritConstructors
@@ -33,9 +34,19 @@ class DefaultLayout extends VelocityLayout {
     @Override
     void layoutInternal(SVGDocument doc, Card card) {
         SVGGraphics2D g = new SVGGraphics2D(doc)
+        def tool = new FrameTool(theme, card)
 
-        // todo: casting cost
-        layoutUtils.line(TITLE_BAR, card.title, TITLE_BAR.textAttributes).draw(g)
+        TextBox titleBar
+        if (tool.land) {
+            titleBar = TITLE_BAR
+        } else {
+            def cost = tool.costAsIcons
+            // todo: casting cost
+            def totalCostIconWidth = (double) cost*.size*.width.sum(0)
+            def avgCostIconWidth = 1.0 * totalCostIconWidth / cost.size()
+            titleBar = TITLE_BAR - new DoubleDimension(totalCostIconWidth + avgCostIconWidth / 2, 0)
+        }
+        layoutUtils.line(titleBar, card.title, titleBar.textAttributes).draw(g)
         xmlImage(g, ARTWORK, card.artwork)
         // todo: set/rarity
         layoutUtils.line(TYPE_BAR, card.typeParts.join(" ") + (card.subtypeParts ? ' \u2014 ' + card.subtypeParts.join(" ") : ""), TYPE_BAR.textAttributes).draw(g)
