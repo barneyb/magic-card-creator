@@ -27,6 +27,10 @@ class FrameTool {
     Theme theme
     Card card
 
+    String unique() {
+        Math.random().toString().substring(2)
+    }
+
     boolean isLand() {
         card.layoutType == LayoutType.LAND
     }
