@@ -13,8 +13,8 @@ class DefaultIconGroup implements IconGroup {
     @Delegate
     final protected List<Icon> _list
 
-    def DefaultIconGroup(List<Icon> list) {
-        this._list = list
+    def DefaultIconGroup(Collection<Icon> list) {
+        this._list = list as List
     }
 
     @Override
