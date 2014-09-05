@@ -28,6 +28,11 @@
         </dependency>
         <dependency>
             <groupId>com.barneyb.magic</groupId>
+            <artifactId>card-creator-text-layout</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.barneyb.magic</groupId>
             <artifactId>card-creator-descriptor</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
@@ -40,6 +45,11 @@
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-svggen</artifactId>
+            <version>${org.apache.xmlgraphics.batik.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-codec</artifactId>
             <version>${org.apache.xmlgraphics.batik.version}</version>
         </dependency>
         <dependency>

@@ -1,7 +1,12 @@
 package com.barneyb.magic.creator.theme
+
+import com.barneyb.magic.creator.api.BodyItem
 import com.barneyb.magic.creator.api.Card
+import com.barneyb.magic.creator.api.Icon
 import com.barneyb.magic.creator.api.LayoutType
 import com.barneyb.magic.creator.api.ManaColor
+import com.barneyb.magic.creator.api.Symbol
+import com.barneyb.magic.creator.api.SymbolGroup
 import com.barneyb.magic.creator.api.Texture
 import com.barneyb.magic.creator.api.Theme
 import com.barneyb.magic.creator.api.ThemedColor
@@ -175,6 +180,34 @@ class FrameTool {
     float gradientPoint(int index, int count) {
         float step = 1.0 / (count + 1)
         step * (index + 1)
+    }
+
+    List<Icon> getCostAsIcons() {
+        card.castingCost?.collect {
+            theme.symbolIconFactory.getShadowedIcon(it)
+        }
+    }
+
+    List<List<BodyItem>> getBodyAsIcons() {
+        bodySymbolToIcon(card.rulesText)
+    }
+
+    List<List<BodyItem>> getFlavorAsIcons() {
+        bodySymbolToIcon(card.rulesText)
+    }
+
+    protected List<List<BodyItem>> bodySymbolToIcon(List<List<BodyItem>> body) {
+        body?.each { line ->
+            line.eachWithIndex { BodyItem it, int i ->
+                if (it instanceof Symbol) {
+                    theme.symbolIconFactory.getIcon(it)
+                } else if (it instanceof SymbolGroup) {
+                    theme.symbolIconFactory.getIcons(it)
+                } else {
+                    it
+                }
+            }
+        }
     }
 
 }
