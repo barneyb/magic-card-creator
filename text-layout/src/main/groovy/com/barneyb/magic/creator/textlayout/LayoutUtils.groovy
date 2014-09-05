@@ -8,16 +8,21 @@ import com.barneyb.magic.creator.api.NonNormativeText
 import com.barneyb.magic.creator.api.RulesText
 import com.barneyb.magic.creator.core.DoubleDimension
 
-import java.awt.*
+import java.awt.Font
+import java.awt.Graphics2D
+import java.awt.Point
+import java.awt.Rectangle
+import java.awt.RenderingHints
 import java.awt.font.FontRenderContext
 import java.awt.font.LineBreakMeasurer
 import java.awt.font.TextAttribute
 import java.awt.font.TextLayout
+import java.awt.font.TransformAttribute
+import java.awt.geom.AffineTransform
 import java.awt.geom.Dimension2D
 import java.awt.geom.Point2D
 import java.awt.geom.Rectangle2D
 import java.text.AttributedString
-import java.util.List
 
 /**
  *
@@ -71,15 +76,19 @@ class LayoutUtils {
         // do the math
         float y = lm.ascent + (box.height - lm.ascent - Math.abs(lm.descent)) / 2
         float x = 0
-        float w = new TextLayout(new AttributedString(text, font.attributes).iterator, FONT_RENDER_CONTEXT).advance
+        def layout = new TextLayout(new AttributedString(text, font.attributes).iterator, FONT_RENDER_CONTEXT)
+        float w = layout.advance
         float xScale = 1
         if (align == Align.CENTER && w < box.width) {
             x += (box.width - w) / 2
         }
         if (w > box.width) {
             xScale = box.width / w
+            layout = new TextLayout(new AttributedString(text, font.attributes + [
+                (TextAttribute.TRANSFORM): new TransformAttribute(AffineTransform.getScaleInstance(xScale, 1))
+            ]).iterator, FONT_RENDER_CONTEXT)
         }
-        new LineLayout(fontSize, x, y, xScale)
+        new LineLayout(layout, x, y, xScale)
     }
 
     /**

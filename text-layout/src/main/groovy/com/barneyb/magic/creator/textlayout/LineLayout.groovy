@@ -1,9 +1,9 @@
 package com.barneyb.magic.creator.textlayout
-
 import groovy.transform.Immutable
+import org.apache.batik.svggen.SVGGraphics2D
 
+import java.awt.font.TextLayout
 import java.awt.geom.Point2D
-
 /**
  *
  * @author bboisvert
@@ -12,28 +12,34 @@ import java.awt.geom.Point2D
 class LineLayout {
 
     /**
-     * The font size to use for this line (based on box height).
+     * The font attributes to use for this line.
      */
-    float fontSize
+    TextLayout layout
+
     /**
      * The x coordinate the baseline should start at.
      */
     float x
+
     /**
      * The y coordinate the baseline should start at.
      */
     float y
+
     /**
      * The scaling transform needed in the x direction to fit in the box.
      */
     float scale
 
     LineLayout plus(Point2D p) {
-        new LineLayout(fontSize, (float) x + p.x, (float) y + p.y, scale)
+        new LineLayout(layout, (float) x + p.x, (float) y + p.y, scale)
     }
 
     boolean isScaled() {
         scale != 1
     }
 
+    void draw(SVGGraphics2D g) {
+        layout.draw(g, x, y)
+    }
 }

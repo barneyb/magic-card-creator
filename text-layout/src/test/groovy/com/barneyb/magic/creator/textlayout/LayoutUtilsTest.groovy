@@ -1,4 +1,5 @@
 package com.barneyb.magic.creator.textlayout
+
 import com.barneyb.magic.creator.api.Icon
 import com.barneyb.magic.creator.api.SymbolFactory
 import com.barneyb.magic.creator.api.SymbolIconFactory
@@ -11,11 +12,15 @@ import org.apache.batik.svggen.SVGGraphics2D
 import org.junit.Before
 import org.junit.Test
 
-import java.awt.*
+import java.awt.Color
+import java.awt.Dimension
+import java.awt.Graphics2D
+import java.awt.Rectangle
 import java.awt.font.TextAttribute
 import java.awt.geom.Rectangle2D
 
 import static org.junit.Assert.*
+
 /**
  * I test some of the layout stuff, but MUST do it in a somewhat careful way,
  * specifically avoiding any assertions which depend on the presence of
@@ -67,7 +72,6 @@ class LayoutUtilsTest {
         def leading = utils.line(dim, text, attrs)
         assertTrue(Math.abs(centered.x - leading.x) >  0.0000001)
         assertEquals(centered.y, leading.y, 0.0000001)
-        assertEquals(centered.fontSize, leading.fontSize, 0.0000001)
         assertEquals(centered.scale, leading.scale, 0.0000001)
     }
 
@@ -83,7 +87,6 @@ class LayoutUtilsTest {
         def leading = utils.line(dim, text, attrs)
         assertEquals(centered.x, leading.x, 0.0000001)
         assertEquals(centered.y, leading.y, 0.0000001)
-        assertEquals(centered.fontSize, leading.fontSize, 0.0000001)
         assertEquals(centered.scale, leading.scale, 0.0000001)
     }
 
