@@ -1,11 +1,11 @@
 package com.barneyb.magic.creator.icon
-
 import com.barneyb.magic.creator.api.IconGroup
 import com.barneyb.magic.creator.api.Symbol
 import com.barneyb.magic.creator.api.SymbolGroup
 import com.barneyb.magic.creator.api.SymbolIconFactory
 import com.barneyb.magic.creator.core.DefaultIcon
 import com.barneyb.magic.creator.core.DefaultIconGroup
+import com.barneyb.magic.creator.util.FontLoader
 import com.barneyb.magic.creator.util.XmlUtils
 import org.apache.batik.svggen.SVGGraphics2D
 import org.w3c.dom.Element
@@ -13,7 +13,6 @@ import org.w3c.dom.Element
 import java.awt.font.TextAttribute
 import java.awt.geom.AffineTransform
 import java.text.AttributedString
-
 /**
  * I am the default SymbolIconFactory creating symbol icons a la Magic 2014.
  *
@@ -23,6 +22,12 @@ class DefaultIconFactory implements SymbolIconFactory {
 
     public static final String DESCRIPTOR_PATH = 'default-icons.txt'
     protected Map<String, Icon> icons = [:]
+
+    static {
+        FontLoader.fromClasspath(
+            "fonts/GoudyOldStyle-Regular.ttf"
+        )
+    }
 
     def DefaultIconFactory() {
         load()
@@ -66,7 +71,7 @@ class DefaultIconFactory implements SymbolIconFactory {
             // X colorless
             return addIcon(new SimpleIcon(id: symbol, body: XmlUtils.write(withGraphics { SVGGraphics2D g ->
                 def attrStr = new AttributedString("X", [
-                    (TextAttribute.FAMILY): "Norasi", // todo: Goudy Old Style
+                    (TextAttribute.FAMILY): "Goudy Old Style",
                     (TextAttribute.SIZE): 45,
                     (TextAttribute.TRANSFORM): AffineTransform.getScaleInstance(0.8, 1)
                 ])
@@ -78,15 +83,18 @@ class DefaultIconFactory implements SymbolIconFactory {
             if (n >= 0 && n < 100) {
                 return addIcon(new SimpleIcon(id: symbol, body: XmlUtils.write(withGraphics { SVGGraphics2D g ->
                     def attrStr = new AttributedString(symbol, [
-                        (TextAttribute.FAMILY): "Norasi", // todo: Goudy Old Style
-                        (TextAttribute.SIZE): 53,
+                        (TextAttribute.FAMILY): "Goudy Old Style",
                         (TextAttribute.WEIGHT): TextAttribute.WEIGHT_BOLD,
                     ])
                     if (n < 10) {
-                        g.drawString(attrStr.iterator, 12, 39)
+                        attrStr.addAttribute(TextAttribute.SIZE, 49)
+                        // this BS transform seems to be needed to get Batik to convert the text to path
+                        attrStr.addAttribute(TextAttribute.TRANSFORM, AffineTransform.getScaleInstance(1, 1))
+                        g.drawString(attrStr.iterator, 11, 38)
                     } else {
+                        attrStr.addAttribute(TextAttribute.SIZE, 45)
                         attrStr.addAttribute(TextAttribute.TRANSFORM, AffineTransform.getScaleInstance(0.58, 1))
-                        g.drawString(attrStr.iterator, 8.5f, 40)
+                        g.drawString(attrStr.iterator, 10, 38)
                     }
                 })))
             }
