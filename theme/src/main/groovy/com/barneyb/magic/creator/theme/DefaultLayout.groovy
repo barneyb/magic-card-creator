@@ -12,9 +12,9 @@ import org.apache.batik.svggen.SVGGraphics2D
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
 
-import java.awt.Color
 import java.awt.Rectangle
 import java.awt.geom.AffineTransform
+import java.awt.geom.Rectangle2D
 import java.awt.image.AffineTransformOp
 /**
  *
@@ -87,7 +87,15 @@ class DefaultLayout extends VelocityLayout {
         xmlImage(g, ARTWORK, card.artwork)
         // todo: set/rarity
         layoutUtils.line(TYPE_BAR, card.typeParts.join(" ") + (card.subtypeParts ? ' \u2014 ' + card.subtypeParts.join(" ") : ""), TYPE_BAR.textAttributes).draw(g)
-        // todo: textbox
+
+        tool.bodyIcons.each iconDef.curry("body")
+        layoutUtils.block(g, TEXTBOX, tool.bodyText, TEXTBOX.font, TEXTBOX.italicFont, { SVGGraphics2D gphcs, Rectangle2D box, Icon it ->
+            el(doc.rootElement, 'use', [
+                'xlink:href': "#body-$it.key",
+                transform: "translate($box.x $box.y)" + (box.size == it.size ? '' : " scale(${(float) box.width / it.size.width} ${(float) box.height / it.size.height})")
+            ])
+        })
+
         if (card instanceof CreatureCard) {
             layoutUtils.line(POWER_TOUGHNESS, "$card.power/$card.toughness", POWER_TOUGHNESS.textAttributes, Align.CENTER).draw(g)
         }

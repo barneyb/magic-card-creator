@@ -1,6 +1,7 @@
 package com.barneyb.magic.creator.theme
 import com.barneyb.magic.creator.api.BodyItem
 import com.barneyb.magic.creator.api.Card
+import com.barneyb.magic.creator.api.Icon
 import com.barneyb.magic.creator.api.IconGroup
 import com.barneyb.magic.creator.api.LayoutType
 import com.barneyb.magic.creator.api.ManaColor
@@ -11,6 +12,7 @@ import com.barneyb.magic.creator.api.Theme
 import com.barneyb.magic.creator.api.ThemedColor
 import com.barneyb.magic.creator.core.DefaultIconGroup
 import com.barneyb.magic.creator.util.ColorUtils
+import groovy.transform.Memoized
 import groovy.transform.TupleConstructor
 
 import javax.imageio.ImageIO
@@ -192,17 +194,35 @@ class FrameTool {
         })
     }
 
-    List<List<BodyItem>> getBodyAsIcons() {
-        bodySymbolToIcon(card.rulesText)
+    Set<Icon> getBodyIcons() {
+        def icons = [] as Set
+        def doIt
+        doIt = {
+            if (it instanceof Icon) {
+                icons << it
+            } else if (it instanceof Collection) {
+                it.each doIt
+            }
+        }
+        bodyText.each doIt
+        icons
     }
 
-    List<List<BodyItem>> getFlavorAsIcons() {
-        bodySymbolToIcon(card.rulesText)
+    @Memoized
+    List<List<BodyItem>> getBodyText() {
+        def r = []
+        if (card.rulesText != null) {
+            r.addAll(symbolsToIcons(card.rulesText))
+        }
+        if (card.flavorText != null) {
+            r.addAll(symbolsToIcons(card.flavorText))
+        }
+        r
     }
 
-    protected List<List<BodyItem>> bodySymbolToIcon(List<List<BodyItem>> body) {
-        body?.each { line ->
-            line.eachWithIndex { BodyItem it, int i ->
+    List<List<BodyItem>> symbolsToIcons(List<List<BodyItem>> lines) {
+        lines.collect { line ->
+            line.collect {
                 if (it instanceof Symbol) {
                     theme.symbolIconFactory.getIcon(it)
                 } else if (it instanceof SymbolGroup) {
