@@ -1,8 +1,7 @@
 package com.barneyb.magic.creator.theme
-
 import com.barneyb.magic.creator.api.BodyItem
 import com.barneyb.magic.creator.api.Card
-import com.barneyb.magic.creator.api.Icon
+import com.barneyb.magic.creator.api.IconGroup
 import com.barneyb.magic.creator.api.LayoutType
 import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Symbol
@@ -10,6 +9,7 @@ import com.barneyb.magic.creator.api.SymbolGroup
 import com.barneyb.magic.creator.api.Texture
 import com.barneyb.magic.creator.api.Theme
 import com.barneyb.magic.creator.api.ThemedColor
+import com.barneyb.magic.creator.core.DefaultIconGroup
 import com.barneyb.magic.creator.util.ColorUtils
 import groovy.transform.TupleConstructor
 
@@ -182,10 +182,10 @@ class FrameTool {
         step * (index + 1)
     }
 
-    List<Icon> getCostAsIcons() {
-        card.castingCost?.collect {
+    IconGroup getCostAsIcons() {
+        new DefaultIconGroup(card.castingCost?.collect {
             theme.symbolIconFactory.getShadowedIcon(it)
-        }
+        })
     }
 
     List<List<BodyItem>> getBodyAsIcons() {
