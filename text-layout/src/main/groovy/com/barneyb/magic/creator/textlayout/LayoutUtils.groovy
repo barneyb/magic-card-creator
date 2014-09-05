@@ -1,5 +1,4 @@
 package com.barneyb.magic.creator.textlayout
-
 import com.barneyb.magic.creator.api.BodyItem
 import com.barneyb.magic.creator.api.BodyText
 import com.barneyb.magic.creator.api.Icon
@@ -11,7 +10,6 @@ import com.barneyb.magic.creator.core.DoubleDimension
 import java.awt.Font
 import java.awt.Graphics2D
 import java.awt.Point
-import java.awt.Rectangle
 import java.awt.RenderingHints
 import java.awt.font.FontRenderContext
 import java.awt.font.LineBreakMeasurer
@@ -23,7 +21,6 @@ import java.awt.geom.Dimension2D
 import java.awt.geom.Point2D
 import java.awt.geom.Rectangle2D
 import java.text.AttributedString
-
 /**
  *
  * @author bboisvert
@@ -138,19 +135,19 @@ class LayoutUtils {
 
     static class RenderCtx {
         final Graphics2D graphics
-        final Rectangle bounds
+        final Rectangle2D bounds
         float x
         float y
-        Font bodyFont
-        Font flavorFont
+        Font rulesFont
+        Font nonNormativeFont
         float fontSize
         float wrapOffset
         final boolean measuring
         int paragraphCount = 0
         float paragraphBreakSize
-        Closure drawAsset
+        Closure drawIcon
 
-        def RenderCtx(Graphics2D g, Rectangle b, float fs, float wo, boolean m) {
+        def RenderCtx(Graphics2D g, Rectangle2D b, float fs, float wo, boolean m) {
             graphics = g
             bounds = b
             x = bounds.x
@@ -174,20 +171,20 @@ class LayoutUtils {
         }
     }
 
-    void block(Graphics2D g, Rectangle box, List<List<BodyItem>> items, Map<TextAttribute, ?> bodyAttrs, Map<TextAttribute, ?> flavorAttrs, Closure drawAsset) {
+    void block(Graphics2D g, Rectangle2D box, List<List<BodyItem>> items, Map<TextAttribute, ?> bodyAttrs, Map<TextAttribute, ?> flavorAttrs, Closure drawAsset) {
         block(g, box, items, new Font(bodyAttrs), new Font(flavorAttrs), drawAsset)
     }
 
-    void block(Graphics2D g, Rectangle box, List<List<BodyItem>> items, Font bodyFont, Font flavorFont, Closure drawAsset) {
-        def fontSize = fontSizeForHeight(box.height / 7, ALL_ALPHANUMERICS, bodyFont.attributes, true)
+    void block(Graphics2D g, Rectangle2D box, List<List<BodyItem>> items, Font rulesFont, Font nonNormativeFont, Closure drawIcon) {
+        def fontSize = fontSizeForHeight(box.height / 7, ALL_ALPHANUMERICS, rulesFont.attributes, true)
         RenderCtx rctx
         for (int _i = 0; _i < 5; _i++) {
             // measure first
-            g.font = bodyFont.deriveFont(fontSize)
+            g.font = rulesFont.deriveFont(fontSize)
             def fm = g.fontMetrics
             def mctx = new RenderCtx(g, box, fontSize, fm.ascent + fm.descent, true)
-            mctx.bodyFont = bodyFont
-            mctx.flavorFont = flavorFont
+            mctx.rulesFont = rulesFont
+            mctx.nonNormativeFont = nonNormativeFont
             items.each { line ->
                 mctx.XOffset = 0
                 line.each this.&render.curry(mctx)
@@ -214,9 +211,9 @@ class LayoutUtils {
             }
         }
         assert rctx != null
-        rctx.drawAsset = drawAsset
-        rctx.bodyFont = bodyFont
-        rctx.flavorFont = flavorFont
+        rctx.drawIcon = drawIcon
+        rctx.rulesFont = rulesFont
+        rctx.nonNormativeFont = nonNormativeFont
         // draw it
         items.each { line ->
             rctx.XOffset = 0
@@ -230,11 +227,11 @@ class LayoutUtils {
     }
 
     protected void render(RenderCtx ctx, RulesText it) {
-        render(ctx, it, ctx.bodyFont)
+        render(ctx, it, ctx.rulesFont)
     }
 
     protected void render(RenderCtx ctx, NonNormativeText it) {
-        render(ctx, it, ctx.flavorFont)
+        render(ctx, it, ctx.nonNormativeFont)
     }
 
     protected void render(RenderCtx ctx, BodyText it, Font font) {
@@ -276,7 +273,7 @@ class LayoutUtils {
         def width = it.size.width * factor
         def height = it.size.height * factor
         if (! ctx.measuring) {
-            ctx.drawAsset(
+            ctx.drawIcon(
                 ctx.graphics,
                 new Rectangle2D.Double(
                     ctx.x + width * ICON_SPACING / 2,
