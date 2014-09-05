@@ -16,6 +16,8 @@ interface Theme {
 
     Texture getSemiEnchantmentTexture()
 
+    SymbolIconFactory getSymbolIconFactory()
+
     /**
      * I will lay out the given {@link Card} according to the the rules
      * of this theme.

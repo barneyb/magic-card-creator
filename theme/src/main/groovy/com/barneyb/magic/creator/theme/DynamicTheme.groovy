@@ -13,7 +13,6 @@ import com.barneyb.magic.creator.core.UrlRasterImage
 import com.barneyb.magic.creator.icon.DefaultIconFactory
 import groovy.transform.TupleConstructor
 import org.w3c.dom.svg.SVGDocument
-
 /**
  *
  *
@@ -22,7 +21,7 @@ import org.w3c.dom.svg.SVGDocument
 @TupleConstructor
 class DynamicTheme implements Theme {
 
-    protected SymbolIconFactory iconFactory = new DefaultIconFactory()
+    SymbolIconFactory symbolIconFactory = new DefaultIconFactory()
 
     protected ThemeSpec desc
     protected Map<LayoutType, VelocityLayout> layouts
