@@ -94,15 +94,15 @@ class DefaultLayout extends VelocityLayout {
         layoutUtils.line(ARTIST, card.artwork.artist, ARTIST.textAttributes).draw(g)
         layoutUtils.line(FOOTER, "$card.copyright $card.cardNumber/$card.setCardCount", FOOTER.textAttributes).draw(g)
 
-        g.color = Color.YELLOW
-        g.draw(TITLE_BAR)
-        g.draw(titleBar)
-        g.draw(ARTWORK)
-        g.draw(TYPE_BAR)
-        g.draw(TEXTBOX)
-        g.draw(POWER_TOUGHNESS)
-        g.draw(ARTIST)
-        g.draw(FOOTER)
+//        g.color = Color.YELLOW
+//        g.draw(TITLE_BAR)
+//        g.draw(titleBar)
+//        g.draw(ARTWORK)
+//        g.draw(TYPE_BAR)
+//        g.draw(TEXTBOX)
+//        g.draw(POWER_TOUGHNESS)
+//        g.draw(ARTIST)
+//        g.draw(FOOTER)
 
         doc.documentElement.appendChild(g.topLevelGroup)
     }
