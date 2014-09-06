@@ -155,7 +155,7 @@ class LayoutUtils {
             y = bounds.y
             fontSize = fs
             wrapOffset = wo
-            paragraphBreakSize = wrapOffset * 0.65
+            paragraphBreakSize = wrapOffset * 0.35
             measuring = m
         }
 
