@@ -8,7 +8,7 @@ import java.awt.Color
  * @author barneyb
  */
 class ColorThemeSpec {
-    Color raw
+    Color border
     TextureSpec frame
     TextureSpec bar
     TextureSpec textbox

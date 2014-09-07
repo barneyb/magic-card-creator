@@ -49,7 +49,7 @@ class DynamicTheme implements Theme {
 
     protected ColorTheme colorFromSpec(ColorThemeSpec spec) {
         new SimpleColorTheme(
-            spec.raw,
+            spec.border,
             textureFromSpec(spec.frame),
             textureFromSpec(spec.bar),
             textureFromSpec(spec.textbox),
