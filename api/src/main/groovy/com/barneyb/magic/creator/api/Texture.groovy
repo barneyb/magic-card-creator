@@ -1,6 +1,7 @@
 package com.barneyb.magic.creator.api
 
-import java.awt.*
+import java.awt.Color
+import java.awt.Rectangle
 
 /**
  * I represent a single texture used in a theme.  Texture objects may be
@@ -21,5 +22,7 @@ interface Texture extends Transparent {
     Flood getOverFlood()
 
     Rectangle getBounds()
+
+    Color getTextColor()
 
 }

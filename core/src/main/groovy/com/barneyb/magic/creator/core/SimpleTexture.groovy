@@ -6,6 +6,7 @@ import com.barneyb.magic.creator.api.Texture
 import groovy.transform.ToString
 import groovy.transform.TupleConstructor
 
+import java.awt.Color
 import java.awt.Point
 import java.awt.Rectangle
 
@@ -33,6 +34,8 @@ class SimpleTexture implements Texture {
     Rectangle getBounds() {
         bounds ?: new Rectangle(new Point(0, 0), image.size)
     }
+
+    Color textColor = Color.BLACK
 
     @Override
     boolean isNonOpaque() {
@@ -67,7 +70,8 @@ class SimpleTexture implements Texture {
             t.opacity ?: opacity,
             t.overFlood ?: overFlood,
             t.underFlood ?: underFlood,
-            t.@bounds ?: bounds
+            t.@bounds ?: bounds,
+            t.textColor ?: textColor
         )
     }
 

@@ -50,7 +50,8 @@
             "border": 0x666666,
             "frame": {
                 "base": "bar",
-                "over": 0x99A6A6A6
+                "over": 0x99A6A6A6,
+                "text": 0xffffff
             },
             "bar": "bar",
             "textbox": {
@@ -109,7 +110,8 @@
             "border": 0xFFD798,
             "frame": {
                 "base": "bar",
-                "over": 0x99FFEED4
+                "over": 0x99FFEED4,
+                "text": 0xffffff
             },
             "bar": "bar",
             "textbox": {

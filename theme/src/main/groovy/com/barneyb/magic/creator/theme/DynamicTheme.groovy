@@ -82,7 +82,8 @@ class DynamicTheme implements Theme {
                 spec.opacity,
                 spec.over,
                 spec.under,
-                spec.bounds
+                spec.bounds,
+                spec.text
             )
             if (spec.base != null) {
                 texture = textureFromName(spec.base) + texture

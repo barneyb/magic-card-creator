@@ -2,6 +2,7 @@ package com.barneyb.magic.creator.theme
 
 import com.barneyb.magic.creator.api.Flood
 
+import java.awt.Color
 import java.awt.Rectangle
 
 /**
@@ -16,4 +17,5 @@ class TextureSpec {
     Flood over
     Flood under
     Rectangle bounds
+    Color text
 }

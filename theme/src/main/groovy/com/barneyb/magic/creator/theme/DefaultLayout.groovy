@@ -84,12 +84,14 @@ class DefaultLayout extends VelocityLayout {
             def avgCostIconWidth = 1.0 * totalCostIconWidth / cost.size()
             titleBar = TITLE_BAR - new DoubleDimension(totalCostIconWidth + avgCostIconWidth / 2, 0)
         }
+        g.color = tool.barTexture.textColor
         layoutUtils.line(titleBar, card.title, titleBar.textAttributes).draw(g)
         xmlImage(g, ARTWORK, card.artwork)
         // todo: set/rarity
         layoutUtils.line(TYPE_BAR, card.typeParts.join(" ") + (card.subtypeParts ? ' \u2014 ' + card.subtypeParts.join(" ") : ""), TYPE_BAR.textAttributes).draw(g)
 
         tool.bodyIcons.each iconDef.curry("body")
+        g.color = tool.textboxTextures.first().textColor
         layoutUtils.block(g, TEXTBOX, tool.bodyText, TEXTBOX.font, TEXTBOX.italicFont, { SVGGraphics2D gphcs, Rectangle2D box, Icon it ->
             el(doc.rootElement, 'use', [
                 'xlink:href': "#body-$it.key",
@@ -98,8 +100,10 @@ class DefaultLayout extends VelocityLayout {
         })
 
         if (card instanceof CreatureCard) {
+            g.color = tool.barTexture.textColor
             layoutUtils.line(POWER_TOUGHNESS, "$card.power/$card.toughness", POWER_TOUGHNESS.textAttributes, Align.CENTER).draw(g)
         }
+        g.color = tool.frameTextures.first().textColor
         layoutUtils.line(ARTIST, card.artwork.artist, ARTIST.textAttributes).draw(g)
         layoutUtils.line(FOOTER, "$card.copyright $card.cardNumber/$card.setCardCount", FOOTER.textAttributes).draw(g)
 
