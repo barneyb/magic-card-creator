@@ -7,7 +7,7 @@
             <src>artwork/sally.jpg</src>
             <artist>Sally Mann</artist>
         </artwork>
-        <rules-text>{U}{T}: Tap target creature and pay 1 life.</rules-text>
+        <rules-text>{U}{T}: Tap target creature and you lose one life.</rules-text>
         <flavor-text>
             Sally doesn't like you.
 
@@ -24,7 +24,7 @@
         <rules-text>Counter target spell.</rules-text>
         <flavor-text>
             How about "never".<br />
-            -- Barney of the Green Woods
+            &#x2014; Barney of the Green Woods
         </flavor-text>
     </spell>
     <creature title="Nightmare" casting-cost="5b" subtype="Nightmare Horse">
@@ -72,15 +72,15 @@
         <power>100</power>
         <toughness>100</toughness>
     </creature>
-    <land title="Elysian Brothel">
+    <land title="Elysian Brothel" type-modifiers="Legendary">
         <artwork>
             <src>artwork/brothel.jpg</src>
             <artist>God of War: Ascension</artist>
         </artwork>
         <rules-text>
-            Legendary Land
+            All Sirens you control get +1/+1.
 
-            All legendary creatures, gods, and angels, get -1/-1.
+            All Gods, Angels, and legendary creatures your opponents control get -1/-1.
         </rules-text>
         <flavor-text>They are selective in their clientele, but their service legendary.</flavor-text>
     </land>
