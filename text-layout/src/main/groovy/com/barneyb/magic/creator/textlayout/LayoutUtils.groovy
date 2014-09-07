@@ -182,9 +182,9 @@ class LayoutUtils {
     }
 
     void block(Graphics2D g, Rectangle2D box, List<List<BodyItem>> items, Font rulesFont, Font nonNormativeFont, Closure drawIcon) {
-        def fontSize = fontSizeForHeight(box.height / 7, ALL_ALPHANUMERICS, rulesFont.attributes, true)
+        def fontSize = fontSizeForHeight(box.height / 5, ALL_ALPHANUMERICS, rulesFont.attributes, true)
         RenderCtx rctx
-        for (int _i = 0; _i < 5; _i++) {
+        for (int _i = 0; _i < 10; _i++) {
             // measure first
             g.font = rulesFont.deriveFont(fontSize)
             def fm = g.fontMetrics
@@ -205,14 +205,14 @@ class LayoutUtils {
                 break
             } else {
                 extraSpace *= -1
-                def maxSpaceReduction = mctx.paragraphCount * mctx.paragraphBreakSize * 0.5
+                def maxSpaceReduction = (mctx.paragraphCount - 1) * mctx.paragraphBreakSize * 0.5
                 if (extraSpace <= maxSpaceReduction) {
                     // reduce paragraph breaks and done
-                    rctx.paragraphBreakSize -= extraSpace / mctx.paragraphCount
+                    rctx.paragraphBreakSize -= extraSpace / (mctx.paragraphCount - 1)
                     break
                 } else {
                     // shrink it down and repeat
-                    fontSize = (float) mctx.fontSize - (extraSpace - maxSpaceReduction) / 10 // the '10' is magic. I don't know what it represents.
+                    fontSize = (float) mctx.fontSize - (extraSpace - maxSpaceReduction) / 25 // this number is magic. I don't know what it represents.
                 }
             }
         }
