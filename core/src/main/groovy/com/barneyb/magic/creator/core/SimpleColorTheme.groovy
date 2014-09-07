@@ -4,7 +4,7 @@ import com.barneyb.magic.creator.api.ColorTheme
 import com.barneyb.magic.creator.api.Texture
 import groovy.transform.TupleConstructor
 
-import java.awt.*
+import java.awt.Color
 
 /**
  *
@@ -14,7 +14,7 @@ import java.awt.*
 @TupleConstructor
 class SimpleColorTheme implements ColorTheme {
 
-    Color baseColor
+    Color borderColor
 
     Texture frameTexture
 

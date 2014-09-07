@@ -163,7 +163,7 @@ class FrameTool {
             tcs = card.colors.collect this.&color
         }
         tcs.collect {
-            theme.getColorTheme(it).baseColor
+            theme.getColorTheme(it).borderColor
         }
     }
 

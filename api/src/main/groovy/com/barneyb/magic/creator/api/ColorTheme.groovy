@@ -1,6 +1,6 @@
 package com.barneyb.magic.creator.api
 
-import java.awt.*
+import java.awt.Color
 
 /**
  * I represent the info related to a specific color w/in this theme.  Note
@@ -11,9 +11,9 @@ import java.awt.*
 interface ColorTheme {
 
     /**
-     * I am the base color of this color theme, at full saturation.
+     * I am the border color for this color theme.
      */
-    Color getBaseColor()
+    Color getBorderColor()
 
     /**
      * I am used for the card frame (inside the black border, outside all card
