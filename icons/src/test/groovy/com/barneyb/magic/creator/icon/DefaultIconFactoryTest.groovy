@@ -5,6 +5,8 @@ import com.barneyb.magic.creator.util.XmlUtils
 import org.junit.Before
 import org.junit.Test
 
+import java.nio.file.Files
+
 /**
  *
  *
@@ -12,7 +14,7 @@ import org.junit.Test
  */
 class DefaultIconFactoryTest {
 
-    static final String  PROOFSHEET_FILENAME = "proof-icons.html"
+    static final String PROOFSHEET_FILENAME = "proof-icons.html"
 
     DefaultSymbolFactory sf
     DefaultIconFactory factory
@@ -29,7 +31,7 @@ class DefaultIconFactoryTest {
         if (tgt.exists()) {
             tgt.delete()
         }
-        def tmp = File.createTempFile(PROOFSHEET_FILENAME, "html")
+        def tmp = File.createTempFile(PROOFSHEET_FILENAME, ".html")
         tmp.deleteOnExit()
         def out = tmp.newPrintWriter()
         out.print """\
@@ -72,7 +74,7 @@ div > svg { margin: 10px; }
 """
         out.flush()
         out.close()
-        tmp.renameTo(tgt)
+        Files.move(tmp.toPath(), tgt.toPath())
     }
 
 }
