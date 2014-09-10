@@ -69,9 +69,10 @@ div > svg { margin: 10px; }
             }
         }
         out.write """\
+<p>Generated at: ${new Date()}
 </body>
 </html>
-"""
+""".toString()
         out.flush()
         out.close()
         Files.move(tmp.toPath(), tgt.toPath())
