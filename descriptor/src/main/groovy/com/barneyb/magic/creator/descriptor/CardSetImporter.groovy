@@ -3,6 +3,13 @@ import com.barneyb.magic.creator.api.CardSet
 import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Rarity
 import com.barneyb.magic.creator.api.SymbolFactory
+import com.barneyb.magic.creator.core.DefaultCard
+import com.barneyb.magic.creator.core.DefaultCardSet
+import com.barneyb.magic.creator.core.DefaultCreatureCard
+import com.barneyb.magic.creator.core.DefaultCreatureLevel
+import com.barneyb.magic.creator.core.DefaultFusedCard
+import com.barneyb.magic.creator.core.DefaultLoyaltyAbility
+import com.barneyb.magic.creator.core.DefaultPlaneswalkerCard
 import com.barneyb.magic.creator.core.SimpleArtwork
 import com.barneyb.magic.creator.descriptor.schema.CardSetType
 import com.barneyb.magic.creator.descriptor.schema.CreatureType
