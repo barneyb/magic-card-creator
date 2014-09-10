@@ -27,7 +27,7 @@ class TextLayoutUtils {
     /**
      * Defers to {@link #line(java.awt.geom.Dimension2D, java.lang.String, java.util.Map, Align)}.
      */
-    LineLayout line(Dimension2D box, String text, Font font, Align align=Align.LEADING) {
+    static LineLayout line(Dimension2D box, String text, Font font, Align align=Align.LEADING) {
         line(box, text, font.attributes, align)
     }
 
@@ -46,7 +46,7 @@ class TextLayoutUtils {
      * @param align The alignment of the text within the box.
      * @return a LineLayout describing how the text should be laid out w/in the box.
      */
-    LineLayout line(Dimension2D box, String text, Map<TextAttribute, ?> attrs, Align align=Align.LEADING) {
+    static LineLayout line(Dimension2D box, String text, Map<TextAttribute, ?> attrs, Align align=Align.LEADING) {
         if (! attrs.containsKey(TextAttribute.FAMILY)) {
             throw new IllegalArgumentException("You must supply a 'family' attribute to lay out a line of text.")
         }
@@ -64,9 +64,10 @@ class TextLayoutUtils {
         float xScale = 1
         if (align == Align.CENTER && w < box.width) {
             x += (box.width - w) / 2
-        }
-        if (w > box.width) {
+        } else if (w > box.width || align == Align.STRETCH) {
             xScale = box.width / w
+        }
+        if (xScale != 1) {
             layout = new TextLayout(new AttributedString(text, font.attributes + [
                 (TextAttribute.TRANSFORM): new TransformAttribute(AffineTransform.getScaleInstance(xScale, 1))
             ]).iterator, FONT_RENDER_CONTEXT)
@@ -89,7 +90,7 @@ class TextLayoutUtils {
      *  lines, or just the visible height (ascent + descent) of the text.
      * @return The font size to use to get text rendered at the requested height.
      */
-    float fontSizeForHeight(double height, String text=null, Map<TextAttribute, ?> attrs, boolean includeLeading) {
+    static float fontSizeForHeight(double height, String text=null, Map<TextAttribute, ?> attrs, boolean includeLeading) {
         if (text == null) {
             text = ALL_ALPHANUMERICS
         }
@@ -107,7 +108,7 @@ class TextLayoutUtils {
     /**
      * Defers to {@link #line(java.awt.Rectangle, java.lang.String, java.util.Map, Align)}.
      */
-    LineLayout line(Rectangle2D box, String text, Font font, Align align=Align.LEADING) {
+    static LineLayout line(Rectangle2D box, String text, Font font, Align align=Align.LEADING) {
         line(box, text, font.attributes, align)
     }
 
@@ -115,7 +116,7 @@ class TextLayoutUtils {
      * Defers to {@link #line(java.awt.geom.Dimension2D, java.lang.String, java.util.Map, Align)},
      * and then offsets the coordinates by those in the Rectangle.
      */
-    LineLayout line(Rectangle2D box, String text, Map<TextAttribute, ?> attrs, Align align=Align.LEADING) {
+    static LineLayout line(Rectangle2D box, String text, Map<TextAttribute, ?> attrs, Align align=Align.LEADING) {
         line(new DoubleDimension(box.width, box.height), text, attrs, align) + new Point2D.Double(box.x, box.y)
     }
 

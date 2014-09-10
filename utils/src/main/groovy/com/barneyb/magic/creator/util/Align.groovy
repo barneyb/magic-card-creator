@@ -8,6 +8,7 @@ enum Align {
 
     LEADING,
     CENTER,
-//        TRAILING
+//        TRAILING,
+    STRETCH
 
 }
