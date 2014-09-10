@@ -1,9 +1,11 @@
-package com.barneyb.magic.creator.textlayout
-import groovy.transform.Immutable
-import org.apache.batik.svggen.SVGGraphics2D
+package com.barneyb.magic.creator.util
 
+import groovy.transform.Immutable
+
+import java.awt.Graphics2D
 import java.awt.font.TextLayout
 import java.awt.geom.Point2D
+
 /**
  *
  * @author bboisvert
@@ -39,7 +41,7 @@ class LineLayout {
         scale != 1
     }
 
-    void draw(SVGGraphics2D g) {
+    void draw(Graphics2D g) {
         layout.draw(g, x, y)
     }
 }

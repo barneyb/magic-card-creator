@@ -1,4 +1,4 @@
-package com.barneyb.magic.creator.textlayout
+package com.barneyb.magic.creator.util
 
 /**
  *
