@@ -10,7 +10,7 @@ import com.barneyb.magic.creator.api.ThemedColor
 import com.barneyb.magic.creator.core.SimpleColorTheme
 import com.barneyb.magic.creator.core.SimpleTexture
 import com.barneyb.magic.creator.core.UrlRasterImage
-import com.barneyb.magic.creator.icon.DefaultIconFactory
+import com.barneyb.magic.creator.icon.DefaultSymbolIconFactory
 import groovy.transform.TupleConstructor
 import org.w3c.dom.svg.SVGDocument
 /**
@@ -21,7 +21,7 @@ import org.w3c.dom.svg.SVGDocument
 @TupleConstructor
 class DynamicTheme implements Theme {
 
-    SymbolIconFactory symbolIconFactory = new DefaultIconFactory()
+    SymbolIconFactory symbolIconFactory = new DefaultSymbolIconFactory()
 
     protected ThemeSpec desc
     protected Map<LayoutType, VelocityLayout> layouts

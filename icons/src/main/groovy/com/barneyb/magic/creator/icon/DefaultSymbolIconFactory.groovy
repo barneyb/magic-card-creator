@@ -1,4 +1,5 @@
 package com.barneyb.magic.creator.icon
+
 import com.barneyb.magic.creator.api.IconGroup
 import com.barneyb.magic.creator.api.Symbol
 import com.barneyb.magic.creator.api.SymbolGroup
@@ -18,7 +19,7 @@ import java.text.AttributedString
  *
  * @author barneyb
  */
-class DefaultIconFactory implements SymbolIconFactory {
+class DefaultSymbolIconFactory implements SymbolIconFactory {
 
     public static final String DESCRIPTOR_PATH = 'default-icons.txt'
     protected Map<String, Icon> icons = [:]
@@ -29,7 +30,7 @@ class DefaultIconFactory implements SymbolIconFactory {
         )
     }
 
-    def DefaultIconFactory() {
+    def DefaultSymbolIconFactory() {
         load()
     }
 

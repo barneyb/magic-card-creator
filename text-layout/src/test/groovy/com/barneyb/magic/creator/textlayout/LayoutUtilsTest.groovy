@@ -5,7 +5,7 @@ import com.barneyb.magic.creator.api.SymbolFactory
 import com.barneyb.magic.creator.api.SymbolIconFactory
 import com.barneyb.magic.creator.core.DefaultNonNormativeText
 import com.barneyb.magic.creator.core.DefaultRulesText
-import com.barneyb.magic.creator.icon.DefaultIconFactory
+import com.barneyb.magic.creator.icon.DefaultSymbolIconFactory
 import com.barneyb.magic.creator.symbol.DefaultSymbolFactory
 import com.barneyb.magic.creator.util.XmlUtils
 import org.apache.batik.svggen.SVGGraphics2D
@@ -36,7 +36,7 @@ class LayoutUtilsTest {
     LayoutUtils utils
 
     SymbolFactory sf = new DefaultSymbolFactory()
-    SymbolIconFactory sif = new DefaultIconFactory()
+    SymbolIconFactory sif = new DefaultSymbolIconFactory()
 
     @Before
     void _makeUtils() {

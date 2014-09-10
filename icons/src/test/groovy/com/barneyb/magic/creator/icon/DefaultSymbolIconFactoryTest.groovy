@@ -12,17 +12,17 @@ import java.nio.file.Files
  *
  * @author barneyb
  */
-class DefaultIconFactoryTest {
+class DefaultSymbolIconFactoryTest {
 
     static final String PROOFSHEET_FILENAME = "proof-icons.html"
 
     DefaultSymbolFactory sf
-    DefaultIconFactory factory
+    DefaultSymbolIconFactory factory
 
     @Before
     void _makeFactory() {
         sf = new DefaultSymbolFactory()
-        factory = new DefaultIconFactory()
+        factory = new DefaultSymbolIconFactory()
     }
 
     @Test
