@@ -1,4 +1,4 @@
-package com.barneyb.magic.creator.core
+package com.barneyb.magic.creator.util
 
 import groovy.transform.TupleConstructor
 

@@ -1,5 +1,6 @@
 package com.barneyb.magic.creator.core
 import com.barneyb.magic.creator.api.Icon
+import com.barneyb.magic.creator.util.DoubleDimension
 import com.barneyb.magic.creator.util.XmlUtils
 import groovy.transform.EqualsAndHashCode
 import org.w3c.dom.svg.SVGDocument
