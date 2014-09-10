@@ -1,11 +1,12 @@
 package com.barneyb.magic.creator.theme
+
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CreatureCard
 import com.barneyb.magic.creator.api.Icon
 import com.barneyb.magic.creator.api.RasterImage
-import com.barneyb.magic.creator.core.DoubleDimension
-import com.barneyb.magic.creator.textlayout.Align
 import com.barneyb.magic.creator.textlayout.LayoutUtils
+import com.barneyb.magic.creator.util.Align
+import com.barneyb.magic.creator.util.DoubleDimension
 import com.barneyb.magic.creator.util.FontLoader
 import groovy.transform.InheritConstructors
 import org.apache.batik.svggen.SVGGraphics2D
@@ -16,6 +17,7 @@ import java.awt.Rectangle
 import java.awt.geom.AffineTransform
 import java.awt.geom.Rectangle2D
 import java.awt.image.AffineTransformOp
+
 /**
  *
  *
