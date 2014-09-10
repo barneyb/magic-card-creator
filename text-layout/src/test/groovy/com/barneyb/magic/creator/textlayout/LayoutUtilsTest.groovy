@@ -93,6 +93,8 @@ class LayoutUtilsTest {
     @Test
     void block() {
         def doc = XmlUtils.create()
+        doc.rootElement.setAttributeNS(doc.namespaceURI, 'width', '505')
+        doc.rootElement.setAttributeNS(doc.namespaceURI, 'height', '505')
         def g = new SVGGraphics2D(doc)
         g.color = Color.RED
         def bounds = new Rectangle(0, 0, 500, 500)
@@ -101,13 +103,17 @@ class LayoutUtilsTest {
         utils.block(g, bounds, [
             [new DefaultRulesText("Double strike")],
             [sif.getIcons(sf.getCost('ub')), new DefaultRulesText(', '), sif.getIcons(sf.getCost('t')), new DefaultRulesText(': tap up to two target creatures.')],
-            [new DefaultNonNormativeText('The knights are fast, but their trickery means they are rarely forced to use their speed.')]
+            [new DefaultNonNormativeText('The knights are fast, but their trickery means they rarely have to use it.')]
         ], [:], [:], { Graphics2D svgg, Rectangle2D box, Icon icon ->
             svgg.draw(box)
         })
 
         doc.documentElement.appendChild(g.topLevelGroup)
-        XmlUtils.write(doc, new File("block.svg").newWriter())
+        def out = new File("proof-block.html").newWriter()
+        out.write("<html><body>")
+        XmlUtils.write(doc, out)
+        out.write("</body></html>")
+        out.close()
     }
 
 }
