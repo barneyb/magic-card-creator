@@ -9,11 +9,13 @@ import com.barneyb.magic.creator.core.DefaultIconGroup
 import com.barneyb.magic.creator.util.FontLoader
 import com.barneyb.magic.creator.util.XmlUtils
 import org.apache.batik.svggen.SVGGraphics2D
-import org.w3c.dom.Element
 
 import java.awt.font.TextAttribute
 import java.awt.geom.AffineTransform
 import java.text.AttributedString
+
+import static com.barneyb.magic.creator.util.SvgUtils.*
+
 /**
  * I am the default SymbolIconFactory creating symbol icons a la Magic 2014.
  *
@@ -50,18 +52,10 @@ class DefaultSymbolIconFactory implements SymbolIconFactory {
             }
             addIcon i
         }
-
     }
 
     protected InputStream getIconDescriptor() {
         getClass().classLoader.getResourceAsStream(DESCRIPTOR_PATH)
-    }
-
-    protected Element withGraphics(Closure work) {
-        def doc = XmlUtils.create()
-        SVGGraphics2D g = new SVGGraphics2D(doc)
-        work(g)
-        g.topLevelGroup
     }
 
     Icon getIconInternal(String symbol) {

@@ -23,6 +23,11 @@
         </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-svggen</artifactId>
+            <version>${org.apache.xmlgraphics.batik.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-util</artifactId>
             <version>${org.apache.xmlgraphics.batik.version}</version>
         </dependency>
