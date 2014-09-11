@@ -23,22 +23,18 @@
         "white": {
             "border": 0xffffff,
             "frame": {
-                "image": "white.jpg"
+                "image": "white.png"
             },
             "bar": "bar",
             "textbox": {
-                "image": "cloud.jpg",
+                "image": "white_textbox.jpg",
                 "over": 0xccfffafc
             }
         },
         "blue": {
             "border": 0x9FC5FF,
             "frame": {
-                "base": "bar",
-                "over": {
-                    "color": 0xD9E8FF,
-                    "opacity": 0.6
-                }
+                "image": "blue.png"
             },
             "bar": "bar",
             "textbox": {
@@ -49,8 +45,7 @@
         "black": {
             "border": 0x666666,
             "frame": {
-                "base": "bar",
-                "over": 0x99A6A6A6,
+                "image": "black.png",
                 "text": 0xffffff
             },
             "bar": "bar",
@@ -62,19 +57,18 @@
         "red": {
             "border": 0xff0000,
             "frame": {
-                "image": "red.jpg"
+                "image": "red.png"
             },
             "bar": "bar",
             "textbox": {
-                "image": "red.jpg",
+                "image": "red_textbox.jpg",
                 "over": 0xccffeeee
             }
         },
         "green": {
             "border": 0xA2D192,
             "frame": {
-                "base": "bar",
-                "over": 0x99BDD1B6
+                "image": "green.png"
             },
             "bar": "bar",
             "textbox": {
@@ -85,8 +79,7 @@
         "gold": {
             "border": 0xE8E78D,
             "frame": {
-                "base": "bar",
-                "over": 0x99E8E8B7
+                "image": "gold.png"
             },
             "bar": "bar",
             "textbox": {
@@ -97,8 +90,7 @@
         "artifact": {
             "border": 0xAAD7EC,
             "frame": {
-                "base": "bar",
-                "over": 0x99C4DFEC
+                "image": "artifact.png"
             },
             "bar": "bar",
             "textbox": {
@@ -109,8 +101,7 @@
         "land": {
             "border": 0xFFD798,
             "frame": {
-                "base": "bar",
-                "over": 0x99FFEED4,
+                "image": "land.png",
                 "text": 0xffffff
             },
             "bar": "bar",
