@@ -2,7 +2,7 @@
           title="Test Set"
           key="TS">
     <copyright>&#169; 2014 Barney Boisvert</copyright>
-    <creature title="Sally" casting-cost="1r" subtype="Human">
+    <creature title="Sally" casting-cost="1r" subtype="Human" rarity="common">
         <artwork>
             <src>artwork/sally.jpg</src>
             <artist>Sally Mann</artist>
@@ -16,7 +16,7 @@
         <power>1</power>
         <toughness>1</toughness>
     </creature>
-    <spell title="Counterspell" casting-cost="uu" type="Instant">
+    <spell title="Counterspell" casting-cost="uu" type="Instant" rarity="uncommon">
         <artwork>
             <src>artwork/counterspell.jpg</src>
             <artist>Zueuk</artist>
@@ -27,7 +27,7 @@
             &#x2014; Barney of the Green Woods
         </flavor-text>
     </spell>
-    <creature title="Nightmare" casting-cost="5b" subtype="Nightmare Horse">
+    <creature title="Nightmare" casting-cost="5b" subtype="Nightmare Horse" rarity="rare">
         <artwork>
             <src>artwork/nightmare.jpg</src>
             <artist>catfish08</artist>
@@ -41,7 +41,7 @@
         <power>*</power>
         <toughness>*</toughness>
     </creature>
-    <creature title="Blitz Hellion" casting-cost="3RG" subtype="Hellion">
+    <creature title="Blitz Hellion" casting-cost="3RG" subtype="Hellion" rarity="rare">
         <artwork>
             <src>artwork/hellion.jpg</src>
             <artist>Anthony S. Waters</artist>
@@ -58,7 +58,7 @@
         <power>7</power>
         <toughness>7</toughness>
     </creature>
-    <creature title="Barney of the Green Woods" casting-cost="2{r/w}{u/b}gb" subtype="Human Legend" type-modifiers="Legendary Enchantment">
+    <creature title="Barney of the Green Woods" casting-cost="2{r/w}{u/b}gb" subtype="Human Legend" type-modifiers="Legendary Enchantment" rarity="mythic-rare">
         <artwork>
             <src>artwork/barney.jpg</src>
             <artist>Dolores Boisvert</artist>
@@ -72,7 +72,7 @@
         <power>100</power>
         <toughness>100</toughness>
     </creature>
-    <land title="Elysian Brothel" type-modifiers="Legendary">
+    <land title="Elysian Brothel" type-modifiers="Legendary" rarity="mythic-rare">
         <artwork>
             <src>artwork/brothel.jpg</src>
             <artist>God of War: Ascension</artist>
@@ -84,7 +84,7 @@
         </rules-text>
         <flavor-text>They are selective in their clientele, but their service legendary.</flavor-text>
     </land>
-    <creature title="Sleeping Cherub" casting-cost="2ww" subtype="Angel">
+    <creature title="Sleeping Cherub" casting-cost="2ww" subtype="Angel" rarity="uncommon">
         <artwork>
             <src>artwork/sally.jpg</src>
             <artist>Sally Mann</artist>
