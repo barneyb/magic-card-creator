@@ -18,6 +18,8 @@ interface Theme {
 
     SymbolIconFactory getSymbolIconFactory()
 
+    CardSetIconFactory getCardSetIconFactory()
+
     /**
      * I will lay out the given {@link Card} according to the the rules
      * of this theme.

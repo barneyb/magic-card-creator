@@ -1,6 +1,7 @@
 package com.barneyb.magic.creator.theme
 
 import com.barneyb.magic.creator.api.Card
+import com.barneyb.magic.creator.api.CardSetIconFactory
 import com.barneyb.magic.creator.api.ColorTheme
 import com.barneyb.magic.creator.api.LayoutType
 import com.barneyb.magic.creator.api.SymbolIconFactory
@@ -10,6 +11,7 @@ import com.barneyb.magic.creator.api.ThemedColor
 import com.barneyb.magic.creator.core.SimpleColorTheme
 import com.barneyb.magic.creator.core.SimpleTexture
 import com.barneyb.magic.creator.core.UrlRasterImage
+import com.barneyb.magic.creator.icon.DefaultCardSetIconFactory
 import com.barneyb.magic.creator.icon.DefaultSymbolIconFactory
 import groovy.transform.TupleConstructor
 import org.w3c.dom.svg.SVGDocument
@@ -22,6 +24,7 @@ import org.w3c.dom.svg.SVGDocument
 class DynamicTheme implements Theme {
 
     SymbolIconFactory symbolIconFactory = new DefaultSymbolIconFactory()
+    CardSetIconFactory cardSetIconFactory = new DefaultCardSetIconFactory()
 
     protected ThemeSpec desc
     protected Map<LayoutType, VelocityLayout> layouts
