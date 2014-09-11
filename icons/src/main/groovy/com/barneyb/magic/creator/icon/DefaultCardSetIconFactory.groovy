@@ -1,10 +1,8 @@
 package com.barneyb.magic.creator.icon
-
 import com.barneyb.magic.creator.api.CardSetIconFactory
 import com.barneyb.magic.creator.api.Rarity
 import com.barneyb.magic.creator.core.DefaultIcon
 import com.barneyb.magic.creator.util.Align
-import com.barneyb.magic.creator.util.ColorUtils
 import com.barneyb.magic.creator.util.FontLoader
 import com.barneyb.magic.creator.util.SvgUtils
 import com.barneyb.magic.creator.util.TextLayoutUtils
@@ -16,6 +14,7 @@ import java.awt.font.TextAttribute
 import java.awt.geom.AffineTransform
 import java.awt.geom.Rectangle2D
 
+import static com.barneyb.magic.creator.util.ColorUtils.*
 /**
  *
  *
@@ -43,13 +42,13 @@ class DefaultCardSetIconFactory implements CardSetIconFactory {
             def colors = {
                 switch (rarity) {
                     case Rarity.COMMON:
-                        return [Color.WHITE, Color.BLACK]
+                        return [Color.WHITE, Color.BLACK, Color.BLACK]
                     case Rarity.UNCOMMON:
-                        return [Color.BLACK, new Color(192, 192, 192)]
+                        return [Color.BLACK, fromHex("#54707E"), fromHex("#C8E2EF")]
                     case Rarity.RARE:
-                        return [Color.BLACK, new Color(255, 237, 136)]
+                        return [Color.BLACK, fromHex("#8C723C"), fromHex("#E5C77F")]
                     case Rarity.MYTHIC_RARE:
-                        return [Color.BLACK, new Color(255, 165, 52)]
+                        return [Color.BLACK, fromHex("#B02B24"), fromHex("#F7971B")]
                 }
             }()
             def id = "field-" + Math.random().toString().substring(2)
@@ -64,11 +63,16 @@ class DefaultCardSetIconFactory implements CardSetIconFactory {
             c -6 -10 -6 -30 0 -40
             z
         " />
+        <linearGradient id="$id-fill" gradientTransform="translate(-30 0) rotate(-30)" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="${toHex(colors[1])}" />
+            <stop offset="0.5" stop-color="${toHex(colors[2])}" />
+            <stop offset="1" stop-color="${toHex(colors[1])}" />
+        </linearGradient>
     </defs>
     <g transform="translate(30 20)">
-        <use xlink:href="#$id" stroke-width="0" fill="${ColorUtils.toHex(colors[1])}" />
+        <use xlink:href="#$id" stroke-width="0" fill="url(#$id-fill)" />
         <g transform="scale(0.9 0.84)">
-            <use xlink:href="#$id" stroke-width="3" stroke="${ColorUtils.toHex(colors[0])}" fill="none" />
+            <use xlink:href="#$id" stroke-width="3" stroke="${toHex(colors[0])}" fill="none" />
         </g>
     </g>
 </svg>
