@@ -1,12 +1,11 @@
 package com.barneyb.magic.creator.theme
-
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CardSet
 import com.barneyb.magic.creator.descriptor.CardSetImporter
 import com.barneyb.magic.creator.util.XmlUtils
 import groovy.transform.Memoized
-import org.junit.After
-import org.junit.Before
+import org.junit.AfterClass
+import org.junit.BeforeClass
 import org.junit.Test
 /**
  *
@@ -15,19 +14,15 @@ import org.junit.Test
  */
 class DynamicThemeTest {
 
-    DynamicTheme theme
-
-    @Before
-    void _makeTheme() {
-        theme = (DynamicTheme) new ThemeLoader().load(getClass().classLoader.getResource("theme/default/descriptor.json"))
-    }
+    public static final File PROOF_SHEET_FILE = new File("proof-default-theme.html")
+    static DynamicTheme theme
 
     @Memoized
-    protected CardSet cardset() {
-        new CardSetImporter().fromUrl(getClass().classLoader.getResource("test-set.xml"))
+    protected static CardSet cardset() {
+        new CardSetImporter().fromUrl(DynamicThemeTest.classLoader.getResource("test-set.xml"))
     }
 
-    protected Card card(String title) {
+    protected static Card card(String title) {
         def c = cardset().cards.find {
             it.title == title
         }
@@ -37,20 +32,39 @@ class DynamicThemeTest {
         c
     }
 
-    @After
-    void proofsheet() {
-        def files = ['sally', 'cherub', 'counterspell', 'nightmare', 'hellion', 'barney', 'brothel'].collect {
-            it + ".svg"
-        }
-        new File("proof-default-theme.html").text = """\
+    protected static file(Card c) {
+        new File(c.title.toLowerCase().replaceAll(/[^a-z0-9]+/, '-') + ".svg")
+    }
+
+    protected static emit(String title) {
+        emit(card(title))
+    }
+
+    protected static emit(Card c) {
+        file(c).text = XmlUtils.write(theme.layout(c))
+    }
+
+    protected static files() {
+        cardset().cards.collect this.&file
+    }
+
+    @BeforeClass
+    static void deleteExisting() {
+        theme = (DynamicTheme) new ThemeLoader().load(DynamicThemeTest.classLoader.getResource("theme/default/descriptor.json"))
+        (files() + PROOF_SHEET_FILE).findAll {
+            it.exists()
+        }*.delete()
+    }
+
+    @AfterClass
+    static void proofsheet() {
+        PROOF_SHEET_FILE.text = """\
 <html>
 <head>
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8" />
 </head>
 <body>
-${files.collect {
-    new File(it)
-}.findAll {
+${files().findAll {
     it.exists()
 }.collect {
     it.deleteOnExit()
@@ -63,37 +77,47 @@ ${files.collect {
 
     @Test
     void sally() {
-        new File("sally.svg").text = XmlUtils.write(theme.layout(card('Sally')))
+        emit('Sally')
     }
 
     @Test
     void cherub() {
-        new File("cherub.svg").text = XmlUtils.write(theme.layout(card('Sleeping Cherub')))
+        emit('Sleeping Cherub')
     }
 
     @Test
     void counterspell() {
-        new File("counterspell.svg").text = XmlUtils.write(theme.layout(card('Counterspell')))
+        emit('Counterspell')
     }
 
     @Test
     void nightmare() {
-        new File("nightmare.svg").text = XmlUtils.write(theme.layout(card('Nightmare')))
+        emit('Nightmare')
     }
 
     @Test
     void hellion() {
-        new File("hellion.svg").text = XmlUtils.write(theme.layout(card('Blitz Hellion')))
+        emit('Blitz Hellion')
     }
 
     @Test
     void barney() {
-        new File("barney.svg").text = XmlUtils.write(theme.layout(card('Barney of the Green Woods')))
+        emit('Barney of the Green Woods')
     }
 
     @Test
     void brothel() {
-        new File("brothel.svg").text = XmlUtils.write(theme.layout(card('Elysian Brothel')))
+        emit('Elysian Brothel')
+    }
+
+    @Test
+    void everythingElse() {
+        cardset().cards.each {
+            if (! file(it).exists()) {
+                println "emitting $it.title also"
+                emit(it)
+            }
+        }
     }
 
 }
