@@ -36,7 +36,7 @@ class DefaultCardSetIconFactory implements CardSetIconFactory {
 
     @Override
     com.barneyb.magic.creator.api.Icon getIcon(String key, Rarity rarity) {
-        def iconKey = key + ":" + rarity.name()
+        def iconKey = (key + "-" + rarity.name()).toLowerCase()
         if (! icons.containsKey(iconKey)) {
             def colors = {
                 switch (rarity) {
@@ -50,10 +50,11 @@ class DefaultCardSetIconFactory implements CardSetIconFactory {
                         return [Color.BLACK, new Color(255, 165, 52)]
                 }
             }()
+            def id = "set-" + Math.random().toString().substring(2)
             def doc = XmlUtils.read("""\
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="90" height="45">
     <defs>
-        <path id="-title" d="
+        <path id="$id" d="
             M 0 -20
             h 37
             c 7 10 7 30 0 40
@@ -63,12 +64,12 @@ class DefaultCardSetIconFactory implements CardSetIconFactory {
         " />
     </defs>
     <g transform="translate(45 22.5)">
-        <use xlink:href="#-title" stroke="${ColorUtils.toHex(colors[1])}" stroke-width="5" fill="none" />
+        <use xlink:href="#$id" stroke="${ColorUtils.toHex(colors[1])}" stroke-width="5" fill="none" />
         <g transform="scale(0.98 0.99)">
-            <use xlink:href="#-title" stroke-width="0" fill="${ColorUtils.toHex(colors[0])}" />
+            <use xlink:href="#$id" stroke-width="0" fill="${ColorUtils.toHex(colors[0])}" />
         </g>
         <g transform="scale(0.94 0.90)">
-            <use xlink:href="#-title" stroke-width="0" fill="${ColorUtils.toHex(colors[1])}" />
+            <use xlink:href="#$id" stroke-width="0" fill="${ColorUtils.toHex(colors[1])}" />
         </g>
     </g>
 </svg>
