@@ -11,7 +11,7 @@
     "textures": {
         "bar": {
             "image": "metal.jpg",
-            "over": 0x4cffffff,
+            "over": 0x99ffffff,
             "bounds": [10, 10, 240, 240]
         }
     },
