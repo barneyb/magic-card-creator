@@ -1,12 +1,8 @@
 package com.barneyb.magic.creator.icon
-
 import com.barneyb.magic.creator.symbol.DefaultSymbolFactory
 import com.barneyb.magic.creator.util.XmlUtils
 import org.junit.Before
 import org.junit.Test
-
-import java.nio.file.Files
-
 /**
  *
  *
@@ -31,9 +27,7 @@ class DefaultSymbolIconFactoryTest {
         if (tgt.exists()) {
             tgt.delete()
         }
-        def tmp = File.createTempFile(PROOFSHEET_FILENAME, ".html")
-        tmp.deleteOnExit()
-        def out = tmp.newPrintWriter()
+        def out = tgt.newPrintWriter()
         out.print """\
 <html>
 <head>
@@ -73,9 +67,7 @@ div > svg { margin: 10px; }
 </body>
 </html>
 """.toString()
-        out.flush()
         out.close()
-        Files.move(tmp.toPath(), tgt.toPath())
     }
 
 }
