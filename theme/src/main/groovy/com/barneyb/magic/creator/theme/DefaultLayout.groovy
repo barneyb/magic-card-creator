@@ -28,7 +28,7 @@ class DefaultLayout extends VelocityLayout {
 
     static final TextBox TITLE_BAR = new TextBox(70, 70, 738, 45, "Matrix", true)
     static final Rectangle ARTWORK = new Rectangle(68, 139, 740, 541)
-    static final TextBox TYPE_BAR = new TextBox(72, 706, 730, 40, "Matrix", true)
+    static final TextBox TYPE_BAR = new TextBox(72, 706, 745, 40, "Matrix", true)
     static final TextBox TEXTBOX = new TextBox(76, 780, 720, 305, "Garamond")
     static final TextBox POWER_TOUGHNESS = new TextBox(680, 1112, 125, 46, "Goudy Old Style", true)
     static final TextBox ARTIST = new TextBox(135, 1132, 503, 28, "Matrix", true)
@@ -60,17 +60,13 @@ class DefaultLayout extends VelocityLayout {
             ]).appendChild(icon)
         }
 
-        TextBox titleBar
-        if (card.castingCost == null) {
-            titleBar = TITLE_BAR
-        } else {
+        def titleBar = TITLE_BAR
+        if (card.castingCost != null) {
             def cost = tool.costAsIcons
-            def totalCostIconWidth = (double) cost*.size*.width.sum(0)
 
             cost.unique(false).each iconDef.curry("cost")
             def gc = el(doc.rootElement, 'g', [
-                id: "casting-cost",
-                transform: "translate(${TITLE_BAR.x + TITLE_BAR.width - totalCostIconWidth} $TITLE_BAR.y)"
+                id: "casting-cost"
             ])
             float x = 0
             cost.each {
@@ -82,15 +78,31 @@ class DefaultLayout extends VelocityLayout {
                 ])
                 x += width
             }
+            elattr(gc, [
+                transform: "translate(${TITLE_BAR.x + TITLE_BAR.width - x} $TITLE_BAR.y)"
+            ])
             // constrain the title bar to what's left after the cost plus half the average icon width
-            def avgCostIconWidth = 1.0 * totalCostIconWidth / cost.size()
-            titleBar = TITLE_BAR - new DoubleDimension(totalCostIconWidth + avgCostIconWidth / 2, 0)
+            def avgCostIconWidth = x / cost.size()
+            titleBar -= new DoubleDimension(x + avgCostIconWidth / 2, 0)
         }
         g.color = tool.barTexture.textColor
         layoutUtils.line(titleBar, card.title, titleBar.textAttributes).draw(g)
         xmlImage(g, ARTWORK, card.artwork)
-        // todo: set/rarity
-        layoutUtils.line(TYPE_BAR, card.typeParts.join(" ") + (card.subtypeParts ? ' \u2014 ' + card.subtypeParts.join(" ") : ""), TYPE_BAR.textAttributes).draw(g)
+
+        def typeBar = TYPE_BAR
+        if (card.rarity && card.setKey) {
+            def icon = tool.setIcon
+            iconDef("set", icon)
+            def availHeight = TYPE_BAR.height * 1.3
+            def factor = (float) availHeight / icon.size.height
+            def width = icon.size.width * factor
+            el(doc.rootElement, 'use', [
+                'xlink:href': "#set-$icon.key",
+                transform: "translate(${TYPE_BAR.x + TYPE_BAR.width - width}, ${TYPE_BAR.y - (availHeight - TYPE_BAR.height) / 1.8}) scale($factor)"
+            ])
+            typeBar -= new DoubleDimension(width * 1.4, 0)
+        }
+        layoutUtils.line(typeBar, card.typeParts.join(" ") + (card.subtypeParts ? ' \u2014 ' + card.subtypeParts.join(" ") : ""), typeBar.textAttributes).draw(g)
 
         tool.bodyIcons.each iconDef.curry("body")
         g.color = tool.textboxTextures.first().textColor
