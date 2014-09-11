@@ -52,18 +52,18 @@ class DefaultCardSetIconFactory implements CardSetIconFactory {
             }()
             def id = "set-" + Math.random().toString().substring(2)
             def doc = XmlUtils.read("""\
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="90" height="45">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80" height="45">
     <defs>
         <path id="$id" d="
             M 0 -20
-            h 37
+            h 32
             c 7 10 7 30 0 40
-            h -74
+            h -64
             c -7 -10 -7 -30 0 -40
             z
         " />
     </defs>
-    <g transform="translate(45 22.5)">
+    <g transform="translate(40 22.5)">
         <use xlink:href="#$id" stroke="${ColorUtils.toHex(colors[1])}" stroke-width="5" fill="none" />
         <g transform="scale(0.98 0.99)">
             <use xlink:href="#$id" stroke-width="0" fill="${ColorUtils.toHex(colors[0])}" />
@@ -84,7 +84,7 @@ class DefaultCardSetIconFactory implements CardSetIconFactory {
                 attrs[TextAttribute.SIZE] = fontSize
                 g.color = colors[0]
                 g.transform = AffineTransform.getScaleInstance(1, 1.3)
-                TextLayoutUtils.line(new Rectangle(11, 3, 68, 27), key, attrs, Align.STRETCH).draw(g)
+                TextLayoutUtils.line(new Rectangle(11, 3, 58, 27), key, attrs, Align.STRETCH).draw(g)
             }
             icons[iconKey] = new DefaultIcon(iconKey, doc)
         }
