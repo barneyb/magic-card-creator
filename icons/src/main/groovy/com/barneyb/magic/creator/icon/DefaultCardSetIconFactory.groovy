@@ -1,4 +1,5 @@
 package com.barneyb.magic.creator.icon
+
 import com.barneyb.magic.creator.api.CardSetIconFactory
 import com.barneyb.magic.creator.api.Rarity
 import com.barneyb.magic.creator.core.DefaultIcon
@@ -11,9 +12,10 @@ import com.barneyb.magic.creator.util.XmlUtils
 
 import java.awt.Color
 import java.awt.Graphics2D
-import java.awt.Rectangle
 import java.awt.font.TextAttribute
 import java.awt.geom.AffineTransform
+import java.awt.geom.Rectangle2D
+
 /**
  *
  *
@@ -50,26 +52,23 @@ class DefaultCardSetIconFactory implements CardSetIconFactory {
                         return [Color.BLACK, new Color(255, 165, 52)]
                 }
             }()
-            def id = "set-" + Math.random().toString().substring(2)
+            def id = "field-" + Math.random().toString().substring(2)
             def doc = XmlUtils.read("""\
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80" height="45">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="60" height="40">
     <defs>
         <path id="$id" d="
             M 0 -20
-            h 32
-            c 7 10 7 30 0 40
-            h -64
-            c -7 -10 -7 -30 0 -40
+            h 25
+            c 6 10 6 30 0 40
+            h -50
+            c -6 -10 -6 -30 0 -40
             z
         " />
     </defs>
-    <g transform="translate(40 22.5)">
-        <use xlink:href="#$id" stroke="${ColorUtils.toHex(colors[1])}" stroke-width="5" fill="none" />
-        <g transform="scale(0.98 0.99)">
-            <use xlink:href="#$id" stroke-width="0" fill="${ColorUtils.toHex(colors[0])}" />
-        </g>
-        <g transform="scale(0.94 0.90)">
-            <use xlink:href="#$id" stroke-width="0" fill="${ColorUtils.toHex(colors[1])}" />
+    <g transform="translate(30 20)">
+        <use xlink:href="#$id" stroke-width="0" fill="${ColorUtils.toHex(colors[1])}" />
+        <g transform="scale(0.9 0.84)">
+            <use xlink:href="#$id" stroke-width="3" stroke="${ColorUtils.toHex(colors[0])}" fill="none" />
         </g>
     </g>
 </svg>
@@ -84,7 +83,7 @@ class DefaultCardSetIconFactory implements CardSetIconFactory {
                 attrs[TextAttribute.SIZE] = fontSize
                 g.color = colors[0]
                 g.transform = AffineTransform.getScaleInstance(1, 1.3)
-                TextLayoutUtils.line(new Rectangle(11, 3, 58, 27), key, attrs, Align.STRETCH).draw(g)
+                TextLayoutUtils.line(new Rectangle2D.Float(8, 1.5f, 44, 27), key, attrs, Align.STRETCH).draw(g)
             }
             icons[iconKey] = new DefaultIcon(iconKey, doc)
         }
