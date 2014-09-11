@@ -41,15 +41,23 @@ class DynamicThemeTest {
     }
 
     protected static emit(Card c) {
-        file(c).text = XmlUtils.write(theme.layout(c))
+        if (emitted.put(c, true) == null) {
+            file(c).text = XmlUtils.write(theme.layout(c))
+            true
+        } else {
+            false
+        }
     }
 
     protected static files() {
         cardset().cards.collect this.&file
     }
 
+    static Map<Card, Boolean> emitted
+
     @BeforeClass
     static void deleteExisting() {
+        emitted = new IdentityHashMap<>()
         theme = (DynamicTheme) new ThemeLoader().load(DynamicThemeTest.classLoader.getResource("theme/default/descriptor.json"))
         (files() + PROOF_SHEET_FILE).findAll {
             it.exists()
@@ -113,9 +121,8 @@ ${files().findAll {
     @Test
     void everythingElse() {
         cardset().cards.each {
-            if (! file(it).exists()) {
-                println "emitting $it.title also"
-                emit(it)
+            if (emit(it)) {
+                println "emitted '$it.title' also"
             }
         }
     }
