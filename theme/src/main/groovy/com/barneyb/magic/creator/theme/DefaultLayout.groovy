@@ -30,7 +30,7 @@ class DefaultLayout extends VelocityLayout {
     static final Rectangle ARTWORK = new Rectangle(68, 139, 740, 541)
     static final TextBox TYPE_BAR = new TextBox(72, 706, 745, 40, "Matrix", true)
     static final TextBox TEXTBOX = new TextBox(76, 780, 720, 305, "Garamond")
-    static final TextBox POWER_TOUGHNESS = new TextBox(680, 1112, 125, 46, "Goudy Old Style", true)
+    static final TextBox POWER_TOUGHNESS = new TextBox(677, 1112, 125, 46, "Goudy Old Style", true)
     static final TextBox ARTIST = new TextBox(135, 1132, 503, 28, "Matrix", true)
     static final TextBox FOOTER = new TextBox(55, 1161, 583, 24, "Garamond")
 
