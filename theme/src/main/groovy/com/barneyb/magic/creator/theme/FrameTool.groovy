@@ -234,4 +234,8 @@ class FrameTool {
         }
     }
 
+    Icon getSetIcon() {
+        theme.cardSetIconFactory.getIcon(card.setKey ?: '??', card.rarity)
+    }
+
 }
