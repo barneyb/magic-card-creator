@@ -14,7 +14,6 @@ import org.w3c.dom.svg.SVGDocument
  *
  * @author barneyb
  */
-@SuppressWarnings("GrFinalVariableAccess")
 @TupleConstructor
 abstract class VelocityLayout {
 
