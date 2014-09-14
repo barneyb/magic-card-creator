@@ -11,16 +11,25 @@ import java.awt.GraphicsEnvironment
 class FontLoader {
 
     static void fromClasspath(String... paths) {
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
         def cl = FontLoader.classLoader
-        paths.each {
+        fromUrl(paths.collect(cl.&getResource))
+    }
+
+    static void fromClasspath(List<String> paths) {
+        def cl = FontLoader.classLoader
+        fromUrl(paths.collect(cl.&getResource))
+    }
+
+    static void fromUrl(List<URL> urls) {
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
+        urls.each {
             def type
-            if (it.endsWith("ttf") || it.endsWith("TTF")) {
+            if (it.path.endsWith("ttf") || it.path.endsWith("TTF")) {
                 type = Font.TRUETYPE_FONT
             } else {
-                throw new IllegalArgumentException("Unknown font type: $it")
+                throw new IllegalArgumentException("Unknown font type: $it.path")
             }
-            ge.registerFont(Font.createFont(type, cl.getResourceAsStream(it)))
+            ge.registerFont(Font.createFont(type, it.newInputStream()))
         }
     }
 
