@@ -4,9 +4,9 @@ import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.ValidationMessage
 import com.barneyb.magic.creator.core.CardSetValidator
 import com.barneyb.magic.creator.core.CardValidator
-import com.barneyb.magic.creator.descriptor.CardSetImporter
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.Parameters
+
 /**
  *
  *
@@ -19,7 +19,7 @@ class ValidateCommand extends BaseDescriptorCommand {
     ValidationMessage.Level level = ValidationMessage.Level.WARNING
 
     void execute() {
-        def cs = new CardSetImporter().fromFile(descriptor)
+        def cs = loadDescriptor()
         def filter = { ValidationMessage it ->
             it.level >= level
         }
