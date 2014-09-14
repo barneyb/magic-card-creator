@@ -78,7 +78,7 @@ class LayoutUtils extends TextLayoutUtils {
     }
 
     void block(Graphics2D g, Rectangle2D box, List<List<BodyItem>> items, Font rulesFont, Font nonNormativeFont, Closure drawIcon) {
-        def fontSize = fontSizeForHeight(box.height / 5, ALL_ALPHANUMERICS, rulesFont.attributes, true)
+        def fontSize = fontSizeForHeight(box.height / 6, ALL_ALPHANUMERICS, rulesFont.attributes, true)
         RenderCtx rctx
         for (int _i = 0; _i < 10; _i++) {
             // measure first
