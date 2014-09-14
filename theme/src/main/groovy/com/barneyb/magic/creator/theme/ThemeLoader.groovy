@@ -1,8 +1,11 @@
 package com.barneyb.magic.creator.theme
 import com.barneyb.magic.creator.api.Flood
+import com.barneyb.magic.creator.api.LayoutType
 import com.barneyb.magic.creator.api.Theme
+import com.barneyb.magic.creator.api.ThemedColor
 import com.barneyb.magic.creator.core.SimpleFlood
 import com.barneyb.magic.creator.util.ColorUtils
+import com.barneyb.magic.creator.util.DoubleRectangle
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
@@ -20,7 +23,7 @@ import groovy.transform.InheritConstructors
 import groovy.transform.TupleConstructor
 
 import java.awt.Color
-import java.awt.Rectangle
+import java.awt.geom.Rectangle2D
 import java.lang.reflect.Type
 /**
  * I load a theme from a descriptor, which is a JSON file describing all aspects
@@ -53,20 +56,24 @@ class ThemeLoader {
                 switch (type.getRawType()) {
                     case TextureSpec:
                         return new TextureAdapter(delegate)
-                    case FontSpec:
-                        return new FontAdapter(delegate)
+                    case TextAreaSpec:
+                        return new TextAreaAdapter(delegate)
                     case Color:
                         return new ColorAdapter()
                     case Flood:
                         return new FloodAdapter(gson.getDelegateAdapter(this, TypeToken.get(SimpleFlood)))
                     case LayoutSpec:
                         return new LayoutAdapter(delegate, gson.getAdapter(URL))
-                    case Rectangle:
+                    case Rectangle2D:
                         return new RectangleAdapter()
                     case URL:
                         return new URLAdapter(descUrl)
                     case Class:
                         return new ClassAdapter()
+                    case LayoutType:
+                        return new EnumAdapter(LayoutType)
+                    case ThemedColor:
+                        return new EnumAdapter(ThemedColor)
                     default:
                         return null
                 }
@@ -104,12 +111,20 @@ class ThemeLoader {
     }
 
     @InheritConstructors
-    static class FontAdapter extends BaseAdapter<FontSpec> {
+    static class TextAreaAdapter extends BaseAdapter<TextAreaSpec> {
 
         @Override
-        FontSpec read(JsonReader r) throws IOException {
-            if (r.peek() == JsonToken.STRING) {
-                new FontSpec(family: r.nextString())
+        TextAreaSpec read(JsonReader r) throws IOException {
+            if (r.peek() == JsonToken.BEGIN_ARRAY) {
+                r.beginArray()
+                def ta = new TextAreaSpec(
+                    r.nextInt(),
+                    r.nextInt(),
+                    r.nextInt(),
+                    r.nextInt()
+                )
+                r.endArray()
+                return ta
             } else {
                 delegate.read(r)
             }
@@ -158,6 +173,23 @@ class ThemeLoader {
         }
     }
 
+    static class EnumAdapter<T extends Enum> extends BaseAdapter<T> {
+
+        Class<T> type
+
+        def EnumAdapter(Class<T> t) {
+            type = t
+        }
+
+        @Override
+        T read(JsonReader jsonReader) throws IOException {
+            if (jsonReader.peek() == JsonToken.STRING) {
+                return Enum.valueOf(type, jsonReader.nextString().toUpperCase())
+            }
+            throw new JsonSyntaxException("cannot parse enum")
+        }
+    }
+
     @InheritConstructors
     static class FloodAdapter extends BaseAdapter<Flood> {
 
@@ -181,17 +213,17 @@ class ThemeLoader {
         }
     }
 
-    static class RectangleAdapter extends BaseAdapter<Rectangle> {
+    static class RectangleAdapter extends BaseAdapter<Rectangle2D> {
 
         @Override
-        Rectangle read(JsonReader jsonReader) throws IOException {
+        Rectangle2D read(JsonReader jsonReader) throws IOException {
             if (jsonReader.peek() == JsonToken.BEGIN_ARRAY) {
                 jsonReader.beginArray()
-                def r = new Rectangle(
-                    jsonReader.nextInt(),
-                    jsonReader.nextInt(),
-                    jsonReader.nextInt(),
-                    jsonReader.nextInt()
+                def r = new DoubleRectangle(
+                    jsonReader.nextDouble(),
+                    jsonReader.nextDouble(),
+                    jsonReader.nextDouble(),
+                    jsonReader.nextDouble()
                 )
                 jsonReader.endArray()
                 return r

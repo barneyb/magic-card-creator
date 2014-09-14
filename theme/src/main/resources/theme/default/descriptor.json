@@ -7,6 +7,42 @@
             "fonts/GaramondItalic.ttf",
             "fonts/GoudyOldStyle-Regular.ttf"
         ],
+        "layouts": {
+            "base": {
+                "template": "frame.svg.vm",
+                "areas": {
+                    "title": {
+                        "bounds": [70, 70, 738, 45],
+                        "family": "Matrix",
+                        "bold": true
+                    },
+                    "artwork": [68, 139, 740, 541],
+                    "type": {
+                        "bounds": [72, 706, 745, 40],
+                        "family": "Matrix",
+                        "bold": true
+                    },
+                    "textbox": {
+                        "bounds": [76, 780, 720, 305],
+                        "family": "Garamond"
+                    },
+                    "powerToughness": {
+                        "bounds": [677, 1112, 125, 46],
+                        "family": "Goudy Old Style",
+                        "bold": true
+                    },
+                    "artist": {
+                        "bounds": [135, 1132, 503, 28],
+                        "family": "Matrix",
+                        "bold": true
+                    },
+                    "footer": {
+                        "bounds": [55, 1161, 583, 24],
+                        "family": "Garamond"
+                    }
+                }
+            }
+        },
         "textures": {
             "bar": {
                 "image": "metal.jpg",
@@ -16,28 +52,9 @@
         }
     },
     "layouts": {
-        "land": "frame.svg.vm",
-        "spell": "frame.svg.vm",
-        "creature": {
-            "template": "frame.svg.vm",
-            "impl": "com.barneyb.magic.creator.theme.DefaultLayout"
-        }
-    },
-    "fonts": {
-        "bar": {
-            "family": "Matrix",
-            "bold": true
-        },
-        "textbox": "Garamond",
-        "powerToughness": {
-            "family": "Goudy Old Style",
-            "bold": true
-        },
-        "artist": {
-            "family": "Matrix",
-            "bold": true
-        },
-        "footer": "Garamond"
+        "land": "base",
+        "spell": "base",
+        "creature": "base"
     },
     "semiEnchantment": {
         "image": "starfield.jpg",

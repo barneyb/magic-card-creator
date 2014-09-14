@@ -3,7 +3,7 @@ package com.barneyb.magic.creator.theme
 import com.barneyb.magic.creator.api.Flood
 
 import java.awt.Color
-import java.awt.Rectangle
+import java.awt.geom.Rectangle2D
 
 /**
  *
@@ -16,6 +16,6 @@ class TextureSpec {
     Float opacity
     Flood over
     Flood under
-    Rectangle bounds
+    Rectangle2D bounds
     Color text
 }

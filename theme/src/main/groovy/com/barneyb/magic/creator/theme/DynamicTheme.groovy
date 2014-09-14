@@ -35,23 +35,21 @@ class DynamicTheme implements Theme {
     def DynamicTheme(ThemeSpec desc) {
         this.desc = desc
         semiEnchantmentTexture = textureFromSpec(desc.semiEnchantment)
-        //noinspection GroovyAssignabilityCheck
-        layouts = desc.layouts.collectEntries { k, LayoutSpec v ->
+        layouts = [:]
+        desc.layouts.each { t, k ->
+            def v = desc.library.layouts[k]
             def layout = v.impl.newInstance()
             layout.theme = this
             layout.template = v.template.toString()
-            layout.fonts = desc.fonts
-            new MapEntry(
-                LayoutType.valueOf(k.toUpperCase()),
-                layout
-            )
+            layout.areas = v.areas
+            layouts[t] = layout
         }
         if (desc.library?.fonts) {
             FontLoader.fromUrl(desc.library.fonts)
         }
-        //noinspection GroovyAssignabilityCheck
-        colors = desc.colors.collectEntries { k, v ->
-            new MapEntry(ThemedColor.valueOf(k.toUpperCase()), colorFromSpec(v))
+        colors = [:]
+        desc.colors.each { k, v ->
+            colors[k] = colorFromSpec(v)
         }
     }
 

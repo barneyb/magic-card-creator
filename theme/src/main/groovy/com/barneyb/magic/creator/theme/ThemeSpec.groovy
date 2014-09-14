@@ -1,4 +1,8 @@
 package com.barneyb.magic.creator.theme
+
+import com.barneyb.magic.creator.api.LayoutType
+import com.barneyb.magic.creator.api.ThemedColor
+
 /**
  *
  *
@@ -8,9 +12,8 @@ class ThemeSpec {
 
     String name
     LibrarySpec library
-    FontsSpec fonts
-    Map<String, LayoutSpec> layouts
+    Map<LayoutType, String> layouts
     TextureSpec semiEnchantment
-    Map<String, ColorThemeSpec> colors
+    Map<ThemedColor, ColorThemeSpec> colors
 
 }

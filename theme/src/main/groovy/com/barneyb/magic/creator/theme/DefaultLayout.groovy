@@ -1,5 +1,4 @@
 package com.barneyb.magic.creator.theme
-
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CreatureCard
 import com.barneyb.magic.creator.api.Icon
@@ -7,17 +6,14 @@ import com.barneyb.magic.creator.api.RasterImage
 import com.barneyb.magic.creator.textlayout.LayoutUtils
 import com.barneyb.magic.creator.util.Align
 import com.barneyb.magic.creator.util.DoubleDimension
-import com.barneyb.magic.creator.util.DoubleRectangle
 import groovy.transform.InheritConstructors
 import org.apache.batik.svggen.SVGGraphics2D
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
 
-import java.awt.Rectangle
 import java.awt.geom.AffineTransform
 import java.awt.geom.Rectangle2D
 import java.awt.image.AffineTransformOp
-
 /**
  *
  *
@@ -25,14 +21,6 @@ import java.awt.image.AffineTransformOp
  */
 @InheritConstructors
 class DefaultLayout extends VelocityLayout {
-
-    static final Rectangle2D TITLE_BAR = new DoubleRectangle(70, 70, 738, 45)
-    static final Rectangle2D ARTWORK = new Rectangle(68, 139, 740, 541)
-    static final Rectangle2D TYPE_BAR = new DoubleRectangle(72, 706, 745, 40)
-    static final Rectangle2D TEXTBOX = new Rectangle(76, 780, 720, 305)
-    static final Rectangle2D POWER_TOUGHNESS = new Rectangle(677, 1112, 125, 46)
-    static final Rectangle2D ARTIST = new Rectangle(135, 1132, 503, 28)
-    static final Rectangle2D FOOTER = new Rectangle(55, 1161, 583, 24)
 
     LayoutUtils layoutUtils = new LayoutUtils()
 
@@ -51,7 +39,7 @@ class DefaultLayout extends VelocityLayout {
             ]).appendChild(icon)
         }
 
-        def titleBar = TITLE_BAR
+        def titleBar = areas.title.bounds
         if (card.castingCost != null) {
             def cost = tool.costAsIcons
 
@@ -61,7 +49,7 @@ class DefaultLayout extends VelocityLayout {
             ])
             float x = 0
             cost.each {
-                def factor = (float) TITLE_BAR.height / it.size.height
+                def factor = (float) titleBar.height / it.size.height
                 def width = it.size.width * factor
                 el(gc, 'use', [
                     'xlink:href': "#cost-$it.key",
@@ -70,34 +58,34 @@ class DefaultLayout extends VelocityLayout {
                 x += width
             }
             elattr(gc, [
-                transform: "translate(${TITLE_BAR.x + TITLE_BAR.width - x} $TITLE_BAR.y)"
+                transform: "translate(${titleBar.x + titleBar.width - x} $titleBar.y)"
             ])
             // constrain the title bar to what's left after the cost plus half the average icon width
             def avgCostIconWidth = x / cost.size()
             titleBar -= new DoubleDimension(x + avgCostIconWidth / 2, 0)
         }
         g.color = tool.barTexture.textColor
-        layoutUtils.line(titleBar, card.title, fonts.bar.textAttributes).draw(g)
-        xmlImage(g, ARTWORK, card.artwork)
+        layoutUtils.line(titleBar, card.title, areas.title.textAttributes).draw(g)
+        xmlImage(g, areas.artwork, card.artwork)
 
-        def typeBar = TYPE_BAR
+        def typeBar = areas.type.bounds
         if (card.rarity && card.setKey) {
             def icon = tool.setIcon
             iconDef("set", icon)
-            def availHeight = TYPE_BAR.height * 1.3
+            def availHeight = typeBar.height * 1.3
             def factor = (float) availHeight / icon.size.height
             def width = icon.size.width * factor
             el(doc.rootElement, 'use', [
                 'xlink:href': "#set-$icon.key",
-                transform: "translate(${TYPE_BAR.x + TYPE_BAR.width - width}, ${TYPE_BAR.y - (availHeight - TYPE_BAR.height) / 1.8}) scale($factor)"
+                transform: "translate(${typeBar.x + typeBar.width - width}, ${typeBar.y - (availHeight - typeBar.height) / 1.8}) scale($factor)"
             ])
             typeBar -= new DoubleDimension(width * 1.4, 0)
         }
-        layoutUtils.line(typeBar, card.typeParts.join(" ") + (card.subtypeParts ? ' \u2014 ' + card.subtypeParts.join(" ") : ""), fonts.bar.textAttributes).draw(g)
+        layoutUtils.line(typeBar, card.typeParts.join(" ") + (card.subtypeParts ? ' \u2014 ' + card.subtypeParts.join(" ") : ""), areas.type.textAttributes).draw(g)
 
         tool.bodyIcons.each iconDef.curry("body")
         g.color = tool.textboxTextures.first().textColor
-        layoutUtils.block(g, TEXTBOX, tool.bodyText, fonts.textbox.font, fonts.textbox.italicFont, { SVGGraphics2D gphcs, Rectangle2D box, Icon it ->
+        layoutUtils.block(g, areas.textbox.bounds, tool.bodyText, areas.textbox.font, areas.textbox.italicFont, { SVGGraphics2D gphcs, Rectangle2D box, Icon it ->
             el(doc.rootElement, 'use', [
                 'xlink:href': "#body-$it.key",
                 transform: "translate($box.x $box.y)" + (box.size == it.size ? '' : " scale(${(float) box.width / it.size.width} ${(float) box.height / it.size.height})")
@@ -106,11 +94,11 @@ class DefaultLayout extends VelocityLayout {
 
         if (card instanceof CreatureCard) {
             g.color = tool.barTexture.textColor
-            layoutUtils.line(POWER_TOUGHNESS, "$card.power/$card.toughness", fonts.powerToughness.textAttributes, Align.CENTER).draw(g)
+            layoutUtils.line(areas.powerToughness.bounds, "$card.power/$card.toughness", areas.powerToughness.textAttributes, Align.CENTER).draw(g)
         }
         g.color = tool.frameTextures.first().textColor
-        layoutUtils.line(ARTIST, card.artwork.artist, fonts.artist.textAttributes).draw(g)
-        layoutUtils.line(FOOTER, "$card.copyright $card.cardNumber/$card.setCardCount", fonts.footer.textAttributes).draw(g)
+        layoutUtils.line(areas.artist.bounds, card.artwork.artist, areas.artist.textAttributes).draw(g)
+        layoutUtils.line(areas.footer.bounds, "$card.copyright $card.cardNumber/$card.setCardCount", areas.footer.textAttributes).draw(g)
 
 //        g.color = Color.YELLOW
 //        g.draw(TITLE_BAR)
