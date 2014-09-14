@@ -1,8 +1,6 @@
 package com.barneyb.magic.creator.api
-
 import java.awt.Color
-import java.awt.Rectangle
-
+import java.awt.geom.Rectangle2D
 /**
  * I represent a single texture used in a theme.  Texture objects may be
  * reused.  Conceptually the opacity, offset, and flooding are redundant as
@@ -21,7 +19,7 @@ interface Texture extends Transparent {
 
     Flood getOverFlood()
 
-    Rectangle getBounds()
+    Rectangle2D getBounds()
 
     Color getTextColor()
 

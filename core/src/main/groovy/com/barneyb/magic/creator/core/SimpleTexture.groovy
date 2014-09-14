@@ -9,6 +9,7 @@ import groovy.transform.TupleConstructor
 import java.awt.Color
 import java.awt.Point
 import java.awt.Rectangle
+import java.awt.geom.Rectangle2D
 
 /**
  *
@@ -30,8 +31,8 @@ class SimpleTexture implements Texture {
 
     Flood underFlood
 
-    Rectangle bounds
-    Rectangle getBounds() {
+    Rectangle2D bounds
+    Rectangle2D getBounds() {
         bounds ?: new Rectangle(new Point(0, 0), image.size)
     }
 
