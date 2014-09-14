@@ -13,6 +13,7 @@ import com.barneyb.magic.creator.core.SimpleTexture
 import com.barneyb.magic.creator.core.UrlRasterImage
 import com.barneyb.magic.creator.icon.DefaultCardSetIconFactory
 import com.barneyb.magic.creator.icon.DefaultSymbolIconFactory
+import com.barneyb.magic.creator.util.FontLoader
 import groovy.transform.TupleConstructor
 import org.w3c.dom.svg.SVGDocument
 /**
@@ -44,6 +45,7 @@ class DynamicTheme implements Theme {
                 layout
             )
         }
+        FontLoader.fromUrl(desc.fonts)
         //noinspection GroovyAssignabilityCheck
         colors = desc.colors.collectEntries { k, v ->
             new MapEntry(ThemedColor.valueOf(k.toUpperCase()), colorFromSpec(v))

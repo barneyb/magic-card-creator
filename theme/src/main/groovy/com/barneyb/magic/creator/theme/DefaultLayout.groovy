@@ -7,7 +7,6 @@ import com.barneyb.magic.creator.api.RasterImage
 import com.barneyb.magic.creator.textlayout.LayoutUtils
 import com.barneyb.magic.creator.util.Align
 import com.barneyb.magic.creator.util.DoubleDimension
-import com.barneyb.magic.creator.util.FontLoader
 import groovy.transform.InheritConstructors
 import org.apache.batik.svggen.SVGGraphics2D
 import org.w3c.dom.Element
@@ -33,15 +32,6 @@ class DefaultLayout extends VelocityLayout {
     static final TextBox POWER_TOUGHNESS = new TextBox(677, 1112, 125, 46, "Goudy Old Style", true)
     static final TextBox ARTIST = new TextBox(135, 1132, 503, 28, "Matrix", true)
     static final TextBox FOOTER = new TextBox(55, 1161, 583, 24, "Garamond")
-
-    static {
-        FontLoader.fromClasspath(
-            "fonts/Matrix-Bold.ttf",
-            "fonts/Garamond.ttf",
-            "fonts/GaramondItalic.ttf",
-            "fonts/GoudyOldStyle-Regular.ttf",
-        )
-    }
 
     LayoutUtils layoutUtils = new LayoutUtils()
 

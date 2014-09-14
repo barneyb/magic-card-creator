@@ -8,6 +8,12 @@
             "impl": "com.barneyb.magic.creator.theme.DefaultLayout"
         }
     },
+    "fonts": [
+        "fonts/Matrix-Bold.ttf",
+        "fonts/Garamond.ttf",
+        "fonts/GaramondItalic.ttf",
+        "fonts/GoudyOldStyle-Regular.ttf"
+    ],
     "textures": {
         "bar": {
             "image": "metal.jpg",
