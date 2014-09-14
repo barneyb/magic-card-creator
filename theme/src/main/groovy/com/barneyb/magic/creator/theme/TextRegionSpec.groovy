@@ -16,7 +16,7 @@ import static java.awt.font.TextAttribute.*
 @TupleConstructor
 @EqualsAndHashCode
 @Canonical
-class TextAreaSpec {
+class TextRegionSpec {
 
     DoubleRectangle bounds
 
@@ -24,7 +24,7 @@ class TextAreaSpec {
 
     boolean bold = false
 
-    def TextAreaSpec(double x, double y, double w, double h, String family=null, boolean bold=false) {
+    def TextRegionSpec(double x, double y, double w, double h, String family=null, boolean bold=false) {
         bounds = new DoubleRectangle(x, y, w, h)
         if (family != null) {
             this.family = family

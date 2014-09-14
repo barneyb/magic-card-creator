@@ -10,7 +10,7 @@
         "layouts": {
             "base": {
                 "template": "frame.svg.vm",
-                "areas": {
+                "regions": {
                     "title": {
                         "bounds": [70, 70, 738, 45],
                         "family": "Matrix",

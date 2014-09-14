@@ -41,7 +41,7 @@ class DynamicTheme implements Theme {
             def layout = v.impl.newInstance()
             layout.theme = this
             layout.template = v.template.toString()
-            layout.areas = v.areas
+            layout.regions = v.regions
             layouts[t] = layout
         }
         if (desc.library?.fonts) {

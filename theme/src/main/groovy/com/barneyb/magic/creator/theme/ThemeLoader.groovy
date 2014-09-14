@@ -56,7 +56,7 @@ class ThemeLoader {
                 switch (type.getRawType()) {
                     case TextureSpec:
                         return new TextureAdapter(delegate)
-                    case TextAreaSpec:
+                    case TextRegionSpec:
                         return new TextAreaAdapter(delegate)
                     case Color:
                         return new ColorAdapter()
@@ -111,13 +111,13 @@ class ThemeLoader {
     }
 
     @InheritConstructors
-    static class TextAreaAdapter extends BaseAdapter<TextAreaSpec> {
+    static class TextAreaAdapter extends BaseAdapter<TextRegionSpec> {
 
         @Override
-        TextAreaSpec read(JsonReader r) throws IOException {
+        TextRegionSpec read(JsonReader r) throws IOException {
             if (r.peek() == JsonToken.BEGIN_ARRAY) {
                 r.beginArray()
-                def ta = new TextAreaSpec(
+                def ta = new TextRegionSpec(
                     r.nextInt(),
                     r.nextInt(),
                     r.nextInt(),

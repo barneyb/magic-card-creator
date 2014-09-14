@@ -11,6 +11,6 @@ class LayoutSpec {
 
     Class<? extends VelocityLayout> impl = DefaultLayout
 
-    AreasSpec areas
+    RegionsSpec regions
 
 }

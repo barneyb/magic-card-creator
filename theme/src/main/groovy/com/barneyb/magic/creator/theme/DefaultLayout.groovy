@@ -39,7 +39,7 @@ class DefaultLayout extends VelocityLayout {
             ]).appendChild(icon)
         }
 
-        def titleBar = areas.title.bounds
+        def titleBar = regions.title.bounds
         if (card.castingCost != null) {
             def cost = tool.costAsIcons
 
@@ -65,10 +65,10 @@ class DefaultLayout extends VelocityLayout {
             titleBar -= new DoubleDimension(x + avgCostIconWidth / 2, 0)
         }
         g.color = tool.barTexture.textColor
-        layoutUtils.line(titleBar, card.title, areas.title.textAttributes).draw(g)
-        xmlImage(g, areas.artwork, card.artwork)
+        layoutUtils.line(titleBar, card.title, regions.title.textAttributes).draw(g)
+        xmlImage(g, regions.artwork, card.artwork)
 
-        def typeBar = areas.type.bounds
+        def typeBar = regions.type.bounds
         if (card.rarity && card.setKey) {
             def icon = tool.setIcon
             iconDef("set", icon)
@@ -81,11 +81,11 @@ class DefaultLayout extends VelocityLayout {
             ])
             typeBar -= new DoubleDimension(width * 1.4, 0)
         }
-        layoutUtils.line(typeBar, card.typeParts.join(" ") + (card.subtypeParts ? ' \u2014 ' + card.subtypeParts.join(" ") : ""), areas.type.textAttributes).draw(g)
+        layoutUtils.line(typeBar, card.typeParts.join(" ") + (card.subtypeParts ? ' \u2014 ' + card.subtypeParts.join(" ") : ""), regions.type.textAttributes).draw(g)
 
         tool.bodyIcons.each iconDef.curry("body")
         g.color = tool.textboxTextures.first().textColor
-        layoutUtils.block(g, areas.textbox.bounds, tool.bodyText, areas.textbox.font, areas.textbox.italicFont, { SVGGraphics2D gphcs, Rectangle2D box, Icon it ->
+        layoutUtils.block(g, regions.textbox.bounds, tool.bodyText, regions.textbox.font, regions.textbox.italicFont, { SVGGraphics2D gphcs, Rectangle2D box, Icon it ->
             el(doc.rootElement, 'use', [
                 'xlink:href': "#body-$it.key",
                 transform: "translate($box.x $box.y)" + (box.size == it.size ? '' : " scale(${(float) box.width / it.size.width} ${(float) box.height / it.size.height})")
@@ -94,11 +94,11 @@ class DefaultLayout extends VelocityLayout {
 
         if (card instanceof CreatureCard) {
             g.color = tool.barTexture.textColor
-            layoutUtils.line(areas.powerToughness.bounds, "$card.power/$card.toughness", areas.powerToughness.textAttributes, Align.CENTER).draw(g)
+            layoutUtils.line(regions.powerToughness.bounds, "$card.power/$card.toughness", regions.powerToughness.textAttributes, Align.CENTER).draw(g)
         }
         g.color = tool.frameTextures.first().textColor
-        layoutUtils.line(areas.artist.bounds, card.artwork.artist, areas.artist.textAttributes).draw(g)
-        layoutUtils.line(areas.footer.bounds, "$card.copyright $card.cardNumber/$card.setCardCount", areas.footer.textAttributes).draw(g)
+        layoutUtils.line(regions.artist.bounds, card.artwork.artist, regions.artist.textAttributes).draw(g)
+        layoutUtils.line(regions.footer.bounds, "$card.copyright $card.cardNumber/$card.setCardCount", regions.footer.textAttributes).draw(g)
 
 //        g.color = Color.YELLOW
 //        g.draw(TITLE_BAR)

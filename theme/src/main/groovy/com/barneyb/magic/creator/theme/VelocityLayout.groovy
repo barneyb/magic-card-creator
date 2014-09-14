@@ -21,7 +21,7 @@ abstract class VelocityLayout {
 
     String template
 
-    AreasSpec areas
+    RegionsSpec regions
 
     SVGDocument layout(Card card) {
         def ve = new VelocityEngine()
