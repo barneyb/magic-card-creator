@@ -40,6 +40,7 @@ class DynamicTheme implements Theme {
             def layout = v.impl.newInstance()
             layout.theme = this
             layout.template = v.template.toString()
+            layout.fonts = desc.fonts
             new MapEntry(
                 LayoutType.valueOf(k.toUpperCase()),
                 layout

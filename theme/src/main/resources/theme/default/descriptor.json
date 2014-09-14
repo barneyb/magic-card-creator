@@ -23,6 +23,22 @@
             "impl": "com.barneyb.magic.creator.theme.DefaultLayout"
         }
     },
+    "fonts": {
+        "bar": {
+            "family": "Matrix",
+            "bold": true
+        },
+        "textbox": "Garamond",
+        "powerToughness": {
+            "family": "Goudy Old Style",
+            "bold": true
+        },
+        "artist": {
+            "family": "Matrix",
+            "bold": true
+        },
+        "footer": "Garamond"
+    },
     "semiEnchantment": {
         "image": "starfield.jpg",
         "opacity": 0.6

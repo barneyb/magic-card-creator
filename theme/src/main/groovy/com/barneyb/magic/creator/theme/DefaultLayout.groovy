@@ -7,6 +7,7 @@ import com.barneyb.magic.creator.api.RasterImage
 import com.barneyb.magic.creator.textlayout.LayoutUtils
 import com.barneyb.magic.creator.util.Align
 import com.barneyb.magic.creator.util.DoubleDimension
+import com.barneyb.magic.creator.util.DoubleRectangle
 import groovy.transform.InheritConstructors
 import org.apache.batik.svggen.SVGGraphics2D
 import org.w3c.dom.Element
@@ -25,13 +26,13 @@ import java.awt.image.AffineTransformOp
 @InheritConstructors
 class DefaultLayout extends VelocityLayout {
 
-    static final TextBox TITLE_BAR = new TextBox(70, 70, 738, 45, "Matrix", true)
-    static final Rectangle ARTWORK = new Rectangle(68, 139, 740, 541)
-    static final TextBox TYPE_BAR = new TextBox(72, 706, 745, 40, "Matrix", true)
-    static final TextBox TEXTBOX = new TextBox(76, 780, 720, 305, "Garamond")
-    static final TextBox POWER_TOUGHNESS = new TextBox(677, 1112, 125, 46, "Goudy Old Style", true)
-    static final TextBox ARTIST = new TextBox(135, 1132, 503, 28, "Matrix", true)
-    static final TextBox FOOTER = new TextBox(55, 1161, 583, 24, "Garamond")
+    static final Rectangle2D TITLE_BAR = new DoubleRectangle(70, 70, 738, 45)
+    static final Rectangle2D ARTWORK = new Rectangle(68, 139, 740, 541)
+    static final Rectangle2D TYPE_BAR = new DoubleRectangle(72, 706, 745, 40)
+    static final Rectangle2D TEXTBOX = new Rectangle(76, 780, 720, 305)
+    static final Rectangle2D POWER_TOUGHNESS = new Rectangle(677, 1112, 125, 46)
+    static final Rectangle2D ARTIST = new Rectangle(135, 1132, 503, 28)
+    static final Rectangle2D FOOTER = new Rectangle(55, 1161, 583, 24)
 
     LayoutUtils layoutUtils = new LayoutUtils()
 
@@ -76,7 +77,7 @@ class DefaultLayout extends VelocityLayout {
             titleBar -= new DoubleDimension(x + avgCostIconWidth / 2, 0)
         }
         g.color = tool.barTexture.textColor
-        layoutUtils.line(titleBar, card.title, titleBar.textAttributes).draw(g)
+        layoutUtils.line(titleBar, card.title, fonts.bar.textAttributes).draw(g)
         xmlImage(g, ARTWORK, card.artwork)
 
         def typeBar = TYPE_BAR
@@ -92,11 +93,11 @@ class DefaultLayout extends VelocityLayout {
             ])
             typeBar -= new DoubleDimension(width * 1.4, 0)
         }
-        layoutUtils.line(typeBar, card.typeParts.join(" ") + (card.subtypeParts ? ' \u2014 ' + card.subtypeParts.join(" ") : ""), typeBar.textAttributes).draw(g)
+        layoutUtils.line(typeBar, card.typeParts.join(" ") + (card.subtypeParts ? ' \u2014 ' + card.subtypeParts.join(" ") : ""), fonts.bar.textAttributes).draw(g)
 
         tool.bodyIcons.each iconDef.curry("body")
         g.color = tool.textboxTextures.first().textColor
-        layoutUtils.block(g, TEXTBOX, tool.bodyText, TEXTBOX.font, TEXTBOX.italicFont, { SVGGraphics2D gphcs, Rectangle2D box, Icon it ->
+        layoutUtils.block(g, TEXTBOX, tool.bodyText, fonts.textbox.font, fonts.textbox.italicFont, { SVGGraphics2D gphcs, Rectangle2D box, Icon it ->
             el(doc.rootElement, 'use', [
                 'xlink:href': "#body-$it.key",
                 transform: "translate($box.x $box.y)" + (box.size == it.size ? '' : " scale(${(float) box.width / it.size.width} ${(float) box.height / it.size.height})")
@@ -105,11 +106,11 @@ class DefaultLayout extends VelocityLayout {
 
         if (card instanceof CreatureCard) {
             g.color = tool.barTexture.textColor
-            layoutUtils.line(POWER_TOUGHNESS, "$card.power/$card.toughness", POWER_TOUGHNESS.textAttributes, Align.CENTER).draw(g)
+            layoutUtils.line(POWER_TOUGHNESS, "$card.power/$card.toughness", fonts.powerToughness.textAttributes, Align.CENTER).draw(g)
         }
         g.color = tool.frameTextures.first().textColor
-        layoutUtils.line(ARTIST, card.artwork.artist, ARTIST.textAttributes).draw(g)
-        layoutUtils.line(FOOTER, "$card.copyright $card.cardNumber/$card.setCardCount", FOOTER.textAttributes).draw(g)
+        layoutUtils.line(ARTIST, card.artwork.artist, fonts.artist.textAttributes).draw(g)
+        layoutUtils.line(FOOTER, "$card.copyright $card.cardNumber/$card.setCardCount", fonts.footer.textAttributes).draw(g)
 
 //        g.color = Color.YELLOW
 //        g.draw(TITLE_BAR)
@@ -124,7 +125,7 @@ class DefaultLayout extends VelocityLayout {
         doc.documentElement.appendChild(g.topLevelGroup)
     }
 
-    protected void xmlImage(SVGGraphics2D svgg, Rectangle box, RasterImage ri) {
+    protected void xmlImage(SVGGraphics2D svgg, Rectangle2D box, RasterImage ri) {
         def img = ri.image
         def size = ri.size
         def wf = box.width / size.width

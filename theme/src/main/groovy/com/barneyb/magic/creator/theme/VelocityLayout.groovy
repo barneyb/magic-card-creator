@@ -21,6 +21,8 @@ abstract class VelocityLayout {
 
     String template
 
+    FontsSpec fonts
+
     SVGDocument layout(Card card) {
         def ve = new VelocityEngine()
         ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath, url")
