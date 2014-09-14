@@ -45,7 +45,9 @@ class DynamicTheme implements Theme {
                 layout
             )
         }
-        FontLoader.fromUrl(desc.fonts)
+        if (desc.library?.fonts) {
+            FontLoader.fromUrl(desc.library.fonts)
+        }
         //noinspection GroovyAssignabilityCheck
         colors = desc.colors.collectEntries { k, v ->
             new MapEntry(ThemedColor.valueOf(k.toUpperCase()), colorFromSpec(v))
@@ -64,7 +66,7 @@ class DynamicTheme implements Theme {
 
     protected SimpleTexture textureFromName(String name) {
         if (name != null) {
-            def spec = desc.textures[name]
+            def spec = desc.library?.textures?.get(name)
             if (spec != null) {
                 if (spec.base == name) {
                     throw new IllegalStateException("Texture '$name' is based on itself!?")

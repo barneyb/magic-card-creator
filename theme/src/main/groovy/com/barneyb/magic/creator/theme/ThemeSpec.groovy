@@ -7,9 +7,8 @@ package com.barneyb.magic.creator.theme
 class ThemeSpec {
 
     String name
+    LibrarySpec library
     Map<String, LayoutSpec> layouts
-    List<URL> fonts
-    Map<String, TextureSpec> textures
     TextureSpec semiEnchantment
     Map<String, ColorThemeSpec> colors
 
