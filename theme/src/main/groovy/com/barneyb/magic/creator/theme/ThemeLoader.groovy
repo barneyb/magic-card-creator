@@ -53,6 +53,8 @@ class ThemeLoader {
                 switch (type.getRawType()) {
                     case TextureSpec:
                         return new TextureAdapter(delegate)
+                    case FontSpec:
+                        return new FontAdapter(delegate)
                     case Color:
                         return new ColorAdapter()
                     case Flood:
@@ -94,6 +96,20 @@ class ThemeLoader {
         TextureSpec read(JsonReader r) throws IOException {
             if (r.peek() == JsonToken.STRING) {
                 new TextureSpec(base: r.nextString())
+            } else {
+                delegate.read(r)
+            }
+        }
+
+    }
+
+    @InheritConstructors
+    static class FontAdapter extends BaseAdapter<FontSpec> {
+
+        @Override
+        FontSpec read(JsonReader r) throws IOException {
+            if (r.peek() == JsonToken.STRING) {
+                new FontSpec(family: r.nextString())
             } else {
                 delegate.read(r)
             }
