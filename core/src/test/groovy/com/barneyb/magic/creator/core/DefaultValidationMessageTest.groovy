@@ -15,7 +15,11 @@ class DefaultValidationMessageTest {
         def d = DefaultValidationMessage.info(5, 'oh, hai!')
         assert d.level == ValidationMessage.Level.INFO
         assert d.item == 5
+        assert d.propertyName == null
         assert d.message == 'oh, hai!'
+
+        d = DefaultValidationMessage.info(5, 'age', 'oh, hai!')
+        assert d.propertyName == 'age'
     }
 
     @Test
@@ -23,7 +27,11 @@ class DefaultValidationMessageTest {
         def d = DefaultValidationMessage.warning(5, 'oh, hai!')
         assert d.level == ValidationMessage.Level.WARNING
         assert d.item == 5
+        assert d.propertyName == null
         assert d.message == 'oh, hai!'
+
+        d = DefaultValidationMessage.warning(5, 'age', 'oh, hai!')
+        assert d.propertyName == 'age'
     }
 
     @Test
@@ -31,7 +39,11 @@ class DefaultValidationMessageTest {
         def d = DefaultValidationMessage.error(5, 'oh, hai!')
         assert d.level == ValidationMessage.Level.ERROR
         assert d.item == 5
+        assert d.propertyName == null
         assert d.message == 'oh, hai!'
+
+        d = DefaultValidationMessage.error(5, 'age', 'oh, hai!')
+        assert d.propertyName == 'age'
     }
 
 }

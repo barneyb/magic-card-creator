@@ -17,6 +17,8 @@ interface ValidationMessage<T> {
 
     Level getLevel()
 
+    String getPropertyName()
+
     String getMessage()
 
 }
