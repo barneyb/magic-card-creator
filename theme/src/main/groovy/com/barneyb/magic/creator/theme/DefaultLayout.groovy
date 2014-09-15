@@ -7,6 +7,7 @@ import com.barneyb.magic.creator.textlayout.LayoutUtils
 import com.barneyb.magic.creator.util.Align
 import com.barneyb.magic.creator.util.DoubleDimension
 import groovy.transform.InheritConstructors
+import groovy.util.logging.Log
 import org.apache.batik.svggen.SVGGraphics2D
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
@@ -20,6 +21,7 @@ import java.awt.image.AffineTransformOp
  * @author barneyb
  */
 @InheritConstructors
+@Log
 class DefaultLayout extends VelocityLayout {
 
     LayoutUtils layoutUtils = new LayoutUtils()
@@ -114,7 +116,12 @@ class DefaultLayout extends VelocityLayout {
     }
 
     protected void xmlImage(SVGGraphics2D svgg, Rectangle2D box, RasterImage ri) {
-        def img = ri.image
+        try {
+            def img = ri.image
+        } catch (IOException ioe) {
+            log.severe("Failed to load image: $ioe")
+            return // bail
+        }
         def size = ri.size
         def wf = box.width / size.width
         def hf = box.height / size.height
