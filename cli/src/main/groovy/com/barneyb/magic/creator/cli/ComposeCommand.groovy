@@ -13,7 +13,7 @@ import com.beust.jcommander.Parameters
 @Parameters(commandNames = "compose", commandDescription = "compose cards from a descriptor")
 class ComposeCommand extends BaseDescriptorCommand {
 
-    @Parameter(names = ["-o", "--output"], description = "The directory to compose into", required = true)
+    @Parameter(names = ["-o", "--output-dir"], description = "The directory to compose into", required = true)
     File outputDir
 
     @Parameter(names = ["-t", "--theme"], description = "A theme descriptor JSON file")
