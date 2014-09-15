@@ -57,7 +57,7 @@ class DefaultLayout extends VelocityLayout {
                     'xlink:href': "#cost-$it.key",
                     transform: "translate($x 0) scale($factor)"
                 ])
-                x += width
+                x += width * (1 + LayoutUtils.ICON_SPACING)
             }
             elattr(gc, [
                 transform: "translate(${titleBar.x + titleBar.width - x} $titleBar.y)"
