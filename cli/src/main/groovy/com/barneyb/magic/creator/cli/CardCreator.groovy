@@ -29,10 +29,10 @@ class CardCreator {
             jc.parse(args)
             switch (jc.parsedCommand) {
                 case "validate":
-                    validate.execute()
+                    validate.execute(main)
                     break
                 case "compose":
-                    compose.execute()
+                    compose.execute(main)
                     break
                 case null:
                 case "help":

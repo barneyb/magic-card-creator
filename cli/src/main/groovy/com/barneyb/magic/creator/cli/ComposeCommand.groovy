@@ -1,11 +1,9 @@
 package com.barneyb.magic.creator.cli
-
 import com.barneyb.magic.creator.theme.ThemeLoader
 import com.barneyb.magic.creator.util.XmlUtils
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.Parameters
 import groovy.util.logging.Log
-
 /**
  *
  *
@@ -13,7 +11,7 @@ import groovy.util.logging.Log
  */
 @Parameters(commandNames = "compose", commandDescription = "compose cards from a descriptor")
 @Log
-class ComposeCommand extends BaseDescriptorCommand {
+class ComposeCommand extends BaseDescriptorCommand implements Executable {
 
     @Parameter(names = ["-o", "--output-dir"], description = "The directory to compose into", required = true)
     File outputDir
@@ -21,7 +19,7 @@ class ComposeCommand extends BaseDescriptorCommand {
     @Parameter(names = ["-t", "--theme"], description = "A theme descriptor JSON file")
     URL themeDescriptor = getClass().classLoader.getResource("theme/default/descriptor.json")
 
-    void execute() {
+    void execute(MainCommand main) {
         if (! outputDir.exists()) {
             outputDir.mkdirs()
         } else if (outputDir.isFile()) {
@@ -40,7 +38,7 @@ class ComposeCommand extends BaseDescriptorCommand {
 </head>
 <body>
 """
-        cs.cards.each {
+        filterCards(cs).each {
             println("(${it.cardNumber.toString().padLeft(nLength)}/$it.setCardCount) $it.title" + '.' * (maxTitleLength - it.title.length() + 2))
             def start = System.currentTimeMillis()
             def file = new File(outputDir, it.cardNumber + ".svg")
@@ -48,6 +46,9 @@ class ComposeCommand extends BaseDescriptorCommand {
                 XmlUtils.write(theme.layout(it), file.newWriter())
             } catch (Exception e) {
                 log.severe("Failed to lay out card: $e")
+                if (main.debug) {
+                    e.printStackTrace()
+                }
                 return // bail
             }
             def elapsed = System.currentTimeMillis() - start
