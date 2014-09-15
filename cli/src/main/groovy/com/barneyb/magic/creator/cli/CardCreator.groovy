@@ -2,6 +2,8 @@ package com.barneyb.magic.creator.cli
 
 import com.beust.jcommander.JCommander
 import com.beust.jcommander.MissingCommandException
+import com.beust.jcommander.ParameterException
+
 /**
  *
  *
@@ -25,20 +27,28 @@ class CardCreator {
 
         try {
             jc.parse(args)
+            switch (jc.parsedCommand) {
+                case "validate":
+                    validate.execute()
+                    break
+                case "compose":
+                    // todo: implement composition
+                    break
+                case null:
+                case "help":
+                    jc.usage()
+                    break
+            }
         } catch (MissingCommandException mce) {
             println mce.message
-        }
-        switch (jc.parsedCommand) {
-            case "validate":
-                validate.execute()
-                break
-            case "compose":
-                // todo: implement composition
-                break
-            case null:
-            case "help":
+            jc.usage()
+        } catch (ParameterException pe){
+            println pe.message
+            if (jc.parsedCommand) {
+                jc.usage(jc.parsedCommand)
+            } else {
                 jc.usage()
-                break
+            }
         }
     }
 
