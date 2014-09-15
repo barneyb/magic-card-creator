@@ -20,6 +20,7 @@ class ValidateCommand extends BaseDescriptorCommand {
 
     void execute() {
         def cs = loadDescriptor()
+        println("validating set '$cs.title' ($cs.key)")
         def filter = { ValidationMessage it ->
             it.level >= level
         }
