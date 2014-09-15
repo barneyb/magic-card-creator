@@ -4,6 +4,7 @@ import com.barneyb.magic.creator.theme.ThemeLoader
 import com.barneyb.magic.creator.util.XmlUtils
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.Parameters
+import groovy.util.logging.Log
 
 /**
  *
@@ -11,6 +12,7 @@ import com.beust.jcommander.Parameters
  * @author barneyb
  */
 @Parameters(commandNames = "compose", commandDescription = "compose cards from a descriptor")
+@Log
 class ComposeCommand extends BaseDescriptorCommand {
 
     @Parameter(names = ["-o", "--output-dir"], description = "The directory to compose into", required = true)
@@ -41,7 +43,12 @@ class ComposeCommand extends BaseDescriptorCommand {
             println("(${it.cardNumber.toString().padLeft(nLength)}/$it.setCardCount) $it.title" + '.' * (maxTitleLength - it.title.length() + 2))
             def start = System.currentTimeMillis()
             def file = new File(outputDir, it.cardNumber + ".svg")
-            XmlUtils.write(theme.layout(it), file.newWriter())
+            try {
+                XmlUtils.write(theme.layout(it), file.newWriter())
+            } catch (Exception e) {
+                log.severe("Failed to lay out card: $e")
+                return // bail
+            }
             def elapsed = System.currentTimeMillis() - start
             println(' ' * (nLength * 2 + 4) + "done (${(Math.round(elapsed / 100) / 10).toString().padLeft(4)} s)")
             proofs.println """<img src="$file.name" />"""
