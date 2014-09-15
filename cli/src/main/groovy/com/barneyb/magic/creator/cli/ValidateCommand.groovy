@@ -16,7 +16,7 @@ import groovy.util.logging.Log
 @Log
 class ValidateCommand extends BaseDescriptorCommand implements Executable {
 
-    @Parameter(names = ["-l", "--level"], description = "validation level: error, warning, info")
+    @Parameter(names = ["-l", "--level"], description = "validation level: ERROR, WARNING, INFO")
     ValidationMessage.Level level = ValidationMessage.Level.WARNING
 
     void execute(MainCommand main) {
