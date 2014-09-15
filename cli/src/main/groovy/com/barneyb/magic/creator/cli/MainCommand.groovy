@@ -12,7 +12,10 @@ import com.beust.jcommander.Parameters
 class MainCommand {
 
     @Parameter(names = ["-h", "--help"], help = true)
-    private boolean help
+    boolean help
+
+    @Parameter(names = "--debug")
+    boolean debug
 
 
 }
