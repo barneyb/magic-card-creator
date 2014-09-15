@@ -116,8 +116,9 @@ class DefaultLayout extends VelocityLayout {
     }
 
     protected void xmlImage(SVGGraphics2D svgg, Rectangle2D box, RasterImage ri) {
+        def img
         try {
-            def img = ri.image
+            img = ri.image
         } catch (IOException ioe) {
             log.severe("Failed to load image: $ioe")
             return // bail
