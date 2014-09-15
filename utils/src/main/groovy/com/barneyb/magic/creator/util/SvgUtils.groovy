@@ -1,8 +1,9 @@
 package com.barneyb.magic.creator.util
-
 import org.apache.batik.svggen.SVGGraphics2D
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
+
+import java.awt.geom.Dimension2D
 
 /**
  *
@@ -22,6 +23,13 @@ class SvgUtils {
             doc.rootElement.appendChild(g.topLevelGroup)
         }
         g.topLevelGroup
+    }
+
+    static Dimension2D size(SVGDocument doc) {
+        new DoubleDimension(
+            doc.rootElement.width.baseVal.value,
+            doc.rootElement.height.baseVal.value
+        )
     }
 
 }
