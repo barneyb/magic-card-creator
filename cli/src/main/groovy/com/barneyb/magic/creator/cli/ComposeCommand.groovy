@@ -28,6 +28,7 @@ class ComposeCommand extends BaseDescriptorCommand {
             throw new IllegalStateException("You cannot output into a file")
         }
         def cs = loadDescriptor()
+        println("composing set '$cs.title' ($cs.key)")
         def theme = new ThemeLoader().load(themeDescriptor)
         def maxTitleLength = cs.cards*.title*.length().max()
         def nLength = cs.cards.size().toString().length()
