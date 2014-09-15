@@ -32,7 +32,7 @@ class CardCreator {
                     validate.execute()
                     break
                 case "compose":
-                    // todo: implement composition
+                    compose.execute()
                     break
                 case null:
                 case "help":
