@@ -13,11 +13,13 @@ import groovy.util.logging.Log
 @Log
 class ComposeCommand extends BaseDescriptorCommand implements Executable {
 
+    public static final URL DEFAULT_THEME_DESCRIPTOR = ComposeCommand.classLoader.getResource("theme/default/descriptor.json")
+
     @Parameter(names = ["-o", "--output-dir"], description = "The directory to compose into", required = true)
     File outputDir
 
     @Parameter(names = ["-t", "--theme"], description = "A theme descriptor JSON file")
-    URL themeDescriptor = getClass().classLoader.getResource("theme/default/descriptor.json")
+    File themeDescriptor
 
     void execute(MainCommand main) {
         if (! outputDir.exists()) {
@@ -27,7 +29,7 @@ class ComposeCommand extends BaseDescriptorCommand implements Executable {
         }
         def cs = loadDescriptor()
         println("composing set '$cs.title' ($cs.key)")
-        def theme = new ThemeLoader().load(themeDescriptor)
+        def theme = new ThemeLoader().load(themeDescriptor ? themeDescriptor.toURI().toURL() : DEFAULT_THEME_DESCRIPTOR)
         def maxTitleLength = cs.cards*.title*.length().max()
         def nLength = cs.cards.size().toString().length()
         def proofs = new File(outputDir, "proof-${cs.key}.html").newPrintWriter()
