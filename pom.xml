@@ -94,12 +94,6 @@
                 <configuration>
                     <filesets>
                         <fileset>
-                            <directory>build</directory>
-                            <includes>
-                                <include>**/*</include>
-                            </includes>
-                        </fileset>
-                        <fileset>
                             <directory>${basedir}/src/main/resources/assets/print</directory>
                             <includes>
                                 <include>large/*.svg</include>
