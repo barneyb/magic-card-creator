@@ -15,6 +15,14 @@ import java.awt.geom.Dimension2D
 class DefaultIcon implements Icon {
 
     String key
+    URL __url
+    String __documentString
+    SVGDocument __document
+
+    def DefaultIcon(String key, URL url) {
+        this.key = key
+        this.__url = url
+    }
 
     def DefaultIcon(String key, SVGDocument doc) {
         this.key = key
@@ -26,15 +34,20 @@ class DefaultIcon implements Icon {
         this.__documentString = doc
     }
 
-    SVGDocument __document
+    private String needString() {
+        if (__documentString == null) {
+            __documentString = __url.text
+        }
+        __documentString
+    }
+
     SVGDocument getDocument() {
         if (__document == null) {
-            __document = XmlUtils.read(__documentString)
+            __document = XmlUtils.read(needString())
         }
         __document
     }
 
-    String __documentString
     String getDocumentString() {
         if (__documentString == null) {
             __documentString =  XmlUtils.write(__document)
