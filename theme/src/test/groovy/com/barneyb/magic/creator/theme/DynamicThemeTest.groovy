@@ -84,6 +84,46 @@ ${files().findAll {
     }
 
     @Test
+    void white() {
+        cherub()
+    }
+
+    @Test
+    void blue() {
+        counterspell()
+    }
+
+    @Test
+    void black() {
+        nightmare()
+    }
+
+    @Test
+    void red() {
+        sally()
+    }
+
+    @Test
+    void green() {
+        woods()
+    }
+
+    @Test
+    void gold() {
+        barney()
+    }
+
+    @Test
+    void artifact() {
+        axe()
+    }
+
+    @Test
+    void land() {
+        brothel()
+    }
+
+    @Test
     void sally() {
         emit('Sally')
     }
