@@ -11,11 +11,11 @@ interface CardSetIconFactory {
     /**
      * I construct the icon for the named set assuming the COMMON rarity.
      */
-    Icon getIcon(String key)
+    Icon getIcon(CardSet cs)
 
     /**
      * I construct the icon for the named set at the specified rarity.
      */
-    Icon getIcon(String key, Rarity rarity)
+    Icon getIcon(CardSet cs, Rarity rarity)
 
 }

@@ -1,4 +1,6 @@
 package com.barneyb.magic.creator.icon
+
+import com.barneyb.magic.creator.api.CardSet
 import com.barneyb.magic.creator.api.CardSetIconFactory
 import com.barneyb.magic.creator.api.Rarity
 import com.barneyb.magic.creator.core.DefaultIcon
@@ -31,12 +33,16 @@ class DefaultCardSetIconFactory implements CardSetIconFactory {
     }
 
     @Override
-    com.barneyb.magic.creator.api.Icon getIcon(String key) {
-        getIcon(key, Rarity.COMMON)
+    com.barneyb.magic.creator.api.Icon getIcon(CardSet cs) {
+        getIcon(cs, Rarity.COMMON)
     }
 
     @Override
-    com.barneyb.magic.creator.api.Icon getIcon(String key, Rarity rarity) {
+    com.barneyb.magic.creator.api.Icon getIcon(CardSet cs, Rarity rarity) {
+        getIcon(cs.key, rarity)
+    }
+
+    protected com.barneyb.magic.creator.api.Icon getIcon(String key, Rarity rarity) {
         def iconKey = (key + "-" + rarity.name()).toLowerCase()
         if (! icons.containsKey(iconKey)) {
             def colors = {
