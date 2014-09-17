@@ -32,7 +32,11 @@ interface Card {
 
     List<String> getTypeParts()
 
+    boolean isType(String type)
+
     List<String> getSubtypeParts()
+
+    boolean isSubtype(String subtype)
 
     boolean isSemiEnchantment()
 

@@ -3,7 +3,6 @@ import com.barneyb.magic.creator.api.BodyItem
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.Icon
 import com.barneyb.magic.creator.api.IconGroup
-import com.barneyb.magic.creator.api.LayoutType
 import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Symbol
 import com.barneyb.magic.creator.api.SymbolGroup
@@ -34,15 +33,15 @@ class FrameTool {
     }
 
     boolean isLand() {
-        card.layoutType == LayoutType.LAND
+        card.isType('land')
     }
 
     boolean isCreature() {
-        card.layoutType == LayoutType.CREATURE
+        card.isType('creature')
     }
 
     boolean isArtifact() {
-        card.typeParts*.toLowerCase().contains('artifact')
+        card.isType('artifact')
     }
 
     boolean isSemiEnchantment() {

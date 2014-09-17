@@ -28,19 +28,30 @@ class DefaultCard implements Card {
 
     List<String> typeParts = null
 
+    @Override
+    boolean isType(String type) {
+        // intelliJ is colluding Collection.contains and String.contains ;(
+        //noinspection GroovyAssignabilityCheck
+        typeParts*.toLowerCase()*.contains(type.toLowerCase())
+    }
+
     List<String> subtypeParts = null
 
     @Override
+    boolean isSubtype(String subtype) {
+        subtypeParts*.toLowerCase().contains(subtype.toLowerCase())
+    }
+
+    @Override
     LayoutType getLayoutType() {
-        typeParts*.toLowerCase().contains("land") ? LayoutType.LAND : LayoutType.SPELL
+        isType("land") ? LayoutType.LAND : LayoutType.SPELL
     }
 
     @Override
     boolean isSemiEnchantment() {
-        def lctps = typeParts*.toLowerCase()
-        lctps.contains("enchantment") &&
-            (lctps.contains("creature") ||
-                lctps.contains("artifact")
+        isType("enchantment") &&
+            (isType("creature") ||
+                isType("artifact")
             )
     }
 
