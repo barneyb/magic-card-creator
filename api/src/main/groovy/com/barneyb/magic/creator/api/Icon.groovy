@@ -7,14 +7,7 @@ import java.awt.geom.Dimension2D
  *
  * @author barneyb
  */
-interface Icon {
-
-    /**
-     * I am this icon's unique identifier, and should be both as simple as
-     * possible (to support use in logs) but retain sufficient uniqueness
-     * to allow implementations to operate on it alone for <tt>equals()</tt>.
-     */
-    String getKey()
+interface Icon extends Keyed {
 
     /**
      * The natural size of the icon, which is primarily a way of accessing the
