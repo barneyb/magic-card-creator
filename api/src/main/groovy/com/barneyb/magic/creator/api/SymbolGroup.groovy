@@ -6,4 +6,6 @@ package com.barneyb.magic.creator.api
  */
 interface SymbolGroup extends BodyItem, List<Symbol> {
 
+    SymbolGroup sort()
+
 }

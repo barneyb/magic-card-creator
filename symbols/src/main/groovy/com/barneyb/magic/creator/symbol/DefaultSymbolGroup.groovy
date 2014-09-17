@@ -1,4 +1,6 @@
-package com.barneyb.magic.creator.core
+package com.barneyb.magic.creator.symbol
+
+import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Symbol
 import com.barneyb.magic.creator.api.SymbolGroup
 /**
@@ -13,6 +15,21 @@ class DefaultSymbolGroup implements SymbolGroup {
 
     def DefaultSymbolGroup(List<Symbol> list) {
         this._list = list
+    }
+
+    SymbolGroup sort() {
+        def byColor = this.groupBy {
+            it.colors.size() == 0 ? null : it.colors.first()
+        }
+        def nulls = byColor.remove(null)
+        def result = new DefaultSymbolGroup([])
+        ManaColor.sort(byColor.keySet()).each { c ->
+            result.addAll byColor[c].sort()
+        }
+        if (nulls != null) {
+            result.addAll nulls.sort()
+        }
+        result
     }
 
     @Override

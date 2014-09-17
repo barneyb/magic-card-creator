@@ -4,7 +4,6 @@ import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Symbol
 import com.barneyb.magic.creator.api.SymbolFactory
 import com.barneyb.magic.creator.api.SymbolGroup
-import com.barneyb.magic.creator.core.DefaultSymbolGroup
 
 /**
  *
