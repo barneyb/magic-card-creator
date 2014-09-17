@@ -107,14 +107,9 @@ interface Card {
     List<Card> getFusedCards()
 
     /**
-     * The name of the set this Card belongs to, or null if standalone.
+     * The set this Card belongs to or null if standalone.
      */
-    String getSetTitle()
-
-    /**
-     * The key of the set this Card belongs to, or null if standalone.
-     */
-    String getSetKey()
+    CardSet getSet()
 
     /**
      * This Card's number w/in its set, or null if standalone.

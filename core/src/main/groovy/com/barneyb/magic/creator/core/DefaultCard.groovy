@@ -16,7 +16,7 @@ import com.barneyb.magic.creator.api.Symbol
  */
 class DefaultCard implements Card {
 
-    CardSet cardSet
+    CardSet set
 
     String title
 
@@ -77,16 +77,6 @@ class DefaultCard implements Card {
     @Override
     String getCopyright() {
         cardSet?.copyright
-    }
-
-    @Override
-    String getSetTitle() {
-        cardSet?.title
-    }
-
-    @Override
-    String getSetKey() {
-        cardSet?.key
     }
 
     Integer cardNumber = null

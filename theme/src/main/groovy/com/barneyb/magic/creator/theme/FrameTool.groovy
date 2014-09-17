@@ -235,7 +235,7 @@ class FrameTool {
     }
 
     Icon getSetIcon() {
-        theme.cardSetIconFactory.getIcon(card.setKey ?: '??', card.rarity)
+        theme.cardSetIconFactory.getIcon(card.set, card.rarity)
     }
 
 }
