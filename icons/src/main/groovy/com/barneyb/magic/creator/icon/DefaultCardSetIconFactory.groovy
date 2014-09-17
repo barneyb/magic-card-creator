@@ -55,12 +55,13 @@ class DefaultCardSetIconFactory implements CardSetIconFactory {
 
     @Override
     com.barneyb.magic.creator.api.Icon getIcon(CardSet cs, Rarity rarity) {
-        def iconKey = (cs.key + "-" + rarity.name()).toLowerCase()
+        def setKey = cs?.key ?: "??"
+        def iconKey = (setKey + "-" + rarity.name()).toLowerCase()
         if (! icons.containsKey(iconKey)) {
             icons[iconKey] = new DefaultIcon(
                 iconKey,
-                cs.iconSymbol == null
-                    ? compose(getDefaultField(), getDefaultSymbol(cs.key), rarity)
+                cs?.iconSymbol == null
+                    ? compose(getDefaultField(), getDefaultSymbol(setKey), rarity)
                     : compose(cs.iconField.document, cs.iconSymbol.document, rarity)
             )
         }
