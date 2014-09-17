@@ -58,7 +58,7 @@ class DynamicThemeTest {
     @BeforeClass
     static void deleteExisting() {
         emitted = new IdentityHashMap<>()
-        theme = (DynamicTheme) new ThemeLoader().load(DynamicThemeTest.classLoader.getResource("theme/default/descriptor.json"))
+        theme = (DynamicTheme) new DynamicThemeLoader().load(DynamicThemeTest.classLoader.getResource("theme/default/descriptor.json"))
         (files() + PROOF_SHEET_FILE).findAll {
             it.exists()
         }*.delete()

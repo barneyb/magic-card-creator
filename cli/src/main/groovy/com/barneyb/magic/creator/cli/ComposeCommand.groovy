@@ -1,9 +1,13 @@
 package com.barneyb.magic.creator.cli
-import com.barneyb.magic.creator.theme.ThemeLoader
+
+import com.barneyb.magic.creator.api.Theme
+import com.barneyb.magic.creator.api.ThemeLoader
+import com.barneyb.magic.creator.core.ServiceUtils
 import com.barneyb.magic.creator.util.XmlUtils
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.Parameters
 import groovy.util.logging.Log
+
 /**
  *
  *
@@ -13,12 +17,13 @@ import groovy.util.logging.Log
 @Log
 class ComposeCommand extends BaseDescriptorCommand implements Executable {
 
-    public static final URL DEFAULT_THEME_DESCRIPTOR = ComposeCommand.classLoader.getResource("theme/default/descriptor.json")
-
     @Parameter(names = ["-o", "--output-dir"], description = "The directory to compose into", required = true)
     File outputDir
 
-    @Parameter(names = ["-t", "--theme"], description = "A theme descriptor JSON file")
+    @Parameter(names = "--theme-key", description = "The key of the theme to use")
+    String themeKey = "dynamic"
+
+    @Parameter(names = "--theme-descriptor", description = "A theme descriptor file, if needed.")
     File themeDescriptor
 
     void execute(MainCommand main) {
@@ -29,7 +34,7 @@ class ComposeCommand extends BaseDescriptorCommand implements Executable {
         }
         def cs = loadDescriptor()
         println("composing set '$cs.title' ($cs.key)")
-        def theme = new ThemeLoader().load(themeDescriptor ? themeDescriptor.toURI().toURL() : DEFAULT_THEME_DESCRIPTOR)
+        def theme = createTheme()
         def maxTitleLength = cs.cards*.title*.length().max()
         def nLength = cs.cards.size().toString().length()
         def proofs = new File(outputDir, "proof-${cs.key}.html").newPrintWriter()
@@ -63,4 +68,9 @@ class ComposeCommand extends BaseDescriptorCommand implements Executable {
 </html>"""
         proofs.close()
     }
+
+    protected Theme createTheme() {
+        ServiceUtils.load(ThemeLoader, themeKey).load(themeDescriptor?.toURI()?.toURL())
+    }
+
 }

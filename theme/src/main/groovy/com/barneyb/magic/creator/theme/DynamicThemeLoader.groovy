@@ -2,6 +2,7 @@ package com.barneyb.magic.creator.theme
 import com.barneyb.magic.creator.api.Flood
 import com.barneyb.magic.creator.api.LayoutType
 import com.barneyb.magic.creator.api.Theme
+import com.barneyb.magic.creator.api.ThemeLoader
 import com.barneyb.magic.creator.api.ThemedColor
 import com.barneyb.magic.creator.core.SimpleFlood
 import com.barneyb.magic.creator.util.ColorUtils
@@ -33,9 +34,14 @@ import java.lang.reflect.Type
  *
  * @author barneyb
  */
-class ThemeLoader {
+class DynamicThemeLoader implements ThemeLoader {
+
+    public static final URL DEFAULT_THEME_DESCRIPTOR = DynamicThemeLoader.classLoader.getResource("theme/default/descriptor.json")
 
     Theme load(URL descUrl) {
+        if (! descUrl) {
+            descUrl = DEFAULT_THEME_DESCRIPTOR
+        }
         def gsb = new GsonBuilder()
         gsb.registerTypeAdapter(Long, new JsonDeserializer<Long>() {
             @Override
@@ -81,6 +87,10 @@ class ThemeLoader {
         })
         def td = gsb.create().fromJson(descUrl.newReader(), ThemeSpec)
         new DynamicTheme(td)
+    }
+
+    String getKey() {
+        "dynamic"
     }
 
     @TupleConstructor
