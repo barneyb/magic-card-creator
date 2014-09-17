@@ -13,6 +13,7 @@ class CardSetValidator extends BaseValidator<CardSet> {
         validateTitle(ctx)
         validateKey(ctx)
         validateCopyright(ctx)
+        validateIcon(ctx)
         validateCards(ctx)
         ctx.messages
     }
@@ -30,6 +31,18 @@ class CardSetValidator extends BaseValidator<CardSet> {
     protected void validateCopyright(Ctx<CardSet> ctx) {
         ctx.prop = 'copyright'
         nullOrEmpty(ctx.&warning, 'Copyright', ctx.item.copyright)
+    }
+
+    protected void validateIcon(Ctx<CardSet> ctx) {
+        ctx.prop = 'icon'
+        if (ctx.item.iconSymbol == null) {
+            ctx.warning("No set icon is specified")
+            if (ctx.item.iconField != null) {
+                ctx.error("You must provide a set icon symbol if you provide an icon field")
+            }
+        } else if (ctx.item.iconField == null) {
+            ctx.info("The set icon doesn't have a field specified, just a symbol")
+        }
     }
 
     protected void validateCards(Ctx<CardSet> ctx) {

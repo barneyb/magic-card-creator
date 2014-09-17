@@ -27,9 +27,9 @@ class CardSetValidatorTest {
         def ms = validator.validate(new DefaultCardSet()).sort {
             it.propertyName
         }
-        assert ms.size() == 4
-        assert ms*.level == [ERROR, WARNING, ERROR, WARNING]
-        assert ms*.propertyName == ['cards', 'copyright', 'key', 'title']
+        assert ms.size() == 5
+        assert ms*.level == [ERROR, WARNING, WARNING, ERROR, WARNING]
+        assert ms*.propertyName == ['cards', 'copyright', 'icon', 'key', 'title']
     }
 
     @Test
@@ -58,6 +58,40 @@ class CardSetValidatorTest {
         assert m.level == WARNING
         assert m.propertyName == 'title'
         assert m.message.contains('empty')
+    }
+
+    @Test
+    void noIcon() {
+        def ctx = ctx()
+        validator.validateIcon(ctx)
+        def ms = ctx.messages
+        assert ms.size() == 1
+        assert ms*.level == [WARNING]
+        assert ms*.propertyName == ['icon']
+    }
+
+    @Test
+    void fieldOnlyIcon() {
+        def ctx = ctx(
+            iconField: new DefaultIcon('b', '')
+        )
+        validator.validateIcon(ctx)
+        def ms = ctx.messages
+        assert ms.size() == 2
+        assert ms*.level == [WARNING, ERROR]
+        assert ms*.propertyName == ['icon', 'icon']
+    }
+
+    @Test
+    void symbolOnlyIcon() {
+        def ctx = ctx(
+            iconSymbol: new DefaultIcon('b', '')
+        )
+        validator.validateIcon(ctx)
+        def ms = ctx.messages
+        assert ms.size() == 1
+        assert ms*.level == [INFO]
+        assert ms*.propertyName == ['icon']
     }
 
 }
