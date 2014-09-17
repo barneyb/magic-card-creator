@@ -119,6 +119,16 @@ ${files().findAll {
     }
 
     @Test
+    void woods() {
+        emit('The Green Woods')
+    }
+
+    @Test
+    void axe() {
+        emit("Purphoros' Axe")
+    }
+
+    @Test
     void everythingElse() {
         cardset().cards.each {
             if (emit(it)) {
