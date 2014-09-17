@@ -35,6 +35,7 @@
     <xs:complexType name="CardSetType">
         <xs:sequence>
             <xs:element name="copyright" type="xs:token" minOccurs="0" />
+            <xs:element name="icon" type="SetIconType" minOccurs="0" />
             <xs:choice maxOccurs="unbounded">
                 <xs:annotation>
                     <xs:appinfo>
@@ -64,6 +65,13 @@
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="SetIconType">
+        <xs:sequence>
+            <xs:element name="symbol" type="xs:string" />
+            <xs:element name="field" type="xs:string" minOccurs="0" />
+        </xs:sequence>
     </xs:complexType>
 
     <xs:group name="ArtGroup">

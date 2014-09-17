@@ -1,7 +1,53 @@
 <card-set xmlns="http://barneyb.com/schema/magic/card-descriptor"
-        title="All In One"
-        key="AiO">
+          title="All In One"
+          key="AiO">
     <copyright>&#0169; Wizards of the Coast</copyright>
+    <icon>
+        <symbol>
+            <![CDATA[
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="60" height="40">
+    <g transform="translate(30 20)">
+        <path id="path" d="
+            M 0 -20
+            h 25
+            c 6 10 6 30 0 40
+            h -50
+            c -6 -10 -6 -30 0 -40
+            z
+        " />
+        <text x="8" y="25" font-size="20">BB</text>
+    </g>
+</svg>
+            ]]>
+        </symbol>
+        <field>
+            <![CDATA[
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="60" height="40">
+    <defs>
+        <path id="path" d="
+            M 0 -20
+            h 25
+            c 6 10 6 30 0 40
+            h -50
+            c -6 -10 -6 -30 0 -40
+            z
+        " />
+        <mask id="mask">
+            <use xlink:href="#path" fill="#fff" />
+            <g transform="scale(0.9 0.84)">
+                <use xlink:href="#path" fill="#000" />
+            </g>
+        </mask>
+    </defs>
+    <g transform="translate(30 20)">
+        <g transform="scale(0.94 0.9)">
+            <use xlink:href="#path" mask="url(#mask)" />
+        </g>
+    </g>
+</svg>
+            ]]>
+        </field>
+    </icon>
     <land title="Nykthos, Shrine to Nyx" type-modifiers="Legendary" rarity="rare">
         <artwork>
             <src>artwork/nykthos-shrine-to-nyx.jpg</src>

@@ -3,6 +3,7 @@ import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CreatureCard
 import com.barneyb.magic.creator.api.PlaneswalkerCard
 import com.barneyb.magic.creator.api.Rarity
+import com.barneyb.magic.creator.core.DefaultIcon
 import org.junit.Test
 
 import static junit.framework.Assert.*
@@ -30,6 +31,8 @@ class CardSetImporterTest {
         assertEquals(title, cs.title)
         assertEquals(key, cs.key)
         assertEquals(copyright, cs.copyright)
+        assert (cs.iconField instanceof DefaultIcon)
+        assert (cs.iconSymbol instanceof DefaultIcon)
         // check the names...
         assertEquals([
             "Nykthos, Shrine to Nyx",

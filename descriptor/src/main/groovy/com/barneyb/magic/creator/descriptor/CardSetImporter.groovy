@@ -8,6 +8,7 @@ import com.barneyb.magic.creator.core.DefaultCardSet
 import com.barneyb.magic.creator.core.DefaultCreatureCard
 import com.barneyb.magic.creator.core.DefaultCreatureLevel
 import com.barneyb.magic.creator.core.DefaultFusedCard
+import com.barneyb.magic.creator.core.DefaultIcon
 import com.barneyb.magic.creator.core.DefaultLoyaltyAbility
 import com.barneyb.magic.creator.core.DefaultPlaneswalkerCard
 import com.barneyb.magic.creator.core.SimpleArtwork
@@ -20,6 +21,7 @@ import com.barneyb.magic.creator.descriptor.schema.PlaneswalkerType
 import com.barneyb.magic.creator.descriptor.schema.RulesTextType
 import com.barneyb.magic.creator.descriptor.schema.SpellType
 import com.barneyb.magic.creator.symbol.DefaultSymbolFactory
+import com.barneyb.magic.creator.util.XmlUtils
 
 import javax.xml.XMLConstants
 import javax.xml.bind.JAXBContext
@@ -70,6 +72,12 @@ class CardSetImporter {
 
     protected CardSet fromCardSetType(URL base, CardSetType csel) {
         def cs = new DefaultCardSet(csel.title, csel.key, csel.copyright)
+        if (csel?.icon?.symbol) {
+            cs.iconSymbol = new DefaultIcon("cardset-$csel.key-symbol", XmlUtils.read(csel.icon.symbol))
+        }
+        if (csel?.icon?.field) {
+            cs.iconField = new DefaultIcon("cardset-$csel.key-field", XmlUtils.read(csel.icon.field))
+        }
         cs.cards = csel.cards.collect { el->
             DefaultCard c
             if (el instanceof FuseType) {
