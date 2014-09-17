@@ -76,14 +76,14 @@ class DefaultCard implements Card {
 
     @Override
     String getCopyright() {
-        cardSet?.copyright
+        set?.copyright
     }
 
     Integer cardNumber = null
 
     @Override
     Integer getSetCardCount() {
-        cardSet?.cards?.size()
+        set?.cards?.size()
     }
 
 }

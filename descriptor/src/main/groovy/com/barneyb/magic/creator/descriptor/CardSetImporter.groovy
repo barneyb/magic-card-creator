@@ -97,7 +97,7 @@ class CardSetImporter {
                 coreProps(base, el, c)
             }
             c.rarity = Rarity.valueOf(el.rarity.name())
-            c.cardSet = cs
+            c.set = cs
             c.cardNumber = csel.cards.indexOf(el) + 1 // one-indexed
             c
         }
