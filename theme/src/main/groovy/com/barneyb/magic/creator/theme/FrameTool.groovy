@@ -70,7 +70,7 @@ class FrameTool {
     ThemedColor color(ManaColor c) {
         switch (c) {
             case ManaColor.COLORLESS:
-                return ThemedColor.LAND
+                return artifact ? ThemedColor.ARTIFACT : ThemedColor.LAND
             case ManaColor.WHITE:
                 return ThemedColor.WHITE
             case ManaColor.BLUE:
