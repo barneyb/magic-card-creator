@@ -1,27 +1,33 @@
 package com.barneyb.magic.creator.icon
+
 import com.barneyb.magic.creator.api.CardSet
 import com.barneyb.magic.creator.api.CardSetIconFactory
 import com.barneyb.magic.creator.api.Rarity
 import com.barneyb.magic.creator.core.DefaultIcon
 import com.barneyb.magic.creator.util.Align
+import com.barneyb.magic.creator.util.DoubleDimension
 import com.barneyb.magic.creator.util.FontLoader
 import com.barneyb.magic.creator.util.SvgUtils
 import com.barneyb.magic.creator.util.TextLayoutUtils
 import com.barneyb.magic.creator.util.XmlUtils
+import groovy.util.logging.Log
 import org.w3c.dom.svg.SVGDocument
 
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.font.TextAttribute
 import java.awt.geom.AffineTransform
+import java.awt.geom.Dimension2D
 import java.awt.geom.Rectangle2D
 
 import static com.barneyb.magic.creator.util.ColorUtils.*
+
 /**
  *
  *
  * @author barneyb
  */
+@Log
 class DefaultCardSetIconFactory implements CardSetIconFactory {
 
     static final String THE_PATH = """\
@@ -102,9 +108,20 @@ class DefaultCardSetIconFactory implements CardSetIconFactory {
     }
 
     protected SVGDocument compose(SVGDocument field, SVGDocument symbol, Rarity rarity) {
+        Dimension2D size
         if (field == null) {
             field = symbol
             symbol = null
+            size = SvgUtils.size(field)
+        } else {
+            def fs = SvgUtils.size(field)
+            def ss = SvgUtils.size(symbol)
+            if (fs == ss) {
+                size = fs
+            } else {
+                log.warning("Set icon field and symbol are different sizes: $fs vs. $ss")
+                size = new DoubleDimension(Math.max(fs.width, ss.width), Math.max(fs.height, ss.height))
+            }
         }
         def colors = {
             switch (rarity) {
@@ -120,9 +137,9 @@ class DefaultCardSetIconFactory implements CardSetIconFactory {
         }()
         def id = "field-" + Math.random().toString().substring(2)
         def doc = XmlUtils.read("""\
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="60" height="40">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="$size.width" height="$size.height">
     <defs>
-        <linearGradient id="$id-fill" gradientTransform="translate(-30 0) rotate(-30)" gradientUnits="userSpaceOnUse">
+        <linearGradient id="$id-fill" gradientTransform="translate(-${size.width / 2} 0) rotate(-30)" gradientUnits="userSpaceOnUse">
             <stop offset="0" stop-color="${toHex(colors[1])}" />
             <stop offset="0.5" stop-color="${toHex(colors[2])}" />
             <stop offset="1" stop-color="${toHex(colors[1])}" />
