@@ -2,6 +2,7 @@ package com.barneyb.magic.creator.core
 
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CardSet
+import com.barneyb.magic.creator.api.Icon
 import groovy.transform.TupleConstructor
 
 /**
@@ -19,5 +20,9 @@ class DefaultCardSet implements CardSet {
     String copyright = null
 
     List<Card> cards = []
+
+    Icon iconField
+
+    Icon iconSymbol
 
 }

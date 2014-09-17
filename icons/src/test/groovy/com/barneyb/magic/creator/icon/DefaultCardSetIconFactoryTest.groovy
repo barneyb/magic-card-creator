@@ -1,4 +1,5 @@
 package com.barneyb.magic.creator.icon
+
 import com.barneyb.magic.creator.api.Rarity
 import com.barneyb.magic.creator.util.XmlUtils
 import org.junit.Before
@@ -45,6 +46,7 @@ div > svg { margin: 10px; }
             out.println "<div>"
             Rarity.enumConstants.each { r ->
                 XmlUtils.write factory.getIcon(it, r).document, out
+                XmlUtils.write factory.compose(null, factory.getDefaultSymbol(it), r), out
                 out.println "<br />"
             }
             out.println "</div>"
