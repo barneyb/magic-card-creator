@@ -10,7 +10,7 @@ package com.barneyb.magic.creator.api
  *
  * @author bboisvert
  */
-interface SymbolIconFactory {
+interface SymbolIconFactory extends Keyed {
 
     /**
      * I construct a standard icon for the symbol as would be found in a card

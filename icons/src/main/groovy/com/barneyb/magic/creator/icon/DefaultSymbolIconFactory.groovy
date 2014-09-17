@@ -36,6 +36,10 @@ class DefaultSymbolIconFactory implements SymbolIconFactory {
         load()
     }
 
+    String getKey() {
+        "default"
+    }
+
     protected addIcon(Icon i) {
         icons[i.id] = i
     }

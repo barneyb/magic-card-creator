@@ -51,6 +51,7 @@
             }
         }
     },
+    "icons": "default",
     "layouts": {
         "land": "base",
         "spell": "base",

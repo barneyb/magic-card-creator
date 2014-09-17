@@ -8,6 +8,7 @@ import com.barneyb.magic.creator.api.SymbolIconFactory
 import com.barneyb.magic.creator.api.Texture
 import com.barneyb.magic.creator.api.Theme
 import com.barneyb.magic.creator.api.ThemedColor
+import com.barneyb.magic.creator.core.ServiceUtils
 import com.barneyb.magic.creator.core.SimpleColorTheme
 import com.barneyb.magic.creator.core.SimpleTexture
 import com.barneyb.magic.creator.core.UrlRasterImage
@@ -15,6 +16,7 @@ import com.barneyb.magic.creator.icon.DefaultCardSetIconFactory
 import com.barneyb.magic.creator.icon.DefaultSymbolIconFactory
 import com.barneyb.magic.creator.util.FontLoader
 import groovy.transform.TupleConstructor
+import groovy.util.logging.Log
 import org.w3c.dom.svg.SVGDocument
 /**
  *
@@ -22,6 +24,7 @@ import org.w3c.dom.svg.SVGDocument
  * @author barneyb
  */
 @TupleConstructor
+@Log
 class DynamicTheme implements Theme {
 
     SymbolIconFactory symbolIconFactory = new DefaultSymbolIconFactory()
@@ -34,6 +37,14 @@ class DynamicTheme implements Theme {
 
     def DynamicTheme(ThemeSpec desc) {
         this.desc = desc
+        if (desc.icons) {
+            def sif = ServiceUtils.load(SymbolIconFactory, desc.icons)
+            if (sif == null) {
+                log.warning("No '$desc.icons' icon factory is known, using default")
+            } else {
+                symbolIconFactory = sif
+            }
+        }
         semiEnchantmentTexture = textureFromSpec(desc.semiEnchantment)
         layouts = [:]
         desc.layouts.each { t, k ->

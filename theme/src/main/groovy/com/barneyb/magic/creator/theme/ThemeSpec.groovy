@@ -12,6 +12,7 @@ class ThemeSpec {
 
     String name
     LibrarySpec library
+    String icons
     Map<LayoutType, String> layouts
     TextureSpec semiEnchantment
     Map<ThemedColor, ColorThemeSpec> colors
