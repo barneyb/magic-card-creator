@@ -4,11 +4,9 @@ package com.barneyb.magic.creator.api
  *
  * @author bboisvert
  */
-interface CardSet {
+interface CardSet extends Keyed {
 
     String getTitle()
-
-    String getKey()
 
     List<Card> getCards()
 
