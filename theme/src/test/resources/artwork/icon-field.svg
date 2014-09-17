@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="60" height="40">
+    <g transform="translate(30 20)">
+        <path d="
+            M 0 -20
+            h 25
+            c 6 10 6 30 0 40
+            h -50
+            c -6 -10 -6 -30 0 -40
+            z
+        " />
+    </g>
+</svg>

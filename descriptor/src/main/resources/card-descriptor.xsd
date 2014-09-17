@@ -5,9 +5,12 @@
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
            xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+           xmlns:svg="http://www.w3.org/2000/svg"
            jaxb:version="2.1"
            elementFormDefault="qualified"
            jaxb:extensionBindingPrefixes="inheritance">
+
+    <xs:import namespace="http://www.w3.org/2000/svg" />
 
     <xs:element name="card-set" type="c:CardSetType">
         <xs:key name="CardTitle">
@@ -68,10 +71,8 @@
     </xs:complexType>
 
     <xs:complexType name="SetIconType">
-        <xs:sequence>
-            <xs:element name="symbol" type="xs:string" />
-            <xs:element name="field" type="xs:string" minOccurs="0" />
-        </xs:sequence>
+        <xs:attribute name="symbol-svg" type="xs:token" use="required" />
+        <xs:attribute name="field-svg" type="xs:token" />
     </xs:complexType>
 
     <xs:group name="ArtGroup">
