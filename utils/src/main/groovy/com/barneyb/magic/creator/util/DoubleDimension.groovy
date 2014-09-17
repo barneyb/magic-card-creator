@@ -1,5 +1,7 @@
 package com.barneyb.magic.creator.util
 
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 import groovy.transform.TupleConstructor
 
 import java.awt.geom.Dimension2D
@@ -10,6 +12,8 @@ import java.awt.geom.Dimension2D
  * @author barneyb
  */
 @TupleConstructor
+@EqualsAndHashCode
+@ToString(includeNames = false, includePackage = false)
 class DoubleDimension extends Dimension2D {
 
     double width
