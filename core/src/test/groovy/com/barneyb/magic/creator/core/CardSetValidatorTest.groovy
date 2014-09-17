@@ -1,5 +1,6 @@
 package com.barneyb.magic.creator.core
 
+import com.barneyb.magic.creator.api.ValidationMessage
 import org.junit.Before
 import org.junit.Test
 
@@ -18,80 +19,50 @@ class CardSetValidatorTest {
         validator = new CardSetValidator()
     }
 
-    protected ctx(HashMap args) {
-        new BaseValidator.Ctx(new DefaultCardSet(args))
+    protected check(String pn, HashMap args, Object... tests) {
+        if (tests.size() == 1 && tests.first() instanceof List) {
+            tests = tests.first()
+        }
+        def ms = validator.validate(new DefaultCardSet(args)).findAll {
+            pn == null || it.propertyName == pn
+        }
+        assert ms*.level == tests.findAll {
+            it instanceof ValidationMessage.Level
+        }
+        int i = -1
+        tests.each {
+            if (it instanceof ValidationMessage.Level) {
+                i += 1
+            } else {
+                assert ms[i].message.contains(it.toString())
+            }
+        }
+        ms
     }
 
     @Test
     void allInOne() {
-        def ms = validator.validate(new DefaultCardSet()).sort {
-            it.propertyName
+        def ms = check null, [:], WARNING, ERROR, WARNING, WARNING, ERROR
+        assert ms*.propertyName == ['title', 'key', 'copyright', 'icon', 'cards']
+    }
+
+    @Test
+    void title2() {
+        def check = { v, Object... tests ->
+            check('title', [title: v], tests)
         }
-        assert ms.size() == 5
-        assert ms*.level == [ERROR, WARNING, WARNING, ERROR, WARNING]
-        assert ms*.propertyName == ['cards', 'copyright', 'icon', 'key', 'title']
+        check null, WARNING, "null"
+        check '', WARNING, "empty"
+        check '   \t\t \n ', WARNING, "empty"
+        check 'fred'
     }
 
     @Test
-    void nullTitle() {
-        def ctx = ctx(
-            title: null
-        )
-        validator.validateTitle(ctx)
-        def ms = ctx.messages
-        assert ms.size() == 1
-        def m = ms.first()
-        assert m.level == WARNING
-        assert m.propertyName == 'title'
-        assert m.message.contains('null')
-    }
-
-    @Test
-    void emptyTitle() {
-        def ctx = ctx(
-            title: '   \t\t \n '
-        )
-        validator.validateTitle(ctx)
-        def ms = ctx.messages
-        assert ms.size() == 1
-        def m = ms.first()
-        assert m.level == WARNING
-        assert m.propertyName == 'title'
-        assert m.message.contains('empty')
-    }
-
-    @Test
-    void noIcon() {
-        def ctx = ctx()
-        validator.validateIcon(ctx)
-        def ms = ctx.messages
-        assert ms.size() == 1
-        assert ms*.level == [WARNING]
-        assert ms*.propertyName == ['icon']
-    }
-
-    @Test
-    void fieldOnlyIcon() {
-        def ctx = ctx(
-            iconField: new DefaultIcon('b', '')
-        )
-        validator.validateIcon(ctx)
-        def ms = ctx.messages
-        assert ms.size() == 2
-        assert ms*.level == [WARNING, ERROR]
-        assert ms*.propertyName == ['icon', 'icon']
-    }
-
-    @Test
-    void symbolOnlyIcon() {
-        def ctx = ctx(
-            iconSymbol: new DefaultIcon('b', '')
-        )
-        validator.validateIcon(ctx)
-        def ms = ctx.messages
-        assert ms.size() == 1
-        assert ms*.level == [INFO]
-        assert ms*.propertyName == ['icon']
+    void icon() {
+        def check = this.&check.curry('icon')
+        check([:], WARNING)
+        check([iconField: new DefaultIcon('b', '')], WARNING, "No set", ERROR, "icon field")
+        check([iconSymbol: new DefaultIcon('b', '')], INFO, "just a symbol")
     }
 
 }
