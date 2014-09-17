@@ -45,6 +45,20 @@ class DefaultSymbol implements Symbol {
     }
 
     @Override
+    int compareTo(Symbol other) {
+        // 'x' is always first
+        if (symbol == 'X') {
+            other.symbol == 'X' ? 0 : -1
+        } else if (other.symbol == 'X') {
+            1
+        } else if (colors.size() != other.colors.size()) {
+            other.colors.size().compareTo(colors.size()) // desc
+        } else {
+            symbol.compareTo(other.symbol) // asc
+        }
+    }
+
+    @Override
     String toString() {
         "{$symbol}"
     }

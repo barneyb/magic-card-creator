@@ -5,7 +5,7 @@ package com.barneyb.magic.creator.api
  *
  * @author bboisvert
  */
-interface Symbol {
+interface Symbol extends Comparable<Symbol> {
 
     /**
      * The raw string version of the symbol, expressed in uppercase, but NOT
