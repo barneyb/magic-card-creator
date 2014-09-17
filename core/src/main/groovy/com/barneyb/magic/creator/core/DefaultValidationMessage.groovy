@@ -1,8 +1,6 @@
 package com.barneyb.magic.creator.core
-
 import com.barneyb.magic.creator.api.ValidationMessage
 import groovy.transform.TupleConstructor
-
 /**
  *
  *
@@ -31,5 +29,9 @@ class DefaultValidationMessage<T> implements ValidationMessage<T> {
     final String propertyName
 
     final String message
+
+    String toString() {
+        "${level.name().padRight(7)}[$propertyName] $message"
+    }
 
 }
