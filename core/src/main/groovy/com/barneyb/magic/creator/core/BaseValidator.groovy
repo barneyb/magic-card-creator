@@ -25,6 +25,10 @@ abstract class BaseValidator<T> implements Validator<T> {
             messages.add(DefaultValidationMessage.warning(item, prop, msg))
         }
 
+        void info(String msg) {
+            messages.add(DefaultValidationMessage.info(item, prop, msg))
+        }
+
     }
 
     protected void nullOrEmpty(Closure emit, String label, String value) {
