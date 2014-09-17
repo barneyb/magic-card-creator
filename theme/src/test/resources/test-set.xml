@@ -94,4 +94,24 @@
         <power>2</power>
         <toughness>4</toughness>
     </creature>
+    <spell title="The Green Woods" casting-cost="5gg" type="Instant">
+        <artwork>
+            <src>artwork/trees.jpg</src>
+            <artist>pegico</artist>
+        </artwork>
+        <rules-text>
+            Untap all Forests.  All Forests become 1/4 green Elemental creatures with reach until end of turn.  They are still lands.
+        </rules-text>
+    </spell>
+    <spell title="Purphoros' Axe" casting-cost="3" type="Artifact">
+        <artwork>
+            <src>artwork/axe.jpg</src>
+            <artist>meh</artist>
+        </artwork>
+        <rules-text>
+            At the beginning of your upkeep, pay {R} or sacrifice Purphoros' Axe.
+
+            At the end of your upkeep, choose target creature.  The creature has protection from Forests until your next upkeep.
+        </rules-text>
+    </spell>
 </card-set>
