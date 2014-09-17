@@ -10,18 +10,18 @@ import com.barneyb.magic.creator.api.Validator
  */
 class BaseValidatorTest {
 
-    protected <T> List<ValidationMessage<T>> check(Validator<T> validator, String pn, T item, Object... tests) {
-        if (tests.size() == 1 && tests.first() instanceof List) {
-            tests = tests.first()
+    protected <T> List<ValidationMessage<T>> check(Validator<T> validator, String pn, T item, Object... expected) {
+        if (expected.size() == 1 && expected.first() instanceof List) {
+            expected = expected.first()
         }
         def ms = validator.validate(item).findAll {
             pn == null || it.propertyName == pn
         }
-        assert ms*.level == tests.findAll {
+        assert ms*.level == expected.findAll {
             it instanceof ValidationMessage.Level
         }
         int i = -1
-        tests.each {
+        expected.each {
             if (it instanceof ValidationMessage.Level) {
                 i += 1
             } else {
