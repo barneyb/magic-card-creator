@@ -1,22 +1,16 @@
 package com.barneyb.magic.creator.util
-
 import org.apache.batik.dom.svg.SAXSVGDocumentFactory
 import org.apache.batik.dom.svg.SVGDOMImplementation
 import org.apache.batik.util.XMLResourceDescriptor
-import org.w3c.dom.Document
+import org.w3c.dom.Element
 import org.w3c.dom.Node
 import org.w3c.dom.svg.SVGDocument
-import org.xml.sax.InputSource
 
-import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.transform.OutputKeys
 import javax.xml.transform.Transformer
 import javax.xml.transform.TransformerFactory
-import javax.xml.transform.dom.DOMResult
 import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
-import javax.xml.transform.stream.StreamSource
-
 /**
  *
  *
@@ -77,6 +71,18 @@ class XmlUtils {
             "svg",
             null
         )
+    }
+
+    static Element el(Element parent, String name, Map<String, ?> attrs=[:]) {
+        def el = parent.ownerDocument.createElementNS(parent.namespaceURI, name)
+        parent.appendChild(elattr(el, attrs))
+    }
+
+    static Element elattr(Element el, Map<String, ?> attrs) {
+        attrs.each { n, v ->
+            el.setAttributeNS(null, n, v.toString())
+        }
+        el
     }
 
 }

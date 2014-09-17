@@ -9,12 +9,13 @@ import com.barneyb.magic.creator.util.DoubleDimension
 import groovy.transform.InheritConstructors
 import groovy.util.logging.Log
 import org.apache.batik.svggen.SVGGraphics2D
-import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
 
 import java.awt.geom.AffineTransform
 import java.awt.geom.Rectangle2D
 import java.awt.image.AffineTransformOp
+
+import static com.barneyb.magic.creator.util.XmlUtils.*
 /**
  *
  *
@@ -132,18 +133,6 @@ class DefaultLayout extends VelocityLayout {
         def y = box.y + (box.height - size.height * f) / 2
         svgg.drawImage(img, new AffineTransformOp(AffineTransform.getScaleInstance(f, f), AffineTransformOp.TYPE_BICUBIC), (int) x, (int) y)
         svgg.clip = null
-    }
-
-    protected Element el(Element parent, String name, Map<String, ?> attrs=[:]) {
-        def el = parent.ownerDocument.createElementNS(parent.namespaceURI, name)
-        parent.appendChild(elattr(el, attrs))
-    }
-
-    protected Element elattr(Element el, Map<String, ?> attrs) {
-        attrs.each { n, v ->
-            el.setAttributeNS(null, n, v.toString())
-        }
-        el
     }
 
 }
