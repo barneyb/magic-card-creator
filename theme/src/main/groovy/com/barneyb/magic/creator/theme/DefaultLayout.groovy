@@ -84,7 +84,9 @@ class DefaultLayout extends VelocityLayout {
             ])
             typeBar -= new DoubleDimension(width * 1.4, 0)
         }
-        layoutUtils.line(typeBar, card.typeParts.join(" ") + (card.subtypeParts ? ' \u2014 ' + card.subtypeParts.join(" ") : ""), regions.type.textAttributes).draw(g)
+        // IntelliJ is being dumb about 'capitalize'
+        //noinspection GroovyAssignabilityCheck
+        layoutUtils.line(typeBar, card.typeParts*.capitalize().join(" ") + (card.subtypeParts ? ' \u2014 ' + card.subtypeParts*.capitalize().join(" ") : ""), regions.type.textAttributes).draw(g)
 
         tool.bodyIcons.each iconDef.curry("body")
         g.color = tool.textboxTextures.first().textColor
