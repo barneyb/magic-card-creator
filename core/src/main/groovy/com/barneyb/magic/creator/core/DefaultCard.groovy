@@ -28,14 +28,14 @@ class DefaultCard implements Card {
 
     @Override
     boolean isType(String type) {
-        typeParts*.toLowerCase().contains(type.toLowerCase())
+        typeParts != null && typeParts*.toLowerCase().contains(type.toLowerCase())
     }
 
     List<String> subtypeParts = null
 
     @Override
     boolean isSubtype(String subtype) {
-        subtypeParts*.toLowerCase().contains(subtype.toLowerCase())
+        subtypeParts != null && subtypeParts*.toLowerCase().contains(subtype.toLowerCase())
     }
 
     @Override
