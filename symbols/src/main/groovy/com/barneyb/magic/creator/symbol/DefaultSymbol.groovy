@@ -46,8 +46,9 @@ class DefaultSymbol implements Symbol {
 
     @Override
     int compareTo(Symbol other) {
-        // 'x' is always first
-        if (symbol == 'X') {
+        if (equals(other)) {
+            0
+        } else if (symbol == 'X') { // 'x' is always first
             other.symbol == 'X' ? 0 : -1
         } else if (other.symbol == 'X') {
             1
