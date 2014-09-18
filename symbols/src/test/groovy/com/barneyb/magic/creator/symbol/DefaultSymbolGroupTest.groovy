@@ -38,6 +38,11 @@ class DefaultSymbolGroupTest {
     }
 
     @Test
+    void barney() {
+        check([COLORLESS_1, GREEN, BLUE])
+    }
+
+    @Test
     void hammerOfPurphoros() {
         check([COLORLESS_1, RED, RED]) // cast
         check([COLORLESS_2, RED, TAP]) // activate

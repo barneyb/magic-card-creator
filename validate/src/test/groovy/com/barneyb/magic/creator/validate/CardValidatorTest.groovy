@@ -136,6 +136,8 @@ class CardValidatorTest extends BaseValidatorTest {
         check new DefaultCard(typeParts: ["Creature"], flavorText: [[nnt('die?')]])
         // warn about non-standard order in symbol groups
         check new DefaultCard(rulesText: [[sg("rw")]])
+        check new DefaultCard(rulesText: [[sg("1gu")]])
+        check new DefaultCard(rulesText: [[sg("1ug")]]), WARNING, "canonical", "order", "{1}{U}{G}"
         check new DefaultCard(rulesText: [[sg("wr")]]), WARNING, "canonical", "order", "{R}{W}"
         // error if tap/untap is not at the end of a symbol group
         // warn about tap/untap w/in a multi-symbol group
