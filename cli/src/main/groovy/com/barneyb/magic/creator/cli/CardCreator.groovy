@@ -16,28 +16,22 @@ class CardCreator {
         def jc = new JCommander(main)
         jc.programName = CardCreator.simpleName
 
-        def help = new HelpCommand()
-        jc.addCommand("help", help)
-
-        def validate = new ValidateCommand()
-        jc.addCommand("validate", validate)
-
-        def compose = new ComposeCommand()
-        jc.addCommand("compose", compose)
+        def commands = [
+            help: new HelpCommand(),
+            validate: new ValidateCommand(),
+            compose: new ComposeCommand(),
+            stats: new StatsCommand()
+        ].each { n, c ->
+            jc.addCommand(n, c)
+        }
 
         try {
             jc.parse(args)
-            switch (jc.parsedCommand) {
-                case "validate":
-                    validate.execute(main)
-                    break
-                case "compose":
-                    compose.execute(main)
-                    break
-                case null:
-                case "help":
-                    jc.usage()
-                    break
+            def cmd = commands[jc.parsedCommand]
+            if (cmd instanceof Executable) {
+                cmd.execute(main)
+            } else {
+                jc.usage()
             }
         } catch (MissingCommandException mce) {
             println mce.message
