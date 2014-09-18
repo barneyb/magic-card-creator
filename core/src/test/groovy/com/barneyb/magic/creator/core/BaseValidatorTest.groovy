@@ -25,7 +25,7 @@ class BaseValidatorTest {
             if (it instanceof ValidationMessage.Level) {
                 i += 1
             } else {
-                assert ms[i].message.contains(it.toString())
+                assert ms[i].message.toLowerCase().contains(it.toString().toLowerCase())
             }
         }
         ms
