@@ -12,7 +12,7 @@ import groovy.util.logging.Log
  *
  * @author barneyb
  */
-@Parameters(commandNames = "validate", commandDescription = "validate one or more descriptors")
+@Parameters(commandNames = "validate", commandDescription = "validate a cardset")
 @Log
 class ValidateCommand extends BaseDescriptorCommand implements Executable {
 
