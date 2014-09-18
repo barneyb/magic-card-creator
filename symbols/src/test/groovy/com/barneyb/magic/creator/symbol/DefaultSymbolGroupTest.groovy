@@ -27,9 +27,9 @@ class DefaultSymbolGroupTest {
     protected void check(List<Symbol> colors) {
         colors = new DefaultSymbolGroup(colors.asImmutable())
         assertEquals("failed to preserve $colors", colors, colors.sort())
-        def rev = colors.reverse()
+        def rev = new DefaultSymbolGroup(colors.reverse())
         assertEquals("failed to reverse $rev", colors, rev.sort())
-        def shuf = []
+        def shuf = new DefaultSymbolGroup([])
         shuf.addAll(colors)
         10.times {
             Collections.shuffle(shuf)
