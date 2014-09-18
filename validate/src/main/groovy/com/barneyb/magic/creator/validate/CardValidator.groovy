@@ -21,6 +21,7 @@ class CardValidator extends BaseValidator<Card> {
         'enchantment',
         'artifact',
         'creature',
+        'planeswalker'
     ]
 
     Collection<ValidationMessage<Card>> validate(Card card) {
