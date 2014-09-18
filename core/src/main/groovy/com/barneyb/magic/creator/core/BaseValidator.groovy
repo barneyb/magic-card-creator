@@ -17,15 +17,15 @@ abstract class BaseValidator<T> implements Validator<T> {
         String prop
         Collection<ValidationMessage<T>> messages = []
 
-        void error(String msg) {
+        void error(String prop=this.prop, String msg) {
             messages.add(DefaultValidationMessage.error(item, prop, msg))
         }
 
-        void warning(String msg) {
+        void warning(String prop=this.prop, String msg) {
             messages.add(DefaultValidationMessage.warning(item, prop, msg))
         }
 
-        void info(String msg) {
+        void info(String prop=this.prop, String msg) {
             messages.add(DefaultValidationMessage.info(item, prop, msg))
         }
 
