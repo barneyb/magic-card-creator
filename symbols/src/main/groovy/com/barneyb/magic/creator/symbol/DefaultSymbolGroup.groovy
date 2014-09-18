@@ -50,7 +50,7 @@ class DefaultSymbolGroup implements SymbolGroup {
 
     @Override
     String toString() {
-        _list.toString()
+        _list*.toString().join('')
     }
 
 }
