@@ -1,5 +1,4 @@
 package com.barneyb.magic.creator.core
-
 import com.barneyb.magic.creator.api.Artwork
 import com.barneyb.magic.creator.api.BodyItem
 import com.barneyb.magic.creator.api.Card
@@ -7,8 +6,7 @@ import com.barneyb.magic.creator.api.CardSet
 import com.barneyb.magic.creator.api.LayoutType
 import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Rarity
-import com.barneyb.magic.creator.api.Symbol
-
+import com.barneyb.magic.creator.api.SymbolGroup
 /**
  *
  *
@@ -20,7 +18,7 @@ class DefaultCard implements Card {
 
     String title
 
-    List<Symbol> castingCost = null
+    SymbolGroup castingCost = null
 
     Artwork artwork = null
 

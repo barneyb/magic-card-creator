@@ -9,7 +9,7 @@ interface Card {
 
     String getTitle()
 
-    List<Symbol> getCastingCost()
+    SymbolGroup getCastingCost()
 
     /**
      * I am the main artwork for the card, which will be rendered into the

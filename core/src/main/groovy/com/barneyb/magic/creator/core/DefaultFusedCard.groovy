@@ -4,7 +4,7 @@ import com.barneyb.magic.creator.api.BodyItem
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.LayoutType
 import com.barneyb.magic.creator.api.ManaColor
-import com.barneyb.magic.creator.api.Symbol
+import com.barneyb.magic.creator.api.SymbolGroup
 /**
  *
  *
@@ -30,7 +30,7 @@ class DefaultFusedCard extends DefaultCard {
     }
 
     @Override
-    List<Symbol> getCastingCost() {
+    SymbolGroup getCastingCost() {
         throw new UnsupportedOperationException("Fused cards don't have casting costs, their components do.")
     }
 
