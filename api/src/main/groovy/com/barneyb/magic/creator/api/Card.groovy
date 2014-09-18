@@ -27,6 +27,9 @@ interface Card {
      * boundaries, but should be used with caution as it can irrevocably occlude
      * important card elements.  For example, the effect of Nicol Bolas,
      * Planeswalker's wingtip or a pile of Unhinged cards.
+     *
+     * // todo: how this will actually be incorporated into layouts needs to be
+     * revised, as the way it's described doesn't actually make sense.
      */
     Artwork getOverArtwork()
 
