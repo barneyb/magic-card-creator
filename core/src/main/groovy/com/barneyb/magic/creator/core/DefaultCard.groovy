@@ -81,6 +81,10 @@ class DefaultCard implements Card {
 
     Rarity rarity = null
 
+    boolean isFused() {
+        false
+    }
+
     List<Card> getFusedCards() {
         throw new UnsupportedOperationException("This is not a fused card.")
     }

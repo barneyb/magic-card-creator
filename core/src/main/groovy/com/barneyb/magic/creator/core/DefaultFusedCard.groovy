@@ -12,6 +12,11 @@ import com.barneyb.magic.creator.api.Symbol
  */
 class DefaultFusedCard extends DefaultCard {
 
+    @Override
+    boolean isFused() {
+        true
+    }
+
     List<Card> fusedCards = []
 
     @Override

@@ -102,6 +102,8 @@ interface Card {
 
     Rarity getRarity()
 
+    boolean isFused()
+
     /**
      * If this card is a fused card, all other card-level properties are
      * ignored and this property contains two Card objects which describe the
