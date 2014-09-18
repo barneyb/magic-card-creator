@@ -1,4 +1,4 @@
-package com.barneyb.magic.creator.core
+package com.barneyb.magic.creator.validate
 import com.barneyb.magic.creator.api.CardSet
 import com.barneyb.magic.creator.api.ValidationMessage
 /**

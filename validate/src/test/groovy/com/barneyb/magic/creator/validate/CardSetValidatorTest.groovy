@@ -1,5 +1,7 @@
-package com.barneyb.magic.creator.core
+package com.barneyb.magic.creator.validate
 
+import com.barneyb.magic.creator.core.DefaultCardSet
+import com.barneyb.magic.creator.core.DefaultIcon
 import org.junit.Before
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.barneyb.magic.creator.core
+package com.barneyb.magic.creator.validate
 import com.barneyb.magic.creator.api.LineBreak
 import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.NonNormativeText
@@ -7,6 +7,12 @@ import com.barneyb.magic.creator.api.RulesText
 import com.barneyb.magic.creator.api.Symbol
 import com.barneyb.magic.creator.api.SymbolFactory
 import com.barneyb.magic.creator.api.SymbolGroup
+import com.barneyb.magic.creator.core.DefaultCard
+import com.barneyb.magic.creator.core.DefaultCreatureCard
+import com.barneyb.magic.creator.core.DefaultLineBreak
+import com.barneyb.magic.creator.core.DefaultNonNormativeText
+import com.barneyb.magic.creator.core.DefaultRulesText
+import com.barneyb.magic.creator.core.SimpleArtwork
 import com.barneyb.magic.creator.symbol.DefaultSymbolFactory
 import org.junit.Before
 import org.junit.Test

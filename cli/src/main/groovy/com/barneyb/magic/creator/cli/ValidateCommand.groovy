@@ -1,8 +1,8 @@
 package com.barneyb.magic.creator.cli
 
 import com.barneyb.magic.creator.api.ValidationMessage
-import com.barneyb.magic.creator.core.CardSetValidator
-import com.barneyb.magic.creator.core.CardValidator
+import com.barneyb.magic.creator.validate.CardSetValidator
+import com.barneyb.magic.creator.validate.CardValidator
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.Parameters
 import groovy.util.logging.Log
