@@ -21,6 +21,12 @@
             <artifactId>card-creator-utils</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.barneyb.magic</groupId>
+            <artifactId>card-creator-symbols</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
