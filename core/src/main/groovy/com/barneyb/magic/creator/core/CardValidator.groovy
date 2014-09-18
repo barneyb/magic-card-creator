@@ -1,7 +1,11 @@
 package com.barneyb.magic.creator.core
+
+import com.barneyb.magic.creator.api.BodyText
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CreatureCard
 import com.barneyb.magic.creator.api.ManaColor
+import com.barneyb.magic.creator.api.Symbol
+import com.barneyb.magic.creator.api.SymbolGroup
 import com.barneyb.magic.creator.api.ValidationMessage
 /**
  *
@@ -202,16 +206,73 @@ class CardValidator extends BaseValidator<Card> {
     protected void validateText(Ctx<Card> ctx) {
         ctx.prop = 'text'
         def card = ctx.item
+        def empty
+        empty = {
+            it == null || (it instanceof Collection && it.every(empty))
+        }
         if (card.isType('instant') || card.isType('sorcery')) {
-            if (card.rulesText == null || card.rulesText == [] || card.rulesText == [[]]) {
+            if (empty(card.rulesText)) {
                 ctx.error("Instants and sorceries must specify rules text")
             }
         } else {
-            if ((card.rulesText == null || card.rulesText == [] || card.rulesText == [[]]) &&
-                (card.rulesText == null || card.rulesText == [] || card.rulesText == [[]])) {
+            if (empty(card.rulesText) && empty(card.flavorText)) {
                 ctx.warning("Cards should rarely have neither rules nor flavor text")
             }
         }
+
+        // check symbol group ordering
+        def walk
+        walk = { work, it ->
+            if (it instanceof SymbolGroup) {
+                work(it)
+            } else if (it instanceof Collection) {
+                it.each walk.curry(work)
+            }
+        }
+        def groupOrder = walk.curry {
+            def sorted = it.sort()
+            if (it != sorted) {
+                ctx.warning("Cost symbols are not in canonical order (expected ${sorted.toString()})")
+            }
+        }
+        groupOrder card.rulesText
+        groupOrder card.flavorText
+
+        // check tap/untap location
+        def tapUntap = walk.curry { SymbolGroup it ->
+            if (it.size() > 1) {
+                if (it*.symbol.contains('T')) {
+                    ctx.warning("Tap symbols should be separated from mana costs by a comma and space (e.g., {1}{W}, {T}")
+                } else if (it*.symbol.contains('Q')) {
+                    ctx.warning("Untap symbols should be separated from mana costs by a comma and space (e.g., {1}{W}, {Q}")
+                }
+            }
+        }
+        tapUntap card.rulesText
+        tapUntap card.flavorText
+
+        // check total length
+        walk = { work, it ->
+            if (it instanceof Collection) {
+                it.each walk.curry(work)
+            } else {
+                work(it)
+            }
+        }
+        def totalLen = 0
+        def lenCheck = walk.curry {
+            if (it instanceof Symbol) {
+                totalLen += 2
+            } else if (it instanceof BodyText) {
+                totalLen += it.text.length()
+            }
+        }
+        lenCheck card.rulesText
+        lenCheck card.flavorText
+        if (totalLen >= 200) {
+            ctx.warning("Your body text is pretty long.  It'll be shrunk down to fit, but there's a lot of it.")
+        }
+
     }
 
     protected void validateRarity(Ctx<Card> ctx) {

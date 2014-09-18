@@ -127,19 +127,19 @@ class CardValidatorTest extends BaseValidatorTest {
         // cards must have rules or flavor
         check new DefaultCard(typeParts: ["Creature"]), WARNING, "rules", "flavor"
         check new DefaultCard(typeParts: ["Creature"], rulesText: [[rt('die')]])
-        check new DefaultCard(typeParts: ["Creature"], flavorText: [[rt('die?')]])
+        check new DefaultCard(typeParts: ["Creature"], flavorText: [[nnt('die?')]])
         // warn about non-standard order in symbol groups
         check new DefaultCard(rulesText: [[sg("rw")]])
-        check new DefaultCard(rulesText: [[sg("wr")]], WARNING, "color", "order", "{R}{W}")
+        check new DefaultCard(rulesText: [[sg("wr")]]), WARNING, "canonical", "order", "{R}{W}"
         // error if tap/untap is not at the end of a symbol group
         // warn about tap/untap w/in a multi-symbol group
-        check new DefaultCard(rulesText: [[sg("wt")]], WARNING, "tap", "group")
-        check new DefaultCard(rulesText: [[sg("wq")]], WARNING, "untap", "group")
-        check new DefaultCard(rulesText: [[sg("tw")]], WARNING, "tap", "order", "{W}{T}", WARNING, "tap", "group")
-        check new DefaultCard(rulesText: [[sg("qw")]], WARNING, "untap", "order", "{W}{Q}", WARNING, "untap", "group")
+        check new DefaultCard(rulesText: [[sg("wt")]]), WARNING, "tap", "separated"
+        check new DefaultCard(rulesText: [[sg("wq")]]), WARNING, "untap", "separated"
+        check new DefaultCard(rulesText: [[sg("tw")]]), WARNING, "canonical", "order", "{W}{T}", WARNING, "tap", "separated"
+        check new DefaultCard(rulesText: [[sg("qw")]]), WARNING, "canonical", "order", "{W}{Q}", WARNING, "untap", "separated"
         // warn if more than "a bunch" of text is present
         check new DefaultCard(rulesText: [[rt('a ' * 99)]])
-        check new DefaultCard(rulesText: [[rt('b ' * 100)]], WARNING, "long")
+        check new DefaultCard(rulesText: [[rt('b ' * 100)]]), WARNING, "long"
     }
 
     @Test
