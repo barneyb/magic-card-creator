@@ -38,7 +38,7 @@ class DefaultSymbol implements Symbol {
     @Override
     ManaColor getColor() {
         if (colored) {
-            colors.first()
+            multiColor && colors.first() == ManaColor.COLORLESS ? colors.get(1) : colors.first()
         } else {
             throw new UnsupportedOperationException("You cannot request the color of a non-colored symbol.")
         }
@@ -51,10 +51,15 @@ class DefaultSymbol implements Symbol {
             other.symbol == 'X' ? 0 : -1
         } else if (other.symbol == 'X') {
             1
+        } else if (colored && ! other.colored) {
+            -1
+        } else if (! colored && other.colored) {
+            1
         } else if (colors.size() != other.colors.size()) {
-            other.colors.size().compareTo(colors.size()) // desc
+            other.colors.size().compareTo(colors.size()) // desc (multi-color first)
         } else {
-            symbol.compareTo(other.symbol) // asc
+            def cs = ManaColor.sort([this, other]*.color)
+            cs.first() == this.color ? -1 : 1
         }
     }
 
