@@ -79,7 +79,7 @@ class CardValidator extends BaseValidator<Card> {
                 }
                 def sorted = cost.sort()
                 if (cost != sorted) {
-                    ctx.warning("The casting cost is not in canonical order (expected ${sorted.toString()})")
+                    ctx.warning("The casting cost is not in canonical order (expected ${sorted.toString()} but was ${cost.toString()})")
                 }
             }
         }
@@ -114,12 +114,12 @@ class CardValidator extends BaseValidator<Card> {
                     }
                 } else {
                     if (known != sorted) {
-                        ctx.warning("The type modifiers are not in canonical order (expected ${sorted.join(' ')})")
+                        ctx.warning("The type modifiers are not in canonical order (expected ${sorted.join(' ')} but was ${known.join(' ')})")
                     }
                 }
                 sorted = unknown + known
                 if (type != sorted) {
-                    ctx.warning("The type(s) and modifier(s) are not in canonical order (expected ${sorted.join(' ')})")
+                    ctx.warning("The type(s) and modifier(s) are not in canonical order (expected ${sorted.join(' ')} but was ${type.join(' ')})")
                 }
             }
         }
@@ -198,7 +198,7 @@ class CardValidator extends BaseValidator<Card> {
         } else {
             def sorted = ManaColor.sort(colors)
             if (colors != sorted) {
-                ctx.warning("The color indicator is not in canonical order (expected ${sorted*.symbol.join('')})")
+                ctx.warning("The color indicator is not in canonical order (expected ${sorted*.symbol.join('')} but was ${colors*.symbol.join('')})")
             }
         }
     }
@@ -232,7 +232,7 @@ class CardValidator extends BaseValidator<Card> {
         def groupOrder = walk.curry {
             def sorted = it.sort()
             if (it != sorted) {
-                ctx.warning("Cost symbols are not in canonical order (expected ${sorted.toString()})")
+                ctx.warning("Cost symbols are not in canonical order (expected ${sorted.toString()} but was ${it.toString()})")
             }
         }
         groupOrder card.rulesText
