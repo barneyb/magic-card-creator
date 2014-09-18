@@ -28,9 +28,7 @@ class DefaultCard implements Card {
 
     @Override
     boolean isType(String type) {
-        // intelliJ is colluding Collection.contains and String.contains ;(
-        //noinspection GroovyAssignabilityCheck
-        typeParts*.toLowerCase()*.contains(type.toLowerCase())
+        typeParts*.toLowerCase().contains(type.toLowerCase())
     }
 
     List<String> subtypeParts = null
