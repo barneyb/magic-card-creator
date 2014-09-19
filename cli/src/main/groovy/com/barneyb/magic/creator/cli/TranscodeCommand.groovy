@@ -37,7 +37,7 @@ class TranscodeCommand implements Executable {
             // transcode the file(s)
             eachFile { File f ->
                 println "processing $f"
-                def tgt = new File(outputDir, f.name + '.png')
+                def tgt = targetFromSource(f)
                 def httpclient = HttpClients.createDefault()
                 try {
                     def req = new HttpPost(baseUrl)
@@ -56,6 +56,16 @@ class TranscodeCommand implements Executable {
                 }
             }
         }
+    }
+
+    private Set alreadyTargeted = []
+    protected File targetFromSource(File f) {
+        f = f.canonicalFile
+        def t = new File(outputDir, f.name + '.png').canonicalFile
+        for (int i = 0; ! alreadyTargeted.add(t); i++) {
+            t = new File(outputDir, f.name + '_' + i + '.png').canonicalFile
+        }
+        t
     }
 
     protected withDocker(Closure work) {
