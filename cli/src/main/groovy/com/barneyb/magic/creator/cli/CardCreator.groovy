@@ -20,7 +20,8 @@ class CardCreator {
             help: new HelpCommand(),
             validate: new ValidateCommand(),
             compose: new ComposeCommand(),
-            stats: new StatsCommand()
+            stats: new StatsCommand(),
+            transcode: new TranscodeCommand()
         ].each { n, c ->
             jc.addCommand(n, c)
         }

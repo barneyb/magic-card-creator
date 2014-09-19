@@ -4,6 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>card-creator-cli</artifactId>
+    <properties>
+        <org.apache.httpcomponents.version>4.3.5</org.apache.httpcomponents.version>
+    </properties>
     <parent>
         <artifactId>card-creator-parent</artifactId>
         <groupId>com.barneyb.magic</groupId>
@@ -35,6 +38,16 @@
             <groupId>com.beust</groupId>
             <artifactId>jcommander</artifactId>
             <version>1.35</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${org.apache.httpcomponents.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>${org.apache.httpcomponents.version}</version>
         </dependency>
     </dependencies>
     <build>
