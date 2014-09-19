@@ -1,14 +1,14 @@
 package com.barneyb.magic.creator.cli
+
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.ParameterException
-import com.beust.jcommander.Parameters
+
 /**
  *
  *
  * @author barneyb
  */
-@Parameters(commandNames = "transcode", commandDescription = "transcode composed cards (via docker)")
-class TranscodeCommand implements Executable {
+abstract class BaseTranscodeCommand implements Executable {
 
     @Parameter(names = "--docker", description = "The name of the 'docker' binary to use")
     String dockerCommand = "docker"
@@ -25,8 +25,7 @@ class TranscodeCommand implements Executable {
             throw new ParameterException("No inputs were specified.")
         }
         DockerUtils.withDocker dockerCommand, { String hostAndPort ->
-            def baseUrl = "http://$hostAndPort/convert/png"
-            HttpUtils.withConverter baseUrl, { postAndSave ->
+            HttpUtils.withConverter "http://$hostAndPort" + urlPath, { postAndSave ->
                 // transcode the file(s)
                 eachFile { File src ->
                     println "processing $src"
@@ -38,10 +37,21 @@ class TranscodeCommand implements Executable {
         }
     }
 
+    /**
+     * I return a domain-relative path (starting with a slash) for where to
+     * send transcode requests.
+     */
+    abstract String getUrlPath()
+
+    /**
+     * I return the file suffix to use for transcoded files.
+     */
+    abstract String getFileSuffix()
+
     private Closure<File> targeter
     protected File targetFromSource(File f) {
         if (targeter == null) {
-            targeter = targeter = FileUtils.uniqueFileBuilder(outputDir, ".svg", ".png")
+            targeter = targeter = FileUtils.uniqueFileBuilder(outputDir, ".svg", fileSuffix)
         }
         targeter(f)
     }

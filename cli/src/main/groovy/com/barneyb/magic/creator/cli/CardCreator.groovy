@@ -21,7 +21,7 @@ class CardCreator {
             validate: new ValidateCommand(),
             compose: new ComposeCommand(),
             stats: new StatsCommand(),
-            transcode: new TranscodeCommand()
+            png: new PngCommand()
         ].each { n, c ->
             jc.addCommand(n, c)
         }
