@@ -12,6 +12,7 @@ app.post "/convert/png", (req, res) ->
     fn = req.files.svg.path
     out = "#{fn}.png"
     cmd = "/usr/bin/rsvg-convert -f png --width #{req.query.w ? 400} -o #{out} #{fn}"
+    #noinspection CoffeeScriptUnusedLocalSymbols
     exec cmd, (e, so, se) ->
         res.sendfile out
 
@@ -20,7 +21,14 @@ app.post "/convert/pdf", (req, res) ->
     out = "#{fn}.pdf"
     cmd = "/usr/bin/rsvg-convert -f pdf -o #{out} #{fn}"
     exec cmd, (e, so, se) ->
-        res.sendfile out
+        rotate = req.query.r ? 'east'
+        if rotate == 'north'
+            res.sendfile out
+        else
+            out2 = "#{fn}-rotated.pdf"
+            cmd = "pdftk #{out} cat 1-end #{rotate} #{out2}"
+            exec cmd, (e, so, se) ->
+                res.sendfile out2
 
 app.listen PORT
 console.log "Running on http://localhost:" + PORT
