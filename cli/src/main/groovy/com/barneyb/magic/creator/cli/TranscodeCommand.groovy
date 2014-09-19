@@ -60,10 +60,9 @@ class TranscodeCommand implements Executable {
 
     private Set alreadyTargeted = []
     protected File targetFromSource(File f) {
-        f = f.canonicalFile
-        def t = new File(outputDir, f.name + '.png').canonicalFile
-        for (int i = 0; ! alreadyTargeted.add(t); i++) {
-            t = new File(outputDir, f.name + '_' + i + '.png').canonicalFile
+        def t = new File(outputDir, f.name + '.png')
+        for (int i = 0; ! alreadyTargeted.add(t.canonicalFile); i++) {
+            t = new File(outputDir, f.name + '_' + i + '.png')
         }
         t
     }
