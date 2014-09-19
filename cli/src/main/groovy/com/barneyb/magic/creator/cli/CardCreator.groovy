@@ -38,11 +38,7 @@ class CardCreator {
             jc.usage()
         } catch (ParameterException pe){
             println pe.message
-            if (jc.parsedCommand) {
-                jc.usage(jc.parsedCommand)
-            } else {
-                jc.usage()
-            }
+            jc.usage()
         }
     }
 
