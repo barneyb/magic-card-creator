@@ -2,12 +2,6 @@ package com.barneyb.magic.creator.cli
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.ParameterException
 import com.beust.jcommander.Parameters
-import org.apache.http.HttpStatus
-import org.apache.http.client.HttpClient
-import org.apache.http.client.methods.HttpPost
-import org.apache.http.entity.mime.MultipartEntityBuilder
-import org.apache.http.entity.mime.content.FileBody
-import org.apache.http.impl.client.HttpClients
 
 import java.nio.file.Files
 /**
@@ -34,40 +28,15 @@ class TranscodeCommand implements Executable {
         }
         DockerUtils.withDocker dockerCommand, { String hostAndPort ->
             def baseUrl = "http://$hostAndPort/convert/png"
-            withHttpClient { HttpClient httpclient ->
+            HttpUtils.withConverter baseUrl, { postAndSave ->
                 // transcode the file(s)
                 eachFile { File src ->
                     println "processing $src"
                     def dest = targetFromSource(src)
-                    postAndSave(httpclient, baseUrl, src, dest)
+                    postAndSave(src, dest)
                     println "saved $dest"
                 }
             }
-        }
-    }
-
-    protected void postAndSave(HttpClient httpclient, String endpoint, File src, File dest) {
-        def req = new HttpPost(endpoint)
-        req.entity = MultipartEntityBuilder.create()
-            .addPart("svg", new FileBody(src))
-            .build()
-        def resp = httpclient.execute(req)
-        if (resp.statusLine.statusCode != HttpStatus.SC_OK) {
-            throw new IOException(resp.statusLine.reasonPhrase)
-        }
-        if (resp.entity != null) {
-            def out = dest.newOutputStream()
-            resp.entity.writeTo(out)
-            out.close()
-        }
-    }
-
-    protected withHttpClient(Closure work) {
-        def httpclient = HttpClients.createDefault()
-        try {
-            work(httpclient)
-        } finally {
-            httpclient.close()
         }
     }
 
