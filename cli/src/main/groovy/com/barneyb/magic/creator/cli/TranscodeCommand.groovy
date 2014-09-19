@@ -2,6 +2,7 @@ package com.barneyb.magic.creator.cli
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.ParameterException
 import com.beust.jcommander.Parameters
+import org.apache.http.client.HttpClient
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.mime.MultipartEntityBuilder
 import org.apache.http.entity.mime.content.FileBody
@@ -34,27 +35,37 @@ class TranscodeCommand implements Executable {
         }
         withDocker { String hostAndPort ->
             def baseUrl = "http://$hostAndPort/convert/png"
-            // transcode the file(s)
-            eachFile { File f ->
-                println "processing $f"
-                def tgt = targetFromSource(f)
-                def httpclient = HttpClients.createDefault()
-                try {
-                    def req = new HttpPost(baseUrl)
-                    req.entity = MultipartEntityBuilder.create()
-                        .addPart("svg", new FileBody(f))
-                        .build()
-                    def resp = httpclient.execute(req)
-                    if (resp.entity != null) {
-                        def out = tgt.newOutputStream()
-                        resp.entity.writeTo(out)
-                        out.close()
-                    }
-                    println "saved $tgt"
-                } finally {
-                    httpclient.close()
+            withHttpClient { HttpClient httpclient ->
+                // transcode the file(s)
+                eachFile { File src ->
+                    println "processing $src"
+                    def dest = targetFromSource(src)
+                    postAndSave(httpclient, baseUrl, src, dest)
+                    println "saved $dest"
                 }
             }
+        }
+    }
+
+    protected void postAndSave(HttpClient httpclient, String endpoint, File src, File dest) {
+        def req = new HttpPost(endpoint)
+        req.entity = MultipartEntityBuilder.create()
+            .addPart("svg", new FileBody(src))
+            .build()
+        def resp = httpclient.execute(req)
+        if (resp.entity != null) {
+            def out = dest.newOutputStream()
+            resp.entity.writeTo(out)
+            out.close()
+        }
+    }
+
+    protected withHttpClient(Closure work) {
+        def httpclient = HttpClients.createDefault()
+        try {
+            work(httpclient)
+        } finally {
+            httpclient.close()
         }
     }
 
