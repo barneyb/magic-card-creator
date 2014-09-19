@@ -2,6 +2,7 @@ package com.barneyb.magic.creator.cli
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.ParameterException
 import com.beust.jcommander.Parameters
+import org.apache.http.HttpStatus
 import org.apache.http.client.HttpClient
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.mime.MultipartEntityBuilder
@@ -53,6 +54,9 @@ class TranscodeCommand implements Executable {
             .addPart("svg", new FileBody(src))
             .build()
         def resp = httpclient.execute(req)
+        if (resp.statusLine.statusCode != HttpStatus.SC_OK) {
+            throw new IOException(resp.statusLine.reasonPhrase)
+        }
         if (resp.entity != null) {
             def out = dest.newOutputStream()
             resp.entity.writeTo(out)
