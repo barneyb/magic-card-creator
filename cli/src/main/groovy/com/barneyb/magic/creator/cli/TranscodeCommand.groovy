@@ -32,6 +32,33 @@ class TranscodeCommand implements Executable {
         if (targets == null || targets.empty) {
             throw new ParameterException("No target(s) were specified.")
         }
+        withDocker { String hostAndPort ->
+            def baseUrl = "http://$hostAndPort/convert/png"
+            // transcode the file(s)
+            eachFile { File f ->
+                println "processing $f"
+                def tgt = new File(outputDir, f.name + '.png')
+                def httpclient = HttpClients.createDefault()
+                try {
+                    def req = new HttpPost(baseUrl)
+                    req.entity = MultipartEntityBuilder.create()
+                        .addPart("svg", new FileBody(f))
+                        .build()
+                    def resp = httpclient.execute(req)
+                    if (resp.entity != null) {
+                        def out = tgt.newOutputStream()
+                        resp.entity.writeTo(out)
+                        out.close()
+                    }
+                    println "saved $tgt"
+                } finally {
+                    httpclient.close()
+                }
+            }
+        }
+    }
+
+    protected withDocker(Closure work) {
         def started = false
         // check if container is running
         def p = docker("ps")
@@ -43,37 +70,21 @@ class TranscodeCommand implements Executable {
             println "no docker container found, creating a temporary one"
             contId = 'mtgc-' + UUID.randomUUID()
             docker("run", "--publish-all", "--detach", "--name", contId, IMAGE_NAME)
-            Thread.sleep(1000) // OMG! // KLUDGE! // BE ASHAMED!
             started = true
         }
-        // get network endpoint
-        def ip = docker("port", contId, "8080").inputStream.readLines().first()
-        def baseUrl = "http://$ip/convert/png"
-        // transcode the file(s)
-        eachFile { File f ->
-            println "processing $f"
-            def tgt = new File(outputDir, f.name + '.png')
-            def httpclient = HttpClients.createDefault()
-            try {
-                def req = new HttpPost(baseUrl)
-                req.entity = MultipartEntityBuilder.create()
-                    .addPart("svg", new FileBody(f))
-                    .build()
-                def resp = httpclient.execute(req)
-                if (resp.entity != null) {
-                    def out = tgt.newOutputStream()
-                    resp.entity.writeTo(out)
-                    out.close()
-                }
-                println "saved $tgt"
-            } finally {
-                httpclient.close()
+        try {
+            if (started) {
+                Thread.sleep(1000) // OMG! // KLUDGE! // BE ASHAMED!
             }
-        }
-        // kill off container
-        if (started) {
-            println "cleaning up temporary docker container"
-            docker("rm", "--force", contId).waitFor()
+            // get network endpoint
+            def hostAndPort = docker("port", contId, "8080").inputStream.readLines().first()
+            work(hostAndPort)
+        } finally {
+            // kill off container
+            if (started) {
+                println "cleaning up temporary docker container"
+                docker("rm", "--force", contId).waitFor()
+            }
         }
     }
 
