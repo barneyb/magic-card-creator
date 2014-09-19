@@ -3,6 +3,7 @@ package com.barneyb.magic.creator.cli
 import com.barneyb.magic.creator.api.Theme
 import com.barneyb.magic.creator.api.ThemeLoader
 import com.barneyb.magic.creator.core.ServiceUtils
+import com.barneyb.magic.creator.util.SvgUtils
 import com.barneyb.magic.creator.util.XmlUtils
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.Parameters
@@ -23,8 +24,11 @@ class ComposeCommand extends BaseDescriptorCommand implements Executable {
     @Parameter(names = "--theme-key", description = "The key of the theme to use")
     String themeKey = "dynamic"
 
-    @Parameter(names = "--theme-descriptor", description = "A theme descriptor file, if needed.")
+    @Parameter(names = "--theme-descriptor", description = "A theme descriptor file, if needed")
     File themeDescriptor
+
+    @Parameter(names = "--print", description = "If true, composed cards will be rotated and bled for printing")
+    boolean print = false
 
     void execute(MainCommand main) {
         if (! outputDir.exists()) {
@@ -50,7 +54,43 @@ class ComposeCommand extends BaseDescriptorCommand implements Executable {
             def start = System.currentTimeMillis()
             def file = new File(outputDir, it.cardNumber + ".svg")
             try {
-                XmlUtils.write(theme.layout(it), file.newWriter())
+                def doc = theme.layout(it)
+                if (print) {
+                    def xbleed = 17.5
+                    def ybleed = 17.5
+                    def rotate = 0 // todo: setting this to anything but 0 mod 360 screws up the filters and patterns.  no idea why.
+                    def size = SvgUtils.size(doc)
+                    def base = doc
+                    doc = XmlUtils.create()
+
+                    def w = size.width
+                    def h = size.height
+                    def flip = rotate % 180 != 0
+                    def newWidth = (flip ? h : w) + xbleed * 2
+                    def newHeight = (flip ? w : h) + ybleed * 2
+
+                    XmlUtils.elattr(doc.rootElement, [
+                        width: newWidth,
+                        height: newHeight
+                    ])
+                    XmlUtils.el(doc.rootElement, 'rect', [
+                        width: "100%",
+                        height: "100%",
+                        fill: "#000"
+                    ])
+                    def g = XmlUtils.el(doc.rootElement, 'g', [
+                        transform: "translate($xbleed $ybleed)"
+                    ])
+                    if (rotate % 360 != 0) {
+                        g = XmlUtils.el(g, 'g', [
+                            transform: (flip ? "translate(${(h - w) / 2} ${(w - h) / 2}) " : "") + "rotate($rotate ${(float) w / 2} ${(float) h / 2})"
+                        ])
+                    }
+                    g.appendChild(doc.adoptNode(base.rootElement))
+                }
+                def out = file.newWriter()
+                XmlUtils.write(doc, out)
+                out.close()
             } catch (Exception e) {
                 log.severe("Failed to lay out card: $e")
                 if (main.debug) {
