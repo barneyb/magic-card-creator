@@ -1,5 +1,7 @@
 package com.barneyb.magic.creator.cli
 
+import java.nio.file.Files
+
 /**
  *
  *
@@ -28,6 +30,26 @@ class FileUtils {
                 t = new File(outputDir, root + '_' + i + destSuffix)
             }
             t
+        }
+    }
+
+    /**
+     * I accept a glob pattern and invoke the passed work for each File it
+     * matches based on the working directory (or the root, if the glob starts
+     * with a leading slash).
+     * @param work The work to do per File, which will be passed to it
+     * @param glob The glob to identify files of interest
+     */
+    static void eachFile(Closure work, String glob) {
+        def dir = new File(glob.startsWith('/') ? "/" : ".")
+        def parts = glob.tokenize('/')
+        parts.eachWithIndex { p, i ->
+            if (i == parts.size() - 1) {
+                //noinspection GroovyAssignabilityCheck
+                Files.newDirectoryStream(dir.toPath(), p)*.toFile().each work
+            } else {
+                dir = new File(dir, p)
+            }
         }
     }
 
