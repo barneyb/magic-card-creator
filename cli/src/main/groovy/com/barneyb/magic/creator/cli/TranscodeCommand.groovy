@@ -40,17 +40,12 @@ class TranscodeCommand implements Executable {
         }
     }
 
-    private Set alreadyTargeted = []
+    private Closure<File> targeter
     protected File targetFromSource(File f) {
-        def root = f.name
-        if (root.endsWith(".svg")) {
-            root = root.substring(0, root.length() - 4) // strip the extension
+        if (targeter == null) {
+            targeter = targeter = FileUtils.uniqueFileBuilder(outputDir, ".svg", ".png")
         }
-        def t = new File(outputDir, root + '.png')
-        for (int i = 0; ! alreadyTargeted.add(t.canonicalFile); i++) {
-            t = new File(outputDir, root + '_' + i + '.png')
-        }
-        t
+        targeter(f)
     }
 
     protected void eachFile(Closure work) {
