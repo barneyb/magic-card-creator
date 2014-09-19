@@ -18,8 +18,6 @@ import java.nio.file.Files
 @Parameters(commandNames = "transcode", commandDescription = "transcode composed cards (via docker)")
 class TranscodeCommand implements Executable {
 
-    static final String IMAGE_NAME = 'magic-card-creator'
-
     @Parameter(names = "--docker", description = "The name of the 'docker' binary to use")
     String dockerCommand = "docker"
 
@@ -34,7 +32,7 @@ class TranscodeCommand implements Executable {
         if (targets == null || targets.empty) {
             throw new ParameterException("No target(s) were specified.")
         }
-        withDocker { String hostAndPort ->
+        DockerUtils.withDocker dockerCommand, { String hostAndPort ->
             def baseUrl = "http://$hostAndPort/convert/png"
             withHttpClient { HttpClient httpclient ->
                 // transcode the file(s)
@@ -84,41 +82,6 @@ class TranscodeCommand implements Executable {
             t = new File(outputDir, root + '_' + i + '.png')
         }
         t
-    }
-
-    protected withDocker(Closure work) {
-        def started = false
-        // check if container is running
-        def p = docker("ps")
-        def contId = p.inputStream.readLines().find {
-            it.tokenize()[1].startsWith(IMAGE_NAME + ":")
-        }?.tokenize()?.first()
-        // start up new container?
-        if (contId == null) {
-            println "no docker container found, creating a temporary one"
-            contId = 'mtgc-' + UUID.randomUUID()
-            docker("run", "--publish-all", "--detach", "--name", contId, IMAGE_NAME)
-            started = true
-        }
-        try {
-            if (started) {
-                Thread.sleep(1000) // OMG! // KLUDGE! // BE ASHAMED!
-            }
-            // get network endpoint
-            def hostAndPort = docker("port", contId, "8080").inputStream.readLines().first()
-            work(hostAndPort)
-        } finally {
-            // kill off container
-            if (started) {
-                println "cleaning up temporary docker container"
-                docker("rm", "--force", contId).waitFor()
-            }
-        }
-    }
-
-    protected docker(String... args) {
-        new ProcessBuilder((List) [dockerCommand] + args.toList())
-            .start()
     }
 
     protected void eachFile(Closure work) {
