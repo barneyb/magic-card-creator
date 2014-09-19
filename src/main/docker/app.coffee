@@ -26,7 +26,7 @@ app.post "/convert/pdf", (req, res) ->
             res.sendfile out
         else
             out2 = "#{fn}-rotated.pdf"
-            cmd = "pdftk #{out} cat 1-end #{rotate} #{out2}"
+            cmd = "/usr/bin/pdftk #{out} cat 1-end#{rotate} output #{out2}"
             exec cmd, (e, so, se) ->
                 res.sendfile out2
 
