@@ -11,11 +11,10 @@ import com.beust.jcommander.Parameters
 @Parameters(separators = "=")
 class MainCommand {
 
-    @Parameter(names = ["-h", "--help"], help = true)
+    @Parameter(names = ["-h", "--help"], help = true, description = "display usage information and exit")
     boolean help
 
-    @Parameter(names = "--debug")
+    @Parameter(names = "--debug", description = "enable debug mode")
     boolean debug
-
 
 }
