@@ -4,6 +4,7 @@ import com.barneyb.magic.creator.api.CardSet
 import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Rarity
 import com.barneyb.magic.creator.api.Symbol
+import com.beust.jcommander.JCommander
 import com.beust.jcommander.Parameters
 import groovy.transform.TupleConstructor
 /**
@@ -27,7 +28,7 @@ class StatsCommand extends BaseDescriptorCommand implements Executable {
     ]
 
     @Override
-    void execute(MainCommand main) {
+    void execute(MainCommand main, JCommander jc) {
         def cs = loadDescriptor()
         println "stats for '$cs.title' ($cs.key)"
         def stats = [

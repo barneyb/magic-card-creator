@@ -1,5 +1,7 @@
 package com.barneyb.magic.creator.cli
 
+import com.beust.jcommander.JCommander
+
 /**
  *
  *
@@ -7,6 +9,6 @@ package com.barneyb.magic.creator.cli
  */
 interface Executable {
 
-    void execute(MainCommand main)
+    void execute(MainCommand main, JCommander jc)
 
 }

@@ -5,6 +5,7 @@ import com.barneyb.magic.creator.api.ThemeLoader
 import com.barneyb.magic.creator.core.ServiceUtils
 import com.barneyb.magic.creator.util.SvgUtils
 import com.barneyb.magic.creator.util.XmlUtils
+import com.beust.jcommander.JCommander
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.Parameters
 import groovy.util.logging.Log
@@ -30,7 +31,7 @@ class ComposeCommand extends BaseDescriptorCommand implements Executable {
     @Parameter(names = "--print", description = "If true, composed cards will be rotated and bled for printing")
     boolean print = false
 
-    void execute(MainCommand main) {
+    void execute(MainCommand main, JCommander jc) {
         if (! outputDir.exists()) {
             outputDir.mkdirs()
         } else if (outputDir.isFile()) {

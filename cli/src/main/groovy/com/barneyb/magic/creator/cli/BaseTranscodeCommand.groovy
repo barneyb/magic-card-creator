@@ -1,5 +1,6 @@
 package com.barneyb.magic.creator.cli
 
+import com.beust.jcommander.JCommander
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.ParameterException
 
@@ -20,7 +21,7 @@ abstract class BaseTranscodeCommand implements Executable {
     File outputDir
 
     @Override
-    void execute(MainCommand main) {
+    void execute(MainCommand main, JCommander jc) {
         if (inputs == null || inputs.empty) {
             throw new ParameterException("No inputs were specified.")
         }

@@ -3,6 +3,7 @@ package com.barneyb.magic.creator.cli
 import com.barneyb.magic.creator.api.ValidationMessage
 import com.barneyb.magic.creator.validate.CardSetValidator
 import com.barneyb.magic.creator.validate.CardValidator
+import com.beust.jcommander.JCommander
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.Parameters
 import groovy.util.logging.Log
@@ -19,7 +20,7 @@ class ValidateCommand extends BaseDescriptorCommand implements Executable {
     @Parameter(names = ["-l", "--level"], description = "validation level: ERROR, WARNING, INFO")
     ValidationMessage.Level level = ValidationMessage.Level.WARNING
 
-    void execute(MainCommand main) {
+    void execute(MainCommand main, JCommander jc) {
         def cs = loadDescriptor()
         println("validating set '$cs.title' ($cs.key)")
         def filter = { ValidationMessage it ->

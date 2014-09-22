@@ -29,18 +29,19 @@ class CardCreator {
 
         try {
             jc.parse(args)
-            def cmd = commands[jc.parsedCommand]
+            def cmd = commands[jc.parsedCommand ?: "help"]
             if (cmd instanceof Executable) {
-                cmd.execute(main)
+                cmd.execute(main, jc)
             } else {
                 jc.usage()
             }
         } catch (MissingCommandException mce) {
             println mce.message
-            jc.usage()
+            commands.help.execute(main, jc)
+            System.exit(2)
         } catch (ParameterException pe){
             println pe.message
-            jc.usage()
+            System.exit(1)
         }
     }
 
