@@ -14,7 +14,7 @@ abstract class BaseTranscodeCommand implements Executable {
     @Parameter(names = "--docker", description = "The name of the 'docker' binary to use")
     String dockerCommand = "docker"
 
-    @Parameter(description = "The list of transcoding inputs, supporting normal ? and * filename globs.", required = true)
+    @Parameter(description = "list of transcoding inputs (supporting ? and * filename globs)", required = true)
     List<String> inputs
 
     @Parameter(names = ["-o", "--output-dir"], description = "The directory to transcode into", required = true)
