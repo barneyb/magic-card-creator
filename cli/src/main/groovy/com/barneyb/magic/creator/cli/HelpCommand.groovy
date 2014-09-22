@@ -12,7 +12,7 @@ import com.beust.jcommander.Parameters
 @Parameters(commandNames = "help", commandDescription = "display usage information and exit")
 class HelpCommand implements Executable {
 
-    @Parameter(description = "The command to get help for")
+    @Parameter(description = "command to get help for")
     List<String> commands
 
     @Override
