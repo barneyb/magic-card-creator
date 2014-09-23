@@ -41,7 +41,7 @@ class StatsCommand extends BaseDescriptorCommand implements Executable {
                 def colors = it.castingCost*.colors.flatten()
                 colors.size() > 1 || colors.contains(ManaColor.COLORLESS)
             }, this.&devotion)),
-            new Histogram('Cost', cs.cards.findAll {
+            new Histogram('CMC', cs.cards.findAll {
                 it.castingCost
             }.collect(this.&cmc).countBy { it }.sort().collect { cmc, int n ->
                 new Numeric(cmc.toString(), n)
@@ -51,7 +51,11 @@ class StatsCommand extends BaseDescriptorCommand implements Executable {
             }.collect(this.&devotion).countBy { it }.sort().collect { cmc, int n ->
                 new Numeric(cmc.toString(), n)
             }),
-            // todo new Histogram('Devotion To', ),
+            new Histogram('Devotion to', (ManaColor.enumConstants - ManaColor.COLORLESS).collectEntries {
+                [it, cs.cards.sum(0, this.&devotion.rcurry(it))]
+            }.collect { ManaColor c, int n ->
+                new Numeric(c.name(), n)
+            }),
             new Histogram('Rarity', (Rarity.enumConstants.collectEntries {
                 [it, 0]
             } + cs.cards.countBy { it.rarity }).collect { r, int n ->
