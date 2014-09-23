@@ -28,7 +28,7 @@ class ComposeCommand extends BaseDescriptorCommand implements Executable {
     @Parameter(names = "--theme-descriptor", description = "A theme descriptor file, if needed")
     File themeDescriptor
 
-    @Parameter(names = "--print", description = "If true, composed cards will be rotated and bled for printing")
+    @Parameter(names = "--print", description = "If true, composed cards will be bled for printing")
     boolean print = false
 
     void execute(MainCommand main, JCommander jc) {
