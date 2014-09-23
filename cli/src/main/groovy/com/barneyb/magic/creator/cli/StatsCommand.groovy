@@ -5,7 +5,9 @@ import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Rarity
 import com.barneyb.magic.creator.api.Symbol
 import com.beust.jcommander.JCommander
+import com.beust.jcommander.Parameter
 import com.beust.jcommander.Parameters
+import com.google.gson.Gson
 import groovy.transform.TupleConstructor
 /**
  *
@@ -14,6 +16,11 @@ import groovy.transform.TupleConstructor
  */
 @Parameters(commandNames = "stats", commandDescription = "view stats about a cardset")
 class StatsCommand extends BaseDescriptorCommand implements Executable {
+
+    static enum Format {
+        text,
+        json
+    }
 
     static final int OUTPUT_WIDTH = 79
 
@@ -27,10 +34,12 @@ class StatsCommand extends BaseDescriptorCommand implements Executable {
         'Planeswalker'
     ]
 
+    @Parameter(names = ["-f", "--format"], description = "Format to emit stats in (text or json)")
+    Format format = Format.text
+
     @Override
     void execute(MainCommand main, JCommander jc) {
         def cs = loadDescriptor()
-        println "stats for '$cs.title' ($cs.key)"
         def stats = [
             new Numeric('Total Cards', cs.cards.size()),
             new Numeric('Average CMC', mean(cs, { it.castingCost }, this.&cmc)),
@@ -79,27 +88,16 @@ class StatsCommand extends BaseDescriptorCommand implements Executable {
                 new Numeric(t.toString(), n)
             })
         ]
-        stats.each this.&emit.curry((stats*.label
-            + Rarity.enumConstants*.name()
-            + ManaColor.enumConstants*.name()
-            + TYPES
-        )*.length().max())
-    }
-
-    protected void emit(int fcWidth, Numeric s) {
-        println '  ' + s.label.padRight(fcWidth) + ' : '  + s.n
-    }
-
-    protected void emit(int fcWidth, Histogram s) {
-        def max = s.values*.n.max()
-        def maxDigits = Math.ceil(Math.log10((double) max))
-        def labelWidth = fcWidth + 8 + maxDigits
-        def barWidth = OUTPUT_WIDTH - labelWidth
-        println '-' * OUTPUT_WIDTH
-        println s.label
-        s.values.each { v ->
-            println '  ' + v.label.padRight(fcWidth) + ' : '  + v.n.toString().padLeft(maxDigits) + ' : ' + '#' * Math.round(((double) v.n) / max * barWidth)
+        Emitter e
+        switch (format) {
+            case Format.text:
+                e = new TextEmitter()
+                break
+            case Format.json:
+                e = new JsonEmitter()
+                break
         }
+        e.emit(cs, stats, System.out)
     }
 
     protected float mean(CardSet cs, filter, num) {
@@ -121,6 +119,49 @@ class StatsCommand extends BaseDescriptorCommand implements Executable {
         }.sum 0, { Symbol it ->
             color == null ? (it.colors - ManaColor.COLORLESS).size() : it.colors.contains(color) ? 1 : 0
         }
+    }
+
+    protected static interface Emitter {
+        void emit(CardSet cs, Collection<Stat> stats, OutputStream out)
+    }
+
+    protected static class JsonEmitter implements Emitter {
+        @Override
+        void emit(CardSet cs, Collection<Stat> stats, OutputStream os) {
+            PrintStream out = os instanceof PrintStream ? os : new PrintStream(os)
+            println new Gson().toJson(stats, out)
+        }
+    }
+
+    protected static class TextEmitter implements Emitter {
+
+        @Override
+        void emit(CardSet cs, Collection<Stat> stats, OutputStream os) {
+            def out = os instanceof PrintStream ? os : new PrintStream(os)
+            out.println "stats for '$cs.title' ($cs.key)"
+            stats.each this.&emit.curry(out, (stats*.label
+                + Rarity.enumConstants*.name()
+                + ManaColor.enumConstants*.name()
+                + TYPES
+            )*.length().max())
+        }
+
+        protected void emit(PrintStream out, int fcWidth, Numeric s) {
+            out.println '  ' + s.label.padRight(fcWidth) + ' : '  + s.n
+        }
+
+        protected void emit(PrintStream out, int fcWidth, Histogram s) {
+            def max = s.values*.n.max()
+            def maxDigits = Math.ceil(Math.log10((double) max))
+            def labelWidth = fcWidth + 8 + maxDigits
+            def barWidth = OUTPUT_WIDTH - labelWidth
+            out.println '-' * OUTPUT_WIDTH
+            out.println s.label
+            s.values.each { v ->
+                out.println '  ' + v.label.padRight(fcWidth) + ' : '  + v.n.toString().padLeft(maxDigits) + ' : ' + '#' * Math.round(((double) v.n) / max * barWidth)
+            }
+        }
+
     }
 
     static abstract class Stat {
