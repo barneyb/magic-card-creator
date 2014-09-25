@@ -1,5 +1,5 @@
 #
-# docker build -t magic-card-creator src/main/docker/
+# docker build -t magic-card-creator docker/src/main/resources
 # docker run --rm -i -p 8080:8080 magic-card-creator
 # curl -F svg=@build/1.svg -o build/1.png http://localhost:8080/convert/png?w=400
 # curl -F svg=@build/1.svg -o build/1.pdf http://localhost:8080/convert/pdf?r=west
