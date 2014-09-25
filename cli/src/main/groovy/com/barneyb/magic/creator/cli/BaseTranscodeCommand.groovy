@@ -30,9 +30,8 @@ abstract class BaseTranscodeCommand implements Executable {
                 // transcode the file(s)
                 eachFile { File src ->
                     println "processing $src"
-                    src = transformSource(src)
                     def dest = targetFromSource(src)
-                    postAndSave(src, dest)
+                    postAndSave(transformSource(src), dest)
                     println "saved $dest"
                 }
             }
