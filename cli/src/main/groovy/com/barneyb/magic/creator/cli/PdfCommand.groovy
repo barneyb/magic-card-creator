@@ -48,9 +48,7 @@ class PdfCommand extends BaseTranscodeCommand {
         src
     }
 
-    protected SVGDocument addBleed(SVGDocument doc) {
-        def xbleed = 17.5
-        def ybleed = 17.5
+    protected SVGDocument addBleed(SVGDocument doc, float xbleed = 17.5, float ybleed = xbleed) {
         def size = SvgUtils.size(doc)
         def base = doc
         doc = XmlUtils.create()
