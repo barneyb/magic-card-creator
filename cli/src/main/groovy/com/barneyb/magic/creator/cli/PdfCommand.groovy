@@ -26,12 +26,12 @@ class PdfCommand extends BaseTranscodeCommand {
     Rotate rotate = Rotate.none
 
     @Override
-    String getUrlPath() {
+    protected String getUrlPath() {
         "/convert/pdf?r=$rotate.direction"
     }
 
     @Override
-    String getFileSuffix() {
+    protected String getFileSuffix() {
         ".pdf"
     }
 

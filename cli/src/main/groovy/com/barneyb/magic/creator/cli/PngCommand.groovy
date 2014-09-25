@@ -15,12 +15,12 @@ class PngCommand extends BaseTranscodeCommand {
     int width = 400
 
     @Override
-    String getUrlPath() {
+    protected String getUrlPath() {
         "/convert/png?w=$width"
     }
 
     @Override
-    String getFileSuffix() {
+    protected String getFileSuffix() {
         ".png"
     }
 

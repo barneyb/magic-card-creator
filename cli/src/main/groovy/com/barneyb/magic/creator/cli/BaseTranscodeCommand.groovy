@@ -30,6 +30,7 @@ abstract class BaseTranscodeCommand implements Executable {
                 // transcode the file(s)
                 eachFile { File src ->
                     println "processing $src"
+                    src = transformSource(src)
                     def dest = targetFromSource(src)
                     postAndSave(src, dest)
                     println "saved $dest"
@@ -39,15 +40,26 @@ abstract class BaseTranscodeCommand implements Executable {
     }
 
     /**
+     * I can be used to transform the source file before transcoding.  By
+     * default, no transformation is performed (the passed source file is
+     * returned as-is).
+     * @param src the raw source file
+     * @return the new source file
+     */
+    protected File transformSource(File src) {
+        src
+    }
+
+    /**
      * I return a domain-relative path (starting with a slash) for where to
      * send transcode requests.
      */
-    abstract String getUrlPath()
+    abstract protected String getUrlPath()
 
     /**
      * I return the file suffix to use for transcoded files.
      */
-    abstract String getFileSuffix()
+    abstract protected String getFileSuffix()
 
     private Closure<File> targeter
     protected File targetFromSource(File f) {
