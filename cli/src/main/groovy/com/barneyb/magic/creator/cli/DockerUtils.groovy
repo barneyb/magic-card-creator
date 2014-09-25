@@ -48,7 +48,7 @@ class DockerUtils {
                 }
             }
             contId = 'mtgc-' + UUID.randomUUID()
-            docker("run", "--publish-all", "--detach", "--name", contId, IMAGE_NAME)
+            docker("run", "--publish-all", "--detach", "--name", contId, IMAGE_NAME + ":" + IMAGE_TAG)
                 .start()
                 .waitFor()
             started = true
