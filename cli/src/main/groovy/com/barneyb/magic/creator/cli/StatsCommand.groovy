@@ -14,7 +14,7 @@ import groovy.transform.TupleConstructor
  *
  * @author barneyb
  */
-@Parameters(commandNames = "stats", commandDescription = "view stats about a cardset")
+@Parameters(commandNames = "stats", commandDescription = "view stats about a cardset", separators = "=")
 class StatsCommand extends BaseDescriptorCommand implements Executable {
 
     static enum Format {

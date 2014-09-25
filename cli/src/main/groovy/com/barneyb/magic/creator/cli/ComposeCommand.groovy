@@ -3,7 +3,6 @@ package com.barneyb.magic.creator.cli
 import com.barneyb.magic.creator.api.Theme
 import com.barneyb.magic.creator.api.ThemeLoader
 import com.barneyb.magic.creator.core.ServiceUtils
-import com.barneyb.magic.creator.util.SvgUtils
 import com.barneyb.magic.creator.util.XmlUtils
 import com.beust.jcommander.JCommander
 import com.beust.jcommander.Parameter
@@ -15,7 +14,7 @@ import groovy.util.logging.Log
  *
  * @author barneyb
  */
-@Parameters(commandNames = "compose", commandDescription = "compose cards from a descriptor")
+@Parameters(commandNames = "compose", commandDescription = "compose cards from a descriptor", separators = "=")
 @Log
 class ComposeCommand extends BaseDescriptorCommand implements Executable {
 
