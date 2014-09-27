@@ -1,6 +1,13 @@
 package com.barneyb.magic.creator.theme
+
+import com.barneyb.magic.creator.api.Artwork
+import com.barneyb.magic.creator.api.BodyItem
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CardSet
+import com.barneyb.magic.creator.api.LayoutType
+import com.barneyb.magic.creator.api.ManaColor
+import com.barneyb.magic.creator.api.Rarity
+import com.barneyb.magic.creator.api.SymbolGroup
 import com.barneyb.magic.creator.descriptor.CardSetImporter
 import com.barneyb.magic.creator.util.XmlUtils
 import groovy.transform.Memoized
@@ -33,7 +40,7 @@ class DynamicThemeTest {
     }
 
     protected static file(Card c) {
-        new File(c.title.toLowerCase().replaceAll(/[^a-z0-9]+/, '-') + ".svg")
+        new File((c.title ?: "Card #${System.identityHashCode(c)}").toLowerCase().replaceAll(/[^a-z0-9]+/, '-') + ".svg")
     }
 
     protected static emit(String title) {
@@ -56,7 +63,7 @@ class DynamicThemeTest {
     static Map<Card, Boolean> emitted
 
     @BeforeClass
-    static void deleteExisting() {
+    static void setup() {
         emitted = new IdentityHashMap<>()
         theme = (DynamicTheme) new DynamicThemeLoader().load(DynamicThemeTest.classLoader.getResource("theme/default/descriptor.json"))
         (files() + PROOF_SHEET_FILE).findAll {
@@ -65,22 +72,156 @@ class DynamicThemeTest {
     }
 
     @AfterClass
-    static void proofsheet() {
+    static void cleanup() {
+        def proofs = files().findAll {
+            it.exists()
+        }
+        if (proofs.size() == 0) {
+            return
+        }
         PROOF_SHEET_FILE.text = """\
 <html>
 <head>
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8" />
 </head>
 <body>
-${files().findAll {
-    it.exists()
-}.collect {
+${proofs.collect {
     it.deleteOnExit()
     it.text
 }.join("\n")}
 <p>Generated at: ${new Date()}
 </body>
 </html>"""
+    }
+
+    @Test
+    void allNull() {
+        emit(new Card() {
+            @Override
+            LayoutType getLayoutType() {
+                LayoutType.CREATURE
+            }
+
+            @Override
+            String getTitle() {
+                return null
+            }
+
+            @Override
+            SymbolGroup getCastingCost() {
+                return null
+            }
+
+            @Override
+            Artwork getArtwork() {
+                return null
+            }
+
+            @Override
+            Artwork getOverArtwork() {
+                return null
+            }
+
+            @Override
+            List<String> getTypeParts() {
+                return null
+            }
+
+            @Override
+            boolean isType(String type) {
+                return false
+            }
+
+            @Override
+            List<String> getSubtypeParts() {
+                return null
+            }
+
+            @Override
+            boolean isSubtype(String subtype) {
+                return false
+            }
+
+            @Override
+            boolean isSemiEnchantment() {
+                return false
+            }
+
+            @Override
+            List<List<BodyItem>> getRulesText() {
+                return null
+            }
+
+            @Override
+            List<List<BodyItem>> getFlavorText() {
+                return null
+            }
+
+            @Override
+            List<ManaColor> getColors() {
+                return null
+            }
+
+            @Override
+            boolean isHybrid() {
+                return false
+            }
+
+            @Override
+            boolean isColorExplicit() {
+                return false
+            }
+
+            @Override
+            boolean isMultiColor() {
+                return false
+            }
+
+            @Override
+            List<ManaColor> getAlliedColors() {
+                return null
+            }
+
+            @Override
+            String getWatermarkName() {
+                return null
+            }
+
+            @Override
+            String getCopyright() {
+                return null
+            }
+
+            @Override
+            Rarity getRarity() {
+                return null
+            }
+
+            @Override
+            boolean isFused() {
+                return false
+            }
+
+            @Override
+            List<Card> getFusedCards() {
+                return null
+            }
+
+            @Override
+            CardSet getSet() {
+                return null
+            }
+
+            @Override
+            Integer getCardNumber() {
+                return null
+            }
+
+            @Override
+            Integer getSetCardCount() {
+                return null
+            }
+        })
     }
 
     @Test

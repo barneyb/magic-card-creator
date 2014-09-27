@@ -54,7 +54,7 @@ class FrameTool {
 
     Texture getBarTexture() {
         def tc
-        if (land || card.hybrid) {
+        if (land || card.hybrid || card.colors == null) {
             tc = ThemedColor.LAND
         } else if (artifact) {
             tc = ThemedColor.ARTIFACT
@@ -101,7 +101,7 @@ class FrameTool {
 
     List<Texture> getFrameTextures() {
         def tcs
-        if (land) {
+        if (land || card.colors == null) {
             tcs = [ThemedColor.LAND]
         } else if (artifact) {
             tcs = [ThemedColor.ARTIFACT]
@@ -117,7 +117,7 @@ class FrameTool {
 
     List<Texture> getTextboxTextures() {
         def tcs
-        if (land) {
+        if (land || card.colors == null) {
             if (card.alliedColors != null && card.alliedColors.size() in 1..2) {
                 return card.alliedColors.collect {
                     def ct = theme.getColorTheme(color(it))
@@ -144,7 +144,7 @@ class FrameTool {
 
     List<Color> getBorderColors() {
         def tcs
-        if (land) {
+        if (land || card.colors == null) {
             if (card.alliedColors != null && card.alliedColors.size() in 1..2) {
                 tcs = card.alliedColors.collect this.&color
             } else {

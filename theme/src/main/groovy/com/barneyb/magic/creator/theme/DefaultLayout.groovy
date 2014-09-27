@@ -68,8 +68,12 @@ class DefaultLayout extends VelocityLayout {
             titleBar -= new DoubleDimension(x + avgCostIconWidth / 2, 0)
         }
         g.color = tool.barTexture.textColor
-        layoutUtils.line(titleBar, card.title, regions.title.textAttributes).draw(g)
-        xmlImage(g, regions.artwork, card.artwork)
+        if (card.title) {
+            layoutUtils.line(titleBar, card.title, regions.title.textAttributes).draw(g)
+        }
+        if (card.artwork) {
+            xmlImage(g, regions.artwork, card.artwork)
+        }
 
         def typeBar = regions.type.bounds
         if (card.rarity && card.set) {
@@ -84,9 +88,11 @@ class DefaultLayout extends VelocityLayout {
             ])
             typeBar -= new DoubleDimension(width * 1.4, 0)
         }
-        // IntelliJ is being dumb about 'capitalize'
-        //noinspection GroovyAssignabilityCheck
-        layoutUtils.line(typeBar, card.typeParts*.capitalize().join(" ") + (card.subtypeParts ? ' \u2014 ' + card.subtypeParts*.capitalize().join(" ") : ""), regions.type.textAttributes).draw(g)
+        if (card.typeParts) {
+            // IntelliJ is being dumb about 'capitalize'
+            //noinspection GroovyAssignabilityCheck
+            layoutUtils.line(typeBar, card.typeParts*.capitalize().join(" ") + (card.subtypeParts ? ' \u2014 ' + card.subtypeParts*.capitalize().join(" ") : ""), regions.type.textAttributes).draw(g)
+        }
 
         tool.bodyIcons.each iconDef.curry("body")
         g.color = tool.textboxTextures.first().textColor
@@ -102,8 +108,28 @@ class DefaultLayout extends VelocityLayout {
             layoutUtils.line(regions.powerToughness.bounds, "$card.power/$card.toughness", regions.powerToughness.textAttributes, Align.CENTER).draw(g)
         }
         g.color = tool.frameTextures.first().textColor
-        layoutUtils.line(regions.artist.bounds, card.artwork.artist, regions.artist.textAttributes).draw(g)
-        layoutUtils.line(regions.footer.bounds, "$card.copyright $card.cardNumber/$card.setCardCount", regions.footer.textAttributes).draw(g)
+        if (card.artwork?.artist) {
+            layoutUtils.line(regions.artist.bounds, card.artwork.artist, regions.artist.textAttributes).draw(g)
+        }
+        def footer = new StringBuilder()
+        if (card.copyright) {
+            footer.append(card.copyright)
+            if (card.cardNumber || card.setCardCount) {
+                footer.append(" ")
+            }
+        }
+        if (card.cardNumber) {
+            footer.append(card.cardNumber)
+        }
+        if (card.setCardCount) {
+            if (card.cardNumber) {
+                footer.append('/')
+            }
+            footer.append(card.setCardCount)
+        }
+        if (footer.length() > 0) {
+            layoutUtils.line(regions.footer.bounds, footer.toString(), regions.footer.textAttributes).draw(g)
+        }
 
 //        g.color = Color.YELLOW
 //        g.draw(TITLE_BAR)
