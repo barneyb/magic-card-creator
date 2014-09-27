@@ -70,7 +70,7 @@ class DefaultCard implements Card {
 
     @Override
     boolean isMultiColor() {
-        colors.size() > 1
+        colors && colors.size() > 1
     }
 
     String watermarkName = null

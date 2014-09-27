@@ -4,10 +4,16 @@ import com.barneyb.magic.creator.api.Artwork
 import com.barneyb.magic.creator.api.BodyItem
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CardSet
+import com.barneyb.magic.creator.api.CreatureCard
+import com.barneyb.magic.creator.api.CreatureLevel
 import com.barneyb.magic.creator.api.LayoutType
 import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Rarity
 import com.barneyb.magic.creator.api.SymbolGroup
+import com.barneyb.magic.creator.core.DefaultCard
+import com.barneyb.magic.creator.core.DefaultCreatureCard
+import com.barneyb.magic.creator.core.DefaultFusedCard
+import com.barneyb.magic.creator.core.DefaultPlaneswalkerCard
 import com.barneyb.magic.creator.descriptor.CardSetImporter
 import com.barneyb.magic.creator.util.XmlUtils
 import groovy.transform.Memoized
@@ -97,131 +103,71 @@ ${proofs.collect {
     @Test
     void allNull() {
         emit(new Card() {
-            @Override
-            LayoutType getLayoutType() {
-                LayoutType.CREATURE
-            }
-
-            @Override
-            String getTitle() {
-                return null
-            }
-
-            @Override
-            SymbolGroup getCastingCost() {
-                return null
-            }
-
-            @Override
-            Artwork getArtwork() {
-                return null
-            }
-
-            @Override
-            Artwork getOverArtwork() {
-                return null
-            }
-
-            @Override
-            List<String> getTypeParts() {
-                return null
-            }
-
-            @Override
-            boolean isType(String type) {
-                return false
-            }
-
-            @Override
-            List<String> getSubtypeParts() {
-                return null
-            }
-
-            @Override
-            boolean isSubtype(String subtype) {
-                return false
-            }
-
-            @Override
-            boolean isSemiEnchantment() {
-                return false
-            }
-
-            @Override
-            List<List<BodyItem>> getRulesText() {
-                return null
-            }
-
-            @Override
-            List<List<BodyItem>> getFlavorText() {
-                return null
-            }
-
-            @Override
-            List<ManaColor> getColors() {
-                return null
-            }
-
-            @Override
-            boolean isHybrid() {
-                return false
-            }
-
-            @Override
-            boolean isColorExplicit() {
-                return false
-            }
-
-            @Override
-            boolean isMultiColor() {
-                return false
-            }
-
-            @Override
-            List<ManaColor> getAlliedColors() {
-                return null
-            }
-
-            @Override
-            String getWatermarkName() {
-                return null
-            }
-
-            @Override
-            String getCopyright() {
-                return null
-            }
-
-            @Override
-            Rarity getRarity() {
-                return null
-            }
-
-            @Override
-            boolean isFused() {
-                return false
-            }
-
-            @Override
-            List<Card> getFusedCards() {
-                return null
-            }
-
-            @Override
-            CardSet getSet() {
-                return null
-            }
-
-            @Override
-            Integer getCardNumber() {
-                return null
-            }
-
-            @Override
-            Integer getSetCardCount() {
-                return null
-            }
+            LayoutType getLayoutType() { LayoutType.SPELL }
+            String getTitle() { null }
+            SymbolGroup getCastingCost() { null }
+            Artwork getArtwork() { null }
+            Artwork getOverArtwork() { null }
+            List<String> getTypeParts() { null }
+            boolean isType(String type) { false }
+            List<String> getSubtypeParts() { null }
+            boolean isSubtype(String subtype) { false }
+            boolean isSemiEnchantment() { false }
+            List<List<BodyItem>> getRulesText() { null }
+            List<List<BodyItem>> getFlavorText() { null }
+            List<ManaColor> getColors() { null }
+            boolean isHybrid() { false }
+            boolean isColorExplicit() { false }
+            boolean isMultiColor() { false }
+            List<ManaColor> getAlliedColors() { null }
+            String getWatermarkName() { null }
+            String getCopyright() { null }
+            Rarity getRarity() { null }
+            boolean isFused() { false }
+            List<Card> getFusedCards() { null }
+            CardSet getSet() { null }
+            Integer getCardNumber() { null }
+            Integer getSetCardCount() { null }
         })
+        emit(new CreatureCard() {
+            LayoutType getLayoutType() { LayoutType.CREATURE }
+            String getPower() { null }
+            String getToughness() { null }
+            boolean isLeveler() { false }
+            List<CreatureLevel> getLevels() { null }
+            String getTitle() { null }
+            SymbolGroup getCastingCost() { null }
+            Artwork getArtwork() { null }
+            Artwork getOverArtwork() { null }
+            List<String> getTypeParts() { null }
+            boolean isType(String type) { false }
+            List<String> getSubtypeParts() { null }
+            boolean isSubtype(String subtype) { false }
+            boolean isSemiEnchantment() { false }
+            List<List<BodyItem>> getRulesText() { null }
+            List<List<BodyItem>> getFlavorText() { null }
+            List<ManaColor> getColors() { null }
+            boolean isHybrid() { false }
+            boolean isColorExplicit() { false }
+            boolean isMultiColor() { false }
+            List<ManaColor> getAlliedColors() { null }
+            String getWatermarkName() { null }
+            String getCopyright() { null }
+            Rarity getRarity() { null }
+            boolean isFused() { false }
+            List<Card> getFusedCards() { null }
+            CardSet getSet() { null }
+            Integer getCardNumber() { null }
+            Integer getSetCardCount() { null }
+        })
+        emit(new DefaultCard())
+        emit(new DefaultCreatureCard())
+        if (theme.supports(LayoutType.PLANESWALKER)) {
+            emit(new DefaultPlaneswalkerCard())
+        }
+        if (theme.supports(LayoutType.FUSE)) {
+            emit(new DefaultFusedCard())
+        }
     }
 
     @Test

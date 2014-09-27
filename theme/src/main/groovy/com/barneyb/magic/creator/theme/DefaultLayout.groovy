@@ -76,7 +76,7 @@ class DefaultLayout extends VelocityLayout {
         }
 
         def typeBar = regions.type.bounds
-        if (card.rarity && card.set) {
+        if (card.set) {
             def icon = tool.setIcon
             iconDef("set", icon)
             def availHeight = typeBar.height * 1.3

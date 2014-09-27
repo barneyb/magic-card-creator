@@ -4,6 +4,7 @@ import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.Icon
 import com.barneyb.magic.creator.api.IconGroup
 import com.barneyb.magic.creator.api.ManaColor
+import com.barneyb.magic.creator.api.Rarity
 import com.barneyb.magic.creator.api.Symbol
 import com.barneyb.magic.creator.api.SymbolGroup
 import com.barneyb.magic.creator.api.Texture
@@ -234,7 +235,7 @@ class FrameTool {
     }
 
     Icon getSetIcon() {
-        theme.cardSetIconFactory.getIcon(card.set, card.rarity)
+        theme.cardSetIconFactory.getIcon(card.set, card.rarity ?: Rarity.COMMON)
     }
 
 }
