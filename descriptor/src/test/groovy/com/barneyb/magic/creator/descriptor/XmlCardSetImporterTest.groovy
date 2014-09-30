@@ -13,7 +13,7 @@ import static junit.framework.Assert.*
  * @author barneyb
  */
 @Mixin(TestMixin)
-class CardSetImporterTest {
+class XmlCardSetImporterTest {
 
     protected assertRelativeUrl(URL base, String expected, URL actual) {
         assertEquals(new URL(base, expected), actual)
@@ -23,7 +23,7 @@ class CardSetImporterTest {
     void allInOne() {
         def descriptor = getClass().classLoader.getResource("all-in-one.xml")
         def relativeUrl = this.&assertRelativeUrl.curry(descriptor)
-        def cs = new CardSetImporter().fromUrl(descriptor)
+        def cs = new XmlCardSetImporter().fromUrl(descriptor)
         def title = "All In One"
         def key = "AiO"
         def cardCount = 10

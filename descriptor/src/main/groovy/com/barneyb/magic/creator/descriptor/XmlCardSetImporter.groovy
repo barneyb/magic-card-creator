@@ -32,7 +32,7 @@ import javax.xml.validation.SchemaFactory
  *
  * @author barneyb
  */
-class CardSetImporter {
+class XmlCardSetImporter {
 
     SymbolFactory symbolFactory = new DefaultSymbolFactory()
 
