@@ -42,4 +42,135 @@ class StringUtils {
         sb.toString()
     }
 
+    static interface ParseVisitor {
+        void startParagraph()
+        void text(String text)
+        void lineBreak()
+        void symbols(List<String> keys)
+        void endParagraph()
+    }
+
+    static void parseTextAndSymbols(String raw, ParseVisitor visitor) {
+        List<String> grp = null
+        def endGroup = { ->
+            if (grp != null) {
+                visitor.symbols(grp)
+                //noinspection GrReassignedInClosureLocalVar
+                grp = null
+            }
+        }
+        def text = { String text ->
+            endGroup()
+            ((String) text).readLines().eachWithIndex { String s, int i ->
+                if (i > 0) {
+                    visitor.lineBreak()
+                }
+                visitor.text(s)
+            }
+        }
+        def symbol = { String key ->
+            if (grp == null) {
+                grp = [key]
+            } else {
+                grp << key
+            }
+        }
+        toParagraphs(toLines(raw)).each { para ->
+            visitor.startParagraph()
+            int open, close, pointer = 0
+            while (true) {
+                open = para.indexOf('{', pointer)
+                if (open < pointer) {
+                    if (pointer < para.length()) {
+                        endGroup()
+                        text(para.substring(pointer))
+                    }
+                    break
+                }
+                close = para.indexOf('}', open)
+                if (close < 0) {
+                    // pretend there was one added to the end of the string
+                    close = para.length()
+                }
+                if (open >= 0 && open < close) {
+                    if (open > pointer) {
+                        endGroup()
+                        text(para.substring(pointer, open))
+                    }
+                    symbol(para.substring(open + 1, close))
+                    pointer = close + 1
+                }
+            }
+            endGroup()
+            visitor.endParagraph()
+        }
+    }
+
+    static String leadingWhitespace(CharSequence s) {
+        if (! s.allWhitespace) {
+            for (int i = 0; i < s.length(); i++) {
+                if (! s.charAt(i).whitespace) {
+                    return s.subSequence(0, i).toString()
+                }
+            }
+        }
+        s.toString()
+    }
+
+    static List<String> toParagraphs(List<String> lines) {
+        def paras = []
+        StringBuilder para = new StringBuilder()
+        def lastIndent = ''
+        lines.each { line ->
+            if (line.allWhitespace) {
+                if (para.length() > 0) {
+                    paras << para.toString()
+                    para = new StringBuilder()
+                }
+            } else {
+                def thisIndent = leadingWhitespace(line)
+                if (lastIndent == thisIndent) {
+                    if (para.length() > 0) {
+                        para.append(' ')
+                    }
+                    para.append(line.trim())
+                } else {
+                    if (para.length() > 0) {
+                        para.append('\n')
+                    }
+                    para.append(line)
+                }
+                lastIndent = thisIndent
+            }
+        }
+        if (para != null) {
+            paras << para.toString()
+        }
+        paras
+    }
+
+    static List<String> toLines(String text) {
+        if (text == null || text.allWhitespace) {
+            return []
+        }
+        def lines = text.replaceAll(/\r\n?/, '\n').replaceAll(/\n\n+/, '\n\n').stripIndent().readLines()
+        // this is a bunch of inefficient list and string manipulation.  but it's correct!
+        while (lines.first().allWhitespace) {
+            lines.remove(0)
+        }
+        while (lines.last().allWhitespace) {
+            lines.remove(lines.size() - 1)
+        }
+        lines.collect {
+            if (it.allWhitespace) {
+                it = ''
+            } else {
+                while (it.length() > 0 && it.charAt(it.length() - 1).whitespace) {
+                    it = it.substring(0, it.length() - 1)
+                }
+            }
+            it
+        }
+    }
+
 }
