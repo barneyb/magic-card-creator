@@ -2,7 +2,7 @@ package com.barneyb.magic.creator.cli
 
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CardSet
-import com.barneyb.magic.creator.descriptor.XmlCardSetImporter
+import com.barneyb.magic.creator.descriptor.XmlCardSetReader
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.converters.FileConverter
 
@@ -20,7 +20,7 @@ abstract class BaseDescriptorCommand {
     List<String> cards = []
 
     protected CardSet loadDescriptor() {
-        new XmlCardSetImporter().fromFile(descriptor)
+        new XmlCardSetReader(descriptor).read()
     }
 
     protected List<Card> filterCards(CardSet cs) {

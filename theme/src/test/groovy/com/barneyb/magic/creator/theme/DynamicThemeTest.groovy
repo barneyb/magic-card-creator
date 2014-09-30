@@ -1,7 +1,7 @@
 package com.barneyb.magic.creator.theme
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CardSet
-import com.barneyb.magic.creator.descriptor.XmlCardSetImporter
+import com.barneyb.magic.creator.descriptor.XmlCardSetReader
 import com.barneyb.magic.creator.util.XmlUtils
 import groovy.transform.Memoized
 import org.junit.AfterClass
@@ -19,7 +19,7 @@ class DynamicThemeTest {
 
     @Memoized
     protected static CardSet cardset() {
-        new XmlCardSetImporter().fromUrl(DynamicThemeTest.classLoader.getResource("test-set.xml"))
+        new XmlCardSetReader(DynamicThemeTest.classLoader.getResource("test-set.xml")).read()
     }
 
     protected static Card card(String title) {
