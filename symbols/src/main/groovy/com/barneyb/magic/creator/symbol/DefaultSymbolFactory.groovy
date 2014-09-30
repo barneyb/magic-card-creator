@@ -49,7 +49,12 @@ class DefaultSymbolFactory implements SymbolFactory {
 
     @Override
     SymbolGroup getCost(String cost) {
-        def l = parts(cost)
+        getCost(parts(cost))
+    }
+
+    @Override
+    SymbolGroup getCost(Collection<String> symbols) {
+        def l = symbols
             .collect(this.&getSymbol)
         def cl = l.findAll {
             it.symbol != 'X' && it.colors == [ManaColor.COLORLESS]
