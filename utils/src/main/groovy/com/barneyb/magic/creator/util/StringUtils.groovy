@@ -120,7 +120,11 @@ class StringUtils {
     }
 
     static void parseTextAndSymbols(String raw, ParseVisitor visitor) {
-        new TextAndSymbolParser(visitor).parse(toParagraphs(toLines(raw)))
+        parseTextAndSymbols(toParagraphs(toLines(raw)), visitor)
+    }
+
+    static void parseTextAndSymbols(List<String> paragraphs, ParseVisitor visitor) {
+        new TextAndSymbolParser(visitor).parse(paragraphs)
     }
 
     static String leadingWhitespace(CharSequence s) {
