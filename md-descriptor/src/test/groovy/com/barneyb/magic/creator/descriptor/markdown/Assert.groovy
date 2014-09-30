@@ -38,6 +38,7 @@ class Assert {
             assertEquals(expected, actual)
         } catch (AssertionError ae) {
             assertEquals("title doesn't match", expected.title, actual.title)
+            assertEquals("key doesn't match", expected.key, actual.key)
             assertEquals("copyright doesn't match", expected.copyright, actual.copyright)
             assertEquals("cardsInSet doesn't match", expected.cardsInSet, actual.cardsInSet)
             assertEquals("titles don't match", expected.cards*.title, actual.cards*.title)
