@@ -152,7 +152,7 @@ class TextParser {
 
         }
         StringUtils.parseTextAndSymbols(raw, vis)
-        vis.paras
+        vis.paras.size() == 0 ? null : vis.paras
     }
 
 }
