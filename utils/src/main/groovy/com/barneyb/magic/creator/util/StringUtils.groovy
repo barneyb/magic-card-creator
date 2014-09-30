@@ -1,5 +1,7 @@
 package com.barneyb.magic.creator.util
 
+import groovy.transform.TupleConstructor
+
 import java.util.regex.Pattern
 
 /**
@@ -50,60 +52,75 @@ class StringUtils {
         void endParagraph()
     }
 
-    static void parseTextAndSymbols(String raw, ParseVisitor visitor) {
+    @TupleConstructor
+    private static class TextAndSymbolParser {
+
+        @SuppressWarnings("GrFinalVariableAccess")
+        final ParseVisitor visitor
+
         List<String> grp = null
-        def endGroup = { ->
+
+        void parse(List<String> paras) {
+            paras.each { para ->
+                visitor.startParagraph()
+                int open, close, pointer = 0
+                while (true) {
+                    open = para.indexOf('{', pointer)
+                    if (open < pointer) {
+                        if (pointer < para.length()) {
+                            endGroup()
+                            text(para.substring(pointer))
+                        }
+                        break
+                    }
+                    close = para.indexOf('}', open)
+                    if (close < 0) {
+                        // pretend there was one added to the end of the string
+                        close = para.length()
+                    }
+                    if (open >= 0 && open < close) {
+                        if (open > pointer) {
+                            endGroup()
+                            text(para.substring(pointer, open))
+                        }
+                        symbol(para.substring(open + 1, close))
+                        pointer = close + 1
+                    }
+                }
+                endGroup()
+                visitor.endParagraph()
+            }
+        }
+
+        void endGroup() {
             if (grp != null) {
                 visitor.symbols(grp)
-                //noinspection GrReassignedInClosureLocalVar
                 grp = null
             }
         }
-        def text = { String text ->
+
+        void text(String text) {
             endGroup()
-            ((String) text).readLines().eachWithIndex { String s, int i ->
+            text.readLines().eachWithIndex { String s, int i ->
                 if (i > 0) {
                     visitor.lineBreak()
                 }
                 visitor.text(s)
             }
         }
-        def symbol = { String key ->
+
+        void symbol(String key) {
             if (grp == null) {
                 grp = [key]
             } else {
                 grp << key
             }
         }
-        toParagraphs(toLines(raw)).each { para ->
-            visitor.startParagraph()
-            int open, close, pointer = 0
-            while (true) {
-                open = para.indexOf('{', pointer)
-                if (open < pointer) {
-                    if (pointer < para.length()) {
-                        endGroup()
-                        text(para.substring(pointer))
-                    }
-                    break
-                }
-                close = para.indexOf('}', open)
-                if (close < 0) {
-                    // pretend there was one added to the end of the string
-                    close = para.length()
-                }
-                if (open >= 0 && open < close) {
-                    if (open > pointer) {
-                        endGroup()
-                        text(para.substring(pointer, open))
-                    }
-                    symbol(para.substring(open + 1, close))
-                    pointer = close + 1
-                }
-            }
-            endGroup()
-            visitor.endParagraph()
-        }
+
+    }
+
+    static void parseTextAndSymbols(String raw, ParseVisitor visitor) {
+        new TextAndSymbolParser(visitor).parse(toParagraphs(toLines(raw)))
     }
 
     static String leadingWhitespace(CharSequence s) {
