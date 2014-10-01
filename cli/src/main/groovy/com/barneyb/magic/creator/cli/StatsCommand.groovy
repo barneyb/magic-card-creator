@@ -88,16 +88,12 @@ class StatsCommand extends BaseDescriptorCommand implements Executable {
                 new Numeric(t.toString(), n)
             })
         ]
-        Emitter e
-        switch (format) {
+        ({switch (format) {
             case Format.text:
-                e = new TextEmitter()
-                break
+                return new TextEmitter()
             case Format.json:
-                e = new JsonEmitter()
-                break
-        }
-        e.emit(cs, stats, System.out)
+                return new JsonEmitter()
+        }})().emit(cs, stats, System.out)
     }
 
     protected float mean(CardSet cs, filter, num) {
@@ -151,14 +147,14 @@ class StatsCommand extends BaseDescriptorCommand implements Executable {
         }
 
         protected void emit(PrintStream out, int fcWidth, Histogram s) {
-            def max = s.values*.n.max()
+            double max = s.values*.n.max()
             def maxDigits = Math.ceil(Math.log10((double) max))
             def labelWidth = fcWidth + 8 + maxDigits
             def barWidth = OUTPUT_WIDTH - labelWidth
             out.println '-' * OUTPUT_WIDTH
             out.println s.label
             s.values.each { v ->
-                out.println '  ' + v.label.padRight(fcWidth) + ' : '  + v.n.toString().padLeft(maxDigits) + ' : ' + '#' * Math.round(((double) v.n) / max * barWidth)
+                out.println '  ' + v.label.padRight(fcWidth) + ' : '  + v.n.toString().padLeft(maxDigits) + ' : ' + '#' * Math.round(v.n / max * barWidth)
             }
         }
 
