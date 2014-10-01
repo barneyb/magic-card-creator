@@ -67,7 +67,7 @@ class StatsCommand extends BaseDescriptorCommand implements Executable {
             }),
             new Histogram('Rarity', (Rarity.enumConstants.collectEntries {
                 [it, 0]
-            } + cs.cards.countBy { it.rarity }).collect { r, int n ->
+            } + cs.cards.countBy { it.rarity ?: Rarity.COMMON }).collect { r, int n ->
                 new Numeric(r.name(), n)
             }),
             new Histogram('Color', (ManaColor.enumConstants.collectEntries {
