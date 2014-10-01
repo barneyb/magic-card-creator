@@ -19,6 +19,15 @@ class DefaultCard implements Card {
     String title
 
     SymbolGroup castingCost = null
+    void setCastingCost(SymbolGroup castingCost) {
+        this.castingCost = castingCost
+        if (! colorExplicit) {
+            colors = castingCost*.colors.flatten().unique()
+            if (colors.size() > 1 && colors.contains(ManaColor.COLORLESS)) {
+                colors -= ManaColor.COLORLESS
+            }
+        }
+    }
 
     Artwork artwork = null
 

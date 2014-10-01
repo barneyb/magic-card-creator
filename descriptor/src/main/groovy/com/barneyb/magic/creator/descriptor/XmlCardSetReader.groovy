@@ -113,8 +113,6 @@ class XmlCardSetReader implements CardSetReader {
         if (el.colorIndicator) {
             c.colors = getColors(el.colorIndicator)
             c.colorExplicit = true
-        } else {
-            c.colorExplicit = false
         }
         c.artwork = new SimpleArtwork(
             new URL(base, el.artwork.src),
@@ -205,10 +203,6 @@ class XmlCardSetReader implements CardSetReader {
 
     protected void populateCost(DefaultCard c, BaseCardType el) {
         c.castingCost = symbolFactory.getCost(el.castingCost)
-        c.colors = c.castingCost*.colors.flatten().unique()
-        if (c.colors.size() > 1 && c.colors.contains(ManaColor.COLORLESS)) {
-            c.colors -= ManaColor.COLORLESS
-        }
     }
 
 }
