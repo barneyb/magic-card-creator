@@ -270,8 +270,8 @@ class CardValidator extends BaseValidator<Card> {
         }
         lenCheck card.rulesText
         lenCheck card.flavorText
-        if (totalLen >= 200) {
-            ctx.warning("Your body text is pretty long.  It'll be shrunk down to fit, but there's a lot of it.")
+        if (totalLen >= 250) {
+            ctx.warning("Your body text is pretty long.  It'll be shrunk down to fit, but there's a lot of it ($totalLen characters).")
         }
 
     }
