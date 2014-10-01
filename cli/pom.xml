@@ -26,6 +26,11 @@
         </dependency>
         <dependency>
             <groupId>com.barneyb.magic</groupId>
+            <artifactId>card-creator-md-descriptor</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.barneyb.magic</groupId>
             <artifactId>card-creator-theme</artifactId>
             <version>${project.version}</version>
         </dependency>

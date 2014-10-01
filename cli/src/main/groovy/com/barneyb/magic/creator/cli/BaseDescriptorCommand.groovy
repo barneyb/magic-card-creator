@@ -2,9 +2,13 @@ package com.barneyb.magic.creator.cli
 
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CardSet
+import com.barneyb.magic.creator.api.CardSetReader
 import com.barneyb.magic.creator.descriptor.XmlCardSetReader
+import com.barneyb.magic.creator.descriptor.markdown.MarkdownCardSetReader
 import com.beust.jcommander.Parameter
+import com.beust.jcommander.ParameterException
 import com.beust.jcommander.converters.FileConverter
+import groovy.transform.TupleConstructor
 
 /**
  *
@@ -13,14 +17,34 @@ import com.beust.jcommander.converters.FileConverter
  */
 abstract class BaseDescriptorCommand {
 
+    @TupleConstructor
+    static enum Format {
+        xml(XmlCardSetReader),
+        md(MarkdownCardSetReader)
+
+        @SuppressWarnings("GrFinalVariableAccess")
+        final Class<? extends CardSetReader> readerClass
+    }
+
     @Parameter(names = ["-d", "--descriptor"], description = "Cardset descriptor", converter = FileConverter, required = true)
     File descriptor
+
+    @Parameter(names = "--descriptor-format", description = "The format of the descriptor (xml or md), defaults based on file extension")
+    Format descriptorFormat = null
 
     @Parameter(names = "--cards", description = "Card names or numbers to process", variableArity = true)
     List<String> cards = []
 
     protected CardSet loadDescriptor() {
-        new XmlCardSetReader(descriptor).read()
+        if (descriptorFormat == null) {
+            def ext = descriptor.name.tokenize('.').last()
+            try {
+                descriptorFormat = Format.valueOf(ext)
+            } catch (IllegalArgumentException ignored) {
+                throw new ParameterException("No '$ext' descriptor format is known.")
+            }
+        }
+        descriptorFormat.readerClass.newInstance(descriptor).read()
     }
 
     protected List<Card> filterCards(CardSet cs) {
