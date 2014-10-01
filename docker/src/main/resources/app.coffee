@@ -6,7 +6,8 @@ app = express()
 app.use express.bodyParser()
 
 app.get "/", (req, res) ->
-    res.send "try a POST to /convert/{format} (where format is 'pdf' or 'png') with an 'svg' file upload\n"
+    body = "try a POST to /convert/{format} (where format is 'pdf' or 'png') with an 'svg' file upload\n"
+    res.send body
 
 app.post "/convert/png", (req, res) ->
     fn = req.files.svg.path
