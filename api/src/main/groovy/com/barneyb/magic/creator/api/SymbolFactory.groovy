@@ -25,10 +25,21 @@ interface SymbolFactory {
      * will be parsed according to the rules of {@link #getSymbol(java.lang.String)}
      * with the addition that multiple symbols are supported.
      *
-     * @param symbols the symbols string to create a List of Symbols for.
-     * @return a List of Symbols parsed from the string.
+     * @param symbols the symbols string to create a SymbolGroup for.
+     * @return a SymbolGroup parsed from the string.
      * @throws IllegalArgumentException if an unrecognized symbol is found.
      */
     SymbolGroup getCost(String symbols)
+
+    /**
+     * I create a SymbolGroup from the provided string versions.  Each string
+     * will be individually parsed according to the rules of
+     * @link #getSymbol(java.lang.String)}.
+     *
+     * @param symbols the collection of symbol strings to create a SymbolGroup for.
+     * @return a SymbolGroup parsed from the strings
+     * @throws IllegalArgumentException if an unrecognized symbol is found.
+     */
+    SymbolGroup getCost(Collection<String> symbols)
 
 }

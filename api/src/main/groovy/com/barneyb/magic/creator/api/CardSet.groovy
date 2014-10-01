@@ -9,6 +9,8 @@ interface CardSet extends Keyed {
 
     List<Card> getCards()
 
+    int getCardsInSet()
+
     String getCopyright()
 
     /**

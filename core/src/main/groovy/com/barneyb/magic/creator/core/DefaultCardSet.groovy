@@ -21,6 +21,11 @@ class DefaultCardSet implements CardSet {
 
     List<Card> cards = []
 
+    @Override
+    int getCardsInSet() {
+        cards?.size() ?: 0
+    }
+
     Icon iconField
 
     Icon iconSymbol

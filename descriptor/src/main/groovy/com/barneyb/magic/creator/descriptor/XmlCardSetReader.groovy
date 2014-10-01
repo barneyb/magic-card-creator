@@ -1,5 +1,6 @@
 package com.barneyb.magic.creator.descriptor
 import com.barneyb.magic.creator.api.CardSet
+import com.barneyb.magic.creator.api.CardSetReader
 import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.Rarity
 import com.barneyb.magic.creator.api.SymbolFactory
@@ -32,41 +33,45 @@ import javax.xml.validation.SchemaFactory
  *
  * @author barneyb
  */
-class CardSetImporter {
+class XmlCardSetReader implements CardSetReader {
 
     SymbolFactory symbolFactory = new DefaultSymbolFactory()
 
     TextParser textParser = new TextParser()
 
-    CardSet fromUrl(URL url) {
-        fromReader(url, url.newReader())
+    final URL base
+    final Reader reader
+
+    def XmlCardSetReader(URL url) {
+        this(url, url.newReader())
     }
 
-    CardSet fromUrl(String url) {
-        fromUrl(new URL(url))
+    def XmlCardSetReader(URI uri) {
+        this(uri.toURL())
     }
 
-    CardSet fromUri(URI uri) {
-        fromUrl(uri.toURL())
+    def XmlCardSetReader(File file) {
+        this(file.toURI().toURL(), file.newReader())
     }
 
-    CardSet fromUri(String uri) {
-        fromUri(new URI(uri))
+    def XmlCardSetReader(URL base, InputStream inputStream) {
+        this(base, new InputStreamReader(inputStream))
     }
 
-    CardSet fromFile(File descriptor) {
-        fromReader(descriptor.toURI().toURL(), descriptor.newReader())
+    def XmlCardSetReader(URL base, Reader reader) {
+        this.base = base
+        this.reader = reader
     }
 
-    CardSet fromStream(URL base, InputStream descriptor) {
-        fromReader(base, new InputStreamReader(descriptor))
-    }
-
-    CardSet fromReader(URL base, Reader descriptor) {
+    CardSet read() {
         def jc = JAXBContext.newInstance("com.barneyb.magic.creator.descriptor.schema")
         def u = jc.createUnmarshaller()
         u.schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI).newSchema(new StreamSource(getClass().classLoader.getResourceAsStream("card-descriptor.xsd")))
-        fromCardSetType(base, (u.unmarshal(descriptor) as JAXBElement).getValue() as CardSetType)
+        fromCardSetType(base, (u.unmarshal(reader) as JAXBElement).getValue() as CardSetType)
+    }
+
+    void close() {
+        reader?.close()
     }
 
     protected CardSet fromCardSetType(URL base, CardSetType csel) {

@@ -15,6 +15,7 @@ import com.barneyb.magic.creator.core.DefaultCreatureCard
 import com.barneyb.magic.creator.core.DefaultFusedCard
 import com.barneyb.magic.creator.core.DefaultPlaneswalkerCard
 import com.barneyb.magic.creator.descriptor.CardSetImporter
+import com.barneyb.magic.creator.descriptor.XmlCardSetReader
 import com.barneyb.magic.creator.util.XmlUtils
 import groovy.transform.Memoized
 import org.junit.AfterClass
@@ -32,7 +33,7 @@ class DynamicThemeTest {
 
     @Memoized
     protected static CardSet cardset() {
-        new CardSetImporter().fromUrl(DynamicThemeTest.classLoader.getResource("test-set.xml"))
+        new XmlCardSetReader(DynamicThemeTest.classLoader.getResource("test-set.xml")).read()
     }
 
     protected static Card card(String title) {

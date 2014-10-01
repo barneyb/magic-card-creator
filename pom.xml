@@ -18,6 +18,7 @@
         <module>text-layout</module>
         <module>validate</module>
         <module>docker</module>
+        <module>md-descriptor</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

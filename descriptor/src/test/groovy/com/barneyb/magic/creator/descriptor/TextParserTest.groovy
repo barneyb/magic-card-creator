@@ -28,56 +28,6 @@ class TextParserTest {
     }
 
     @Test
-    void toLines() {
-        // the \u0020 escapes are simple spaces, but encoded so that IntelliJ
-        // won't strip them from the ends of lines.
-        assertEquals([
-            "alex",
-            "",
-            "fred",
-            "jim",
-            "  sally",
-            "johan",
-            "",
-            "tom",
-            "will"
-        ], parser.toLines("""
-\u0020
-        alex
-\u0020\u0020\u0020\u0020
-        fred\u0020\u0020
-        jim
-          sally\u0020
-        johan
-
-        tom
-        will
-
-"""))
-    }
-
-    @Test
-    void toParagraphs() {
-        // the \u0020 escapes are simple spaces, but encoded so that IntelliJ
-        // won't strip them from the ends of lines.
-        assertEquals([
-            "alex",
-            "fred jim\n  sally\njohan",
-            "tom will"
-        ], parser.toParagraphs([
-            "alex",
-            "",
-            "fred",
-            "jim",
-            "  sally",
-            "johan",
-            "",
-            "tom",
-            "will"
-        ]))
-    }
-
-    @Test
     void simpleSymbols() {
         assertEquals([[
               sg('g'),
@@ -102,20 +52,6 @@ class TextParserTest {
     @Test
     void a_breaks() {
         def text = '\n\none\ntwo\n\nthree\n\n\n\nfour\n five\n'
-        assertEquals([
-            "one",
-            "two",
-            "",
-            "three",
-            "",
-            "four",
-            " five"
-        ], parser.toLines(text))
-        assertEquals([
-            "one two",
-            "three",
-            "four\n five"
-        ], parser.toParagraphs(parser.toLines(text)))
         assertEquals(
             [
                 [rt("one two")],
