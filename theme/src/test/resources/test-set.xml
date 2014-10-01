@@ -62,7 +62,7 @@
     </creature>
     <creature title="Barney of the Green Woods" casting-cost="2{r/w}{u/b}gb" subtype="Human Legend" type-modifiers="Legendary Enchantment" rarity="mythic-rare">
         <artwork>
-            <src>artwork/barney.jpg</src>
+            <src>artwork/barney_fake.png</src>
             <artist>Dolores Boisvert</artist>
         </artwork>
         <rules-text>
