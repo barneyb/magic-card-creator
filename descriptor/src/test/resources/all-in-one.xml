@@ -181,4 +181,19 @@
             </rules-text>
         </spell>
     </fused>
+    <creature title="Rakdos Guildmage" casting-cost="{b/r}{b/r}" subtype="Zombie Shaman" watermark="rakdos" rarity="uncommon">
+        <artwork>
+            <src>artwork/rakdos-guildmage.jpg</src>
+            <artist>Jeremy Jarvis</artist>
+        </artwork>
+        <rules-text>
+            <reminder>({b/r} can be paid with either {b} or {r}.)</reminder>
+
+            {3}{b}, Discard a card: Target creature gets -2/-2 until end of turn.
+
+            {3}{r}: Put a 2/1 red Goblin creature token with haste onto the battlefield. Exile it at the beginning of the next end step.
+        </rules-text>
+        <power>2</power>
+        <toughness>2</toughness>
+    </creature>
 </card-set>

@@ -26,7 +26,7 @@ class XmlCardSetReaderTest {
         def cs = new XmlCardSetReader(descriptor).read()
         def title = "All In One"
         def key = "AiO"
-        def cardCount = 10
+        def cardCount = 11
         def copyright = "\u00A9 Wizards of the Coast"
         assertEquals(title, cs.title)
         assertEquals(key, cs.key)
@@ -44,9 +44,10 @@ class XmlCardSetReaderTest {
             "Transguild Courier",
             "Paralyze",
             "Goblin Bully",
-            "Breaking // Entering"
+            "Breaking // Entering",
+            "Rakdos Guildmage"
         ], cs.cards*.title)
-        def (shrine, bolt, knight, garruk, assassin, gate, courier, paralyze, bully, breakEnter) = cs.cards
+        def (shrine, bolt, knight, garruk, assassin, gate, courier, paralyze, bully, breakEnter, mage) = cs.cards
 
         Card c = shrine
         assertEquals(Rarity.RARE, c.rarity)
@@ -358,6 +359,35 @@ class XmlCardSetReaderTest {
         assertEquals(null, c.subtypeParts)
         assertEquals(['Sorcery'], c.typeParts)
         assertEquals(null, c.watermarkName)
+
+        c = mage as CreatureCard
+        assertEquals("2", c.power)
+        assertEquals("2", c.toughness)
+        assertEquals(false, c.leveler)
+        assertEquals(null, c.levels)
+        assertEquals(Rarity.UNCOMMON, c.rarity)
+        assertEquals(null, c.flavorText)
+        assertEquals(11, c.cardNumber)
+        relativeUrl("artwork/rakdos-guildmage.jpg", c.artwork.url)
+        assertEquals("Jeremy Jarvis", c.artwork.artist)
+        assertEquals(sg('b/r', 'b/r'), c.castingCost)
+        assertEquals(false, c.colorExplicit)
+        assertEquals(mcs('b', 'r'), c.colors)
+        assertEquals(null, c.alliedColors)
+        assertEquals(copyright, c.copyright)
+        assertEquals(true, c.multiColor)
+        assertEquals(null, c.overArtwork)
+        assertEquals([
+            [nnt('('), sg('b/r'), nnt(' can be paid with either '), sg('b'), nnt(' or '), sg('r'), nnt('.)')],
+            [sg('3', 'b'), rt(', Discard a card: Target creature gets -2/-2 until end of turn.')],
+            [sg('3', 'r'), rt(': Put a 2/1 red Goblin creature token with haste onto the battlefield. Exile it at the beginning of the next end step.')]
+        ], c.rulesText)
+        assertEquals(false, c.semiEnchantment)
+        assertSame(cs, c.set)
+        assertEquals(cardCount, c.setCardCount)
+        assertEquals(['Zombie', 'Shaman'], c.subtypeParts)
+        assertEquals(['Creature'], c.typeParts)
+        assertEquals("rakdos", c.watermarkName)
     }
 
 }
