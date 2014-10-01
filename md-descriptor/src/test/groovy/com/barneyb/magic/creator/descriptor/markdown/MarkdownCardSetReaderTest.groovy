@@ -1,6 +1,7 @@
 package com.barneyb.magic.creator.descriptor.markdown
 
 import com.barneyb.magic.creator.api.Card
+import com.barneyb.magic.creator.api.ManaColor
 import com.barneyb.magic.creator.api.SymbolFactory
 import com.barneyb.magic.creator.core.DefaultCard
 import com.barneyb.magic.creator.core.DefaultCardSet
@@ -27,6 +28,7 @@ class MarkdownCardSetReaderTest {
     final Card sally = new DefaultCreatureCard(
         title: "Sally",
         castingCost: sf.getCost("1R"),
+        colors: [ManaColor.RED],
         artwork: new SimpleArtwork(
             new URL(TEST_SET_DESCRIPTOR, "artwork/sally.jpg"),
             "Sally Mann"
@@ -195,6 +197,7 @@ Creature - Human
                 ),
                 new DefaultCard(
                     title: "Elysian Brothel",
+                    colors: [ManaColor.COLORLESS],
                     artwork: new SimpleArtwork(
                         new URL(TEST_SET_DESCRIPTOR, "artwork/brothel.jpg"),
                         "God of War: Ascension"

@@ -13,25 +13,20 @@ import static org.junit.Assert.*
 class Assert {
 
     static assertCard(Card e, Card a) {
-        try {
-            assertEquals("title doesn't match", e.title, a.title)
-            assertEquals("castingCost doesn't match", e.castingCost, a.castingCost)
-            assertEquals("artwork doesn't match", e.artwork?.url, a.artwork?.url)
-            assertEquals("type doesn't match", e.typeParts, a.typeParts)
-            assertEquals("subtype doesn't match", e.subtypeParts, a.subtypeParts)
-            assertEquals("rules text doesn't match", e.rulesText, a.rulesText)
-            assertEquals("flavor text doesn't match", e.flavorText, a.flavorText)
-            if (e instanceof CreatureCard) {
-                assert a instanceof CreatureCard
-                assertEquals("power doesn't match", e.power, a.power)
-                assertEquals("toughness doesn't match", e.toughness, a.toughness)
-            }
-            assertEquals("artist doesn't match", e.artwork?.artist, a.artwork?.artist)
-        } catch (AssertionError ae) {
-            println "expected: $e"
-            println "  actual: $a"
-            throw ae
+        assertEquals("title doesn't match", e.title, a.title)
+        assertEquals("castingCost doesn't match", e.castingCost, a.castingCost)
+        assertEquals("color doesn't match", e.colors, a.colors)
+        assertEquals("artwork doesn't match", e.artwork?.url, a.artwork?.url)
+        assertEquals("type doesn't match", e.typeParts, a.typeParts)
+        assertEquals("subtype doesn't match", e.subtypeParts, a.subtypeParts)
+        assertEquals("rules text doesn't match", e.rulesText, a.rulesText)
+        assertEquals("flavor text doesn't match", e.flavorText, a.flavorText)
+        if (e instanceof CreatureCard) {
+            assert a instanceof CreatureCard
+            assertEquals("power doesn't match", e.power, a.power)
+            assertEquals("toughness doesn't match", e.toughness, a.toughness)
         }
+        assertEquals("artist doesn't match", e.artwork?.artist, a.artwork?.artist)
     }
 
     static assertCardSet(CardSet expected, CardSet actual) {
