@@ -19,6 +19,7 @@
         <module>validate</module>
         <module>docker</module>
         <module>md-descriptor</module>
+        <module>stats</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
