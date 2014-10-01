@@ -10,6 +10,6 @@ import com.beust.jcommander.IStringConverter
 class URLConverter implements IStringConverter<URL> {
     @Override
     URL convert(String value) {
-        value.contains("://") ? new URL(value) : new File(value).toURI().toURL()
+        (value.contains("://") || value.startsWith("file:/")) ? new URL(value) : new File(value).toURI().toURL()
     }
 }
