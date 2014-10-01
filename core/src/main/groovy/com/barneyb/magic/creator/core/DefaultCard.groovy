@@ -22,9 +22,13 @@ class DefaultCard implements Card {
     void setCastingCost(SymbolGroup castingCost) {
         this.castingCost = castingCost
         if (! colorExplicit) {
-            colors = castingCost*.colors.flatten().unique()
-            if (colors.size() > 1 && colors.contains(ManaColor.COLORLESS)) {
-                colors -= ManaColor.COLORLESS
+            if (castingCost == null || castingCost.empty) {
+                colors = [ManaColor.COLORLESS]
+            } else {
+                colors = castingCost*.colors.flatten().unique()
+                if (colors.size() > 1 && colors.contains(ManaColor.COLORLESS)) {
+                    colors -= ManaColor.COLORLESS
+                }
             }
         }
     }
@@ -64,7 +68,7 @@ class DefaultCard implements Card {
 
     List<List<BodyItem>> flavorText = null
 
-    List<ManaColor> colors = null
+    List<ManaColor> colors = [ManaColor.COLORLESS]
 
     List<ManaColor> alliedColors = null
 

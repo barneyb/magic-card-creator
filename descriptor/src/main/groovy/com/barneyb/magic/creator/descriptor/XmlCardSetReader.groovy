@@ -131,7 +131,6 @@ class XmlCardSetReader implements CardSetReader {
 
     protected DefaultCard fromLandType(LandType el) {
         def c = new DefaultCard()
-        c.colors = [ManaColor.COLORLESS]
         if (el.alliedColors != null) {
             c.alliedColors = getColors(el.alliedColors)
         }
