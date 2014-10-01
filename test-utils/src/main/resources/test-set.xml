@@ -1,3 +1,8 @@
+<!--
+I describe a test set of stuff that should be fully supported by all aspects of
+the composition engine.  It does not fully exercise what a fully-functional
+implementation should be able to do.
+-->
 <card-set xmlns="http://barneyb.com/schema/magic/card-descriptor"
           title="Test Set"
           key="TS">

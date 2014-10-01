@@ -33,7 +33,7 @@
         </dependency>
         <dependency>
             <groupId>com.barneyb.magic</groupId>
-            <artifactId>card-creator-descriptor</artifactId>
+            <artifactId>card-creator-test-utils</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
