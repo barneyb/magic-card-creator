@@ -3,7 +3,6 @@ package com.barneyb.magic.creator.cli
 import com.beust.jcommander.JCommander
 import com.beust.jcommander.MissingCommandException
 import com.beust.jcommander.ParameterException
-
 /**
  *
  *
@@ -14,6 +13,7 @@ class CardCreator {
     static void main(String[] args) {
         def main = new MainCommand()
         def jc = new JCommander(main)
+        jc.addConverterFactory(new Converters())
         jc.programName = CardCreator.simpleName
 
         def commands = [
