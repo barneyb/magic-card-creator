@@ -1,5 +1,4 @@
 package com.barneyb.magic.creator.cli
-
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CardSet
 import com.barneyb.magic.creator.api.CardSetReader
@@ -7,9 +6,7 @@ import com.barneyb.magic.creator.descriptor.XmlCardSetReader
 import com.barneyb.magic.creator.descriptor.markdown.MarkdownCardSetReader
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.ParameterException
-import com.beust.jcommander.converters.FileConverter
 import groovy.transform.TupleConstructor
-
 /**
  *
  *
@@ -26,8 +23,8 @@ abstract class BaseDescriptorCommand {
         final Class<? extends CardSetReader> readerClass
     }
 
-    @Parameter(names = ["-d", "--descriptor"], description = "Cardset descriptor", converter = FileConverter, required = true)
-    File descriptor
+    @Parameter(names = ["-d", "--descriptor"], description = "Cardset descriptor", required = true)
+    URL descriptor
 
     @Parameter(names = "--descriptor-format", description = "The format of the descriptor (xml or md), defaults based on file extension")
     Format descriptorFormat = null
@@ -37,7 +34,7 @@ abstract class BaseDescriptorCommand {
 
     protected CardSet loadDescriptor() {
         if (descriptorFormat == null) {
-            def ext = descriptor.name.tokenize('.').last()
+            def ext = descriptor.path.tokenize('.').last()
             try {
                 descriptorFormat = Format.valueOf(ext)
             } catch (IllegalArgumentException ignored) {
