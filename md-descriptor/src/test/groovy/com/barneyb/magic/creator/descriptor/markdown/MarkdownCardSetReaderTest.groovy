@@ -13,7 +13,7 @@ import com.barneyb.magic.creator.core.SimpleArtwork
 import com.barneyb.magic.creator.symbol.DefaultSymbolFactory
 import org.junit.Test
 
-import static com.barneyb.magic.creator.descriptor.markdown.Assert.*
+import static com.barneyb.magic.creator.util.Assert.*
 import static org.junit.Assert.*
 /**
  *
@@ -37,7 +37,7 @@ class MarkdownCardSetReaderTest {
         subtypeParts: ["Human"],
         rulesText: [[
                         sf.getCost("UT"),
-                        new DefaultRulesText(": Tap target creature and pay 1 life.")
+                        new DefaultRulesText(": Tap target creature and you lose 1 life.")
                     ]],
         flavorText: [
             [new DefaultNonNormativeText("Sally doesn't like you.")],
@@ -95,7 +95,7 @@ Creature - Human
 
 Creature - Human
 
-{U}{T}: Tap target creature and pay 1 life.
+{U}{T}: Tap target creature and you lose 1 life.
 
 *Sally doesn't like you.*
 
@@ -126,7 +126,7 @@ Creature - Human
                     flavorText: [[
                         new DefaultNonNormativeText("How about \"never\"."),
                         new DefaultLineBreak(),
-                        new DefaultNonNormativeText("-- Barney of the Green Woods")
+                        new DefaultNonNormativeText("\u2014 Barney of the Green Woods")
                     ]]
                 ),
                 new DefaultCreatureCard(
@@ -203,9 +203,10 @@ Creature - Human
                         "God of War: Ascension"
                     ),
                     typeParts: ["Legendary", "Land"],
-                    rulesText: [[
-                        new DefaultRulesText("All legendary creatures, gods, and angels, get -1/-1.")
-                    ]],
+                    rulesText: [
+                        [new DefaultRulesText("All Sirens you control get +1/+1.")],
+                        [new DefaultRulesText("All Gods, Angels, and legendary creatures your opponents control get -1/-1.")]
+                    ],
                     flavorText: [[
                         new DefaultNonNormativeText("They are selective in their clientele, but their service legendary."),
                     ]],
