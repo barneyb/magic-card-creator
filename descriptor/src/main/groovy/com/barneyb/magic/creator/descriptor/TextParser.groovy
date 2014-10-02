@@ -161,6 +161,9 @@ class TextParser {
     }
 
     public <T> T unparse(List<List<BodyItem>> body, Class<T> typeClass) {
+        if (body == null) {
+            return null
+        }
         def el = typeClass.newInstance()
         def sb = new StringBuilder()
         def flush = { ->
