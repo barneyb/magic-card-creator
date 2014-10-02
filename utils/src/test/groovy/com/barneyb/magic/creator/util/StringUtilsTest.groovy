@@ -50,8 +50,6 @@ class StringUtilsTest {
 
     @Test
     void toParagraphs() {
-        // the \u0020 escapes are simple spaces, but encoded so that IntelliJ
-        // won't strip them from the ends of lines.
         assertEquals([
             "alex",
             "fred jim\n  sally\njohan",
