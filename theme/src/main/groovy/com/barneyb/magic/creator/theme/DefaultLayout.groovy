@@ -103,7 +103,7 @@ class DefaultLayout extends VelocityLayout {
             ])
         })
 
-        if (card instanceof CreatureCard) {
+        if (card instanceof CreatureCard && card.power && card.toughness) {
             g.color = tool.barTexture.textColor
             layoutUtils.line(regions.powerToughness.bounds, "$card.power/$card.toughness", regions.powerToughness.textAttributes, Align.CENTER).draw(g)
         }
