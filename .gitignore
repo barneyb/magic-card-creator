@@ -9,4 +9,4 @@ target
 build
 dependency-reduced-pom.xml
 proof-*.html
-/*.svg
+/card-*.svg
