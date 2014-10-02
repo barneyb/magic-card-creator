@@ -19,7 +19,6 @@ import com.barneyb.magic.creator.descriptor.schema.FuseType
 import com.barneyb.magic.creator.descriptor.schema.FusedSpellType
 import com.barneyb.magic.creator.descriptor.schema.LandType
 import com.barneyb.magic.creator.descriptor.schema.PlaneswalkerType
-import com.barneyb.magic.creator.descriptor.schema.RulesTextType
 import com.barneyb.magic.creator.descriptor.schema.SpellType
 import com.barneyb.magic.creator.symbol.DefaultSymbolFactory
 
@@ -125,7 +124,7 @@ class XmlCardSetReader implements CardSetReader {
             )
         }
         c.flavorText = textParser.getNonNormativeText(el.flavorText)
-        c.rulesText = textParser.getRulesText(el.rulesText as RulesTextType)
+        c.rulesText = textParser.getRulesText(el.rulesText)
         c.watermarkName = el.watermark
     }
 
