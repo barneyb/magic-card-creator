@@ -1,4 +1,4 @@
-package com.barneyb.magic.creator.descriptor.markdown
+package com.barneyb.magic.creator.util
 
 import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CardSet
