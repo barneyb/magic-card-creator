@@ -5,7 +5,6 @@
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
            xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
-           xmlns:svg="http://www.w3.org/2000/svg"
            jaxb:version="2.1"
            elementFormDefault="qualified"
            jaxb:extensionBindingPrefixes="inheritance">
@@ -43,7 +42,7 @@
                 <xs:annotation>
                     <xs:appinfo>
                         <jaxb:property name="cards">
-                            <jaxb:baseType name="com.barneyb.magic.creator.descriptor.BaseCardType" />
+                            <jaxb:baseType name="com.barneyb.magic.creator.descriptor.ICardType" />
                         </jaxb:property>
                     </xs:appinfo>
                 </xs:annotation>
@@ -120,7 +119,8 @@
     <xs:complexType name="LandType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:extends>com.barneyb.magic.creator.descriptor.BaseCardType</inheritance:extends>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.ICardType</inheritance:implements>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.ICoreType</inheritance:implements>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
@@ -137,7 +137,8 @@
     <xs:complexType name="SpellType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:extends>com.barneyb.magic.creator.descriptor.BaseCardType</inheritance:extends>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.ICardType</inheritance:implements>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.ISpellType</inheritance:implements>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
@@ -154,7 +155,7 @@
     <xs:complexType name="FuseType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:extends>com.barneyb.magic.creator.descriptor.BaseCardType</inheritance:extends>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.ICardType</inheritance:implements>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
@@ -166,7 +167,7 @@
     <xs:complexType name="FusedSpellType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:extends>com.barneyb.magic.creator.descriptor.BaseCardType</inheritance:extends>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.ISpellType</inheritance:implements>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
@@ -182,7 +183,8 @@
     <xs:complexType name="CreatureType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:extends>com.barneyb.magic.creator.descriptor.BaseCardType</inheritance:extends>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.ICardType</inheritance:implements>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.ISpellType</inheritance:implements>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
@@ -221,7 +223,8 @@
     <xs:complexType name="PlaneswalkerType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:extends>com.barneyb.magic.creator.descriptor.BaseCardType</inheritance:extends>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.ICardType</inheritance:implements>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.ISpellType</inheritance:implements>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>

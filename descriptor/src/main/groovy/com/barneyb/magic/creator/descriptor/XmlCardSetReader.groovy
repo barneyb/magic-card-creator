@@ -97,7 +97,7 @@ class XmlCardSetReader implements CardSetReader {
                 } else {
                     throw new IllegalArgumentException("Unknown card type: ${el.getClass()}")
                 }
-                coreProps(el, c)
+                coreProps((ICoreType) el, c)
             }
             c.rarity = Rarity.valueOf(el.rarity.name())
             c.set = cs
@@ -107,7 +107,7 @@ class XmlCardSetReader implements CardSetReader {
         cs
     }
 
-    protected void coreProps(BaseCardType el, DefaultCard c) {
+    protected void coreProps(ICoreType el, DefaultCard c) {
         c.title = el.title
         if (el.colorIndicator) {
             c.colors = getColors(el.colorIndicator)
@@ -199,7 +199,7 @@ class XmlCardSetReader implements CardSetReader {
         symbolFactory.getCost(spec)*.colors.flatten().unique() - ManaColor.COLORLESS
     }
 
-    protected void populateCost(DefaultCard c, BaseCardType el) {
+    protected void populateCost(DefaultCard c, ISpellType el) {
         c.castingCost = symbolFactory.getCost(el.castingCost)
     }
 
