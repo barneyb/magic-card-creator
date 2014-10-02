@@ -11,7 +11,6 @@ import javax.xml.bind.JAXBElement
 import javax.xml.namespace.QName
 
 import static org.junit.Assert.*
-
 /**
  *
  *
@@ -29,37 +28,60 @@ class TextParserTest {
 
     @Test
     void simpleSymbols() {
-        assertEquals([[
-              sg('g'),
-              rt(', '),
-              sg('t'),
-              rt(': Do something.'),
-          ]], parser.parse('{G}, {T}: Do something.', DefaultRulesText))
+        def text = '{G}, {T}: Do something.'
+        def body = [[
+            sg('g'),
+            rt(', '),
+            sg('t'),
+            rt(': Do something.'),
+        ]]
+        assertEquals(body, parser.parse(text, DefaultRulesText))
+        assertEquals(text, parser.unparse(body, RulesTextType).content.join(''))
     }
 
     @Test
     void complexSymbols() {
-        assertEquals([[
-              sg('u'),
-              rt(', '),
-              sg('t'),
-              rt(': Do something unless '),
-              sg('x', 'b/r'),
-              rt(' is paid by Johann.'),
-          ]], parser.parse('{u}, {t}: Do something unless {x}{b/r} is paid by Johann.', DefaultRulesText))
+        def text = '{U}, {T}: Do something unless {X}{B/R} is paid by Johann.'
+        def body = [[
+            sg('u'),
+            rt(', '),
+            sg('t'),
+            rt(': Do something unless '),
+            sg('x', 'b/r'),
+            rt(' is paid by Johann.'),
+        ]]
+        assertEquals(body, parser.parse(text, DefaultRulesText))
+        assertEquals(text, parser.unparse(body, RulesTextType).content.join(''))
+    }
+
+    protected String serialize(textType) {
+        textType.content.collect {
+            if (it instanceof String) {
+                it
+            } else if (it instanceof JAXBElement) {
+                if (it.name.localPart == 'br') {
+                    "<br />"
+                } else if (it.name.localPart == 'reminder') {
+                    "<reminder>${serialize(it.value)}</reminder>"
+                } else {
+                    throw new IllegalArgumentException("Unknown JAXBElement: ${it.name}")
+                }
+            } else {
+                throw new IllegalArgumentException("Unknown Serializable: ${it.getClass().name}")
+            }
+        }.join('')
     }
 
     @Test
     void a_breaks() {
         def text = '\n\none\ntwo\n\nthree\n\n\n\nfour\n five\n'
-        assertEquals(
-            [
-                [rt("one two")],
-                [rt("three")],
-                [rt("four"), new DefaultLineBreak(), rt(" five")],
-            ],
-            parser.parse(text, DefaultRulesText)
-        )
+        def body = [
+            [rt("one two")],
+            [rt("three")],
+            [rt("four"), new DefaultLineBreak(), rt(" five")],
+        ]
+        assertEquals(body, parser.parse(text, DefaultRulesText))
+        assertEquals("one two\n\nthree\n\nfour<br /> five", serialize(parser.unparse(body, RulesTextType)))
     }
 
     @Test
@@ -73,12 +95,14 @@ class TextParserTest {
                 "\nreminder"
             ])),
         ])
-        assertEquals([[
+        def body = [[
             rt("ability"),
             nnt("multi-line"),
             lb(),
             nnt("reminder")
-        ]], parser.parseRulesText(el))
+        ]]
+        assertEquals(body, parser.parse(el))
+        assertEquals('ability<reminder>multi-line</reminder><br /><reminder>reminder</reminder>', serialize(parser.unparse(body, el.getClass())))
     }
 
     @Test
@@ -89,11 +113,13 @@ class TextParserTest {
             new JAXBElement<String>(new QName("br"), String, null),
             "\nauthor",
         ])
-        assertEquals([[
+        def body = [[
             nnt("flavor"),
             lb(),
             nnt("author")
-        ]], parser.parseNonNormativeText(el))
+        ]]
+        assertEquals(body, parser.parse(el))
+        assertEquals('flavor<br />author', serialize(parser.unparse(body, el.getClass())))
     }
 
 }

@@ -1,7 +1,10 @@
 package com.barneyb.magic.creator.descriptor
 import com.barneyb.magic.creator.api.BodyItem
+import com.barneyb.magic.creator.api.LineBreak
+import com.barneyb.magic.creator.api.NonNormativeText
 import com.barneyb.magic.creator.api.RulesText
 import com.barneyb.magic.creator.api.SymbolFactory
+import com.barneyb.magic.creator.api.SymbolGroup
 import com.barneyb.magic.creator.core.DefaultLineBreak
 import com.barneyb.magic.creator.core.DefaultNonNormativeText
 import com.barneyb.magic.creator.core.DefaultRulesText
@@ -11,6 +14,8 @@ import com.barneyb.magic.creator.symbol.DefaultSymbolFactory
 import com.barneyb.magic.creator.util.StringUtils
 
 import javax.xml.bind.JAXBElement
+import javax.xml.namespace.QName
+
 /**
  *
  *
@@ -24,11 +29,11 @@ class TextParser {
 
     SymbolFactory symbolFactory = new DefaultSymbolFactory()
 
-    List<List<BodyItem>> parseNonNormativeText(NonNormativeTextType el) {
-        parseContent(el?.content, DefaultNonNormativeText)
+    List<List<BodyItem>> parse(NonNormativeTextType el) {
+        parse(el?.content, DefaultNonNormativeText)
     }
 
-    protected List<List<BodyItem>> parseContent(List<Serializable> content, Class<? extends BodyItem> textClass) {
+    protected List<List<BodyItem>> parse(List<Serializable> content, Class<? extends BodyItem> textClass) {
         def combined = new StringBuilder()
         def work
         work = {
@@ -67,9 +72,9 @@ class TextParser {
         }
     }
 
-    List<List<BodyItem>> parseRulesText(RulesTextType el) {
+    List<List<BodyItem>> parse(RulesTextType el) {
         def inReminder = false
-        parseContent(el?.content, DefaultRulesText)?.collect { para ->
+        parse(el?.content, DefaultRulesText)?.collect { para ->
             def items = []
             para.each {
                 if (it instanceof RulesText) {
@@ -155,4 +160,43 @@ class TextParser {
         vis.paras.size() == 0 ? null : vis.paras
     }
 
+    public <T> T unparse(List<List<BodyItem>> body, Class<T> typeClass) {
+        def el = typeClass.newInstance()
+        def sb = new StringBuilder()
+        def flush = { ->
+            if (sb && sb.length() > 0) {
+                el.content << sb.toString()
+                sb = new StringBuilder()
+            }
+        }
+        body.eachWithIndex { p, pi ->
+            if (pi > 0) {
+                sb.append('\n\n')
+            }
+            p.eachWithIndex { i, ii ->
+                if (i instanceof SymbolGroup) {
+                    i.each { s ->
+                        sb.append(s.toString())
+                    }
+                } else if (i instanceof LineBreak) {
+                    flush()
+                    el.content << new JAXBElement(new QName("br"), String, null)
+                } else if (i instanceof RulesText) {
+                    sb.append(i.text)
+                } else if (i instanceof NonNormativeText) {
+                    if (NonNormativeTextType.isAssignableFrom(typeClass)) {
+                        sb.append(i.text)
+                    } else {
+                        // reminder text (w/in rules text)
+                        flush()
+                        el.content << new JAXBElement(new QName("reminder"), NonNormativeTextType, new NonNormativeTextType(content: [i.text]))
+                    }
+                } else {
+                    throw new IllegalArgumentException("Unrecognized BodyItem: ${i.getClass().name}")
+                }
+            }
+        }
+        flush()
+        el
+    }
 }
