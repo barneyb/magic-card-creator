@@ -27,6 +27,12 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.barneyb.magic</groupId>
+            <artifactId>card-creator-test-utils</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.tautua.markdownpapers</groupId>
             <artifactId>markdownpapers-core</artifactId>
             <version>1.4.2</version>

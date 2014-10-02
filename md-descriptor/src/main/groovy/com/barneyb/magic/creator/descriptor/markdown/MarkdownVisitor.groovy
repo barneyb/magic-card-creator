@@ -53,7 +53,7 @@ import static com.barneyb.magic.creator.util.StringUtils.*
 @PackageScope
 class MarkdownVisitor implements Visitor {
 
-    public static final Pattern COST_PATTERN = ~/^([0-9]|[wugrbWUGRB]|\{([0-9]+|[wugrbWUGRB])\})+$/
+    public static final Pattern COST_PATTERN = ~/^([0-9]|[wugrbWUGRB]|\{([0-9]+|[wugrbWUGRB])(\/[wugrbWUGRB])?\})+$/
 
     SymbolFactory symbolFactory = new DefaultSymbolFactory()
 

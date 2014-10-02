@@ -21,7 +21,7 @@ import static org.junit.Assert.*
  */
 class MarkdownCardSetReaderTest {
 
-    public static final URL TEST_SET_DESCRIPTOR = MarkdownCardSetReaderTest.classLoader.getResource("test_set.md")
+    public static final URL TEST_SET_DESCRIPTOR = MarkdownCardSetReaderTest.classLoader.getResource("test-set.md")
 
     SymbolFactory sf = new DefaultSymbolFactory()
 
@@ -169,7 +169,7 @@ Creature - Human
                 ),
                 new DefaultCreatureCard(
                     title: "Barney of the Green Woods",
-                    castingCost: sf.getCost("2WUBRG"),
+                    castingCost: sf.getCost("2{r/w}{u/b}gb"),
                     artwork: new SimpleArtwork(
                         new URL(TEST_SET_DESCRIPTOR, "artwork/barney_fake.png"),
                         "Dolores Boisvert"
@@ -227,6 +227,33 @@ Creature - Human
                     ]],
                     power: "2",
                     toughness: "4"
+                ),
+                new DefaultCard(
+                    title: "The Green Woods",
+                    castingCost: sf.getCost("5gg"),
+                    colors: [ManaColor.GREEN],
+                    artwork: new SimpleArtwork(
+                        new URL(TEST_SET_DESCRIPTOR, "artwork/trees.jpg"),
+                        "pegico"
+                    ),
+                    typeParts: ["Instant"],
+                    rulesText: [[
+                        new DefaultRulesText("Untap all Forests.  All Forests become 1/4 green Elemental creatures with reach until end of turn.  They are still lands.")
+                    ]],
+                ),
+                new DefaultCard(
+                    title: "Purphoros' Axe",
+                    castingCost: sf.getCost("3"),
+                    colors: [ManaColor.COLORLESS],
+                    artwork: new SimpleArtwork(
+                        new URL(TEST_SET_DESCRIPTOR, "artwork/axe.jpg"),
+                        "meh"
+                    ),
+                    typeParts: ["Artifact"],
+                    rulesText: [
+                        [new DefaultRulesText("At the beginning of your upkeep, pay "), sf.getCost("r"), new DefaultRulesText(" or sacrifice Purphoros' Axe.")],
+                        [new DefaultRulesText("At the end of your upkeep, choose target creature.  The creature has protection from Forests until your next upkeep.")]
+                    ],
                 )
             ]),
             new MarkdownCardSetReader(TEST_SET_DESCRIPTOR).read()
@@ -236,7 +263,7 @@ Creature - Human
     @Test
     void constructor_equivalence() {
         def cl = getClass().classLoader
-        def path = "test_set.md"
+        def path = "test-set.md"
         def res = cl.getResource(path)
         def url = new MarkdownCardSetReader(res).read()
         def stream = new MarkdownCardSetReader(res, res.newInputStream())

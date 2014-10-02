@@ -56,7 +56,7 @@ At the beginning of the end step, Blitz Hellion's owner shuffles it into his or 
 
 7/7
 
-## Barney of the Green Woods 2WUBRG
+## Barney of the Green Woods 2{r/w}{u/b}gb
 
 ![Dolores Boisvert](artwork/barney_fake.png)
 
@@ -91,3 +91,23 @@ Flying, double strike, lifelink
 _Serra's children are angels. And fierce._
 
 2/4
+
+The Green Woods 5gg
+-------------------
+
+![pegico](artwork/trees.jpg)
+
+Instant
+
+Untap all Forests.  All Forests become 1/4 green Elemental creatures with reach until end of turn.  They are still lands.
+
+Purphoros' Axe 3
+----------------
+
+![meh](artwork/axe.jpg)
+
+Artifact
+
+At the beginning of your upkeep, pay {R} or sacrifice Purphoros' Axe.
+
+At the end of your upkeep, choose target creature.  The creature has protection from Forests until your next upkeep.
