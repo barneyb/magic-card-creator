@@ -80,7 +80,7 @@ class CardValidator extends BaseValidator<Card> {
                 }
                 def sorted = cost.sort()
                 if (cost != sorted) {
-                    ctx.warning("The casting cost is not in canonical order (expected ${sorted.toString()} but was ${cost.toString()})")
+                    ctx.warning("The casting cost is not in canonical order (expected \"${sorted.toString()}\" but was \"${cost.toString()}\")")
                 }
             }
         }
@@ -115,12 +115,12 @@ class CardValidator extends BaseValidator<Card> {
                     }
                 } else {
                     if (known != sorted) {
-                        ctx.warning("The type modifiers are not in canonical order (expected ${sorted.join(' ')} but was ${known.join(' ')})")
+                        ctx.warning("The type modifiers are not in canonical order (expected \"${sorted.join(' ')}\" but was \"${known.join(' ')}\")")
                     }
                 }
                 sorted = unknown + known
                 if (type != sorted) {
-                    ctx.warning("The type(s) and modifier(s) are not in canonical order (expected ${sorted.join(' ')} but was ${type.join(' ')})")
+                    ctx.warning("The type(s) and modifier(s) are not in canonical order (expected \"${sorted.join(' ')}\" but was \"${type.join(' ')}\")")
                 }
             }
         }
@@ -199,7 +199,7 @@ class CardValidator extends BaseValidator<Card> {
         } else {
             def sorted = ManaColor.sort(colors)
             if (colors != sorted) {
-                ctx.warning("The color indicator is not in canonical order (expected ${sorted*.symbol.join('')} but was ${colors*.symbol.join('')})")
+                ctx.warning("The color indicator is not in canonical order (expected \"${sorted*.symbol.join('')}\" but was \"${colors*.symbol.join('')}\")")
             }
         }
     }
@@ -233,7 +233,7 @@ class CardValidator extends BaseValidator<Card> {
         def groupOrder = walk.curry {
             def sorted = it.sort()
             if (it != sorted) {
-                ctx.warning("Cost symbols are not in canonical order (expected ${sorted.toString()} but was ${it.toString()})")
+                ctx.warning("Cost symbols are not in canonical order (expected \"${sorted.toString()}\" but was \"${it.toString()}\")")
             }
         }
         groupOrder card.rulesText
@@ -242,10 +242,13 @@ class CardValidator extends BaseValidator<Card> {
         // check tap/untap location
         def tapUntap = walk.curry { SymbolGroup it ->
             if (it.size() > 1) {
-                if (it*.symbol.contains('T')) {
-                    ctx.warning("Tap symbols should be separated from mana costs by a comma and space (e.g., {1}{W}, {T}")
-                } else if (it*.symbol.contains('Q')) {
-                    ctx.warning("Untap symbols should be separated from mana costs by a comma and space (e.g., {1}{W}, {Q}")
+                [
+                    T: "Tap",
+                    Q: "Untap"
+                ].each { s, l ->
+                    if (it*.symbol.contains(s)) {
+                        ctx.warning("$l symbols should be separated from mana costs by a comma and space (expected \"${it.findAll { it.symbol != s }*.toString().join('')}, {$s}\" but was \"${it.toString()}\")")
+                    }
                 }
             }
         }
