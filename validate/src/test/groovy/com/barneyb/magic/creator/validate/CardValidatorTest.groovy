@@ -146,8 +146,8 @@ class CardValidatorTest extends BaseValidatorTest {
         check new DefaultCard(rulesText: [[sg("tw")]]), WARNING, "canonical", "order", "{W}{T}", WARNING, "tap", "separated"
         check new DefaultCard(rulesText: [[sg("qw")]]), WARNING, "canonical", "order", "{W}{Q}", WARNING, "untap", "separated"
         // warn if more than "a bunch" of text is present
-        check new DefaultCard(rulesText: [[rt('a ' * 99)]])
-        check new DefaultCard(rulesText: [[rt('b ' * 100)]]), WARNING, "long"
+        check new DefaultCard(rulesText: [[rt('a ' * 124)]])
+        check new DefaultCard(rulesText: [[rt('b ' * 125)]]), WARNING, "long"
     }
 
     @Test
