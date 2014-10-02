@@ -67,14 +67,14 @@ class XmlCardSetReader implements CardSetReader {
         def jc = JAXBContext.newInstance("com.barneyb.magic.creator.descriptor.schema")
         def u = jc.createUnmarshaller()
         u.schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI).newSchema(new StreamSource(getClass().classLoader.getResourceAsStream("card-descriptor.xsd")))
-        fromCardSetType(base, (u.unmarshal(reader) as JAXBElement).getValue() as CardSetType)
+        fromCardSetType((u.unmarshal(reader) as JAXBElement).getValue() as CardSetType)
     }
 
     void close() {
         reader?.close()
     }
 
-    protected CardSet fromCardSetType(URL base, CardSetType csel) {
+    protected CardSet fromCardSetType(CardSetType csel) {
         def cs = new DefaultCardSet(csel.title, csel.key, csel.copyright)
         if (csel?.icon?.symbolSvg) {
             cs.iconSymbol = new DefaultIcon("cardset-$csel.key-symbol", new URL(base, csel.icon.symbolSvg))
@@ -85,7 +85,7 @@ class XmlCardSetReader implements CardSetReader {
         cs.cards = csel.cards.collect { el->
             DefaultCard c
             if (el instanceof FuseType) {
-                c = fromFuseType(base, el)
+                c = fromFuseType(el)
             } else {
                 if (el instanceof PlaneswalkerType) {
                     c = fromPlaneswalkerType(el)
@@ -98,7 +98,7 @@ class XmlCardSetReader implements CardSetReader {
                 } else {
                     throw new IllegalArgumentException("Unknown card type: ${el.getClass()}")
                 }
-                coreProps(base, el, c)
+                coreProps(el, c)
             }
             c.rarity = Rarity.valueOf(el.rarity.name())
             c.set = cs
@@ -108,7 +108,7 @@ class XmlCardSetReader implements CardSetReader {
         cs
     }
 
-    protected void coreProps(URL base, BaseCardType el, DefaultCard c) {
+    protected void coreProps(BaseCardType el, DefaultCard c) {
         c.title = el.title
         if (el.colorIndicator) {
             c.colors = getColors(el.colorIndicator)
@@ -178,21 +178,21 @@ class XmlCardSetReader implements CardSetReader {
         c
     }
 
-    protected DefaultFusedCard fromFuseType(URL base, FuseType el) {
+    protected DefaultFusedCard fromFuseType(FuseType el) {
         def c = new DefaultFusedCard()
         c.fusedCards = [
-            fromSpellType(base, el.spell.first()),
-            fromSpellType(base, el.spell.last())
+            fromSpellType(el.spell.first()),
+            fromSpellType(el.spell.last())
         ]
         c
     }
 
-    protected DefaultCard fromSpellType(URL base, FusedSpellType el) {
+    protected DefaultCard fromSpellType(FusedSpellType el) {
         def c = new DefaultCard()
         populateCost(c, el)
         c.typeParts = el.type?.tokenize()
         c.subtypeParts = el.subtype?.tokenize()
-        coreProps(base, el, c)
+        coreProps(el, c)
         c
     }
 
