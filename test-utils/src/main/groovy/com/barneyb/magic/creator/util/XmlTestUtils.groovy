@@ -32,7 +32,7 @@ class XmlTestUtils {
         // prettify
         out = new ByteArrayOutputStream()
         def s = new Serializer(out)
-        s.indent = 2
+        s.indent = 4
         s.lineSeparator = "\n"
         s.write(new Builder().build(xml, null))
         out.toString()
