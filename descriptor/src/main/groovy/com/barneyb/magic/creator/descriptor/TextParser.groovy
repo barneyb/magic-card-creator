@@ -24,11 +24,11 @@ class TextParser {
 
     SymbolFactory symbolFactory = new DefaultSymbolFactory()
 
-    List<List<BodyItem>> getNonNormativeText(NonNormativeTextType el) {
-        getText(el?.content, DefaultNonNormativeText)
+    List<List<BodyItem>> parseNonNormativeText(NonNormativeTextType el) {
+        parseContent(el?.content, DefaultNonNormativeText)
     }
 
-    protected List<List<BodyItem>> getText(List<Serializable> content, Class<? extends BodyItem> textClass) {
+    protected List<List<BodyItem>> parseContent(List<Serializable> content, Class<? extends BodyItem> textClass) {
         def combined = new StringBuilder()
         def work
         work = {
@@ -49,7 +49,7 @@ class TextParser {
             }
         }
         content?.each work
-        getText(combined.replaceAll(LINE_BREAK + /(\n\s*)/, LINE_BREAK).toString(), textClass)?.collect { para ->
+        parse(combined.replaceAll(LINE_BREAK + /(\n\s*)/, LINE_BREAK).toString(), textClass)?.collect { para ->
             def items = []
             para.each {
                 if (textClass.isAssignableFrom(it.getClass()) && it.text.contains(LINE_BREAK)) {
@@ -67,9 +67,9 @@ class TextParser {
         }
     }
 
-    List<List<BodyItem>> getRulesText(RulesTextType el) {
+    List<List<BodyItem>> parseRulesText(RulesTextType el) {
         def inReminder = false
-        getText(el?.content, DefaultRulesText)?.collect { para ->
+        parseContent(el?.content, DefaultRulesText)?.collect { para ->
             def items = []
             para.each {
                 if (it instanceof RulesText) {
@@ -117,7 +117,7 @@ class TextParser {
         }
     }
 
-    protected List<List<BodyItem>> getText(String raw, Class<? extends BodyItem> textClass) {
+    protected List<List<BodyItem>> parse(String raw, Class<? extends BodyItem> textClass) {
         def vis = new StringUtils.ParseVisitor() {
 
             List<BodyItem> items

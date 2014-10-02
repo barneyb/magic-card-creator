@@ -34,7 +34,7 @@ class TextParserTest {
               rt(', '),
               sg('t'),
               rt(': Do something.'),
-          ]], parser.getText('{G}, {T}: Do something.', DefaultRulesText))
+          ]], parser.parse('{G}, {T}: Do something.', DefaultRulesText))
     }
 
     @Test
@@ -46,7 +46,7 @@ class TextParserTest {
               rt(': Do something unless '),
               sg('x', 'b/r'),
               rt(' is paid by Johann.'),
-          ]], parser.getText('{u}, {t}: Do something unless {x}{b/r} is paid by Johann.', DefaultRulesText))
+          ]], parser.parse('{u}, {t}: Do something unless {x}{b/r} is paid by Johann.', DefaultRulesText))
     }
 
     @Test
@@ -58,7 +58,7 @@ class TextParserTest {
                 [rt("three")],
                 [rt("four"), new DefaultLineBreak(), rt(" five")],
             ],
-            parser.getText(text, DefaultRulesText)
+            parser.parse(text, DefaultRulesText)
         )
     }
 
@@ -78,7 +78,7 @@ class TextParserTest {
             nnt("multi-line"),
             lb(),
             nnt("reminder")
-        ]], parser.getRulesText(el))
+        ]], parser.parseRulesText(el))
     }
 
     @Test
@@ -93,7 +93,7 @@ class TextParserTest {
             nnt("flavor"),
             lb(),
             nnt("author")
-        ]], parser.getNonNormativeText(el))
+        ]], parser.parseNonNormativeText(el))
     }
 
 }

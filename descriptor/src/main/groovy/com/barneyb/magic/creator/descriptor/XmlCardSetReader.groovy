@@ -123,8 +123,8 @@ class XmlCardSetReader implements CardSetReader {
                 el.overArtwork.artist
             )
         }
-        c.flavorText = textParser.getNonNormativeText(el.flavorText)
-        c.rulesText = textParser.getRulesText(el.rulesText)
+        c.flavorText = textParser.parseNonNormativeText(el.flavorText)
+        c.rulesText = textParser.parseRulesText(el.rulesText)
         c.watermarkName = el.watermark
     }
 
@@ -156,7 +156,7 @@ class XmlCardSetReader implements CardSetReader {
         if (el.levels.size() > 0) {
             c.levels = el.levels.collect { lel ->
                 def l = new DefaultCreatureLevel(lel.levels, lel.power, lel.toughness)
-                l.rulesText = textParser.getRulesText(lel.rulesText)
+                l.rulesText = textParser.parseRulesText(lel.rulesText)
                 l
             }
         }
@@ -171,7 +171,7 @@ class XmlCardSetReader implements CardSetReader {
         c.loyalty = el.loyalty
         c.loyaltyAbilities = el.loyaltyAbilities.collect { ael ->
             def a = new DefaultLoyaltyAbility(ael.cost)
-            a.rulesText = textParser.getRulesText(ael.rulesText)
+            a.rulesText = textParser.parseRulesText(ael.rulesText)
             a
         }
         c
