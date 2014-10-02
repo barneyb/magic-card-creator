@@ -8,7 +8,7 @@
 
 Creature - Human
 
-{U}{T}: Tap target creature and pay 1 life.
+{U}{T}: Tap target creature and you lose 1 life.
 
 *Sally doesn't like you.*
 
@@ -25,7 +25,7 @@ Instant
 Counter target spell.
 
 *How about "never".*<br />
-_-- Barney of the Green Woods_
+_\u2014 Barney of the Green Woods_
 
 ## Nightmare 5B
 
@@ -76,7 +76,9 @@ _For the first time in his life, Barney felt warm. And hungry._
 
 Legendary Land
 
-All legendary creatures, gods, and angels, get -1/-1.
+All Sirens you control get +1/+1.
+
+All Gods, Angels, and legendary creatures your opponents control get -1/-1.
 
 _They are selective in their clientele, but their service legendary._
 

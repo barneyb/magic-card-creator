@@ -14,7 +14,7 @@ implementation should be able to do.
             <src>artwork/sally.jpg</src>
             <artist>Sally Mann</artist>
         </artwork>
-        <rules-text>{U}{T}: Tap target creature and you lose one life.</rules-text>
+        <rules-text>{U}{T}: Tap target creature and you lose 1 life.</rules-text>
         <flavor-text>
             Sally doesn't like you.
 
@@ -97,7 +97,7 @@ implementation should be able to do.
             <artist>Sally Mann</artist>
         </artwork>
         <rules-text>Flying, double strike, lifelink</rules-text>
-        <flavor-text>Serra's children are angels.  And fierce.</flavor-text>
+        <flavor-text>Serra's children are angels. And fierce.</flavor-text>
         <power>2</power>
         <toughness>4</toughness>
     </creature>
