@@ -1,3 +1,7 @@
+<!--
+I describe a set of cards which exercises everything Magic has to offer, and
+which the composition engine SHOULD support.
+-->
 <card-set xmlns="http://barneyb.com/schema/magic/card-descriptor"
           title="All In One"
           key="AiO">
