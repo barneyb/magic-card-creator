@@ -10,34 +10,55 @@ import com.beust.jcommander.ParameterException
  */
 class CardCreator {
 
-    static void main(String[] args) {
-        def main = new MainCommand()
-        def jc = new JCommander(main)
-        jc.addConverterFactory(new Converters())
-        jc.programName = CardCreator.simpleName
+    protected final MAIN_COMMAND = new MainCommand()
+    protected final HELP_COMMAND = new HelpCommand()
+    protected final SUB_COMMANDS = [
+        validate: new ValidateCommand(),
+        compose : new ComposeCommand(),
+        stats   : new StatsCommand(),
+        png     : new PngCommand(),
+        pdf     : new PdfCommand(),
+    ]
 
-        def commands = [
-            help: new HelpCommand(),
-            validate: new ValidateCommand(),
-            compose: new ComposeCommand(),
-            stats: new StatsCommand(),
-            png: new PngCommand(),
-            pdf: new PdfCommand(),
-        ].each { n, c ->
+    JCommander jc
+
+    CardCreator() {
+        jc = new JCommander(MAIN_COMMAND)
+        jc.addConverterFactory(new Converters())
+        jc.programName = getClass().simpleName
+
+        jc.addCommand(HELP_COMMAND)
+        SUB_COMMANDS.each { n, c ->
             jc.addCommand(n, c)
         }
+    }
 
+    void run(String[] args) {
+        jc.parse(args)
+        def cn = jc.parsedCommand ?: 'help'
+        def cmd = (cn == 'help') ? HELP_COMMAND : SUB_COMMANDS[cn]
+        if (cmd instanceof Executable) {
+            cmd.execute(MAIN_COMMAND, jc)
+        } else {
+            throw new NonExecutableCommandException(cmd)
+        }
+    }
+
+    void help() {
+        HELP_COMMAND.execute(MAIN_COMMAND, jc)
+    }
+
+    static void main(String[] args) {
+        def cc = new CardCreator()
         try {
-            jc.parse(args)
-            def cmd = commands[jc.parsedCommand ?: "help"]
-            if (cmd instanceof Executable) {
-                cmd.execute(main, jc)
-            } else {
-                jc.usage()
-            }
+            cc.run(args)
+        } catch (NonExecutableCommandException nece) {
+            println nece.message
+            cc.help()
+            System.exit(3)
         } catch (MissingCommandException mce) {
             println mce.message
-            commands.help.execute(main, jc)
+            cc.help()
             System.exit(2)
         } catch (ParameterException pe){
             println pe.message

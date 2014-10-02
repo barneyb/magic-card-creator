@@ -46,6 +46,12 @@
         </dependency>
         <dependency>
             <groupId>com.barneyb.magic</groupId>
+            <artifactId>card-creator-test-utils</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.barneyb.magic</groupId>
             <artifactId>card-creator-docker</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
