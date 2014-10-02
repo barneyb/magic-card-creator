@@ -10,19 +10,4 @@
         <version>0.6.1-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
-    <dependencies>
-        <dependency>
-            <groupId>com.barneyb.magic</groupId>
-            <artifactId>card-creator-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>
