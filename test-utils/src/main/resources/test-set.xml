@@ -73,7 +73,7 @@ implementation should be able to do.
         <rules-text>
             Indestructable, hexproof
 
-            {1}{U}{G}, {T}: Every opponent dies in a fire unless all pay {X}{U}{B}{G} or {X}{R}{B}{W} or {X}{X}{B} where X equals your life total.
+            {1}{U}{G}{T}: Every opponent dies in a fire unless all pay {X}{U}{B}{G} or {X}{R}{B}{W} or {X}{X}{B} where X equals your life total.
         </rules-text>
         <flavor-text>For the first time in his life, Barney felt warm. And hungry.</flavor-text>
         <power>100</power>
