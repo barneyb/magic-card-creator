@@ -9,7 +9,8 @@ import org.junit.Test
  */
 class CardCreatorTest {
 
-    String descriptor = getClass().classLoader.getResource("test-set.xml").toString()
+    String xml = getClass().classLoader.getResource("test-set.xml").toString()
+    String md = getClass().classLoader.getResource("test-set.md").toString()
 
     @Test
     void help() {
@@ -18,17 +19,29 @@ class CardCreatorTest {
 
     @Test
     void validate() {
-        new CardCreator().run("validate", "-d", descriptor)
+        new CardCreator().run("validate", "-d", xml)
     }
 
     @Test
     void compose() {
-        new CardCreator().run("compose", "-d", descriptor, "-o", "target", "--cards", "The Green Woods")
+        new CardCreator().run("compose", "-d", xml, "-o", "target", "--cards", "The Green Woods")
     }
 
     @Test
     void stats() {
-        new CardCreator().run("stats", "-d", descriptor)
+        new CardCreator().run("stats", "-d", xml)
+    }
+
+    @Test
+    void md2xml() {
+        def f = File.createTempFile("mgc-md2xml-", ".xml")
+        f.deleteOnExit()
+        new CardCreator().run("md2xml", "-m", md, "-x", f.canonicalPath)
+        f.eachLine { l, n ->
+            if (n < 5) {
+                println l
+            }
+        }
     }
 
     @Test
