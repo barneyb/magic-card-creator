@@ -79,7 +79,6 @@ class XmlCardSetReaderTest {
                 sg('T'),
                 rt(': Choose a color. Add to your mana pool an amount of mana of that color equal to your devotion to that color. '),
                 nnt('(Your devotion to a color is the number of mana symbols of that color in the mana costs of permanents you control.'),
-                rt(' '), // todo: this is stupid
                 lb(),
                 nnt('It does not include mana symbols in card bodies.)')
             ],
@@ -287,8 +286,7 @@ class XmlCardSetReaderTest {
         assertEquals(false, c.leveler)
         assertEquals(null, c.levels)
         assertEquals(Rarity.COMMON, c.rarity)
-        // todo: trailing space is stupid
-        assertEquals([[nnt('It\'s easy to stand head and shoulders over those with no backbone. '), lb(), nnt('-- King Grahznok')]], c.flavorText)
+        assertEquals([[nnt('It\'s easy to stand head and shoulders over those with no backbone.'), lb(), nnt('-- King Grahznok')]], c.flavorText)
         assertEquals(9, c.cardNumber)
         relativeUrl("artwork/goblin-bully.jpg", c.artwork.url)
         assertEquals("Pete Venters", c.artwork.artist)
