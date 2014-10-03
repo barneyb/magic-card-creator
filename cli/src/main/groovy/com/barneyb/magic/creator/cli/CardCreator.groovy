@@ -10,6 +10,8 @@ import com.beust.jcommander.ParameterException
  */
 class CardCreator {
 
+    public static final String HELP_COMMAND_NAME = 'help'
+
     protected final MAIN_COMMAND = new MainCommand()
     protected final HELP_COMMAND = new HelpCommand()
     protected final SUB_COMMANDS = [
@@ -27,7 +29,7 @@ class CardCreator {
         jc.addConverterFactory(new Converters())
         jc.programName = getClass().simpleName
 
-        jc.addCommand(HELP_COMMAND)
+        jc.addCommand(HELP_COMMAND_NAME, HELP_COMMAND)
         SUB_COMMANDS.each { n, c ->
             jc.addCommand(n, c)
         }
@@ -35,8 +37,8 @@ class CardCreator {
 
     void run(String[] args) {
         jc.parse(args)
-        def cn = jc.parsedCommand ?: 'help'
-        def cmd = (cn == 'help') ? HELP_COMMAND : SUB_COMMANDS[cn]
+        def cn = jc.parsedCommand ?: HELP_COMMAND_NAME
+        def cmd = (cn == HELP_COMMAND_NAME) ? HELP_COMMAND : SUB_COMMANDS[cn]
         if (cmd instanceof Executable) {
             cmd.execute(MAIN_COMMAND, jc)
         } else {
