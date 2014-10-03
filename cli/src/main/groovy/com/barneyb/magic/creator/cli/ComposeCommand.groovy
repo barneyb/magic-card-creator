@@ -14,7 +14,7 @@ import groovy.util.logging.Log
  *
  * @author barneyb
  */
-@Parameters(commandNames = "compose", commandDescription = "compose cards from a descriptor", separators = "=")
+@Parameters(commandDescription = "compose cards from a descriptor", separators = "=")
 @Log
 class ComposeCommand extends BaseDescriptorCommand implements Executable {
 

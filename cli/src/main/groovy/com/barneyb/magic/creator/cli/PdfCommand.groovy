@@ -11,7 +11,7 @@ import org.w3c.dom.svg.SVGDocument
  *
  * @author barneyb
  */
-@Parameters(commandNames = "pdf", commandDescription = "transcode composed cards to PDF (via docker)", separators = "=")
+@Parameters(commandDescription = "transcode composed cards to PDF (via docker)", separators = "=")
 class PdfCommand extends BaseTranscodeCommand {
 
     static enum Rotate {

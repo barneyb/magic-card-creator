@@ -8,7 +8,7 @@ import com.beust.jcommander.Parameters
  *
  * @author barneyb
  */
-@Parameters(commandNames = "png", commandDescription = "transcode composed cards to PNG (via docker)", separators = "=")
+@Parameters(commandDescription = "transcode composed cards to PNG (via docker)", separators = "=")
 class PngCommand extends BaseTranscodeCommand {
 
     @Parameter(names = "--width", description = "The width the output images should be")

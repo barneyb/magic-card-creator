@@ -9,7 +9,7 @@ import com.beust.jcommander.Parameters
  *
  * @author barneyb
  */
-@Parameters(commandNames = "help", commandDescription = "display usage information and exit", separators = "=")
+@Parameters(commandDescription = "display usage information and exit", separators = "=")
 class HelpCommand implements Executable {
 
     @Parameter(description = "command to get help for")

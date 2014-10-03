@@ -26,7 +26,7 @@ import com.google.gson.Gson
  *
  * @author barneyb
  */
-@Parameters(commandNames = "stats", commandDescription = "view stats about a cardset", separators = "=")
+@Parameters(commandDescription = "view stats about a cardset", separators = "=")
 class StatsCommand extends BaseDescriptorCommand implements Executable {
 
     static enum Format {
