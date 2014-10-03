@@ -45,6 +45,8 @@ class XmlCardSetWriter implements CardSetWriter {
 
     TextParser textParser = new TextParser()
 
+    boolean formatOutput = true
+
     XmlCardSetWriter(File file) {
         this(file.toURI().toURL(), file.newWriter())
     }
@@ -65,7 +67,7 @@ class XmlCardSetWriter implements CardSetWriter {
         m.schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI).newSchema( // comment out to skip validation
             new StreamSource(getClass().classLoader.getResourceAsStream("card-descriptor.xsd"))
         )
-        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true)
+        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, formatOutput)
         m.marshal(factory.createCardSet(fromCardSet(cs)), writer)
     }
 

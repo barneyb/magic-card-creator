@@ -115,8 +115,7 @@ which the composition engine SHOULD support.
             <src>artwork/goblin-bully.jpg</src>
             <artist>Pete Venters</artist>
         </artwork>
-        <flavor-text>It's easy to stand head and shoulders over those with no backbone.<br />
-            -- King Grahznok</flavor-text>
+        <flavor-text>It's easy to stand head and shoulders over those with no backbone.<br />-- King Grahznok</flavor-text>
         <power>2</power>
         <toughness>1</toughness>
     </creature>
