@@ -83,15 +83,15 @@
 
     <xs:group name="RulesGroup">
         <xs:sequence>
-            <xs:element name="rules-text" type="RulesTextType" />
-            <xs:element name="flavor-text" type="NonNormativeTextType" minOccurs="0" />
+            <xs:element name="rules-text" type="RulesTextType" maxOccurs="unbounded" />
+            <xs:element name="flavor-text" type="NonNormativeTextType" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:group>
 
     <xs:group name="RulesOptionalGroup">
         <xs:sequence>
-            <xs:element name="rules-text" type="RulesTextType" minOccurs="0" />
-            <xs:element name="flavor-text" type="NonNormativeTextType" minOccurs="0" />
+            <xs:element name="rules-text" type="RulesTextType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="flavor-text" type="NonNormativeTextType" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:group>
 
@@ -208,7 +208,7 @@
 
     <xs:complexType name="LevelType">
         <xs:sequence>
-            <xs:element name="rules-text" type="RulesTextType" />
+            <xs:element name="rules-text" type="RulesTextType" maxOccurs="unbounded" />
             <xs:group ref="PowerToughnessGroup" />
         </xs:sequence>
         <xs:attribute name="levels" type="LevelLabelType" use="required" />

@@ -1,6 +1,5 @@
 package com.barneyb.magic.creator.descriptor
 
-import com.barneyb.magic.creator.core.DefaultLineBreak
 import com.barneyb.magic.creator.core.DefaultRulesText
 import com.barneyb.magic.creator.descriptor.schema.NonNormativeTextType
 import com.barneyb.magic.creator.descriptor.schema.RulesTextType
@@ -29,12 +28,12 @@ class TextParserTest {
     @Test
     void simpleSymbols() {
         def text = '{G}, {T}: Do something.'
-        def body = [[
+        def body = [
             sg('g'),
             rt(', '),
             sg('t'),
             rt(': Do something.'),
-        ]]
+        ]
         assertEquals(body, parser.parse(text, DefaultRulesText))
         assertEquals(text, parser.unparse(body, RulesTextType).content.join(''))
     }
@@ -42,14 +41,14 @@ class TextParserTest {
     @Test
     void complexSymbols() {
         def text = '{U}, {T}: Do something unless {X}{B/R} is paid by Johann.'
-        def body = [[
+        def body = [
             sg('u'),
             rt(', '),
             sg('t'),
             rt(': Do something unless '),
             sg('x', 'b/r'),
             rt(' is paid by Johann.'),
-        ]]
+        ]
         assertEquals(body, parser.parse(text, DefaultRulesText))
         assertEquals(text, parser.unparse(body, RulesTextType).content.join(''))
     }
@@ -76,12 +75,10 @@ class TextParserTest {
     void a_breaks() {
         def text = '\n\none\ntwo\n\nthree\n\n\n\nfour\n five\n'
         def body = [
-            [rt("one two")],
-            [rt("three")],
-            [rt("four"), new DefaultLineBreak(), rt(" five")],
+            rt("one two three four five"),
         ]
         assertEquals(body, parser.parse(text, DefaultRulesText))
-        assertEquals("one two\n\nthree\n\nfour<br /> five", serialize(parser.unparse(body, RulesTextType)))
+        assertEquals("one two three four five", serialize(parser.unparse(body, RulesTextType)))
     }
 
     @Test
@@ -95,12 +92,12 @@ class TextParserTest {
                 "\nreminder"
             ])),
         ])
-        def body = [[
+        def body = [
             rt("ability"),
             nnt("multi-line"),
             lb(),
             nnt("reminder")
-        ]]
+        ]
         assertEquals(body, parser.parse(el))
         assertEquals('ability<reminder>multi-line</reminder><br /><reminder>reminder</reminder>', serialize(parser.unparse(body, el.getClass())))
     }
@@ -113,11 +110,11 @@ class TextParserTest {
             new JAXBElement<String>(new QName("br"), String, null),
             "\nauthor",
         ])
-        def body = [[
+        def body = [
             nnt("flavor"),
             lb(),
             nnt("author")
-        ]]
+        ]
         assertEquals(body, parser.parse(el))
         assertEquals('flavor<br />author', serialize(parser.unparse(body, el.getClass())))
     }

@@ -9,41 +9,33 @@ implementation should be able to do.
     <copyright>&#169; 2014 Barney Boisvert</copyright>
     <icon symbol-svg="artwork/icon-symbol.svg"
           field-svg="artwork/icon-field.svg" />
-    <creature title="Sally" casting-cost="1r" subtype="Human" rarity="common">
+    <creature title="Sally" casting-cost="1R" subtype="Human">
         <artwork>
             <src>artwork/sally.jpg</src>
             <artist>Sally Mann</artist>
         </artwork>
         <rules-text>{U}{T}: Tap target creature and you lose 1 life.</rules-text>
-        <flavor-text>
-            Sally doesn't like you.
-
-            Or you.
-        </flavor-text>
+        <flavor-text>Sally doesn't like you.</flavor-text>
+        <flavor-text>Or you.</flavor-text>
         <power>1</power>
         <toughness>1</toughness>
     </creature>
-    <spell title="Counterspell" casting-cost="uu" type="Instant" rarity="uncommon">
+    <spell title="Counterspell" casting-cost="UU" type="Instant" rarity="uncommon">
         <artwork>
             <src>artwork/counterspell.jpg</src>
             <artist>Zueuk</artist>
         </artwork>
         <rules-text>Counter target spell.</rules-text>
-        <flavor-text>
-            How about "never".<br />
-            &#x2014; Barney of the Green Woods
-        </flavor-text>
+        <flavor-text>How about "never".
+            <br />&#x2014; Barney of the Green Woods</flavor-text>
     </spell>
-    <creature title="Nightmare" casting-cost="5b" subtype="Nightmare Horse" rarity="rare">
+    <creature title="Nightmare" casting-cost="5B" subtype="Nightmare Horse" rarity="rare">
         <artwork>
             <src>artwork/nightmare.jpg</src>
             <artist>catfish08</artist>
         </artwork>
-        <rules-text>
-            Flying
-
-            Nightmare's power and toughness are each equal to the number of Swamps you control.
-        </rules-text>
+        <rules-text>Flying</rules-text>
+        <rules-text>Nightmare's power and toughness are each equal to the number of Swamps you control.</rules-text>
         <flavor-text>The thunder of its hooves beats dreams into despair.</flavor-text>
         <power>*</power>
         <toughness>*</toughness>
@@ -53,28 +45,19 @@ implementation should be able to do.
             <src>artwork/hellion.jpg</src>
             <artist>Anthony S. Waters</artist>
         </artwork>
-        <rules-text>
-            Trample, haste
-
-            At the beginning of the end step, Blitz Hellion's owner shuffles it into his or her library.
-        </rules-text>
-        <flavor-text>
-            Alarans commemorated its appearances with new holidays bearing names like the Great
-            Cataclysm and the Fall of Ilson Gate.
-        </flavor-text>
+        <rules-text>Trample, haste</rules-text>
+        <rules-text>At the beginning of the end step, Blitz Hellion's owner shuffles it into his or her library.</rules-text>
+        <flavor-text>Alarans commemorated its appearances with new holidays bearing names like the Great Cataclysm and the Fall of Ilson Gate.</flavor-text>
         <power>7</power>
         <toughness>7</toughness>
     </creature>
-    <creature title="Barney of the Green Woods" casting-cost="2{r/w}{u/b}gb" subtype="Human Legend" type-modifiers="Legendary Enchantment" rarity="mythic-rare">
+    <creature title="Barney of the Green Woods" casting-cost="2{R/W}{U/B}GB" subtype="Human Legend" type-modifiers="Legendary Enchantment" rarity="mythic-rare">
         <artwork>
             <src>artwork/barney_fake.png</src>
             <artist>Dolores Boisvert</artist>
         </artwork>
-        <rules-text>
-            Indestructable, hexproof
-
-            {1}{U}{G}{T}: Every opponent dies in a fire unless all pay {X}{U}{B}{G} or {X}{R}{B}{W} or {X}{X}{B} where X equals your life total.
-        </rules-text>
+        <rules-text>Indestructable, hexproof</rules-text>
+        <rules-text>{1}{U}{G}{T}: Every opponent dies in a fire unless all pay {X}{U}{B}{G} or {X}{R}{B}{W} or {X}{X}{B} where X equals your life total.</rules-text>
         <flavor-text>For the first time in his life, Barney felt warm. And hungry.</flavor-text>
         <power>100</power>
         <toughness>100</toughness>
@@ -84,14 +67,11 @@ implementation should be able to do.
             <src>artwork/brothel.jpg</src>
             <artist>God of War: Ascension</artist>
         </artwork>
-        <rules-text>
-            All Sirens you control get +1/+1.
-
-            All Gods, Angels, and legendary creatures your opponents control get -1/-1.
-        </rules-text>
+        <rules-text>All Sirens you control get +1/+1.</rules-text>
+        <rules-text>All Gods, Angels, and legendary creatures your opponents control get -1/-1.</rules-text>
         <flavor-text>They are selective in their clientele, but their service legendary.</flavor-text>
     </land>
-    <creature title="Sleeping Cherub" casting-cost="2ww" subtype="Angel" rarity="uncommon">
+    <creature title="Sleeping Cherub" casting-cost="2WW" subtype="Angel" rarity="uncommon">
         <artwork>
             <src>artwork/sally.jpg</src>
             <artist>Sally Mann</artist>
@@ -101,24 +81,19 @@ implementation should be able to do.
         <power>2</power>
         <toughness>4</toughness>
     </creature>
-    <spell title="The Green Woods" casting-cost="5gg" type="Instant">
+    <spell title="The Green Woods" casting-cost="5GG" type="Instant">
         <artwork>
             <src>artwork/trees.jpg</src>
             <artist>pegico</artist>
         </artwork>
-        <rules-text>
-            Untap all Forests.  All Forests become 1/4 green Elemental creatures with reach until end of turn.  They are still lands.
-        </rules-text>
+        <rules-text>Untap all Forests.  All Forests become 1/4 green Elemental creatures with reach until end of turn.  They are still lands.</rules-text>
     </spell>
     <spell title="Purphoros' Axe" casting-cost="3" type="Artifact">
         <artwork>
             <src>artwork/axe.jpg</src>
             <artist>meh</artist>
         </artwork>
-        <rules-text>
-            At the beginning of your upkeep, pay {R} or sacrifice Purphoros' Axe.
-
-            At the end of your upkeep, choose target creature.  The creature has protection from Forests until your next upkeep.
-        </rules-text>
+        <rules-text>At the beginning of your upkeep, pay {R} or sacrifice Purphoros' Axe.</rules-text>
+        <rules-text>At the end of your upkeep, choose target creature.  The creature has protection from Forests until your next upkeep.</rules-text>
     </spell>
 </card-set>

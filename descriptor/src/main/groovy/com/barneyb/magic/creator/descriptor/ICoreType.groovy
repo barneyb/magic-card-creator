@@ -23,11 +23,9 @@ interface ICoreType {
     ArtworkType getOverArtwork()
     void setOverArtwork(ArtworkType v)
 
-    RulesTextType getRulesText()
-    void setRulesText(RulesTextType v)
+    List<RulesTextType> getRulesText()
 
-    NonNormativeTextType getFlavorText()
-    void setFlavorText(NonNormativeTextType v)
+    List<NonNormativeTextType> getFlavorText()
 
     String getWatermark()
     void setWatermark(String v)

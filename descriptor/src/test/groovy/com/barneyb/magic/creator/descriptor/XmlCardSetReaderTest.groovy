@@ -79,6 +79,7 @@ class XmlCardSetReaderTest {
                 sg('T'),
                 rt(': Choose a color. Add to your mana pool an amount of mana of that color equal to your devotion to that color. '),
                 nnt('(Your devotion to a color is the number of mana symbols of that color in the mana costs of permanents you control.'),
+                rt(' '), // todo: this is stupid
                 lb(),
                 nnt('It does not include mana symbols in card bodies.)')
             ],
@@ -144,13 +145,13 @@ class XmlCardSetReaderTest {
         assertEquals("5", c.loyalty)
         assertEquals(4, c.loyaltyAbilities.size())
         assertEquals('+1', c.loyaltyAbilities[0].cost)
-        assertEquals([[rt('Destroy another target planeswalker.')]], c.loyaltyAbilities[0].rulesText)
+        assertEquals([rt('Destroy another target planeswalker.')], c.loyaltyAbilities[0].rulesText)
         assertEquals('+1', c.loyaltyAbilities[1].cost)
-        assertEquals([[rt('Put a 3/3 black Beast creature token with deathtouch onto the battlefield.')]], c.loyaltyAbilities[1].rulesText)
+        assertEquals([rt('Put a 3/3 black Beast creature token with deathtouch onto the battlefield.')], c.loyaltyAbilities[1].rulesText)
         assertEquals('-3', c.loyaltyAbilities[2].cost)
-        assertEquals([[rt('Destroy target creature. You gain life equal to its toughness.')]], c.loyaltyAbilities[2].rulesText)
+        assertEquals([rt('Destroy target creature. You gain life equal to its toughness.')], c.loyaltyAbilities[2].rulesText)
         assertEquals('-8', c.loyaltyAbilities[3].cost)
-        assertEquals([[rt('Target opponent gets an emblem with "Whenever a creature attacks you, it gets +5/+5 and gains trample until end of turn."')]], c.loyaltyAbilities[3].rulesText)
+        assertEquals([rt('Target opponent gets an emblem with "Whenever a creature attacks you, it gets +5/+5 and gains trample until end of turn."')], c.loyaltyAbilities[3].rulesText)
         assertEquals(Rarity.MYTHIC_RARE, c.rarity)
         assertEquals(null, c.flavorText)
         assertEquals(4, c.cardNumber)
@@ -286,7 +287,8 @@ class XmlCardSetReaderTest {
         assertEquals(false, c.leveler)
         assertEquals(null, c.levels)
         assertEquals(Rarity.COMMON, c.rarity)
-        assertEquals([[nnt('It\'s easy to stand head and shoulders over those with no backbone.'), lb(), nnt('-- King Grahznok')]], c.flavorText)
+        // todo: trailing space is stupid
+        assertEquals([[nnt('It\'s easy to stand head and shoulders over those with no backbone. '), lb(), nnt('-- King Grahznok')]], c.flavorText)
         assertEquals(9, c.cardNumber)
         relativeUrl("artwork/goblin-bully.jpg", c.artwork.url)
         assertEquals("Pete Venters", c.artwork.artist)

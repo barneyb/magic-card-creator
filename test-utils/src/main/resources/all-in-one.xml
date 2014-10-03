@@ -13,39 +13,25 @@ which the composition engine SHOULD support.
             <src>artwork/nykthos-shrine-to-nyx.jpg</src>
             <artist>Jung Park</artist>
         </artwork>
-        <rules-text>
-            {T}: Add {1} to your mana pool.
-
-            {2}, {T}: Choose a color. Add to your mana pool an amount of mana of that color
-            equal to your devotion to that color. <reminder>(Your devotion to a color is the
-            number of mana symbols of that color in the mana costs of permanents you
-            control.<br />
-            It does not include mana symbols in card bodies.)</reminder>
-        </rules-text>
+        <rules-text>{T}: Add {1} to your mana pool.</rules-text>
+        <rules-text>{2}, {T}: Choose a color. Add to your mana pool an amount of mana of that color equal to your devotion to that color. <reminder>(Your devotion to a color is the number of mana symbols of that color in the mana costs of permanents you control.</reminder>
+            <br /><reminder>It does not include mana symbols in card bodies.)</reminder></rules-text>
     </land>
-    <spell title="Lightning Bolt" casting-cost="R" type="Instant" rarity="common">
+    <spell title="Lightning Bolt" casting-cost="R" type="Instant">
         <artwork>
             <src>artwork/lightning-bolt.jpg</src>
             <artist>Christopher Moeller</artist>
         </artwork>
         <rules-text>Lightning Bolt deals 3 damage to target creature or player.</rules-text>
-        <flavor-text>
-            The sparkmage shrieked, calling on the rage of the storms of his youth. To his
-            surprise, the sky responded with a fierce energy he'd never thought to see again.
-        </flavor-text>
+        <flavor-text>The sparkmage shrieked, calling on the rage of the storms of his youth. To his surprise, the sky responded with a fierce energy he'd never thought to see again.</flavor-text>
     </spell>
     <creature title="White Knight" casting-cost="WW" subtype="Human Knight" rarity="uncommon">
         <artwork>
             <src>artwork/white-knight.jpg</src>
             <artist>Christopher Moeller</artist>
         </artwork>
-        <rules-text>
-            First strike <reminder>(This creature deals combat damage before creatures
-            without first strike.)</reminder>
-
-            Protection from black <reminder>(This creature can't be blocked, targeted, dealt
-            damage, or enchanted by anything black.)</reminder>
-        </rules-text>
+        <rules-text>First strike <reminder>(This creature deals combat damage before creatures without first strike.)</reminder></rules-text>
+        <rules-text>Protection from black <reminder>(This creature can't be blocked, targeted, dealt damage, or enchanted by anything black.)</reminder></rules-text>
         <power>2</power>
         <toughness>2</toughness>
     </creature>
@@ -65,22 +51,15 @@ which the composition engine SHOULD support.
         </ability>
         <ability>
             <cost>+1</cost>
-            <rules-text>
-                Put a 3/3 black Beast creature token with deathtouch onto the battlefield.
-            </rules-text>
+            <rules-text>Put a 3/3 black Beast creature token with deathtouch onto the battlefield.</rules-text>
         </ability>
         <ability>
             <cost>-3</cost>
-            <rules-text>
-                Destroy target creature. You gain life equal to its toughness.
-            </rules-text>
+            <rules-text>Destroy target creature. You gain life equal to its toughness.</rules-text>
         </ability>
         <ability>
             <cost>-8</cost>
-            <rules-text>
-                Target opponent gets an emblem with "Whenever a creature attacks you, it gets
-                +5/+5 and gains trample until end of turn."
-            </rules-text>
+            <rules-text>Target opponent gets an emblem with "Whenever a creature attacks you, it gets +5/+5 and gains trample until end of turn."</rules-text>
         </ability>
     </planeswalker>
     <creature title="Guul Draz Assassin" casting-cost="B" subtype="Vampire Assassin" rarity="rare">
@@ -88,10 +67,7 @@ which the composition engine SHOULD support.
             <src>artwork/guul-draz-assassin.jpg</src>
             <artist>James Ryman</artist>
         </artwork>
-        <rules-text>
-            Level up {1}{B} <reminder>({1}{B}: Put a level counter on this. Level up only as
-            a sorcery.)</reminder>
-        </rules-text>
+        <rules-text>Level up {1}{B} <reminder>({1}{B}: Put a level counter on this. Level up only as a sorcery.)</reminder></rules-text>
         <power>1</power>
         <toughness>1</toughness>
         <level levels="2-3">
@@ -105,98 +81,69 @@ which the composition engine SHOULD support.
             <toughness>4</toughness>
         </level>
     </creature>
-    <land title="Dimir Guildgate" subtype="Gate" rarity="common" watermark="dimir" allied-colors="UB">
+    <land title="Dimir Guildgate" subtype="Gate" watermark="dimir" allied-colors="UB">
         <artwork>
             <src>artwork/dimir-guildgate.jpg</src>
             <artist>Cliff Childs</artist>
         </artwork>
-        <rules-text>
-            Dimir Guildgate enters the battlefield tapped.
-
-            {T}: Add {U} or {B} to your mana pool.
-        </rules-text>
-        <flavor-text>
-            In the cold corridors of the undercity, misinformation unfurls from Duskmantle
-            like a spreading stain.
-        </flavor-text>
+        <rules-text>Dimir Guildgate enters the battlefield tapped.</rules-text>
+        <rules-text>{T}: Add {U} or {B} to your mana pool.</rules-text>
+        <flavor-text>In the cold corridors of the undercity, misinformation unfurls from Duskmantle like a spreading stain.</flavor-text>
     </land>
     <creature title="Transguild Courier" casting-cost="4" type-modifiers="Artifact" subtype="Golem" color-indicator="WUBRG" rarity="uncommon">
         <artwork>
             <src>artwork/transguild-courier.jpg</src>
             <artist>John Avon</artist>
         </artwork>
-        <rules-text>
-            Transguild Courier is all colors <reminder>(even if this card isn't in play)</reminder>.
-        </rules-text>
-        <flavor-text>
-            Reluctant to meet face to face, the leaders of the ten guilds prefer to do official
-            business through a go-between immune to bribes and threats.
-        </flavor-text>
+        <rules-text>Transguild Courier is all colors <reminder>(even if this card isn't in play)</reminder>.</rules-text>
+        <flavor-text>Reluctant to meet face to face, the leaders of the ten guilds prefer to do official business through a go-between immune to bribes and threats.</flavor-text>
         <power>3</power>
         <toughness>3</toughness>
     </creature>
-    <spell title="Paralyze" casting-cost="B" type="Enchantment" subtype="Aura" rarity="common">
+    <spell title="Paralyze" casting-cost="B" type="Enchantment" subtype="Aura">
         <artwork>
             <src>artwork/paralyze.jpg</src>
             <artist>Anson Maddocks</artist>
         </artwork>
-        <rules-text>
-            Enchant creature
-
-            When Paralyze enters the battlefield, tap enchanted creature.
-
-            Enchanted creature doesn't untap during its controller's untap step.
-
-            At the beginning of the upkeep of enchanted creature's controller, that player
-            may pay {4}. If he or she does, untap the creature.
-        </rules-text>
+        <rules-text>Enchant creature</rules-text>
+        <rules-text>When Paralyze enters the battlefield, tap enchanted creature.</rules-text>
+        <rules-text>Enchanted creature doesn't untap during its controller's untap step.</rules-text>
+        <rules-text>At the beginning of the upkeep of enchanted creature's controller, that player may pay {4}. If he or she does, untap the creature.</rules-text>
     </spell>
-    <creature title="Goblin Bully" casting-cost="1r" subtype="Goblin">
+    <creature title="Goblin Bully" casting-cost="1R" subtype="Goblin">
         <artwork>
             <src>artwork/goblin-bully.jpg</src>
             <artist>Pete Venters</artist>
         </artwork>
-        <flavor-text>
-            It's easy to stand head and shoulders over those with no backbone.<br />
-            -- King Grahznok
-        </flavor-text>
+        <flavor-text>It's easy to stand head and shoulders over those with no backbone.
+            <br />-- King Grahznok</flavor-text>
         <power>2</power>
         <toughness>1</toughness>
     </creature>
     <fused rarity="rare">
-        <spell title="Breaking" casting-cost="ub" type="Sorcery">
+        <spell title="Breaking" casting-cost="UB" type="Sorcery">
             <artwork>
                 <src>artwork/breaking.jpg</src>
                 <artist>Mathias Kollros</artist>
             </artwork>
-            <rules-text>
-                Target player puts the top eight cards of his or her library into
-                his or her graveyard.
-            </rules-text>
+            <rules-text>Target player puts the top eight cards of his or her library into his or her graveyard.</rules-text>
         </spell>
-        <spell title="Entering" casting-cost="4br" type="Sorcery">
+        <spell title="Entering" casting-cost="4BR" type="Sorcery">
             <artwork>
                 <src>artwork/entering.jpg</src>
                 <artist>Mathias Kollros</artist>
             </artwork>
-            <rules-text>
-                Put a creature card from a graveyard onto the battlefield under your
-                control. It gains haste until end of turn.
-            </rules-text>
+            <rules-text>Put a creature card from a graveyard onto the battlefield under your control. It gains haste until end of turn.</rules-text>
         </spell>
     </fused>
-    <creature title="Rakdos Guildmage" casting-cost="{b/r}{b/r}" subtype="Zombie Shaman" watermark="rakdos" rarity="uncommon">
+    <creature title="Rakdos Guildmage" casting-cost="{B/R}{B/R}" subtype="Zombie Shaman" watermark="rakdos" rarity="uncommon">
         <artwork>
             <src>artwork/rakdos-guildmage.jpg</src>
             <artist>Jeremy Jarvis</artist>
         </artwork>
-        <rules-text>
-            <reminder>({b/r} can be paid with either {b} or {r}.)</reminder>
-
-            {3}{b}, Discard a card: Target creature gets -2/-2 until end of turn.
-
-            {3}{r}: Put a 2/1 red Goblin creature token with haste onto the battlefield. Exile it at the beginning of the next end step.
-        </rules-text>
+        <rules-text><reminder>({B/R} can be paid with either {B} or {R}.)</reminder></rules-text>
+        <rules-text>{3}{B}, Discard a card: Target creature gets -2/-2 until end of turn.</rules-text>
+        <rules-text>{3}{R}: Put a 2/1 red Goblin creature token with haste onto the battlefield. Exile it at the beginning of the next end step.</rules-text>
         <power>2</power>
         <toughness>2</toughness>
     </creature>

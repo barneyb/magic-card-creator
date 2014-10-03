@@ -1,4 +1,5 @@
 package com.barneyb.magic.creator.descriptor
+import com.barneyb.magic.creator.api.BodyItem
 import com.barneyb.magic.creator.api.CardSet
 import com.barneyb.magic.creator.api.CardSetReader
 import com.barneyb.magic.creator.api.ManaColor
@@ -123,9 +124,13 @@ class XmlCardSetReader implements CardSetReader {
                 el.overArtwork.artist
             )
         }
-        c.flavorText = el.flavorText ? textParser.parse(el.flavorText) : null
-        c.rulesText = el.rulesText ? textParser.parse(el.rulesText) : null
+        c.flavorText = fromText(el.flavorText)
+        c.rulesText = fromText(el.rulesText)
         c.watermarkName = el.watermark
+    }
+
+    List<List<BodyItem>> fromText(List els) {
+        els && els.size() > 0 ? els.collect(textParser.&parse) : null
     }
 
     protected DefaultCard fromLandType(LandType el) {
@@ -156,7 +161,7 @@ class XmlCardSetReader implements CardSetReader {
         if (el.levels.size() > 0) {
             c.levels = el.levels.collect { lel ->
                 def l = new DefaultCreatureLevel(lel.levels, lel.power, lel.toughness)
-                l.rulesText = textParser.parse(lel.rulesText)
+                l.rulesText = fromText(lel.rulesText)
                 l
             }
         }
