@@ -1,6 +1,5 @@
 package com.barneyb.magic.creator.descriptor
 import com.barneyb.magic.creator.api.BodyItem
-import com.barneyb.magic.creator.api.BodyText
 import com.barneyb.magic.creator.api.LineBreak
 import com.barneyb.magic.creator.api.NonNormativeText
 import com.barneyb.magic.creator.api.RulesText
@@ -151,78 +150,61 @@ class TextParser {
         vis.items.size() == 0 ? null : vis.items
     }
 
-    public <T> T unparse(List<BodyItem> line, Class<T> typeClass) {
-        if (line == null) {
+    public <T> T unparse(List<BodyItem> body, Class<T> typeClass) {
+        if (body == null || body.empty) {
             return null
         }
-        def isNn = NonNormativeTextType.isAssignableFrom(typeClass)
-        def el = typeClass.newInstance()
-        List<Serializable> content = el.content
-        def sb = new StringBuilder()
-        def flush = { ->
-            if (sb && sb.length() > 0) {
-                el.content << sb.toString()
-                sb = new StringBuilder()
+        def root = typeClass.newInstance()
+        def el = root
+        List line = el.content
+        def ensureRt = { ->
+            if (el instanceof NonNormativeTextType) {
+                if (root instanceof NonNormativeTextType) {
+                    throw new UnsupportedOperationException("You cannot put rules text inside non-normative text.")
+                }
+                //noinspection GrReassignedInClosureLocalVar
+                el = root
+                line = el.content
             }
         }
-        line.eachWithIndex { i, ii ->
-            def prev = content.size() == 0 ? null : content.last()
-            def prevNn = prev instanceof JAXBElement && prev.value instanceof NonNormativeTextType
-            def nextT = line.subList(ii, line.size()).find { it instanceof BodyText }
-            List prevC = prevNn ? prev.value.content : null
-            if (i instanceof SymbolGroup) {
-                // if prev is NNT and next text is also NNT or there is no more text, add to prev instead of top-level
-                if (prevNn && (nextT == null || nextT instanceof NonNormativeText)) {
-                    if (prevC.size() > 0 && prevC.last() instanceof String) {
-                        prevC << (prevC.pop() + i.toString())
-                    } else {
-                        prevC << i.toString()
-                    }
-                } else {
-                    sb.append(i.toString())
-                }
-            } else if (i instanceof LineBreak) {
-                flush()
-                def br = factory.createBreakType()
-                if (isNn) {
-                    content << factory.createNonNormativeTextTypeBr(br)
-                    content << '\n'
-                } else {
-                    // if prev is NNT and next text is also NNT (after zero or more non-text), add to prev instead of top-level
-                    if (prevNn && nextT instanceof NonNormativeText) {
-                        prevC << factory.createNonNormativeTextTypeBr(br)
-                        prevC << '\n'
-                    } else {
-                        content << factory.createRulesTextTypeBr(br)
-                        content << '\n'
-                    }
-                }
-            } else if (i instanceof RulesText) {
-                sb.append(i.text)
-            } else if (i instanceof NonNormativeText) {
-                if (isNn) {
-                    sb.append(i.text)
-                } else {
-                    // reminder text (w/in rules text)
-                    flush()
-                    // if prev is NNT, add to prev isntead of top-level
-                    if (prevNn) {
-                        if (prevC.size() > 0 && prevC.last() instanceof String) {
-                            prevC << (prevC.pop() + i.text)
-                        } else {
-                            prevC << i.text
-                        }
-                    } else {
-                        def t = factory.createNonNormativeTextType()
-                        t.content << i.text
-                        content << factory.createRulesTextTypeReminder(t)
-                    }
-                }
+        def ensureNnt = { ->
+            if (el instanceof RulesTextType) {
+                def nnt = factory.createNonNormativeTextType()
+                el.content << factory.createRulesTextTypeReminder(nnt)
+                //noinspection GrReassignedInClosureLocalVar
+                el = nnt
+                line = el.content
+            }
+        }
+        def append = {
+            if (it instanceof String && ! line.empty && line.last() instanceof String) {
+                line << (line.pop() + it)
             } else {
-                throw new IllegalArgumentException("Unrecognized BodyItem: ${i.getClass().name}")
+                line << it
             }
         }
-        flush()
-        el
+        body.eachWithIndex { it, ii ->
+            if (it instanceof SymbolGroup) {
+                append it.toString()
+            } else if (it instanceof LineBreak) {
+                def br = factory.createBreakType()
+                if (el instanceof NonNormativeTextType) {
+                    append factory.createNonNormativeTextTypeBr(br)
+                } else {
+                    append factory.createRulesTextTypeBr(br)
+                }
+                append '\n'
+            } else if (it instanceof RulesText) {
+                ensureRt()
+                append it.text
+            } else if (it instanceof NonNormativeText) {
+                ensureNnt()
+                append it.text
+            } else {
+                throw new IllegalArgumentException("Unrecognized BodyItem: ${it.getClass().name}")
+            }
+        }
+        root
     }
+
 }
