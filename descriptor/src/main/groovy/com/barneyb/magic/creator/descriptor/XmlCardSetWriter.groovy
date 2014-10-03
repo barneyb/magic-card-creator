@@ -93,7 +93,7 @@ class XmlCardSetWriter implements CardSetWriter {
                 }
                 coreProps(c, el)
             }
-            el.rarity = c.rarity == Rarity.COMMON ? null : RarityEnum.valueOf(c.rarity.name())
+            el.rarity = c.rarity in [null, Rarity.COMMON] ? null : RarityEnum.valueOf(c.rarity.name())
             csel.cards << el
         }
         csel
@@ -204,7 +204,7 @@ class XmlCardSetWriter implements CardSetWriter {
             if (field instanceof DefaultIcon) {
                 icon.fieldSvg = relativize(field.__url)
             }
-        } else {
+        } else if (symbol != null) {
             log.severe("non-default set icons (${symbol.getClass().name}) cannot be exported")
         }
         icon
