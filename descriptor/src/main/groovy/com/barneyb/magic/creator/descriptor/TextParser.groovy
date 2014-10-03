@@ -1,5 +1,6 @@
 package com.barneyb.magic.creator.descriptor
 import com.barneyb.magic.creator.api.BodyItem
+import com.barneyb.magic.creator.api.BodyText
 import com.barneyb.magic.creator.api.LineBreak
 import com.barneyb.magic.creator.api.NonNormativeText
 import com.barneyb.magic.creator.api.RulesText
@@ -156,6 +157,7 @@ class TextParser {
         }
         def isNn = NonNormativeTextType.isAssignableFrom(typeClass)
         def el = typeClass.newInstance()
+        List<Serializable> content = el.content
         def sb = new StringBuilder()
         def flush = { ->
             if (sb && sb.length() > 0) {
@@ -164,14 +166,37 @@ class TextParser {
             }
         }
         line.eachWithIndex { i, ii ->
+            def prev = content.size() == 0 ? null : content.last()
+            def prevNn = prev instanceof JAXBElement && prev.value instanceof NonNormativeTextType
+            def nextT = line.subList(ii, line.size()).find { it instanceof BodyText }
+            List prevC = prevNn ? prev.value.content : null
             if (i instanceof SymbolGroup) {
-                i.each { s ->
-                    sb.append(s.toString())
+                // if prev is NNT and next text is also NNT or there is no more text, add to prev instead of top-level
+                if (prevNn && (nextT == null || nextT instanceof NonNormativeText)) {
+                    if (prevC.size() > 0 && prevC.last() instanceof String) {
+                        prevC << (prevC.pop() + i.toString())
+                    } else {
+                        prevC << i.toString()
+                    }
+                } else {
+                    sb.append(i.toString())
                 }
             } else if (i instanceof LineBreak) {
                 flush()
-                el.content << (isNn ? factory.createNonNormativeTextTypeBr(factory.createBreakType()) : factory.createRulesTextTypeBr(factory.createBreakType()))
-                el.content << '\n'
+                def br = factory.createBreakType()
+                if (isNn) {
+                    content << factory.createNonNormativeTextTypeBr(br)
+                    content << '\n'
+                } else {
+                    // if prev is NNT and next text is also NNT (after zero or more non-text), add to prev instead of top-level
+                    if (prevNn && nextT instanceof NonNormativeText) {
+                        prevC << factory.createNonNormativeTextTypeBr(br)
+                        prevC << '\n'
+                    } else {
+                        content << factory.createRulesTextTypeBr(br)
+                        content << '\n'
+                    }
+                }
             } else if (i instanceof RulesText) {
                 sb.append(i.text)
             } else if (i instanceof NonNormativeText) {
@@ -180,9 +205,18 @@ class TextParser {
                 } else {
                     // reminder text (w/in rules text)
                     flush()
-                    def t = factory.createNonNormativeTextType()
-                    t.content << i.text
-                    el.content << factory.createRulesTextTypeReminder(t)
+                    // if prev is NNT, add to prev isntead of top-level
+                    if (prevNn) {
+                        if (prevC.size() > 0 && prevC.last() instanceof String) {
+                            prevC << (prevC.pop() + i.text)
+                        } else {
+                            prevC << i.text
+                        }
+                    } else {
+                        def t = factory.createNonNormativeTextType()
+                        t.content << i.text
+                        content << factory.createRulesTextTypeReminder(t)
+                    }
                 }
             } else {
                 throw new IllegalArgumentException("Unrecognized BodyItem: ${i.getClass().name}")

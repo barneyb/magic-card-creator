@@ -1,6 +1,5 @@
 package com.barneyb.magic.creator.descriptor
 import com.barneyb.magic.creator.util.XmlTestUtils
-import org.junit.Ignore
 import org.junit.Test
 /**
  *
@@ -16,8 +15,6 @@ class RoundTripTest {
         roundTrip("test-set.xml")
     }
 
-    // todo: symbols can't be w/in reminders
-    @Ignore("symbols can't be w/in reminders")
     @Test
     void allInOne() {
         roundTrip("all-in-one.xml")

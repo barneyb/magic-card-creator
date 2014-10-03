@@ -85,21 +85,24 @@ class TextParserTest {
     void complexRules() {
         def el = new RulesTextType()
         el.content.addAll([
-            "ability",
+            "{R}: ability ",
             new JAXBElement(new QName("reminder"), NonNormativeTextType, new NonNormativeTextType(content: [
-                "multi-line",
+                "(multi-line",
                 new JAXBElement(new QName("br"), String, null),
-                "\nreminder"
+                "\nreminder {R}{U})"
             ])),
         ])
         def body = [
-            rt("ability"),
-            nnt("multi-line"),
+            sg('R'),
+            rt(": ability "),
+            nnt("(multi-line"),
             lb(),
-            nnt("reminder")
+            nnt("reminder "),
+            sg('R', 'U'),
+            nnt(')')
         ]
         assertEquals(body, parser.parse(el))
-        assertEquals('ability<reminder>multi-line</reminder><br /><reminder>reminder</reminder>', serialize(parser.unparse(body, el.getClass())))
+        assertEquals('{R}: ability <reminder>(multi-line<br />\nreminder {R}{U})</reminder>', serialize(parser.unparse(body, el.getClass())))
     }
 
     @Test
@@ -108,15 +111,43 @@ class TextParserTest {
         el.content.addAll([
             "flavor",
             new JAXBElement<String>(new QName("br"), String, null),
-            "\nauthor",
+            "\nauthor {R}{U} text",
         ])
         def body = [
             nnt("flavor"),
             lb(),
-            nnt("author")
+            nnt("author "),
+            sg('R', 'U'),
+            nnt(' text')
         ]
         assertEquals(body, parser.parse(el))
-        assertEquals('flavor<br />author', serialize(parser.unparse(body, el.getClass())))
+        assertEquals('flavor<br />\nauthor {R}{U} text', serialize(parser.unparse(body, el.getClass())))
+    }
+
+    @Test
+    void guulDrazAssassin() {
+        /*
+        <rules-text>Level up {1}{B}
+            <reminder>({1}{B}: Put a level counter on this. Level up only as a sorcery.)</reminder>
+        </rules-text>
+        */
+        def rel = new NonNormativeTextType()
+        rel.content << "({1}{B}: Put a level counter on this. Level up only as a sorcery.)"
+        def el = new RulesTextType()
+        el.content.addAll([
+            "Level up {1}{B} ",
+            new JAXBElement<NonNormativeTextType>(new QName("reminder"), NonNormativeTextType, rel)
+        ])
+        def body = [
+            rt('Level up '),
+            sg('1', 'B'),
+            rt(' '),
+            nnt('('),
+            sg('1', 'B'),
+            nnt(': Put a level counter on this. Level up only as a sorcery.)')
+        ]
+        assertEquals(body, parser.parse(el))
+        assertEquals("Level up {1}{B} <reminder>({1}{B}: Put a level counter on this. Level up only as a sorcery.)</reminder>", serialize(parser.unparse(body, el.getClass())))
     }
 
 }
