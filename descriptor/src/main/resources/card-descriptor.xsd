@@ -42,7 +42,7 @@
                 <xs:annotation>
                     <xs:appinfo>
                         <jaxb:property name="cards">
-                            <jaxb:baseType name="com.barneyb.magic.creator.descriptor.ICardType" />
+                            <jaxb:baseType name="com.barneyb.magic.creator.descriptor.support.ICardType" />
                         </jaxb:property>
                     </xs:appinfo>
                 </xs:annotation>
