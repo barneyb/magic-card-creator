@@ -171,6 +171,7 @@ class TextParser {
             } else if (i instanceof LineBreak) {
                 flush()
                 el.content << (isNn ? factory.createNonNormativeTextTypeBr(factory.createBreakType()) : factory.createRulesTextTypeBr(factory.createBreakType()))
+                el.content << '\n'
             } else if (i instanceof RulesText) {
                 sb.append(i.text)
             } else if (i instanceof NonNormativeText) {
