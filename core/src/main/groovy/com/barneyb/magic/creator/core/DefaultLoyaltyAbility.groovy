@@ -14,6 +14,6 @@ class DefaultLoyaltyAbility implements LoyaltyAbility {
 
     String cost = null
 
-    List<List<BodyItem>> rulesText = null
+    List<BodyItem> rulesText = null
 
 }

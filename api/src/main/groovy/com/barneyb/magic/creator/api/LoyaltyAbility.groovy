@@ -12,6 +12,6 @@ interface LoyaltyAbility {
      */
     String getCost()
 
-    List<List<BodyItem>> getRulesText()
+    List<BodyItem> getRulesText()
 
 }
