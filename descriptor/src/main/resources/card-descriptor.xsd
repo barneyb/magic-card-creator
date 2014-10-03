@@ -119,8 +119,8 @@
     <xs:complexType name="LandType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:implements>com.barneyb.magic.creator.descriptor.ICardType</inheritance:implements>
-                <inheritance:implements>com.barneyb.magic.creator.descriptor.ICoreType</inheritance:implements>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.support.ICardType</inheritance:implements>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.support.ICoreType</inheritance:implements>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
@@ -137,8 +137,8 @@
     <xs:complexType name="SpellType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:implements>com.barneyb.magic.creator.descriptor.ICardType</inheritance:implements>
-                <inheritance:implements>com.barneyb.magic.creator.descriptor.ISpellType</inheritance:implements>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.support.ICardType</inheritance:implements>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.support.ISpellType</inheritance:implements>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
@@ -155,7 +155,7 @@
     <xs:complexType name="FuseType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:implements>com.barneyb.magic.creator.descriptor.ICardType</inheritance:implements>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.support.ICardType</inheritance:implements>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
@@ -167,7 +167,7 @@
     <xs:complexType name="FusedSpellType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:implements>com.barneyb.magic.creator.descriptor.ISpellType</inheritance:implements>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.support.ISpellType</inheritance:implements>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
@@ -183,8 +183,8 @@
     <xs:complexType name="CreatureType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:implements>com.barneyb.magic.creator.descriptor.ICardType</inheritance:implements>
-                <inheritance:implements>com.barneyb.magic.creator.descriptor.ISpellType</inheritance:implements>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.support.ICardType</inheritance:implements>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.support.ISpellType</inheritance:implements>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
@@ -223,8 +223,8 @@
     <xs:complexType name="PlaneswalkerType">
         <xs:annotation>
             <xs:appinfo>
-                <inheritance:implements>com.barneyb.magic.creator.descriptor.ICardType</inheritance:implements>
-                <inheritance:implements>com.barneyb.magic.creator.descriptor.ISpellType</inheritance:implements>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.support.ICardType</inheritance:implements>
+                <inheritance:implements>com.barneyb.magic.creator.descriptor.support.ISpellType</inheritance:implements>
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>

@@ -22,6 +22,7 @@ import com.barneyb.magic.creator.descriptor.schema.RarityEnum
 import com.barneyb.magic.creator.descriptor.schema.RulesTextType
 import com.barneyb.magic.creator.descriptor.schema.SetIconType
 import com.barneyb.magic.creator.descriptor.schema.SpellType
+import com.barneyb.magic.creator.descriptor.support.ICoreType
 import groovy.util.logging.Log
 
 import javax.xml.XMLConstants

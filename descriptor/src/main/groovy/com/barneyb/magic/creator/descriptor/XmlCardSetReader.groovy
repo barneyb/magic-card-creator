@@ -21,6 +21,8 @@ import com.barneyb.magic.creator.descriptor.schema.FusedSpellType
 import com.barneyb.magic.creator.descriptor.schema.LandType
 import com.barneyb.magic.creator.descriptor.schema.PlaneswalkerType
 import com.barneyb.magic.creator.descriptor.schema.SpellType
+import com.barneyb.magic.creator.descriptor.support.ICoreType
+import com.barneyb.magic.creator.descriptor.support.ISpellType
 import com.barneyb.magic.creator.symbol.DefaultSymbolFactory
 
 import javax.xml.XMLConstants
