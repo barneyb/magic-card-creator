@@ -101,7 +101,7 @@ The Green Woods 5gg
 
 Instant
 
-Untap all Forests.  All Forests become 1/4 green Elemental creatures with reach until end of turn.  They are still lands.
+Untap all Forests. All Forests become 1/4 green Elemental creatures with reach until end of turn. They are still lands.
 
 Purphoros' Axe 3
 ----------------
@@ -112,4 +112,4 @@ Artifact
 
 At the beginning of your upkeep, pay {R} or sacrifice Purphoros' Axe.
 
-At the end of your upkeep, choose target creature.  The creature has protection from Forests until your next upkeep.
+At the end of your upkeep, choose target creature. The creature has protection from Forests until your next upkeep.

@@ -26,8 +26,8 @@ implementation should be able to do.
             <artist>Zueuk</artist>
         </artwork>
         <rules-text>Counter target spell.</rules-text>
-        <flavor-text>How about "never".
-            <br />&#x2014; Barney of the Green Woods</flavor-text>
+        <flavor-text>How about "never".<br />
+            &#x2014; Barney of the Green Woods</flavor-text>
     </spell>
     <creature title="Nightmare" casting-cost="5B" subtype="Nightmare Horse" rarity="rare">
         <artwork>

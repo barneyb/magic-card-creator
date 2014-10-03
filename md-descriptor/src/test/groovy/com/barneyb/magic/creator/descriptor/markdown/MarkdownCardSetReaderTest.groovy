@@ -239,7 +239,7 @@ Creature - Human
                     ),
                     typeParts: ["Instant"],
                     rulesText: [[
-                        new DefaultRulesText("Untap all Forests.  All Forests become 1/4 green Elemental creatures with reach until end of turn.  They are still lands.")
+                        new DefaultRulesText("Untap all Forests. All Forests become 1/4 green Elemental creatures with reach until end of turn. They are still lands.")
                     ]],
                 ),
                 new DefaultCard(
@@ -253,7 +253,7 @@ Creature - Human
                     typeParts: ["Artifact"],
                     rulesText: [
                         [new DefaultRulesText("At the beginning of your upkeep, pay "), sf.getCost("r"), new DefaultRulesText(" or sacrifice Purphoros' Axe.")],
-                        [new DefaultRulesText("At the end of your upkeep, choose target creature.  The creature has protection from Forests until your next upkeep.")]
+                        [new DefaultRulesText("At the end of your upkeep, choose target creature. The creature has protection from Forests until your next upkeep.")]
                     ],
                 )
             ]),
