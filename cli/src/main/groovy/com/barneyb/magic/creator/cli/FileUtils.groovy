@@ -20,6 +20,7 @@ class FileUtils {
      */
     static Closure<File> uniqueFileBuilder(File outputDir, String srcSuffix=null, String destSuffix) {
         final Set alreadyTargeted = []
+        outputDir.mkdirs()
         return { File f ->
             def root = f.name
             if (srcSuffix && root.endsWith(srcSuffix)) {
