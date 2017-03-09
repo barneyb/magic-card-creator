@@ -38,14 +38,7 @@ class ComposeCommand extends BaseDescriptorCommand implements Executable {
         def theme = createTheme()
         def maxTitleLength = cs.cards*.title*.length().max()
         def nLength = cs.cards.size().toString().length()
-        def proofs = new File(outputDir, "proof-${cs.key}.html").newPrintWriter()
-        proofs.println """\
-<html>
-<head>
-<meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8" />
-</head>
-<body>
-"""
+        def proofsheet = new ProofSheet()
         filterCards(cs).each {
             println("(${it.cardNumber.toString().padLeft(nLength)}/$it.setCardCount) $it.title" + '.' * (maxTitleLength - it.title.length() + 2))
             def start = System.currentTimeMillis()
@@ -64,13 +57,9 @@ class ComposeCommand extends BaseDescriptorCommand implements Executable {
             }
             def elapsed = System.currentTimeMillis() - start
             println(' ' * (nLength * 2 + 4) + "done (${(Math.round(elapsed / 100) / 10).toString().padLeft(4)} s)")
-            proofs.println """<img src="$file.name" />"""
+            proofsheet.addImage(file.name)
         }
-        proofs.println """
-<p>Generated at: ${new Date()}
-</body>
-</html>"""
-        proofs.close()
+        proofsheet.render(new File(outputDir, "proof-${cs.key}.html").newOutputStream())
     }
 
     protected Theme createTheme() {
