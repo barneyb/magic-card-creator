@@ -1,5 +1,6 @@
 package com.barneyb.magic.creator.descriptor.markdown
 
+import com.barneyb.magic.creator.api.Card
 import com.barneyb.magic.creator.api.CardSet
 import com.barneyb.magic.creator.api.CardSetReader
 import com.barneyb.magic.creator.core.DefaultCardSet
@@ -40,6 +41,9 @@ class MarkdownCardSetReader implements CardSetReader {
     CardSet read() {
         def cs = new DefaultCardSet()
         new Parser(reader).parse().accept(new MarkdownVisitor(base, cs))
+        cs.cards.eachWithIndex { Card c, int i ->
+            c.cardNumber = i + 1
+        }
         cs
     }
 

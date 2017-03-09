@@ -127,7 +127,8 @@ Creature - Human
                         new DefaultNonNormativeText("How about \"never\"."),
                         new DefaultLineBreak(),
                         new DefaultNonNormativeText("\u2014 Barney of the Green Woods")
-                    ]]
+                    ]],
+                    cardNumber: 2 // sally is card 1
                 ),
                 new DefaultCreatureCard(
                     title: "Nightmare",
@@ -146,7 +147,8 @@ Creature - Human
                         new DefaultNonNormativeText("The thunder of its hooves beats dreams into despair."),
                     ]],
                     power: "*",
-                    toughness: "*"
+                    toughness: "*",
+                    cardNumber: 3
                 ),
                 new DefaultCreatureCard(
                     title: "Blitz Hellion",
@@ -165,7 +167,8 @@ Creature - Human
                         new DefaultNonNormativeText("Alarans commemorated its appearances with new holidays bearing names like the Great Cataclysm and the Fall of Ilson Gate."),
                     ]],
                     power: "7",
-                    toughness: "7"
+                    toughness: "7",
+                    cardNumber: 4
                 ),
                 new DefaultCreatureCard(
                     title: "Barney of the Green Woods",
