@@ -43,6 +43,7 @@ class MarkdownCardSetReader implements CardSetReader {
         new Parser(reader).parse().accept(new MarkdownVisitor(base, cs))
         cs.cards.eachWithIndex { Card c, int i ->
             c.cardNumber = i + 1
+            c.set = cs
         }
         cs
     }
