@@ -27,6 +27,9 @@ class Assert {
             assertEquals("toughness doesn't match", e.toughness, a.toughness)
         }
         assertEquals("artist doesn't match", e.artwork?.artist, a.artwork?.artist)
+        if (e.cardNumber != null) {
+            assertEquals("card number doesn't match ($e.title)", e.cardNumber, a.cardNumber)
+        }
     }
 
     static assertCardSet(CardSet expected, CardSet actual) {
