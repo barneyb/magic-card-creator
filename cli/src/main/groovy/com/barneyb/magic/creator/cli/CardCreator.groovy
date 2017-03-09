@@ -20,7 +20,8 @@ class CardCreator {
         stats   : new StatsCommand(),
         png     : new PngCommand(),
         pdf     : new PdfCommand(),
-        md2xml  : new MarkdownToXmlCommand()
+        md2xml  : new MarkdownToXmlCommand(),
+        icons   : new SymbolIconCommand()
     ]
 
     JCommander jc
