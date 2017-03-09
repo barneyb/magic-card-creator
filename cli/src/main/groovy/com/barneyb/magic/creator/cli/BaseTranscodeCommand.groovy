@@ -20,6 +20,8 @@ abstract class BaseTranscodeCommand implements Executable {
     @Parameter(names = ["-o", "--output-dir"], description = "The directory to transcode into", required = true)
     File outputDir
 
+    boolean includeProofSheet = false
+
     @Override
     void execute(MainCommand main, JCommander jc) {
         if (inputs == null || inputs.empty) {
@@ -27,12 +29,17 @@ abstract class BaseTranscodeCommand implements Executable {
         }
         DockerUtils.withDocker dockerCommand, { String hostAndPort ->
             HttpUtils.withConverter "http://$hostAndPort" + urlPath, { postAndSave ->
+                def sheet = new ProofSheet()
                 // transcode the file(s)
                 eachFile { File src ->
                     println "processing $src"
                     def dest = targetFromSource(src)
                     postAndSave(transformSource(src), dest)
+                    sheet.addImage(dest.name)
                     println "saved $dest"
+                }
+                if (includeProofSheet) {
+                    sheet.render(new File(outputDir, "proof.html").newOutputStream())
                 }
             }
         }

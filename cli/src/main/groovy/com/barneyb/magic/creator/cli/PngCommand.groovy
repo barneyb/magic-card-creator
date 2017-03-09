@@ -24,4 +24,8 @@ class PngCommand extends BaseTranscodeCommand {
         ".png"
     }
 
+    PngCommand() {
+        includeProofSheet = true
+    }
+
 }
