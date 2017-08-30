@@ -46,7 +46,8 @@ class DefaultSymbolIconFactoryTest {
 html { text-align: center; }
 body { max-width: 980px; margin: auto; background-color: #eed; }
 div { float: left; margin-bottom: 20px; }
-div > svg { margin: 10px; }
+div > svg,
+div > img { margin: 10px; }
 pre { text-align: left; clear: left; }
 </style>
 </head>
@@ -54,6 +55,9 @@ pre { text-align: left; clear: left; }
 """
         def toFilename = { s ->
             s.replaceAll(/[^a-zA-Z0-9]+/, '_')
+        }
+        def toPad = { s ->
+            ' ' * (3 - s.length())
         }
         SYMBOL_GROUPS.each { n, ss ->
             println n
@@ -84,10 +88,11 @@ pre { text-align: left; clear: left; }
 ${SYMBOL_GROUPS.collect { g, ss ->
     ss.collect { s ->
         def fn = toFilename(s)
+        def pad = toPad(s)
         [
-            "import _$fn from '../assets/symbols/${fn}.svg';",
-            "import _${fn}_shadow from '../assets/symbols/${fn}_shadow.svg';",
-            "import _${fn}_nodisc from '../assets/symbols/${fn}_nodisc.svg';",
+            "import ${pad}_${fn}_nodisc from './${fn}_nodisc.svg';",
+            "import ${pad}_${fn}        from './${fn}.svg';",
+            "import ${pad}_${fn}_shadow from './${fn}_shadow.svg';",
         ]
     }
 }.flatten().join('\n')}
@@ -96,10 +101,23 @@ ${SYMBOL_GROUPS.collect { g, ss ->
 ${SYMBOL_GROUPS.collect { g, ss ->
     ss.collect { s ->
         def fn = toFilename(s)
-        "case '${s.toUpperCase()}': return shadow ? _${fn}_shadow : disc ? _$fn : _${fn}_nodisc;"
-    }.join('\n')
-}.join('\n')}
+        def pad = toPad(s)
+        "case ${pad}'${s.toUpperCase()}': return shadow ? ${pad}_${fn}_shadow : disc ? ${pad}_$fn : ${pad}_${fn}_nodisc;"
+    }
+}.flatten().join('\n')}
 </pre>
+${SYMBOL_GROUPS.collect { g, ss ->
+    ss.collect { s ->
+        def fn = toFilename(s)
+        """
+        <div>
+            <img src='${fn}_nodisc.svg' /><br />
+            <img src='${fn}.svg' /><br />
+            <img src='${fn}_shadow.svg' />
+        </div>
+        """
+    }
+}.flatten().join('\n')}
 </body>
 </html>
 """.toString()

@@ -8,6 +8,6 @@ target
 .project
 build
 dependency-reduced-pom.xml
-proof-*.html
-/proof-icons
+proof-*.*
+/proof-*/
 /card-*.svg
