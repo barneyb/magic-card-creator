@@ -10,7 +10,9 @@ import org.junit.Test
  */
 class DefaultSymbolIconFactoryTest {
 
-    static final String PROOFSHEET_FILENAME = "proof-icons/index.html"
+    static final String OUTPUT_DIRECTORY = "proof-icons"
+    static final String FACTORY_FILENAME = "factory.js"
+    static final String PROOFSHEET_FILENAME = "index.html"
 
     static final Map SYMBOL_GROUPS = [
         "colored"    : ['w', 'u', 'b', 'r', 'g'],
@@ -30,15 +32,60 @@ class DefaultSymbolIconFactoryTest {
         factory = new DefaultSymbolIconFactory()
     }
 
+    private String toFilename(s) {
+        s.replaceAll(/[^a-zA-Z0-9]+/, '_')
+    }
+
+    private String toPad(s) {
+        ' ' * (3 - s.length())
+    }
+
     @Test
     void proofsheet() {
-        def tgt = new File(PROOFSHEET_FILENAME)
-        if (tgt.exists()) {
-            tgt.delete()
+        def proofFile = new File(OUTPUT_DIRECTORY, PROOFSHEET_FILENAME)
+        if (proofFile.exists()) {
+            proofFile.delete()
         } else {
-            tgt.parentFile.mkdirs()
+            proofFile.parentFile.mkdirs()
         }
-        def out = tgt.newPrintWriter()
+        def factoryFile = new File(OUTPUT_DIRECTORY, FACTORY_FILENAME)
+        if (factoryFile.exists()) {
+            factoryFile.delete()
+        }
+        def symbolExpr = { s, pad ->
+            def fn = toFilename(s)
+            "shadow ? ${pad}_${fn}_shadow : disc ? ${pad}_$fn : ${pad}_${fn}_nodisc"
+        }
+        factoryFile.text = """\
+${SYMBOL_GROUPS.collect { g, ss ->
+    ss.collect { s ->
+        def fn = toFilename(s)
+        def pad = toPad(s)
+        [
+            "import ${pad}_${fn}        from './${fn}.svg';",
+            "import ${pad}_${fn}_shadow from './${fn}_shadow.svg';",
+            "import ${pad}_${fn}_nodisc from './${fn}_nodisc.svg';",
+        ]
+    }
+}.flatten().join('\n')}
+
+// style must be one of 'shadow'/'cost', 'disc'/'inline', 'nodisc'/'bare'
+const factory = (symbol, shadow=false, disc=true) => {
+    switch (symbol) {${SYMBOL_GROUPS.collect { g, ss ->
+    ss.collect { s ->
+        def pad = toPad(s)
+        """
+        case ${pad}'${s.toUpperCase()}': return ${symbolExpr(s, pad)};"""
+    }
+}.flatten().join('')}
+        // sorta silly; don't have "unknown"
+        default   : return ${symbolExpr('0', '  ')};
+    }
+}
+
+export default factory;
+"""
+        def out = proofFile.newPrintWriter()
         out.print """\
 <html>
 <head>
@@ -48,17 +95,14 @@ body { max-width: 980px; margin: auto; background-color: #eed; }
 div { float: left; margin-bottom: 20px; }
 div > svg,
 div > img { margin: 10px; }
-pre { text-align: left; clear: left; }
+h1,
+p { text-align: left; clear: left; }
+textarea { width: 100%; height: 140px; }
 </style>
 </head>
 <body>
+<h1>As Inline SVG</h1>
 """
-        def toFilename = { s ->
-            s.replaceAll(/[^a-zA-Z0-9]+/, '_')
-        }
-        def toPad = { s ->
-            ' ' * (3 - s.length())
-        }
         SYMBOL_GROUPS.each { n, ss ->
             println n
             ss.collect {
@@ -70,42 +114,22 @@ pre { text-align: left; clear: left; }
                 out.println "<div>"
                 def svg = XmlUtils.write factory.getBareIcon(it).document
                 out.println svg
-                new File("proof-icons/${fn}_nodisc.svg").text = svg
+                new File(OUTPUT_DIRECTORY, "${fn}_nodisc.svg").text = svg
                 out.println "<br>"
                 svg = XmlUtils.write factory.getIcon(it).document
                 out.println svg
-                new File("proof-icons/${fn}.svg").text = svg
+                new File(OUTPUT_DIRECTORY, "${fn}.svg").text = svg
                 out.println "<br>"
                 svg = XmlUtils.write factory.getShadowedIcon(it).document
                 out.println svg
-                new File("proof-icons/${fn}_shadow.svg").text = svg
+                new File(OUTPUT_DIRECTORY, "${fn}_shadow.svg").text = svg
                 out.println "</div>"
             }
         }
         out.write """\
-<p>Generated at: ${new Date()}
-<pre>
-${SYMBOL_GROUPS.collect { g, ss ->
-    ss.collect { s ->
-        def fn = toFilename(s)
-        def pad = toPad(s)
-        [
-            "import ${pad}_${fn}_nodisc from './${fn}_nodisc.svg';",
-            "import ${pad}_${fn}        from './${fn}.svg';",
-            "import ${pad}_${fn}_shadow from './${fn}_shadow.svg';",
-        ]
-    }
-}.flatten().join('\n')}
-</pre>
-<pre>
-${SYMBOL_GROUPS.collect { g, ss ->
-    ss.collect { s ->
-        def fn = toFilename(s)
-        def pad = toPad(s)
-        "case ${pad}'${s.toUpperCase()}': return shadow ? ${pad}_${fn}_shadow : disc ? ${pad}_$fn : ${pad}_${fn}_nodisc;"
-    }
-}.flatten().join('\n')}
-</pre>
+<h1>As ES6 Factory (in <a href="factory.js"><code>factory.js</code></a>)</h1>
+<textarea>${factoryFile.text}</textarea>
+<h1>As External SVG (via <code>&lt;img src&gt;</code>)</h1>
 ${SYMBOL_GROUPS.collect { g, ss ->
     ss.collect { s ->
         def fn = toFilename(s)
@@ -118,6 +142,7 @@ ${SYMBOL_GROUPS.collect { g, ss ->
         """
     }
 }.flatten().join('\n')}
+<p>Generated at: ${new Date()}
 </body>
 </html>
 """.toString()
